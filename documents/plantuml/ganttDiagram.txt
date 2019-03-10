@@ -1,0 +1,10 @@
+@startgantt
+Project starts the 1st of february 2019
+sunday are closed
+[Análisis de implementación anterior] lasts 6 days
+then [Establecimiento de arquitectura] lasts 10 days
+then [Diseño de sistema de codificación de ficheros] lasts 6 days
+then [Desarrollo de motor genérico] lasts 10 days
+then [Desarrollo de lógica e interfaz gráfica] lasts 12 weeks
+then [Crear videojuego de ejemplo] lasts 6 days
+@endgantt
