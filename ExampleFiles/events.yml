@@ -1,10 +1,10 @@
-"room17Conversation":
+"room17LookAround":
   mode: "dialogue"
   message: "Miras a tu alrededor"
   character: "narrator" #idCharacter
-  nextStep: "room17Conversation_2"
+  nextStep: ""
 
-"room17Conversation_2":
+"room17Conversation":
   mode: "condition"
   condition:
     kind: "partner" #For items, the keyword is "item".
@@ -73,3 +73,28 @@
   message: "No tienes una piedra. El enemigo se acerca rápidamente."
   character: "narrator" #idCharacter
   nextStep: "room17StartBattle"
+
+"emptyRoomTalk":
+  mode: "dialogue"
+  message: "Parece una habitación vacía..."
+  character: "narrator" #idCharacter
+  nextStep: ""
+
+"genericRoomStartBattle":
+  mode: "condition"
+  condition:
+    kind: "partner"
+    required: "gerar"
+  ifTrueNextStep: "genericRoomBattle1_WithGerar"
+  ifFalseNextStep: "genericRoomBattle1"
+
+"genericRoomBattle1_WithGerar":
+  mode: "dialogue"
+  message: "¡Vamos a luchar!"
+  character: "narrator" #idCharacter
+  nextStep: "genericRoomBattle1"
+
+"genericRoomBattle1":
+  mode: "battle"
+  enemy: "badMonster"
+  nextStep: "ending"
