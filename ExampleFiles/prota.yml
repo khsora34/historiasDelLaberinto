@@ -9,7 +9,7 @@ status:
   defense: 23
   agility: 10
   currentStatusAilment: "none"
-  weapon: "magicSword"
+  weapon: "magic_sword"
 
 rooms:
   '1' :

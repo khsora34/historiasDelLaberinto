@@ -1,0 +1,100 @@
+"room17LookAround":
+  mode: "dialogue"
+  message: "Miras a tu alrededor"
+  character: "narrator" #idCharacter
+  nextStep: ""
+
+"room17Conversation":
+  mode: "condition"
+  condition:
+    kind: "partner" #For items, the keyword is "item".
+    required: "gerar" #Item's or partner's id.
+  ifTrueNextStep: "room17Conversation_WithGerar"
+  ifFalseNextStep: "room17Conversation_3"
+
+"room17Conversation_WithGerar":
+  mode: "dialogue"
+  message: "Parece que hay un malvado allí... ¿Atacamos?"
+  character: "gerar" #idCharacter
+  nextStep: "room17Conversation_WithGerar_2"
+
+"room17Conversation_WithGerar_2":
+  mode: "choice"
+  options:
+    - action: "Valep"
+      nextStep: "room17StartBattle"
+    - action: "Mejor no"
+      nextStep: ""
+
+"room17StartBattle":
+  mode: "battle"
+  enemy: "badMonster"
+  nextStep: "room17BattleReward"
+
+"room17BattleReward":
+  mode: "reward"
+  message: "¡El enemigo ha dejado caer cosas!"
+  rewards:
+    - itemId: "potion"
+      sum: "2"
+    - itemId: "high_potion"
+      sum: "1"
+  nextStep: "ending"
+
+"room17Conversation_3":
+  mode: "dialogue"
+  message: "Divisas a un malvado lejano... ¿Qué deberías hacer?"
+  character: "narrator" #idCharacter
+  nextStep: "room17Conversation_Choice"
+
+"room17Conversation_Choice":
+  mode: "choice"
+  options:
+    - action: "Tirarle una piedra"
+      nextStep: "room17ThrowRock"
+    - action: "Dejarle estar
+
+"room17ThrowRock":
+  mode: "condition"
+  condition:
+    kind: "item"
+    required: "rock" #Item's or partner's id.
+  ifTrueNextStep: "room17ThrownRock"
+  ifFalseNextStep: "room17FailedRock"
+
+"room17ThrownRock":
+  mode: "dialogue"
+  message: "La lanzas y... ¡Acertaste! "
+  character: "narrator" #idCharacter
+  nextStep: "room17BattleReward"
+
+"room17FailedRock":
+  mode: "dialogue"
+  message: "No tienes una piedra. El enemigo se acerca rápidamente."
+  character: "narrator" #idCharacter
+  nextStep: "room17StartBattle"
+
+"emptyRoomTalk":
+  mode: "dialogue"
+  message: "Parece una habitación vacía..."
+  character: "narrator" #idCharacter
+  nextStep: ""
+
+"genericRoomStartBattle":
+  mode: "condition"
+  condition:
+    kind: "partner"
+    required: "gerar"
+  ifTrueNextStep: "genericRoomBattle1_WithGerar"
+  ifFalseNextStep: "genericRoomBattle1"
+
+"genericRoomBattle1_WithGerar":
+  mode: "dialogue"
+  message: "¡Vamos a luchar!"
+  character: "narrator" #idCharacter
+  nextStep: "genericRoomBattle1"
+
+"genericRoomBattle1":
+  mode: "battle"
+  enemy: "badMonster"
+  nextStep: "ending"
