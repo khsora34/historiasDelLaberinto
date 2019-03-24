@@ -1,0 +1,35 @@
+"potion":
+  name: "Poción"
+  description: "Restaura puntos de vida."
+  type: "usable" # It can appear as key and weapon
+  image: "http://LALALAND.com/potion_image"
+  addingHealth: 40
+
+"high_potion":
+  name: "Poción grande"
+  description: "Restaura puntos de vida."
+  type: "usable"
+  image: "http://LALALAND.com/high_option_image"
+  addingHealth: 140
+
+"small_key":
+  name: "Llave pequeña"
+  description: "Una llave pequeña."
+  type: "key"
+  image: "http://LALALAND.com/small_key_image"
+
+"magic_sword":
+  name: "Espada mágica"
+  description: "Una espada mágica."
+  type: "weapon"
+  image: "http://LALALAND.com/magic_sword_image"
+  extraDamage: 10
+  ailment: "none" # This field can be removed
+
+"poisoned_bow":
+  name: "Arco envenenado"
+  description: "Un arco que puede provocar veneno."
+  type: "weapon"
+  image: "http://LALALAND.com/poisoned_bow_image"
+  extraDamage: 0
+  ailment: "poison"
