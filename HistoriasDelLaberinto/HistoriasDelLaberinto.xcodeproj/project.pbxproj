@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28C116A2436248FA3DB4BC92 /* Pods_HistoriasDelLaberinto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FF6F3C6395790C0848EA61 /* Pods_HistoriasDelLaberinto.framework */; };
 		6D6DE4B9221DB40600C92B94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */; };
 		6D6DE4BB221DB40600C92B94 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DE4BA221DB40600C92B94 /* ViewController.swift */; };
 		6D6DE4BE221DB40600C92B94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DE4BC221DB40600C92B94 /* Main.storyboard */; };
@@ -22,6 +23,9 @@
 		6D6DE4BF221DB40700C92B94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6D6DE4C2221DB40700C92B94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6D6DE4C4221DB40700C92B94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7233A83E5CB3B122ECDD5D3B /* Pods-HistoriasDelLaberinto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HistoriasDelLaberinto.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto.debug.xcconfig"; sourceTree = "<group>"; };
+		B18D44CD4BED83926DE99D1B /* Pods-HistoriasDelLaberinto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HistoriasDelLaberinto.release.xcconfig"; path = "Pods/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto.release.xcconfig"; sourceTree = "<group>"; };
+		C1FF6F3C6395790C0848EA61 /* Pods_HistoriasDelLaberinto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HistoriasDelLaberinto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +33,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28C116A2436248FA3DB4BC92 /* Pods_HistoriasDelLaberinto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		12089AF208BF496E76A88A5C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C1FF6F3C6395790C0848EA61 /* Pods_HistoriasDelLaberinto.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6D6DE4AC221DB40600C92B94 = {
 			isa = PBXGroup;
 			children = (
 				6D6DE4B7221DB40600C92B94 /* HistoriasDelLaberinto */,
 				6D6DE4B6221DB40600C92B94 /* Products */,
+				86DB7E70A5ECCE502975804F /* Pods */,
+				12089AF208BF496E76A88A5C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,6 +79,15 @@
 			path = HistoriasDelLaberinto;
 			sourceTree = "<group>";
 		};
+		86DB7E70A5ECCE502975804F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7233A83E5CB3B122ECDD5D3B /* Pods-HistoriasDelLaberinto.debug.xcconfig */,
+				B18D44CD4BED83926DE99D1B /* Pods-HistoriasDelLaberinto.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -71,9 +95,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6D6DE4C7221DB40700C92B94 /* Build configuration list for PBXNativeTarget "HistoriasDelLaberinto" */;
 			buildPhases = (
+				3FC84949EE3A7C1265D29763 /* [CP] Check Pods Manifest.lock */,
 				6D6DE4B1221DB40600C92B94 /* Sources */,
 				6D6DE4B2221DB40600C92B94 /* Frameworks */,
 				6D6DE4B3221DB40600C92B94 /* Resources */,
+				CC3D3352818B9673B11A9398 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -129,6 +155,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3FC84949EE3A7C1265D29763 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HistoriasDelLaberinto-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CC3D3352818B9673B11A9398 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Yams/Yams.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Yams.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6D6DE4B1221DB40600C92B94 /* Sources */ = {
@@ -280,15 +345,13 @@
 		};
 		6D6DE4C8221DB40700C92B94 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7233A83E5CB3B122ECDD5D3B /* Pods-HistoriasDelLaberinto.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F5GX626K37;
 				INFOPLIST_FILE = HistoriasDelLaberinto/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SetonciOS.HistoriasDelLaberinto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -298,15 +361,13 @@
 		};
 		6D6DE4C9221DB40700C92B94 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B18D44CD4BED83926DE99D1B /* Pods-HistoriasDelLaberinto.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F5GX626K37;
 				INFOPLIST_FILE = HistoriasDelLaberinto/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SetonciOS.HistoriasDelLaberinto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
