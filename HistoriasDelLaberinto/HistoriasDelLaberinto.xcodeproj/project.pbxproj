@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		28C116A2436248FA3DB4BC92 /* Pods_HistoriasDelLaberinto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FF6F3C6395790C0848EA61 /* Pods_HistoriasDelLaberinto.framework */; };
+		6D4B57DC224A9489001779DC /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4B57DB224A9489001779DC /* Room.swift */; };
+		6D4B57DE224A9528001779DC /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4B57DD224A9528001779DC /* Action.swift */; };
+		6D4B57E0224A9591001779DC /* Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4B57DF224A9591001779DC /* Condition.swift */; };
+		6D4B57E3224A9621001779DC /* Protagonist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4B57E2224A9621001779DC /* Protagonist.swift */; };
+		6D4B57E5224A99E3001779DC /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4B57E4224A99E3001779DC /* Character.swift */; };
+		6D4B57E8224A9A27001779DC /* StatusAilment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4B57E7224A9A27001779DC /* StatusAilment.swift */; };
 		6D6DE4B9221DB40600C92B94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */; };
 		6D6DE4BB221DB40600C92B94 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DE4BA221DB40600C92B94 /* ViewController.swift */; };
 		6D6DE4BE221DB40600C92B94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DE4BC221DB40600C92B94 /* Main.storyboard */; };
@@ -16,6 +22,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6D4B57DB224A9489001779DC /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		6D4B57DD224A9528001779DC /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		6D4B57DF224A9591001779DC /* Condition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Condition.swift; sourceTree = "<group>"; };
+		6D4B57E2224A9621001779DC /* Protagonist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protagonist.swift; sourceTree = "<group>"; };
+		6D4B57E4224A99E3001779DC /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		6D4B57E7224A9A27001779DC /* StatusAilment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusAilment.swift; sourceTree = "<group>"; };
 		6D6DE4B5221DB40600C92B94 /* HistoriasDelLaberinto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HistoriasDelLaberinto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D6DE4BA221DB40600C92B94 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -48,6 +60,43 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6D4B57D9224A93E1001779DC /* domain */ = {
+			isa = PBXGroup;
+			children = (
+				6D4B57E6224A9A15001779DC /* models */,
+				6D4B57DA224A93F4001779DC /* startTypes */,
+			);
+			path = domain;
+			sourceTree = "<group>";
+		};
+		6D4B57DA224A93F4001779DC /* startTypes */ = {
+			isa = PBXGroup;
+			children = (
+				6D4B57E1224A95EB001779DC /* room */,
+				6D4B57E2224A9621001779DC /* Protagonist.swift */,
+			);
+			path = startTypes;
+			sourceTree = "<group>";
+		};
+		6D4B57E1224A95EB001779DC /* room */ = {
+			isa = PBXGroup;
+			children = (
+				6D4B57DB224A9489001779DC /* Room.swift */,
+				6D4B57DD224A9528001779DC /* Action.swift */,
+				6D4B57DF224A9591001779DC /* Condition.swift */,
+				6D4B57E4224A99E3001779DC /* Character.swift */,
+			);
+			path = room;
+			sourceTree = "<group>";
+		};
+		6D4B57E6224A9A15001779DC /* models */ = {
+			isa = PBXGroup;
+			children = (
+				6D4B57E7224A9A27001779DC /* StatusAilment.swift */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
 		6D6DE4AC221DB40600C92B94 = {
 			isa = PBXGroup;
 			children = (
@@ -69,6 +118,7 @@
 		6D6DE4B7221DB40600C92B94 /* HistoriasDelLaberinto */ = {
 			isa = PBXGroup;
 			children = (
+				6D4B57D9224A93E1001779DC /* domain */,
 				6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */,
 				6D6DE4BA221DB40600C92B94 /* ViewController.swift */,
 				6D6DE4BC221DB40600C92B94 /* Main.storyboard */,
@@ -122,6 +172,7 @@
 				TargetAttributes = {
 					6D6DE4B4221DB40600C92B94 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -201,7 +252,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D6DE4BB221DB40600C92B94 /* ViewController.swift in Sources */,
+				6D4B57DE224A9528001779DC /* Action.swift in Sources */,
+				6D4B57E5224A99E3001779DC /* Character.swift in Sources */,
+				6D4B57E3224A9621001779DC /* Protagonist.swift in Sources */,
+				6D4B57E8224A9A27001779DC /* StatusAilment.swift in Sources */,
 				6D6DE4B9221DB40600C92B94 /* AppDelegate.swift in Sources */,
+				6D4B57DC224A9489001779DC /* Room.swift in Sources */,
+				6D4B57E0224A9591001779DC /* Condition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,10 +408,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F5GX626K37;
 				INFOPLIST_FILE = HistoriasDelLaberinto/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.SetonciOS.HistoriasDelLaberinto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -367,10 +427,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F5GX626K37;
 				INFOPLIST_FILE = HistoriasDelLaberinto/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.SetonciOS.HistoriasDelLaberinto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
