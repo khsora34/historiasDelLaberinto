@@ -23,8 +23,10 @@
   description: "Una espada mágica."
   type: "weapon"
   image: "http://LALALAND.com/magic_sword_image"
-  extraDamage: 10
+  extraDamage:
+  hitRate: 99 # This field means a percentage
   ailment: "none" # This field can be removed
+  ailmentRate: 0 # This can be removed
 
 "poisoned_bow":
   name: "Arco envenenado"
@@ -32,4 +34,6 @@
   type: "weapon"
   image: "http://LALALAND.com/poisoned_bow_image"
   extraDamage: 0
+  hitRate: 94 # This field means a percentage
   ailment: "poison"
+  ailmentRate: 32 # This field means a percentage
