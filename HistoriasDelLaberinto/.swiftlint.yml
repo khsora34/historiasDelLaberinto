@@ -1,0 +1,29 @@
+disabled_rules: # rule identifiers to exclude from running
+  - trailing_whitespace
+  - line_length
+  - function_body_length
+  - nesting
+  - type_name
+  - identifier_name
+  - type_body_length
+  - cyclomatic_complexity
+  - todo
+  - force_cast
+  - force_try
+included: # paths to include during linting. `--path` is ignored if present.
+  - HistoriasDelLaberinto
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - scripts
+  - Data-Repository
+  - Domain-Common
+  - fastlane
+  - i18n
+  - Pods
+  - RetailCleanTests
+  - RetailCleanUITests
+  - SANLibrary-V3
+custom_rules:
+  init_usage:
+    name: "Init as constructor"
+    regex: '(?<!super)(?<!self)(\.init\()' # matching pattern
+    message: "Constructors should be called without init, just Foo(baz: parameter)." # violation message. optional.
