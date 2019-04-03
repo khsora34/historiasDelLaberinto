@@ -10,7 +10,7 @@ struct Protagonist: CharacterWithStatus, Codable {
     var currentStatusAilment: StatusAilment?
     var weapon: Weapon
     
-    var items: [Item: Int]
+    var items: [String: Int]
     var visitedRooms: [Int: VisitedRoom]
 }
 
