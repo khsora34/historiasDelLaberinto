@@ -65,8 +65,8 @@ class ModelParsersTests: XCTestCase {
         XCTAssertNotNil(protagonist)
     }
     
-    func testEventsProtagonistModel() {
-        guard let path = Bundle.main.path(forResource: "prota", ofType: "yml", inDirectory: "loadedGame") else {
+    func testEventsModel() {
+        guard let path = Bundle.main.path(forResource: "events", ofType: "yml", inDirectory: "loadedGame") else {
             XCTFail("Couldn't find prota.yml in loadedGame directory.")
             return
         }
@@ -76,9 +76,12 @@ class ModelParsersTests: XCTestCase {
             return
         }
         
-        let parser = ProtagonistParser()
-        let protagonist = parser.serialize(fileContent)
-        XCTAssertNotNil(protagonist)
+        let parser = EventParser()
+        guard let events = parser.serialize(fileContent) else {
+            XCTFail("Unable to serialize the events file.")
+            return
+        }
+        print(events)
     }
     
     func testRoomsProtagonistModel() {
