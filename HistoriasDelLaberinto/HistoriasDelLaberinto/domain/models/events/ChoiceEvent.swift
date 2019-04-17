@@ -1,6 +1,6 @@
 struct ChoiceEvent: Event, Codable {
-    let id: String
     let options: [Action]
+    let nextStep: String? = nil
 }
 
 typealias ChoiceEventParser = YamlParser<ChoiceEvent>

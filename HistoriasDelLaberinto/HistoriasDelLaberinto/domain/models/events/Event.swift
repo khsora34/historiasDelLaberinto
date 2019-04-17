@@ -1,3 +1,4 @@
 protocol Event: Codable {
-    var id: String { get }
+    var nextStep: String? { get }
+}
 }
