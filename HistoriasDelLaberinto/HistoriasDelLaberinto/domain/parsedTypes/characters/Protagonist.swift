@@ -1,4 +1,4 @@
-struct Protagonist: CharacterWithStatus {
+struct Protagonist: CharacterWithStatus, Codable {
     let name: String
     var partnerId: String
 
@@ -10,11 +10,11 @@ struct Protagonist: CharacterWithStatus {
     var currentStatusAilment: StatusAilment?
     var weapon: Weapon
     
-    var items: [(Item, Int)]
+    var items: [String: Int]
     var visitedRooms: [Int: VisitedRoom]
 }
 
-struct VisitedRoom {
+struct VisitedRoom: Codable {
     var isVisited: Bool
     var isVisitedWithPartner: Bool
 }

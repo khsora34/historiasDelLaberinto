@@ -1,4 +1,4 @@
-struct ChoiceEvent: Event {
+struct ChoiceEvent: Event, Codable {
     let id: String
-    let options: [(action: String, nextStep: String)]
+    let options: [Action]
 }

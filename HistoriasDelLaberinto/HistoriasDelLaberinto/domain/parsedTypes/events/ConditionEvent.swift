@@ -4,6 +4,6 @@ struct ConditionEvent: Event, Codable {
     let nextStepIfTrue: String
     let nextStepIfFalse: String
     var nextStep: String {
-        return ""
+        return condition.evaluate() ? nextStepIfTrue: nextStepIfFalse
     }
 }

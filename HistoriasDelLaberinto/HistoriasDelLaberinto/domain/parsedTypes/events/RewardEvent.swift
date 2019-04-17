@@ -1,6 +1,7 @@
-struct RewardEvent: Event {
+struct RewardEvent: Event, Codable {
     let id: String
     let message: String
-    let rewards: [(item: Item, quantity: Int)]
+    let rewards: [String: Int]
     let nextStep: String
 }
+
