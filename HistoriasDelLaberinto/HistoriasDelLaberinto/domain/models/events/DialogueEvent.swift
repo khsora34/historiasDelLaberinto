@@ -4,3 +4,5 @@ struct DialogueEvent: Event, Codable {
     let message: String
     let nextEventId: String
 }
+
+typealias DialogueEventParser = YamlParser<DialogueEvent>

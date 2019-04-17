@@ -9,3 +9,5 @@ struct ConsumableItem: Item, Codable, Hashable {
         return lhs.name == rhs.name && lhs.description == rhs.description
     }
 }
+
+typealias ConsumableItemParser = YamlParser<ConsumableItem>

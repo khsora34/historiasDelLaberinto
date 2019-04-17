@@ -7,3 +7,5 @@ struct ConditionEvent: Event, Codable {
         return condition.evaluate() ? nextStepIfTrue: nextStepIfFalse
     }
 }
+
+typealias ConditionEventParser = YamlParser<ConditionEvent>

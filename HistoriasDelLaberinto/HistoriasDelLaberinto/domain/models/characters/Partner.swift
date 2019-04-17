@@ -7,7 +7,9 @@ struct Partner: CharacterWithStatus, ImageRepresentable {
     let defense: Int
     let agility: Int
     var currentStatusAilment: StatusAilment?
-    var weapon: Weapon
+    var weapon: String
     
     let imageUrl: String
 }
+
+typealias PartnerParser = YamlParser<Partner>

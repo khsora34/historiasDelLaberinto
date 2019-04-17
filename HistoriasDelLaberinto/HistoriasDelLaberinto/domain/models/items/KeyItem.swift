@@ -7,3 +7,5 @@ struct KeyItem: Item, Codable, Hashable {
         return lhs.name == rhs.name && lhs.description == rhs.description
     }
 }
+
+typealias KeyItemParser = YamlParser<KeyItem>

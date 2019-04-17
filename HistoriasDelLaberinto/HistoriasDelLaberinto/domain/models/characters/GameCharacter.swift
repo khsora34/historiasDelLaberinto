@@ -9,5 +9,5 @@ protocol CharacterWithStatus: GameCharacter {
     var defense: Int { get }
     var agility: Int { get }
     var currentStatusAilment: StatusAilment? { get set }
-    var weapon: Weapon { get set }
+    var weapon: String { get set }
 }

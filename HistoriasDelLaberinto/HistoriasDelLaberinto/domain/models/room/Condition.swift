@@ -45,3 +45,4 @@ extension Condition: Codable {
     }
 }
 
+typealias ConditionParser = YamlParser<Condition>

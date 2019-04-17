@@ -5,3 +5,4 @@ struct RewardEvent: Event, Codable {
     let nextStep: String
 }
 
+typealias RewardEventParser = YamlParser<RewardEvent>
