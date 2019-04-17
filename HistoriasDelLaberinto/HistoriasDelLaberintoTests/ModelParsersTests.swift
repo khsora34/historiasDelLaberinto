@@ -27,10 +27,11 @@ class ModelParsersTests: XCTestCase {
         }
         
         let parser = ProtagonistParser()
-        let protagonist = parser.serialize(fileContent)
-        
-        XCTAssertNotNil(protagonist)
-        print(protagonist!)
+        guard let protagonist = parser.serialize(fileContent) else {
+            XCTFail("Failed to parse characters body.")
+            return
+        }
+        print(protagonist)
     }
     
     func testCharactersProtagonistModel() {
@@ -93,9 +94,11 @@ class ModelParsersTests: XCTestCase {
         }
         
         let parser = RoomsFileParser()
-        let rooms = parser.serialize(fileContent)
-        XCTAssertNotNil(rooms)
-        print(rooms!)
+        guard let rooms = parser.serialize(fileContent) else {
+            XCTFail("Failed to parse characters body.")
+            return
+        }
+        print(rooms)
     }
     
 }
