@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Dialog View Controller-->
+        <scene sceneID="Bu9-hZ-3aT">
+            <objects>
+                <viewController storyboardIdentifier="DialogViewController" id="kRf-eJ-swq" customClass="DialogViewController" customModule="HistoriasDelLaberinto" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="90Z-Wj-uyt">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AYk-Vx-48C" userLabel="Character Image View">
+                                <rect key="frame" x="10" y="50" width="355" height="407"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JwE-Iy-wS9" userLabel="Dialog view">
+                                <rect key="frame" x="10" y="457" width="355" height="200"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="780" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K3S-9R-cFZ" userLabel="Character name label">
+                                        <rect key="frame" x="10" y="8" width="50" height="25.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jzY-Ql-M5g">
+                                        <rect key="frame" x="10" y="41.5" width="335" height="148.5"/>
+                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="19"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="jzY-Ql-M5g" secondAttribute="trailing" constant="10" id="IiQ-YN-HI3"/>
+                                    <constraint firstItem="jzY-Ql-M5g" firstAttribute="leading" secondItem="JwE-Iy-wS9" secondAttribute="leading" constant="10" id="O3M-ai-L73"/>
+                                    <constraint firstAttribute="bottom" secondItem="jzY-Ql-M5g" secondAttribute="bottom" constant="10" id="Ra9-Fe-oy7"/>
+                                    <constraint firstItem="jzY-Ql-M5g" firstAttribute="top" secondItem="K3S-9R-cFZ" secondAttribute="bottom" constant="8" id="gcQ-vg-Kug"/>
+                                    <constraint firstItem="K3S-9R-cFZ" firstAttribute="leading" secondItem="JwE-Iy-wS9" secondAttribute="leading" constant="10" id="iII-si-CHt"/>
+                                    <constraint firstItem="K3S-9R-cFZ" firstAttribute="top" secondItem="JwE-Iy-wS9" secondAttribute="top" constant="8" id="lql-GB-sWe"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="AYk-Vx-48C" firstAttribute="leading" secondItem="gHE-O8-Qsy" secondAttribute="leading" constant="10" id="2Hk-SI-1tD"/>
+                            <constraint firstItem="gHE-O8-Qsy" firstAttribute="trailing" secondItem="JwE-Iy-wS9" secondAttribute="trailing" constant="10" id="Fhi-gG-NB0"/>
+                            <constraint firstItem="AYk-Vx-48C" firstAttribute="top" secondItem="gHE-O8-Qsy" secondAttribute="top" constant="30" id="OxW-H1-D3d"/>
+                            <constraint firstItem="JwE-Iy-wS9" firstAttribute="top" secondItem="AYk-Vx-48C" secondAttribute="bottom" id="a4I-X0-Qxp"/>
+                            <constraint firstItem="gHE-O8-Qsy" firstAttribute="trailing" secondItem="AYk-Vx-48C" secondAttribute="trailing" constant="10" id="dPQ-z1-xVJ"/>
+                            <constraint firstItem="JwE-Iy-wS9" firstAttribute="height" secondItem="90Z-Wj-uyt" secondAttribute="height" multiplier="0.3" id="rAn-b2-hL2"/>
+                            <constraint firstItem="gHE-O8-Qsy" firstAttribute="bottom" secondItem="JwE-Iy-wS9" secondAttribute="bottom" constant="10" id="rgd-WS-wCE"/>
+                            <constraint firstItem="JwE-Iy-wS9" firstAttribute="leading" secondItem="gHE-O8-Qsy" secondAttribute="leading" constant="10" id="waJ-rI-ZcN"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="gHE-O8-Qsy"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="hRm-lB-9Hr" appends="YES" id="xj9-0C-G2y"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="characterImageView" destination="AYk-Vx-48C" id="ePP-It-3SI"/>
+                        <outlet property="characterLabel" destination="K3S-9R-cFZ" id="qyU-jA-I6b"/>
+                        <outlet property="dialogView" destination="JwE-Iy-wS9" id="vtO-i3-RvB"/>
+                        <outlet property="tapWindowGesture" destination="hRm-lB-9Hr" id="lAJ-xn-043"/>
+                        <outlet property="textView" destination="K3S-9R-cFZ" id="Ga9-bm-cVi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LWi-7V-PZJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="hRm-lB-9Hr">
+                    <connections>
+                        <action selector="didTouchView:" destination="kRf-eJ-swq" id="9cX-ds-1t3"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-52" y="59"/>
+        </scene>
+    </scenes>
+</document>
