@@ -21,6 +21,7 @@
 		6D880CDA228ACBF2008D0509 /* loadedGame in Resources */ = {isa = PBXBuildFile; fileRef = 6D880CD9228ACBF2008D0509 /* loadedGame */; };
 		6D90B09C225E361500362CDA /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D90B09B225E361500362CDA /* Parser.swift */; };
 		6D90B09E225E383200362CDA /* YamlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D90B09D225E383200362CDA /* YamlParser.swift */; };
+		6DA2D2502267430800D1B8DF /* ItemsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2D24F2267430800D1B8DF /* ItemsFile.swift */; };
 		6DBC01A42254FAE4004A97AD /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBC01A32254FAE4004A97AD /* Item.swift */; };
 		6DC67565224BC78400B795B6 /* Partner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC67564224BC78400B795B6 /* Partner.swift */; };
 		6DC67567224BC7A800B795B6 /* ImageRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC67566224BC7A800B795B6 /* ImageRepresentable.swift */; };
@@ -66,6 +67,7 @@
 		6D880CD9228ACBF2008D0509 /* loadedGame */ = {isa = PBXFileReference; lastKnownFileType = folder; name = loadedGame; path = ../loadedGame; sourceTree = "<group>"; };
 		6D90B09B225E361500362CDA /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		6D90B09D225E383200362CDA /* YamlParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YamlParser.swift; sourceTree = "<group>"; };
+		6DA2D24F2267430800D1B8DF /* ItemsFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsFile.swift; sourceTree = "<group>"; };
 		6DBC01A32254FAE4004A97AD /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		6DC67564224BC78400B795B6 /* Partner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Partner.swift; sourceTree = "<group>"; };
 		6DC67566224BC7A800B795B6 /* ImageRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepresentable.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				6DDF3667225FBDCD00391B1D /* RoomsFile.swift */,
+				6DA2D24F2267430800D1B8DF /* ItemsFile.swift */,
 			);
 			path = parsedTypes;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 				6D90B09E225E383200362CDA /* YamlParser.swift in Sources */,
 				6DBC01A42254FAE4004A97AD /* Item.swift in Sources */,
 				6DC67579224BCCE700B795B6 /* DialogueEvent.swift in Sources */,
+				6DA2D2502267430800D1B8DF /* ItemsFile.swift in Sources */,
 				6DC67580224BD09700B795B6 /* BattleEvent.swift in Sources */,
 				6DC67572224BC99C00B795B6 /* ConsumableItem.swift in Sources */,
 				6DC6756B224BC85400B795B6 /* GameCharacter.swift in Sources */,
