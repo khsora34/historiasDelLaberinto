@@ -1,4 +1,4 @@
-struct Partner: CharacterWithStatus, ImageRepresentable {
+struct PlayableCharacter: CharacterStatus, ImageRepresentable {
     let name: String
     
     var currentHealthPoints: Int
@@ -7,9 +7,7 @@ struct Partner: CharacterWithStatus, ImageRepresentable {
     let defense: Int
     let agility: Int
     var currentStatusAilment: StatusAilment?
-    var weapon: String
+    var weapon: String?
     
     let imageUrl: String
 }
-
-typealias PartnerParser = YamlParser<Partner>
