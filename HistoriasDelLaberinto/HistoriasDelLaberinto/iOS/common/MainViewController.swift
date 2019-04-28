@@ -1,6 +1,6 @@
 import UIKit
 
-class MainViewController : UIViewController {
+class MainViewController: UIViewController {
     private lazy var mainView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -16,7 +16,7 @@ class MainViewController : UIViewController {
         setupAnchors(from: mainView, to: view)
     }
     
-    func setRoot(viewController: BaseViewController?) {
+    func setRoot(viewController: UIViewController?) {
         if let currentViewController = currentRootViewController {
             remove(currentViewController)
         }
