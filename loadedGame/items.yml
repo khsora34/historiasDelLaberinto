@@ -1,0 +1,36 @@
+consumableItems:
+  "potion":
+    name: "Poción"
+    description: "Restaura puntos de vida."
+    imageUrl: "http://LALALAND.com/potion_image"
+    healthRecovered: 40
+
+  "high_potion":
+    name: "Poción grande"
+    description: "Restaura puntos de vida."
+    imageUrl: "http://LALALAND.com/high_option_image"
+    healthRecovered: 140
+
+keyItems:
+  "small_key":
+    name: "Llave pequeña"
+    description: "Una llave pequeña."
+    imageUrl: "http://LALALAND.com/small_key_image"
+
+weapons:
+  "magic_sword":
+    name: "Espada mágica"
+    description: "Una espada mágica."
+    imageUrl: "http://LALALAND.com/magic_sword_image"
+    extraDamage: 12
+    hitRate: 99 # This field means a percentage
+
+  "poisoned_bow":
+    name: "Arco envenenado"
+    description: "Un arco que puede provocar veneno."
+    imageUrl: "http://LALALAND.com/poisoned_bow_image"
+    extraDamage: 0
+    hitRate: 94 # This field means a percentage
+    inducedAilment:
+      ailment: "poisoned"
+      induceRate: 32 # This field means a percentage

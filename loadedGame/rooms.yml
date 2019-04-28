@@ -5,12 +5,12 @@ rooms:
     reloadWhenPartner: true
     actions:
       - action: "Hablar"
-        event: "room17Conversation"
+        nextStep: "room17Conversation"
         condition:
           kind: "partner" #For items, the keyword is "item".
           required: "gerar" #Item's or partner's id.
       - action: "Observar"
-        event: "room17LookAround"
+        nextStep: "room17LookAround"
 
   "genericRoom1":
     name: "Habitación genérica"
@@ -19,7 +19,7 @@ rooms:
     isGenericRoom: true
     actions:
       - action: "Observar"
-        event: "emptyRoomTalk"
+        nextStep: "emptyRoomTalk"
 
   "genericRoomBattle1":
     name: "Habitación de batalla genérica"
@@ -28,4 +28,7 @@ rooms:
     isGenericRoom: true
     actions:
       - action: "Luchar"
-        event: "genericRoomStartBattle"
+        nextStep: "genericRoomStartBattle"
+        condition:
+          kind: "item"
+          required: "potion"

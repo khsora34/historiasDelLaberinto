@@ -7,25 +7,109 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28C116A2436248FA3DB4BC92 /* Pods_HistoriasDelLaberinto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FF6F3C6395790C0848EA61 /* Pods_HistoriasDelLaberinto.framework */; };
+		6D4B57DC224A9489001779DC /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4B57DB224A9489001779DC /* Room.swift */; };
+		6D4B57DE224A9528001779DC /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4B57DD224A9528001779DC /* Action.swift */; };
+		6D4B57E0224A9591001779DC /* Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4B57DF224A9591001779DC /* Condition.swift */; };
+		6D4B57E3224A9621001779DC /* Protagonist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4B57E2224A9621001779DC /* Protagonist.swift */; };
+		6D4B57E8224A9A27001779DC /* StatusAilment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4B57E7224A9A27001779DC /* StatusAilment.swift */; };
 		6D6DE4B9221DB40600C92B94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */; };
-		6D6DE4BB221DB40600C92B94 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DE4BA221DB40600C92B94 /* ViewController.swift */; };
-		6D6DE4BE221DB40600C92B94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DE4BC221DB40600C92B94 /* Main.storyboard */; };
+		6D6DE4BB221DB40600C92B94 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DE4BA221DB40600C92B94 /* TestViewController.swift */; };
+		6D6DE4BE221DB40600C92B94 /* TestView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DE4BC221DB40600C92B94 /* TestView.storyboard */; };
 		6D6DE4C0221DB40700C92B94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DE4BF221DB40700C92B94 /* Assets.xcassets */; };
 		6D6DE4C3221DB40700C92B94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DE4C1221DB40700C92B94 /* LaunchScreen.storyboard */; };
+		6D823B222267694400522756 /* EventBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D823B212267694400522756 /* EventBuilder.swift */; };
+		6D880CDA228ACBF2008D0509 /* loadedGame in Resources */ = {isa = PBXBuildFile; fileRef = 6D880CD9228ACBF2008D0509 /* loadedGame */; };
+		6D880CDC228ACBF2008D0509 /* CharactersFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D880CDB228ACBF2008D0509 /* CharactersFile.swift */; };
+		6D90B09C225E361500362CDA /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D90B09B225E361500362CDA /* Parser.swift */; };
+		6D90B09E225E383200362CDA /* YamlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D90B09D225E383200362CDA /* YamlParser.swift */; };
+		6DA2D25222674A0100D1B8DF /* EventParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2D25122674A0100D1B8DF /* EventParser.swift */; };
+		6DA2D25522674A5700D1B8DF /* EventsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2D25422674A5700D1B8DF /* EventsFile.swift */; };
+		6DA2D2502267430800D1B8DF /* ItemsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2D24F2267430800D1B8DF /* ItemsFile.swift */; };
+		6DBC01A42254FAE4004A97AD /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBC01A32254FAE4004A97AD /* Item.swift */; };
+		6DC67565224BC78400B795B6 /* PlayableCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC67564224BC78400B795B6 /* PlayableCharacter.swift */; };
+		6DC67567224BC7A800B795B6 /* ImageRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC67566224BC7A800B795B6 /* ImageRepresentable.swift */; };
+		6DC67569224BC81E00B795B6 /* NotPlayableCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC67568224BC81E00B795B6 /* NotPlayableCharacter.swift */; };
+		6DC6756B224BC85400B795B6 /* GameCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC6756A224BC85400B795B6 /* GameCharacter.swift */; };
+		6DC67570224BC91E00B795B6 /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC6756F224BC91E00B795B6 /* Weapon.swift */; };
+		6DC67572224BC99C00B795B6 /* ConsumableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC67571224BC99C00B795B6 /* ConsumableItem.swift */; };
+		6DC67574224BC9E400B795B6 /* KeyItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC67573224BC9E400B795B6 /* KeyItem.swift */; };
+		6DC67577224BCB6B00B795B6 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC67576224BCB6B00B795B6 /* Event.swift */; };
+		6DC67579224BCCE700B795B6 /* DialogueEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC67578224BCCE700B795B6 /* DialogueEvent.swift */; };
+		6DC6757C224BCF4400B795B6 /* ConditionEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC6757B224BCF4400B795B6 /* ConditionEvent.swift */; };
+		6DC6757E224BD04E00B795B6 /* ChoiceEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC6757D224BD04E00B795B6 /* ChoiceEvent.swift */; };
+		6DC67580224BD09700B795B6 /* BattleEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC6757F224BD09700B795B6 /* BattleEvent.swift */; };
+		6DC67582224BD0FB00B795B6 /* RewardEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC67581224BD0FB00B795B6 /* RewardEvent.swift */; };
+		6DDF365A225FBAA400391B1D /* HistoriasDelLaberintoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDF3659225FBAA400391B1D /* HistoriasDelLaberintoTests.swift */; };
+		6DDF3662225FBAD300391B1D /* ModelParsersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDF3661225FBAD300391B1D /* ModelParsersTests.swift */; };
+		6DDF3668225FBDCD00391B1D /* RoomsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDF3667225FBDCD00391B1D /* RoomsFile.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		6DDF365C225FBAA400391B1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D6DE4AD221DB40600C92B94 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6D6DE4B4221DB40600C92B94;
+			remoteInfo = HistoriasDelLaberinto;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		6D4B57DB224A9489001779DC /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		6D4B57DD224A9528001779DC /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		6D4B57DF224A9591001779DC /* Condition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Condition.swift; sourceTree = "<group>"; };
+		6D4B57E2224A9621001779DC /* Protagonist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protagonist.swift; sourceTree = "<group>"; };
+		6D4B57E7224A9A27001779DC /* StatusAilment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusAilment.swift; sourceTree = "<group>"; };
 		6D6DE4B5221DB40600C92B94 /* HistoriasDelLaberinto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HistoriasDelLaberinto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6D6DE4BA221DB40600C92B94 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		6D6DE4BD221DB40600C92B94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6D6DE4BA221DB40600C92B94 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		6D6DE4BD221DB40600C92B94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TestView.storyboard; sourceTree = "<group>"; };
 		6D6DE4BF221DB40700C92B94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6D6DE4C2221DB40700C92B94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6D6DE4C4221DB40700C92B94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6D823B212267694400522756 /* EventBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBuilder.swift; sourceTree = "<group>"; };
+		6D880CD9228ACBF2008D0509 /* loadedGame */ = {isa = PBXFileReference; lastKnownFileType = folder; name = loadedGame; path = ../loadedGame; sourceTree = "<group>"; };
+		6D880CDB228ACBF2008D0509 /* CharactersFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersFile.swift; sourceTree = "<group>"; };
+		6D90B09B225E361500362CDA /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		6D90B09D225E383200362CDA /* YamlParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YamlParser.swift; sourceTree = "<group>"; };
+		6DA2D25122674A0100D1B8DF /* EventParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventParser.swift; sourceTree = "<group>"; };
+		6DA2D25422674A5700D1B8DF /* EventsFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsFile.swift; sourceTree = "<group>"; };
+		6DA2D24F2267430800D1B8DF /* ItemsFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsFile.swift; sourceTree = "<group>"; };
+		6DBC01A32254FAE4004A97AD /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		6DC67564224BC78400B795B6 /* PlayableCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayableCharacter.swift; sourceTree = "<group>"; };
+		6DC67566224BC7A800B795B6 /* ImageRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepresentable.swift; sourceTree = "<group>"; };
+		6DC67568224BC81E00B795B6 /* NotPlayableCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotPlayableCharacter.swift; sourceTree = "<group>"; };
+		6DC6756A224BC85400B795B6 /* GameCharacter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCharacter.swift; sourceTree = "<group>"; };
+		6DC6756F224BC91E00B795B6 /* Weapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weapon.swift; sourceTree = "<group>"; };
+		6DC67571224BC99C00B795B6 /* ConsumableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumableItem.swift; sourceTree = "<group>"; };
+		6DC67573224BC9E400B795B6 /* KeyItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyItem.swift; sourceTree = "<group>"; };
+		6DC67576224BCB6B00B795B6 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		6DC67578224BCCE700B795B6 /* DialogueEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogueEvent.swift; sourceTree = "<group>"; };
+		6DC6757B224BCF4400B795B6 /* ConditionEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionEvent.swift; sourceTree = "<group>"; };
+		6DC6757D224BD04E00B795B6 /* ChoiceEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceEvent.swift; sourceTree = "<group>"; };
+		6DC6757F224BD09700B795B6 /* BattleEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleEvent.swift; sourceTree = "<group>"; };
+		6DC67581224BD0FB00B795B6 /* RewardEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardEvent.swift; sourceTree = "<group>"; };
+		6DDF3657225FBAA400391B1D /* HistoriasDelLaberintoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HistoriasDelLaberintoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DDF3659225FBAA400391B1D /* HistoriasDelLaberintoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoriasDelLaberintoTests.swift; sourceTree = "<group>"; };
+		6DDF365B225FBAA400391B1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6DDF3661225FBAD300391B1D /* ModelParsersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelParsersTests.swift; sourceTree = "<group>"; };
+		6DDF3667225FBDCD00391B1D /* RoomsFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomsFile.swift; sourceTree = "<group>"; };
+		7233A83E5CB3B122ECDD5D3B /* Pods-HistoriasDelLaberinto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HistoriasDelLaberinto.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto.debug.xcconfig"; sourceTree = "<group>"; };
+		B18D44CD4BED83926DE99D1B /* Pods-HistoriasDelLaberinto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HistoriasDelLaberinto.release.xcconfig"; path = "Pods/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto.release.xcconfig"; sourceTree = "<group>"; };
+		C1FF6F3C6395790C0848EA61 /* Pods_HistoriasDelLaberinto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HistoriasDelLaberinto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		6D6DE4B2221DB40600C92B94 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28C116A2436248FA3DB4BC92 /* Pods_HistoriasDelLaberinto.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DDF3654225FBAA400391B1D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -35,11 +119,66 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		12089AF208BF496E76A88A5C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C1FF6F3C6395790C0848EA61 /* Pods_HistoriasDelLaberinto.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6D4B57D9224A93E1001779DC /* domain */ = {
+			isa = PBXGroup;
+			children = (
+				6D4B57E6224A9A15001779DC /* models */,
+				6D4B57DA224A93F4001779DC /* parsedTypes */,
+			);
+			path = domain;
+			sourceTree = "<group>";
+		};
+		6D4B57DA224A93F4001779DC /* parsedTypes */ = {
+			isa = PBXGroup;
+			children = (
+				6DDF3667225FBDCD00391B1D /* RoomsFile.swift */,
+				6DA2D25422674A5700D1B8DF /* EventsFile.swift */,
+				6DA2D24F2267430800D1B8DF /* ItemsFile.swift */,
+				6D880CDB228ACBF2008D0509 /* CharactersFile.swift */,
+			);
+			path = parsedTypes;
+			sourceTree = "<group>";
+		};
+		6D4B57E1224A95EB001779DC /* room */ = {
+			isa = PBXGroup;
+			children = (
+				6D4B57DB224A9489001779DC /* Room.swift */,
+				6D4B57DD224A9528001779DC /* Action.swift */,
+				6D4B57DF224A9591001779DC /* Condition.swift */,
+			);
+			path = room;
+			sourceTree = "<group>";
+		};
+		6D4B57E6224A9A15001779DC /* models */ = {
+			isa = PBXGroup;
+			children = (
+				6DDF3664225FBD8400391B1D /* parser */,
+				6DC6756C224BC8BF00B795B6 /* items */,
+				6D4B57E1224A95EB001779DC /* room */,
+				6DDF3663225FBD6200391B1D /* common */,
+				6DC67563224BC76F00B795B6 /* characters */,
+				6DC67575224BCB5F00B795B6 /* events */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
 		6D6DE4AC221DB40600C92B94 = {
 			isa = PBXGroup;
 			children = (
+				6D880CD9228ACBF2008D0509 /* loadedGame */,
 				6D6DE4B7221DB40600C92B94 /* HistoriasDelLaberinto */,
+				6DDF3658225FBAA400391B1D /* HistoriasDelLaberintoTests */,
 				6D6DE4B6221DB40600C92B94 /* Products */,
+				86DB7E70A5ECCE502975804F /* Pods */,
+				12089AF208BF496E76A88A5C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -47,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				6D6DE4B5221DB40600C92B94 /* HistoriasDelLaberinto.app */,
+				6DDF3657225FBAA400391B1D /* HistoriasDelLaberintoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -54,14 +194,89 @@
 		6D6DE4B7221DB40600C92B94 /* HistoriasDelLaberinto */ = {
 			isa = PBXGroup;
 			children = (
+				6D4B57D9224A93E1001779DC /* domain */,
 				6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */,
-				6D6DE4BA221DB40600C92B94 /* ViewController.swift */,
-				6D6DE4BC221DB40600C92B94 /* Main.storyboard */,
+				6D6DE4BA221DB40600C92B94 /* TestViewController.swift */,
+				6D6DE4BC221DB40600C92B94 /* TestView.storyboard */,
 				6D6DE4BF221DB40700C92B94 /* Assets.xcassets */,
 				6D6DE4C1221DB40700C92B94 /* LaunchScreen.storyboard */,
 				6D6DE4C4221DB40700C92B94 /* Info.plist */,
 			);
 			path = HistoriasDelLaberinto;
+			sourceTree = "<group>";
+		};
+		6DC67563224BC76F00B795B6 /* characters */ = {
+			isa = PBXGroup;
+			children = (
+				6D4B57E7224A9A27001779DC /* StatusAilment.swift */,
+				6D4B57E2224A9621001779DC /* Protagonist.swift */,
+				6DC6756A224BC85400B795B6 /* GameCharacter.swift */,
+				6DC67564224BC78400B795B6 /* PlayableCharacter.swift */,
+				6DC67568224BC81E00B795B6 /* NotPlayableCharacter.swift */,
+			);
+			path = characters;
+			sourceTree = "<group>";
+		};
+		6DC6756C224BC8BF00B795B6 /* items */ = {
+			isa = PBXGroup;
+			children = (
+				6DC6756F224BC91E00B795B6 /* Weapon.swift */,
+				6DC67571224BC99C00B795B6 /* ConsumableItem.swift */,
+				6DC67573224BC9E400B795B6 /* KeyItem.swift */,
+				6DBC01A32254FAE4004A97AD /* Item.swift */,
+			);
+			path = items;
+			sourceTree = "<group>";
+		};
+		6DC67575224BCB5F00B795B6 /* events */ = {
+			isa = PBXGroup;
+			children = (
+				6DC67576224BCB6B00B795B6 /* Event.swift */,
+				6DC67578224BCCE700B795B6 /* DialogueEvent.swift */,
+				6DC6757B224BCF4400B795B6 /* ConditionEvent.swift */,
+				6DC6757D224BD04E00B795B6 /* ChoiceEvent.swift */,
+				6DC6757F224BD09700B795B6 /* BattleEvent.swift */,
+				6DC67581224BD0FB00B795B6 /* RewardEvent.swift */,
+				6D823B212267694400522756 /* EventBuilder.swift */,
+			);
+			path = events;
+			sourceTree = "<group>";
+		};
+		6DDF3658225FBAA400391B1D /* HistoriasDelLaberintoTests */ = {
+			isa = PBXGroup;
+			children = (
+				6DDF3659225FBAA400391B1D /* HistoriasDelLaberintoTests.swift */,
+				6DDF365B225FBAA400391B1D /* Info.plist */,
+				6DDF3661225FBAD300391B1D /* ModelParsersTests.swift */,
+			);
+			path = HistoriasDelLaberintoTests;
+			sourceTree = "<group>";
+		};
+		6DDF3663225FBD6200391B1D /* common */ = {
+			isa = PBXGroup;
+			children = (
+				6DC67566224BC7A800B795B6 /* ImageRepresentable.swift */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		6DDF3664225FBD8400391B1D /* parser */ = {
+			isa = PBXGroup;
+			children = (
+				6DA2D25122674A0100D1B8DF /* EventParser.swift */,
+				6D90B09B225E361500362CDA /* Parser.swift */,
+				6D90B09D225E383200362CDA /* YamlParser.swift */,
+			);
+			path = parser;
+			sourceTree = "<group>";
+		};
+		86DB7E70A5ECCE502975804F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7233A83E5CB3B122ECDD5D3B /* Pods-HistoriasDelLaberinto.debug.xcconfig */,
+				B18D44CD4BED83926DE99D1B /* Pods-HistoriasDelLaberinto.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +286,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6D6DE4C7221DB40700C92B94 /* Build configuration list for PBXNativeTarget "HistoriasDelLaberinto" */;
 			buildPhases = (
+				3FC84949EE3A7C1265D29763 /* [CP] Check Pods Manifest.lock */,
 				6D6DE4B1221DB40600C92B94 /* Sources */,
 				6D6DE4B2221DB40600C92B94 /* Frameworks */,
 				6D6DE4B3221DB40600C92B94 /* Resources */,
+				CC3D3352818B9673B11A9398 /* [CP] Embed Pods Frameworks */,
+				6DC6757A224BCDE800B795B6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -84,18 +302,41 @@
 			productReference = 6D6DE4B5221DB40600C92B94 /* HistoriasDelLaberinto.app */;
 			productType = "com.apple.product-type.application";
 		};
+		6DDF3656225FBAA400391B1D /* HistoriasDelLaberintoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6DDF365E225FBAA400391B1D /* Build configuration list for PBXNativeTarget "HistoriasDelLaberintoTests" */;
+			buildPhases = (
+				6DDF3653225FBAA400391B1D /* Sources */,
+				6DDF3654225FBAA400391B1D /* Frameworks */,
+				6DDF3655225FBAA400391B1D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6DDF365D225FBAA400391B1D /* PBXTargetDependency */,
+			);
+			name = HistoriasDelLaberintoTests;
+			productName = HistoriasDelLaberintoTests;
+			productReference = 6DDF3657225FBAA400391B1D /* HistoriasDelLaberintoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		6D6DE4AD221DB40600C92B94 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = SetonciOS;
 				TargetAttributes = {
 					6D6DE4B4221DB40600C92B94 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
+					};
+					6DDF3656225FBAA400391B1D = {
+						CreatedOnToolsVersion = 10.2;
+						TestTargetID = 6D6DE4B4221DB40600C92B94;
 					};
 				};
 			};
@@ -113,6 +354,7 @@
 			projectRoot = "";
 			targets = (
 				6D6DE4B4221DB40600C92B94 /* HistoriasDelLaberinto */,
+				6DDF3656225FBAA400391B1D /* HistoriasDelLaberintoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -124,31 +366,139 @@
 			files = (
 				6D6DE4C3221DB40700C92B94 /* LaunchScreen.storyboard in Resources */,
 				6D6DE4C0221DB40700C92B94 /* Assets.xcassets in Resources */,
-				6D6DE4BE221DB40600C92B94 /* Main.storyboard in Resources */,
+				6D6DE4BE221DB40600C92B94 /* TestView.storyboard in Resources */,
+				6D880CDA228ACBF2008D0509 /* loadedGame in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DDF3655225FBAA400391B1D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3FC84949EE3A7C1265D29763 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HistoriasDelLaberinto-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6DC6757A224BCDE800B795B6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
+		};
+		CC3D3352818B9673B11A9398 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Yams/Yams.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Yams.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6D6DE4B1221DB40600C92B94 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D6DE4BB221DB40600C92B94 /* ViewController.swift in Sources */,
+				6DC67582224BD0FB00B795B6 /* RewardEvent.swift in Sources */,
+				6DC67574224BC9E400B795B6 /* KeyItem.swift in Sources */,
+				6DDF3668225FBDCD00391B1D /* RoomsFile.swift in Sources */,
+				6DC6757C224BCF4400B795B6 /* ConditionEvent.swift in Sources */,
+				6DA2D25522674A5700D1B8DF /* EventsFile.swift in Sources */,
+				6D6DE4BB221DB40600C92B94 /* TestViewController.swift in Sources */,
+				6D4B57DE224A9528001779DC /* Action.swift in Sources */,
+				6DC67569224BC81E00B795B6 /* NotPlayableCharacter.swift in Sources */,
+				6D823B222267694400522756 /* EventBuilder.swift in Sources */,
+				6D90B09E225E383200362CDA /* YamlParser.swift in Sources */,
+				6DBC01A42254FAE4004A97AD /* Item.swift in Sources */,
+				6DC67579224BCCE700B795B6 /* DialogueEvent.swift in Sources */,
+				6DA2D2502267430800D1B8DF /* ItemsFile.swift in Sources */,
+				6DC67580224BD09700B795B6 /* BattleEvent.swift in Sources */,
+				6DC67572224BC99C00B795B6 /* ConsumableItem.swift in Sources */,
+				6DC6756B224BC85400B795B6 /* GameCharacter.swift in Sources */,
+				6DC67570224BC91E00B795B6 /* Weapon.swift in Sources */,
+				6D90B09C225E361500362CDA /* Parser.swift in Sources */,
+				6DC67577224BCB6B00B795B6 /* Event.swift in Sources */,
+				6D4B57E3224A9621001779DC /* Protagonist.swift in Sources */,
+				6DC6757E224BD04E00B795B6 /* ChoiceEvent.swift in Sources */,
+				6DA2D25222674A0100D1B8DF /* EventParser.swift in Sources */,
+				6D4B57E8224A9A27001779DC /* StatusAilment.swift in Sources */,
 				6D6DE4B9221DB40600C92B94 /* AppDelegate.swift in Sources */,
+				6D4B57DC224A9489001779DC /* Room.swift in Sources */,
+				6D4B57E0224A9591001779DC /* Condition.swift in Sources */,
+				6DC67567224BC7A800B795B6 /* ImageRepresentable.swift in Sources */,
+				6D880CDC228ACBF2008D0509 /* CharactersFile.swift in Sources */,
+				6DC67565224BC78400B795B6 /* PlayableCharacter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6DDF3653225FBAA400391B1D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DDF3662225FBAD300391B1D /* ModelParsersTests.swift in Sources */,
+				6DDF365A225FBAA400391B1D /* HistoriasDelLaberintoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		6DDF365D225FBAA400391B1D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6D6DE4B4221DB40600C92B94 /* HistoriasDelLaberinto */;
+			targetProxy = 6DDF365C225FBAA400391B1D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
-		6D6DE4BC221DB40600C92B94 /* Main.storyboard */ = {
+		6D6DE4BC221DB40600C92B94 /* TestView.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				6D6DE4BD221DB40600C92B94 /* Base */,
 			);
-			name = Main.storyboard;
+			name = TestView.storyboard;
 			sourceTree = "<group>";
 		};
 		6D6DE4C1221DB40700C92B94 /* LaunchScreen.storyboard */ = {
@@ -280,6 +630,7 @@
 		};
 		6D6DE4C8221DB40700C92B94 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7233A83E5CB3B122ECDD5D3B /* Pods-HistoriasDelLaberinto.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -291,13 +642,14 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.SetonciOS.HistoriasDelLaberinto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		6D6DE4C9221DB40700C92B94 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B18D44CD4BED83926DE99D1B /* Pods-HistoriasDelLaberinto.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -309,8 +661,50 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.SetonciOS.HistoriasDelLaberinto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6DDF365F225FBAA400391B1D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = F5GX626K37;
+				INFOPLIST_FILE = HistoriasDelLaberintoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.SetonciOS.HistoriasDelLaberintoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HistoriasDelLaberinto.app/HistoriasDelLaberinto";
+			};
+			name = Debug;
+		};
+		6DDF3660225FBAA400391B1D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = F5GX626K37;
+				INFOPLIST_FILE = HistoriasDelLaberintoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.SetonciOS.HistoriasDelLaberintoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HistoriasDelLaberinto.app/HistoriasDelLaberinto";
 			};
 			name = Release;
 		};
@@ -331,6 +725,15 @@
 			buildConfigurations = (
 				6D6DE4C8221DB40700C92B94 /* Debug */,
 				6D6DE4C9221DB40700C92B94 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6DDF365E225FBAA400391B1D /* Build configuration list for PBXNativeTarget "HistoriasDelLaberintoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6DDF365F225FBAA400391B1D /* Debug */,
+				6DDF3660225FBAA400391B1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
