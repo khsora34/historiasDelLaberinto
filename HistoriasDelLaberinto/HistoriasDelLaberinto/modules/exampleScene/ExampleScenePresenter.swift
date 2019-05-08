@@ -2,6 +2,8 @@ import UIKit
 
 protocol ExampleScenePresentationLogic: Presenter {
     func calculateValueWith(string: String?)
+    func navigateToPlace()
+    func navigateToNewPlace()
 }
 
 class ExampleScenePresenter: BasePresenter {
@@ -22,6 +24,14 @@ class ExampleScenePresenter: BasePresenter {
 // MARK: Do something
 
 extension ExampleScenePresenter: ExampleScenePresentationLogic {
+    func navigateToNewPlace() {
+        router?.goToNewView()
+    }
+    
+    func navigateToPlace() {
+        router?.goToNextView()
+    }
+    
     func calculateValueWith(string: String?) {
         guard let interactor = interactor else { return }
         let request = ExampleScene.Something.Request(input: string)

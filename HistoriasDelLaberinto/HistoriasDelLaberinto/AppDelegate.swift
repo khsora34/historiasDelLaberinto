@@ -23,7 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dependencies = Dependencies()
         
         let exampleModule = dependencies.moduleProvider.exampleSceneModule()
-        drawer.setRoot(viewController: exampleModule.viewController)
+        let nav = UINavigationController(rootViewController: exampleModule.viewController)
+        drawer.setRoot(viewController: nav)
         
         return true
     }
