@@ -44,6 +44,7 @@ class MainViewController: UIViewController {
         newView.frame = mainView.frame
         setupAnchors(from: newView, to: mainView)
         viewController.didMove(toParent: self)
+        currentRootViewController = viewController
     }
     
     func remove(_ viewController: UIViewController) {
