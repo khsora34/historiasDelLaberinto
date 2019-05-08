@@ -19,6 +19,10 @@ class ExampleScenePresenter: BasePresenter {
         return _router as? ExampleSceneRouter
     }
     
+    init(input: ExampleScenePresenterInput) {
+        super.init()
+    }
+    
 }
 
 // MARK: Do something
