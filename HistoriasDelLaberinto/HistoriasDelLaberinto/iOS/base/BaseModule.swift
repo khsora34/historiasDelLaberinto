@@ -8,5 +8,5 @@ protocol Module {
     var presenter: Presenter { get }
     var router: RouterLogic { get }
     
-    init(navigatorProvider: NavigatorProvider)
+    init(routerProvider: RouterProvider)
 }
