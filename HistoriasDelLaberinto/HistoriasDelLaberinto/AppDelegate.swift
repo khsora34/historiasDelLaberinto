@@ -12,10 +12,19 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var dependencies: Dependencies!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        window = UIWindow()
+        let drawer = MainViewController()
+        window?.rootViewController = drawer
+        window?.makeKeyAndVisible()
+        
+        dependencies = Dependencies()
+        
+        let exampleModule = dependencies.moduleProvider.exampleSceneModule()
+        drawer.setRoot(viewController: exampleModule.viewController)
+        
         return true
     }
 

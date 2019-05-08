@@ -1,0 +1,40 @@
+playable:
+  "gerar":
+    name: "Gerardo"
+
+    currentHealthPoints: 456
+    maxHealthPoints: 500
+    attack: 38
+    defense: 22
+    agility: 19
+
+    imageUrl: "http://www.lalaland.com/gerar_image"
+
+  "badMonster":
+    name: "Monstruo"
+
+    currentHealthPoints: 1000
+    maxHealthPoints: 1000
+    attack: 15
+    defense: 13
+    agility: 6
+
+    imageUrl: "http://www.lalaland.com/badMonster_image"
+
+  "grima_monster":
+    name: "Grima"
+
+    currentHealthPoints: 10000
+    maxHealthPoints: 10000
+    attack: 26
+    defense: 22
+    agility: 10
+    weapon: "dragon_claw"
+
+    imageUrl: "http://www.lalaland.com/grima_monster_image"
+
+notPlayable:
+  "grandma_npc":
+    name: "Abuela"
+
+    imageUrl: "http://www.lalaland.com/grandma_npc_image"
