@@ -7,6 +7,11 @@ class MainViewController: UIViewController {
         return view
     }()
     
+    private lazy var hideKeyboardTapGesture: UITapGestureRecognizer = {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
+        return tapGesture
+    }()
+    
     private(set) var currentRootViewController: UIViewController?
     
     override func viewDidLoad() {
@@ -14,6 +19,8 @@ class MainViewController: UIViewController {
         
         view.addSubview(mainView)
         setupAnchors(from: mainView, to: view)
+        
+        view.addGestureRecognizer(hideKeyboardTapGesture)
     }
     
     func setRoot(viewController: UIViewController?) {
@@ -53,4 +60,7 @@ class MainViewController: UIViewController {
         viewController.removeFromParent()
     }
     
+    @objc func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        view.endEditing(false)
+    }
 }
