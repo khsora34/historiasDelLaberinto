@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Action" representedClassName="Action" syncable="YES" codeGenerationType="class">
+        <attribute name="conditionType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="conditionValue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nextStep" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="parentEventId" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChoiceEventDAO" inverseName="actionsAssociated" inverseEntity="ChoiceEventDAO" syncable="YES"/>
+    </entity>
+    <entity name="BattleEventDAO" representedClassName="BattleEventDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="enemyId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nextStep" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ChoiceEventDAO" representedClassName="ChoiceEventDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nextStep" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="actionsAssociated" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Action" inverseName="parentEventId" inverseEntity="Action" syncable="YES"/>
+    </entity>
+    <entity name="ConditionEventDAO" representedClassName="ConditionEventDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nextStepIfFalse" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nextStepIfTrue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="DialogueEventDAO" representedClassName="DialogueEventDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="characterId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nextStep" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="EventDAO" representedClassName="EventDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Reward" representedClassName="Reward" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="parentEventId" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RewardEventDAO" inverseName="rewardsAssociated" inverseEntity="RewardEventDAO" syncable="YES"/>
+    </entity>
+    <entity name="RewardEventDAO" representedClassName="RewardEventDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nextStep" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="rewardsAssociated" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Reward" inverseName="parentEventId" inverseEntity="Reward" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="EventDAO" positionX="-63" positionY="-142.62890625" width="128" height="73"/>
+        <element name="DialogueEventDAO" positionX="-56.2734375" positionY="-42.61328125" width="128" height="105"/>
+        <element name="ConditionEventDAO" positionX="-167" positionY="31.16015625" width="128" height="120"/>
+        <element name="ChoiceEventDAO" positionX="111.00390625" positionY="-82.0390625" width="128" height="88"/>
+        <element name="BattleEventDAO" positionX="-21.6875" positionY="113.86328125" width="128" height="90"/>
+        <element name="RewardEventDAO" positionX="134.29296875" positionY="37.42578125" width="128" height="103"/>
+        <element name="Action" positionX="-242.671875" positionY="-135.08203125" width="128" height="133"/>
+        <element name="Reward" positionX="-307.515625" positionY="62.94921875" width="128" height="103"/>
+    </elements>
+</model>
