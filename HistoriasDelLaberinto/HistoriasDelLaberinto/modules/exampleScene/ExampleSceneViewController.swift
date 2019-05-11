@@ -11,6 +11,8 @@ class ExampleSceneViewController: BaseViewController {
     
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var returnValueLabel: UILabel!
+    @IBOutlet weak var navigateButton: UIButton!
+    @IBOutlet weak var toNewViewButton: UIButton!
     
     // MARK: View lifecycle
     
@@ -22,6 +24,14 @@ class ExampleSceneViewController: BaseViewController {
     
     @IBAction func calculateValue(_ sender: Any) {
         presenter?.calculateValueWith(string: textField.text)
+    }
+    
+    @IBAction func navigateToPlace(_ sender: Any) {
+        presenter?.navigateToPlace()
+    }
+    
+    @IBAction func toNewViewAction(_ sender: Any) {
+        presenter?.navigateToNewPlace()
     }
 }
 
@@ -35,6 +45,5 @@ extension ExampleSceneViewController: ExampleSceneDisplayLogic {
         } else {
             returnValueLabel.isHidden = true
         }
-        
     }
 }

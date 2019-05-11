@@ -13,3 +13,7 @@ enum ExampleScene {
         }
     }
 }
+
+struct ExampleScenePresenterInput {
+    
+}
