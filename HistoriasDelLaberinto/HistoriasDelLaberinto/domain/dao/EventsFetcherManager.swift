@@ -14,15 +14,14 @@ class EventsFetcherManagerImpl: EventsFetcherManager {
         guard let event = dao.get(id: id), let eventType = EventType(rawValue: event.type ?? "") else { return nil }
         
         var loadedEvent: Event?
+        if eventType == .dialogue {
+            loadedEvent = DialogueEvent(characterId: "SI", message: "Me da igual", nextStep: "Me parece bien")
+        }
         
         return loadedEvent
     }
     
     func save(event: Event, with id: String) {
-        let daoEvent = EventDAO()
-        daoEvent.id = id
-        let eventType = EventType(event: event)?.rawValue
-        daoEvent.type = eventType
-        guard dao.save(event: daoEvent) else { return }
+        guard dao.save(event: event, with: id) else { return }
     }
 }

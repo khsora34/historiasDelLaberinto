@@ -3,7 +3,7 @@ import CoreData
 
 protocol AllEventDao {
     func get(id: String) -> EventDAO?
-    func save(event: EventDAO) -> Bool
+    func save(event: Event, with id: String) -> Bool
 }
 
 class AllEventDaoImpl: AllEventDao {
@@ -18,15 +18,17 @@ class AllEventDaoImpl: AllEventDao {
         return results?.first
     }
     
-    func save(event: EventDAO) -> Bool {
+    func save(event: Event, with id: String) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
         guard let entity = NSEntityDescription.entity(forEntityName: "EventDAO", in: managedContext) else { return false }
         let loadingEvent = NSManagedObject(entity: entity, insertInto: managedContext)
         
-        loadingEvent.setValue(event.type, forKey: "type")
-        loadingEvent.setValue(event.id, forKey: "id")
+        guard let eventType = EventType(event: event) else { return false }
+        
+        loadingEvent.setValue(eventType.rawValue, forKey: "type")
+        loadingEvent.setValue(id, forKey: "id")
         
         do {
             try managedContext.save()
