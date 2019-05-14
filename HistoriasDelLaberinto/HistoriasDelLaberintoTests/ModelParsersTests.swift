@@ -16,7 +16,7 @@ class ModelParsersTests: XCTestCase {
     }
     
     func testParseProtagonistModel() {
-        guard let path = Bundle.main.path(forResource: "prota", ofType: "yml", inDirectory: "ExampleFiles") else {
+        guard let path = Bundle.main.path(forResource: "prota", ofType: "yml", inDirectory: "loadedGame") else {
             XCTFail("Couldn't find prota.yml in loadedGame directory.")
             return
         }
@@ -28,11 +28,13 @@ class ModelParsersTests: XCTestCase {
         
         let parser = ProtagonistParser()
         let protagonist = parser.serialize(fileContent)
+        
         XCTAssertNotNil(protagonist)
+        print(protagonist)
     }
     
     func testCharactersProtagonistModel() {
-        guard let path = Bundle.main.path(forResource: "prota", ofType: "yml", inDirectory: "ExampleFiles") else {
+        guard let path = Bundle.main.path(forResource: "prota", ofType: "yml", inDirectory: "loadedGame") else {
             XCTFail("Couldn't find prota.yml in loadedGame directory.")
             return
         }
@@ -48,7 +50,7 @@ class ModelParsersTests: XCTestCase {
     }
     
     func testItemsProtagonistModel() {
-        guard let path = Bundle.main.path(forResource: "prota", ofType: "yml", inDirectory: "ExampleFiles") else {
+        guard let path = Bundle.main.path(forResource: "prota", ofType: "yml", inDirectory: "loadedGame") else {
             XCTFail("Couldn't find prota.yml in loadedGame directory.")
             return
         }
@@ -64,7 +66,7 @@ class ModelParsersTests: XCTestCase {
     }
     
     func testEventsProtagonistModel() {
-        guard let path = Bundle.main.path(forResource: "prota", ofType: "yml", inDirectory: "ExampleFiles") else {
+        guard let path = Bundle.main.path(forResource: "prota", ofType: "yml", inDirectory: "loadedGame") else {
             XCTFail("Couldn't find prota.yml in loadedGame directory.")
             return
         }
@@ -80,8 +82,8 @@ class ModelParsersTests: XCTestCase {
     }
     
     func testRoomsProtagonistModel() {
-        guard let path = Bundle.main.path(forResource: "rooms", ofType: "yml", inDirectory: "ExampleFiles") else {
-            XCTFail("Couldn't find prota.yml in loadedGame directory.")
+        guard let path = Bundle.main.path(forResource: "rooms", ofType: "yml", inDirectory: "loadedGame") else {
+            XCTFail("Couldn't find rooms.yml in loadedGame directory.")
             return
         }
         
