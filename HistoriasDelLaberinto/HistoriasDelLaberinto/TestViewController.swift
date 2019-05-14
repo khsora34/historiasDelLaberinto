@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewController: UIViewController {
+class TestViewController: UIViewController {
 
     @IBOutlet weak var testButton: UIButton!
     
