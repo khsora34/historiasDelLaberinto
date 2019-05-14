@@ -29,3 +29,6 @@ rooms:
     actions:
       - action: "Luchar"
         event: "genericRoomStartBattle"
+        condition:
+          kind: "item"
+          required: "potion"
