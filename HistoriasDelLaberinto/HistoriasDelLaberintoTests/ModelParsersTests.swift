@@ -30,7 +30,7 @@ class ModelParsersTests: XCTestCase {
         let protagonist = parser.serialize(fileContent)
         
         XCTAssertNotNil(protagonist)
-        print(protagonist)
+        print(protagonist!)
     }
     
     func testCharactersProtagonistModel() {
@@ -95,6 +95,7 @@ class ModelParsersTests: XCTestCase {
         let parser = RoomsFileParser()
         let rooms = parser.serialize(fileContent)
         XCTAssertNotNil(rooms)
+        print(rooms!)
     }
     
 }
