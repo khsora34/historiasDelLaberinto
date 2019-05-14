@@ -11,3 +11,5 @@ struct Weapon: Item, Codable, Hashable {
         return lhs.name == rhs.name && lhs.description == rhs.description
     }
 }
+
+typealias WeaponParser = YamlParser<Weapon>
