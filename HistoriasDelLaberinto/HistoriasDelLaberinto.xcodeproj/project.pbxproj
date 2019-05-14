@@ -183,14 +183,14 @@
 		6D45B011226A28A900906FBB /* exampleScene */ = {
 			isa = PBXGroup;
 			children = (
-				6D45B012226A28A900906FBB /* ExampleSceneModule.swift */,
-				6D45B013226A28A900906FBB /* ExampleSceneRouter.swift */,
-				6D45B014226A28A900906FBB /* ExampleSceneWorker.swift */,
-				6D45B015226A28A900906FBB /* ExampleSceneModels.swift */,
-				6D45B016226A28A900906FBB /* ExampleSceneInteractor.swift */,
-				6D45B017226A28A900906FBB /* ExampleScenePresenter.swift */,
 				6D45B018226A28A900906FBB /* ExampleScene.storyboard */,
+				6D45B016226A28A900906FBB /* ExampleSceneInteractor.swift */,
+				6D45B015226A28A900906FBB /* ExampleSceneModels.swift */,
+				6D45B012226A28A900906FBB /* ExampleSceneModule.swift */,
+				6D45B017226A28A900906FBB /* ExampleScenePresenter.swift */,
+				6D45B013226A28A900906FBB /* ExampleSceneRouter.swift */,
 				6D45B019226A28A900906FBB /* ExampleSceneViewController.swift */,
+				6D45B014226A28A900906FBB /* ExampleSceneWorker.swift */,
 			);
 			path = exampleScene;
 			sourceTree = "<group>";
