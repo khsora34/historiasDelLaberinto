@@ -2,29 +2,28 @@ name: "Cisco"
 
 partner: "idPartner"
 
-status:
-  currentHealthPoints: 367
-  maxHealthPoints: 590
-  attack: 45
-  defense: 23
-  agility: 10
-  currentStatusAilment: "none"
-  weapon: "magic_sword"
+currentHealthPoints: 367
+maxHealthPoints: 590
+attack: 45
+defense: 23
+agility: 10
+currentStatusAilment: "blind"
+weapon: "magic_sword"
 
-rooms:
+visitedRooms:
   '1' :
-    visited: false
-    visitedWithPartner: false
+    isVisited: false
+    isVisitedWithPartner: false
   '2' :
-    visited: true
-    visitedWithPartner: false
+    isVisited: true
+    isVisitedWithPartner: false
   '3' :
-    visited: false
-    visitedWithPartner: true
+    isVisited: false
+    isVisitedWithPartner: true
   '4' :
-    visited: true
-    visitedWithPartner: true
+    isVisited: true
+    isVisitedWithPartner: true
 
 items:
-  - "potion": 1
-  - "high_potion": 2
+  "potion": 1
+  "high_potion": 2
