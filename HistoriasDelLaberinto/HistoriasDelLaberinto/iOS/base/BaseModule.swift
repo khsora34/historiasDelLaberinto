@@ -7,6 +7,4 @@ protocol Module {
     var interactor: BusinessLogic { get }
     var presenter: Presenter { get }
     var router: RouterLogic { get }
-    
-    init(routerProvider: RouterProvider)
 }
