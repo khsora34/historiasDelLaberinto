@@ -28,6 +28,8 @@
 		6D5D8FFE2268644800D11390 /* BaseRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D8FFD2268644800D11390 /* BaseRouter.swift */; };
 		6D6DE4B9221DB40600C92B94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */; };
 		6D6DE4C3221DB40700C92B94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DE4C1221DB40700C92B94 /* LaunchScreen.storyboard */; };
+		6D75802522899D57009A48D7 /* AllEventDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D75802422899D57009A48D7 /* AllEventDao.swift */; };
+		6D81DA2A228B189E006DF3D0 /* EventDbAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D81DA29228B189E006DF3D0 /* EventDbAccess.swift */; };
 		6D823B222267694400522756 /* EventBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D823B212267694400522756 /* EventBuilder.swift */; };
 		6D880CDA228ACBF2008D0509 /* loadedGame in Resources */ = {isa = PBXBuildFile; fileRef = 6D880CD9228ACBF2008D0509 /* loadedGame */; };
 		6D880CDC228ACBF2008D0509 /* CharactersFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D880CDB228ACBF2008D0509 /* CharactersFile.swift */; };
@@ -98,6 +100,8 @@
 		6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D6DE4C2221DB40700C92B94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6D6DE4C4221DB40700C92B94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6D75802422899D57009A48D7 /* AllEventDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllEventDao.swift; sourceTree = "<group>"; };
+		6D81DA29228B189E006DF3D0 /* EventDbAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDbAccess.swift; sourceTree = "<group>"; };
 		6D823B212267694400522756 /* EventBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBuilder.swift; sourceTree = "<group>"; };
 		6D880CD9228ACBF2008D0509 /* loadedGame */ = {isa = PBXFileReference; lastKnownFileType = folder; name = loadedGame; path = ../loadedGame; sourceTree = "<group>"; };
 		6D880CDB228ACBF2008D0509 /* CharactersFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersFile.swift; sourceTree = "<group>"; };
@@ -194,6 +198,7 @@
 		6D4B57D9224A93E1001779DC /* domain */ = {
 			isa = PBXGroup;
 			children = (
+				6D75802322899CC0009A48D7 /* dao */,
 				6D9A45A322874C3D004F4D0C /* images */,
 				6D4B57E6224A9A15001779DC /* models */,
 				6D4B57DA224A93F4001779DC /* parsedTypes */,
@@ -287,9 +292,18 @@
 				6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */,
 				6D6DE4C1221DB40700C92B94 /* LaunchScreen.storyboard */,
 				6D6DE4C4221DB40700C92B94 /* Info.plist */,
-				6D9A45AC22874D04004F4D0C /* LoadedGame.xcdatamodeld */,
 			);
 			path = HistoriasDelLaberinto;
+			sourceTree = "<group>";
+		};
+		6D75802322899CC0009A48D7 /* dao */ = {
+			isa = PBXGroup;
+			children = (
+				6D9A45AC22874D04004F4D0C /* LoadedGame.xcdatamodeld */,
+				6D75802422899D57009A48D7 /* AllEventDao.swift */,
+				6D81DA29228B189E006DF3D0 /* EventDbAccess.swift */,
+			);
+			path = dao;
 			sourceTree = "<group>";
 		};
 		6D9A45A322874C3D004F4D0C /* images */ = {
@@ -596,8 +610,10 @@
 				6D9A45AE22874D04004F4D0C /* LoadedGame.xcdatamodeld in Sources */,
 				6DEF066122688C4C00A5C454 /* MainViewController.swift in Sources */,
 				6D45B01D226A28A900906FBB /* ExampleSceneModels.swift in Sources */,
+				6D81DA2A228B189E006DF3D0 /* EventDbAccess.swift in Sources */,
 				6D90B09C225E361500362CDA /* Parser.swift in Sources */,
 				6DC67577224BCB6B00B795B6 /* Event.swift in Sources */,
+				6D75802522899D57009A48D7 /* AllEventDao.swift in Sources */,
 				6D45B01F226A28A900906FBB /* ExampleScenePresenter.swift in Sources */,
 				6D45B01C226A28A900906FBB /* ExampleSceneWorker.swift in Sources */,
 				6D4B57E3224A9621001779DC /* Protagonist.swift in Sources */,
