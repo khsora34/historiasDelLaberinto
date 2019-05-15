@@ -1,6 +1,7 @@
 import UIKit
 
 class Dependencies {
+    var eventsFetcherManager: EventsFetcherManager!
     var moduleProvider: ModuleProvider!
     
     lazy var routerProvider: RouterProvider = {
@@ -12,11 +13,18 @@ class Dependencies {
     }()
     
     init() {
+        eventsFetcherManager = createEventFetcher()
         createModuleProvider()
     }
     
     private func createModuleProvider() {
         moduleProvider = ModuleProvider()
         moduleProvider.routerProvider = routerProvider
+        moduleProvider.eventsFetcherManager = eventsFetcherManager
+    }
+    
+    private func createEventFetcher() -> EventsFetcherManager {
+        let allEventDao = AllEventDaoImpl()
+        return EventsFetcherManagerImpl(dao: allEventDao)
     }
 }
