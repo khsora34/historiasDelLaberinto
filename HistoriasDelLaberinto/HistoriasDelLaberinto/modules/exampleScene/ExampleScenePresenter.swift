@@ -39,6 +39,7 @@ extension ExampleScenePresenter: ExampleScenePresentationLogic {
     
     func getFromDb() {
         let request = ExampleSceneModels.DatabaseGetting.Request(id: "lalaland")
-        viewController?.displayNextStep(viewModel: ExampleSceneModels.DatabaseGetting.ViewModel(nextStep: interactor?.getDb(request: request).event?.nextStep))
+        let newEvent = interactor?.getDb(request: request).event
+        viewController?.displayNextStep(viewModel: ExampleSceneModels.DatabaseGetting.ViewModel(nextStep: newEvent?.nextStep))
     }
 }
