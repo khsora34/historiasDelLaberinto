@@ -24,7 +24,6 @@ class Dependencies {
     }
     
     private func createEventFetcher() -> EventsFetcherManager {
-        let allEventDao = AllEventDaoImpl()
-        return EventsFetcherManagerImpl(dao: allEventDao)
+        return EventsFetcherManagerImpl()
     }
 }

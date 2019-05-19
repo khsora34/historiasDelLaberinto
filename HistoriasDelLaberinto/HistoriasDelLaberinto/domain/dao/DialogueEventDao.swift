@@ -3,7 +3,7 @@ import CoreData
 
 protocol DialogueDao {
     func getDialogue(with id: String) -> DialogueEventDAO?
-    func save(dialogue: DialogueEvent, with id: String)
+    func saveDialogue(_ dialogue: DialogueEvent, with id: String)
 }
 
 extension DialogueDao {
@@ -24,7 +24,7 @@ extension DialogueDao {
         return nil
     }
     
-    func save(dialogue: DialogueEvent, with id: String) {
+    func saveDialogue(_ dialogue: DialogueEvent, with id: String) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         

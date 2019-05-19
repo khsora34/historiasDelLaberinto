@@ -1,17 +1,12 @@
 protocol EventsFetcherManager {
     func getEvent(with id: String) -> Event?
-    func save(event: Event, with id: String)
+    func saveEvent(_ event: Event, with id: String)
 }
 
 class EventsFetcherManagerImpl: EventsFetcherManager {
-    let dao: AllEventDao
-    
-    init(dao: AllEventDao) {
-        self.dao = dao
-    }
     
     func getEvent(with id: String) -> Event? {
-        guard let eventType = EventType(rawValue: dao.get(id: id)?.type ?? "") else { return nil }
+        guard let eventType = EventType(rawValue: getEventType(with: id)?.type ?? "") else { return nil }
         
         var loadedEvent: Event?
         switch eventType {
@@ -24,12 +19,12 @@ class EventsFetcherManagerImpl: EventsFetcherManager {
         return loadedEvent
     }
     
-    func save(event: Event, with id: String) {
-        guard dao.save(event: event, with: id), let type = EventType(event: event) else { return }
+    func saveEvent(_ event: Event, with id: String) {
+        guard saveEventType(for: event, with: id), let type = EventType(event: event) else { return }
         switch type {
         case .dialogue:
             guard let event = event as? DialogueEvent else { return }
-            save(dialogue: event, with: id)
+            saveDialogue(event, with: id)
         default:
             fatalError()
         }
@@ -42,4 +37,5 @@ class EventsFetcherManagerImpl: EventsFetcherManager {
     }
 }
 
+extension EventsFetcherManagerImpl: EventTypeDao {}
 extension EventsFetcherManagerImpl: DialogueDao {}

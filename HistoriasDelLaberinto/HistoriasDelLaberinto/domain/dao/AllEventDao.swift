@@ -1,13 +1,13 @@
 import UIKit
 import CoreData
 
-protocol AllEventDao {
-    func get(id: String) -> EventDAO?
-    func save(event: Event, with id: String) -> Bool
+protocol EventTypeDao {
+    func getEventType(with id: String) -> EventDAO?
+    func saveEventType(for event: Event, with id: String) -> Bool
 }
 
-class AllEventDaoImpl: AllEventDao {
-    func get(id: String) -> EventDAO? {
+extension EventTypeDao {
+    func getEventType(with id: String) -> EventDAO? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext
         
@@ -18,7 +18,7 @@ class AllEventDaoImpl: AllEventDao {
         return results?.first
     }
     
-    func save(event: Event, with id: String) -> Bool {
+    func saveEventType(for event: Event, with id: String) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
