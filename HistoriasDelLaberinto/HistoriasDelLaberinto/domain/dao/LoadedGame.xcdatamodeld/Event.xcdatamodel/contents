@@ -34,7 +34,6 @@
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="RewardDAO" representedClassName="RewardDAO" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="parentEvent" maxCount="1" deletionRule="Nullify" destinationEntity="RewardEventDAO" inverseName="rewardsAssociated" inverseEntity="RewardEventDAO" syncable="YES"/>
@@ -52,7 +51,7 @@
         <element name="ConditionEventDAO" positionX="-167" positionY="31.16015625" width="128" height="120"/>
         <element name="DialogueEventDAO" positionX="12.6171875" positionY="-54.9140625" width="128" height="103"/>
         <element name="EventDAO" positionX="-75.8203125" positionY="-198.2578125" width="128" height="73"/>
-        <element name="RewardDAO" positionX="-307.515625" positionY="62.94921875" width="128" height="103"/>
+        <element name="RewardDAO" positionX="-307.515625" positionY="62.94921875" width="128" height="90"/>
         <element name="RewardEventDAO" positionX="240.0546875" positionY="35.94921875" width="128" height="103"/>
     </elements>
 </model>
