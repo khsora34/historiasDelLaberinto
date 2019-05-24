@@ -14,6 +14,8 @@ class EventsFetcherManagerImpl: EventsFetcherManager {
             loadedEvent = getDialogueFromDao(id: id)
         case .choice:
             loadedEvent = getChoice(with: id)
+        case .reward:
+            loadedEvent = getReward(with: id)
         default:
             fatalError()
         }
@@ -30,6 +32,9 @@ class EventsFetcherManagerImpl: EventsFetcherManager {
         case .choice:
             guard let event = event as? ChoiceEvent else { return }
             saveChoice(event, with: id)
+        case .reward:
+            guard let event = event as? RewardEvent else { return }
+            saveReward(event, with: id)
         default:
             fatalError()
         }
@@ -45,3 +50,4 @@ class EventsFetcherManagerImpl: EventsFetcherManager {
 extension EventsFetcherManagerImpl: EventTypeDao {}
 extension EventsFetcherManagerImpl: DialogueDao {}
 extension EventsFetcherManagerImpl: ChoiceEventDao {}
+extension EventsFetcherManagerImpl: RewardEventDao {}
