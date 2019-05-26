@@ -1,12 +1,12 @@
-import UIKit
+import UIKit.UIApplication
 import CoreData
 
-protocol DialogueDao {
+protocol DialogueEventFetcher {
     func getDialogue(with id: String) -> DialogueEventDAO?
     func saveDialogue(_ dialogue: DialogueEvent, with id: String)
 }
 
-extension DialogueDao {
+extension DialogueEventFetcher {
     func getDialogue(with id: String) -> DialogueEventDAO? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -31,6 +31,7 @@ extension DialogueDao {
         guard let entity = NSEntityDescription.entity(forEntityName: "DialogueEventDAO", in: managedContext) else { return }
         let loadingEvent = NSManagedObject(entity: entity, insertInto: managedContext)
         
+        loadingEvent.setValue(id, forKey: "id")
         loadingEvent.setValue(dialogue.characterId, forKey: "characterId")
         loadingEvent.setValue(dialogue.message, forKey: "message")
         loadingEvent.setValue(dialogue.nextStep, forKey: "nextStep")

@@ -1,12 +1,12 @@
 import UIKit.UIApplication
 import CoreData
 
-protocol RewardEventDao {
+protocol RewardEventFetcher {
     func getReward(with id: String) -> RewardEvent?
     func saveReward(_ reward: RewardEvent, with id: String)
 }
 
-extension RewardEventDao {
+extension RewardEventFetcher {
     func getReward(with id: String) -> RewardEvent? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext
