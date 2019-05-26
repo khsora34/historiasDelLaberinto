@@ -16,8 +16,10 @@ class EventsFetcherManagerImpl: EventsFetcherManager {
             loadedEvent = getChoice(with: id)
         case .reward:
             loadedEvent = getReward(with: id)
-        default:
-            fatalError()
+        case .battle:
+            loadedEvent = getBattle(with: id)
+        case .condition:
+            loadedEvent = getCondition(with: id)
         }
         
         return loadedEvent
@@ -35,8 +37,12 @@ class EventsFetcherManagerImpl: EventsFetcherManager {
         case .reward:
             guard let event = event as? RewardEvent else { return }
             saveReward(event, with: id)
-        default:
-            fatalError()
+        case .battle:
+            guard let event = event as? BattleEvent else { return }
+            saveBattle(event, with: id)
+        case .condition:
+            guard let event = event as? ConditionEvent else { return }
+            saveCondition(event, with: id)
         }
     }
 }
@@ -45,3 +51,5 @@ extension EventsFetcherManagerImpl: EventTypeFetcher {}
 extension EventsFetcherManagerImpl: DialogueEventFetcher {}
 extension EventsFetcherManagerImpl: ChoiceEventFetcher {}
 extension EventsFetcherManagerImpl: RewardEventFetcher {}
+extension EventsFetcherManagerImpl: ConditionEventFetcher {}
+extension EventsFetcherManagerImpl: BattleEventFetcher {}
