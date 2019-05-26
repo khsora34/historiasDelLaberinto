@@ -47,7 +47,7 @@ class EventsFetcherManagerImpl: EventsFetcherManager {
     }
 }
 
-extension EventsFetcherManagerImpl: EventTypeDao {}
-extension EventsFetcherManagerImpl: DialogueDao {}
-extension EventsFetcherManagerImpl: ChoiceEventDao {}
-extension EventsFetcherManagerImpl: RewardEventDao {}
+extension EventsFetcherManagerImpl: EventTypeFetcher {}
+extension EventsFetcherManagerImpl: DialogueEventFetcher {}
+extension EventsFetcherManagerImpl: ChoiceEventFetcher {}
+extension EventsFetcherManagerImpl: RewardEventFetcher {}

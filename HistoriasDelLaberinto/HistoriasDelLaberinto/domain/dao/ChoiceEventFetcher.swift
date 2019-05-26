@@ -1,12 +1,12 @@
 import UIKit.UIApplication
 import CoreData
 
-protocol ChoiceEventDao {
+protocol ChoiceEventFetcher {
     func getChoice(with id: String) -> ChoiceEvent?
     func saveChoice(_ choice: ChoiceEvent, with id: String)
 }
 
-extension ChoiceEventDao {
+extension ChoiceEventFetcher {
     func getChoice(with id: String) -> ChoiceEvent? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext

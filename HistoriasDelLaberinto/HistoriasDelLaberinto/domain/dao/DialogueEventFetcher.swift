@@ -1,12 +1,12 @@
-import UIKit
+import UIKit.UIApplication
 import CoreData
 
-protocol DialogueDao {
+protocol DialogueEventFetcher {
     func getDialogue(with id: String) -> DialogueEventDAO?
     func saveDialogue(_ dialogue: DialogueEvent, with id: String)
 }
 
-extension DialogueDao {
+extension DialogueEventFetcher {
     func getDialogue(with id: String) -> DialogueEventDAO? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext

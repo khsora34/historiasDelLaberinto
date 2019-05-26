@@ -1,12 +1,12 @@
-import UIKit
+import UIKit.UIApplication
 import CoreData
 
-protocol EventTypeDao {
+protocol EventTypeFetcher {
     func getEventType(with id: String) -> EventDAO?
     func saveEventType(for event: Event, with id: String) -> Bool
 }
 
-extension EventTypeDao {
+extension EventTypeFetcher {
     func getEventType(with id: String) -> EventDAO? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext
