@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ActionDAO" representedClassName="ActionDAO" syncable="YES" codeGenerationType="class">
         <attribute name="conditionType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="conditionValue" optional="YES" attributeType="String" syncable="YES"/>
@@ -11,6 +11,12 @@
         <attribute name="enemyId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nextStep" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="CharacterDAO" representedClassName="CharacterDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="status" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StatusDAO" inverseName="parentCharacter" inverseEntity="StatusDAO" syncable="YES"/>
     </entity>
     <entity name="ChoiceEventDAO" representedClassName="ChoiceEventDAO" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
@@ -44,14 +50,25 @@
         <attribute name="nextStep" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="rewardsAssociated" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="RewardDAO" inverseName="parentEvent" inverseEntity="RewardDAO" syncable="YES"/>
     </entity>
+    <entity name="StatusDAO" representedClassName="StatusDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="agility" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="attack" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="currentHealthPoints" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="defense" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="maxHealthPoints" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="weapon" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="parentCharacter" maxCount="1" deletionRule="Nullify" destinationEntity="CharacterDAO" inverseName="status" inverseEntity="CharacterDAO" syncable="YES"/>
+    </entity>
     <elements>
         <element name="ActionDAO" positionX="-315.48828125" positionY="-173.1796875" width="128" height="118"/>
         <element name="BattleEventDAO" positionX="-21.6875" positionY="113.86328125" width="128" height="90"/>
         <element name="ChoiceEventDAO" positionX="110.76953125" positionY="-157.91796875" width="128" height="73"/>
         <element name="ConditionEventDAO" positionX="-167" positionY="31.16015625" width="128" height="120"/>
         <element name="DialogueEventDAO" positionX="12.6171875" positionY="-54.9140625" width="128" height="103"/>
-        <element name="EventDAO" positionX="-75.8203125" positionY="-198.2578125" width="128" height="73"/>
+        <element name="EventDAO" positionX="-75.8203125" positionY="-198.2578125" width="128" height="30"/>
         <element name="RewardDAO" positionX="-307.515625" positionY="62.94921875" width="128" height="90"/>
         <element name="RewardEventDAO" positionX="240.0546875" positionY="35.94921875" width="128" height="103"/>
+        <element name="CharacterDAO" positionX="-108" positionY="-36" width="128" height="30"/>
+        <element name="StatusDAO" positionX="-99" positionY="-27" width="128" height="30"/>
     </elements>
 </model>
