@@ -1,6 +1,7 @@
-struct Room: Codable {
+struct Room: Codable, ImageRepresentable {
     let name: String
     let description: String
+    let imageUrl: String
     let reloadWithPartner: Bool
     let actions: [Action]
     
@@ -9,5 +10,6 @@ struct Room: Codable {
         case description
         case reloadWithPartner = "reloadWhenPartner"
         case actions
+        case imageUrl
     }
 }
