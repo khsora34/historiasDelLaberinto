@@ -3,7 +3,7 @@ import CoreData
 
 protocol ConditionEventFetcher {
     func getCondition(with id: String) -> ConditionEvent?
-    func saveCondition(_ dialogue: ConditionEvent, with id: String)
+    func saveCondition(_ condition: ConditionEvent, with id: String)
 }
 
 extension ConditionEventFetcher {
