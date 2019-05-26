@@ -181,6 +181,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6D0829FF229AB46F00B13A56 /* events */ = {
+			isa = PBXGroup;
+			children = (
+				6D75802422899D57009A48D7 /* EventTypeFetcher.swift */,
+				6DB9A90B228DB3BE00F90098 /* DialogueEventFetcher.swift */,
+				6DA7E37822917CE2005182BA /* ChoiceEventFetcher.swift */,
+				6DE18D0C22981B0D00138012 /* RewardEventFetcher.swift */,
+				6DB6AD72229AA38300B436D2 /* ConditionEventFetcher.swift */,
+				6DB6AD74229AA61900B436D2 /* BattleEventFetcher.swift */,
+			);
+			path = events;
+			sourceTree = "<group>";
+		};
 		6D45B010226A28A900906FBB /* modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -310,13 +323,8 @@
 		6D75802322899CC0009A48D7 /* dao */ = {
 			isa = PBXGroup;
 			children = (
+				6D0829FF229AB46F00B13A56 /* events */,
 				6D9A45AC22874D04004F4D0C /* LoadedGame.xcdatamodeld */,
-				6D75802422899D57009A48D7 /* EventTypeFetcher.swift */,
-				6DB9A90B228DB3BE00F90098 /* DialogueEventFetcher.swift */,
-				6DA7E37822917CE2005182BA /* ChoiceEventFetcher.swift */,
-				6DE18D0C22981B0D00138012 /* RewardEventFetcher.swift */,
-				6DB6AD72229AA38300B436D2 /* ConditionEventFetcher.swift */,
-				6DB6AD74229AA61900B436D2 /* BattleEventFetcher.swift */,
 			);
 			path = dao;
 			sourceTree = "<group>";
