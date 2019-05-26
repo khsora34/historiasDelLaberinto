@@ -47,6 +47,7 @@
 		6DA2D25522674A5700D1B8DF /* EventsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2D25422674A5700D1B8DF /* EventsFile.swift */; };
 		6DA7E37922917CE2005182BA /* ChoiceEventFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA7E37822917CE2005182BA /* ChoiceEventFetcher.swift */; };
 		6DB6AD73229AA38300B436D2 /* ConditionEventFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6AD72229AA38300B436D2 /* ConditionEventFetcher.swift */; };
+		6DB6AD75229AA61900B436D2 /* BattleEventFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6AD74229AA61900B436D2 /* BattleEventFetcher.swift */; };
 		6DB9A90C228DB3BE00F90098 /* DialogueEventFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9A90B228DB3BE00F90098 /* DialogueEventFetcher.swift */; };
 		6DBC01A42254FAE4004A97AD /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBC01A32254FAE4004A97AD /* Item.swift */; };
 		6DC67565224BC78400B795B6 /* PlayableCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC67564224BC78400B795B6 /* PlayableCharacter.swift */; };
@@ -123,6 +124,7 @@
 		6DA2D25422674A5700D1B8DF /* EventsFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsFile.swift; sourceTree = "<group>"; };
 		6DA7E37822917CE2005182BA /* ChoiceEventFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceEventFetcher.swift; sourceTree = "<group>"; };
 		6DB6AD72229AA38300B436D2 /* ConditionEventFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConditionEventFetcher.swift; sourceTree = "<group>"; };
+		6DB6AD74229AA61900B436D2 /* BattleEventFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleEventFetcher.swift; sourceTree = "<group>"; };
 		6DB9A90B228DB3BE00F90098 /* DialogueEventFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogueEventFetcher.swift; sourceTree = "<group>"; };
 		6DBC01A32254FAE4004A97AD /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		6DC67564224BC78400B795B6 /* PlayableCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayableCharacter.swift; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 				6DA7E37822917CE2005182BA /* ChoiceEventFetcher.swift */,
 				6DE18D0C22981B0D00138012 /* RewardEventFetcher.swift */,
 				6DB6AD72229AA38300B436D2 /* ConditionEventFetcher.swift */,
+				6DB6AD74229AA61900B436D2 /* BattleEventFetcher.swift */,
 			);
 			path = dao;
 			sourceTree = "<group>";
@@ -623,6 +626,7 @@
 				6DA7E37922917CE2005182BA /* ChoiceEventFetcher.swift in Sources */,
 				6DC67570224BC91E00B795B6 /* Weapon.swift in Sources */,
 				6D9A45AE22874D04004F4D0C /* LoadedGame.xcdatamodeld in Sources */,
+				6DB6AD75229AA61900B436D2 /* BattleEventFetcher.swift in Sources */,
 				6DE18D0D22981B0D00138012 /* RewardEventFetcher.swift in Sources */,
 				6DEF066122688C4C00A5C454 /* MainViewController.swift in Sources */,
 				6D45B01D226A28A900906FBB /* ExampleSceneModels.swift in Sources */,

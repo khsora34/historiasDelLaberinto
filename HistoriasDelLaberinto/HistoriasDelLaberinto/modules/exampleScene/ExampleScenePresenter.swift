@@ -7,7 +7,7 @@ protocol ExampleScenePresentationLogic: Presenter {
 }
 
 class ExampleScenePresenter: BasePresenter {
-    weak var viewController: ExampleSceneDisplayLogic? {
+    var viewController: ExampleSceneDisplayLogic? {
         return _viewController as? ExampleSceneDisplayLogic
     }
     
