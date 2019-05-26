@@ -2,12 +2,12 @@ import UIKit.UIApplication
 import CoreData
 
 protocol DialogueEventFetcher {
-    func getDialogue(with id: String) -> DialogueEventDAO?
+    func getDialogue(with id: String) -> DialogueEvent?
     func saveDialogue(_ dialogue: DialogueEvent, with id: String)
 }
 
 extension DialogueEventFetcher {
-    func getDialogue(with id: String) -> DialogueEventDAO? {
+    func getDialogue(with id: String) -> DialogueEvent? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext
         
@@ -15,13 +15,18 @@ extension DialogueEventFetcher {
         let predicate = NSPredicate(format: "id == %@", NSString(string: id))
         fetchRequest.predicate = predicate
         
+        var event: DialogueEventDAO?
+        
         do {
-        let results = try managedContext.fetch(fetchRequest)
-            return results.first
+            let results = try managedContext.fetch(fetchRequest)
+            event = results.first
         } catch let error as NSError {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
-        return nil
+        
+        guard let characterId = event?.characterId, let message = event?.message else { return nil }
+        
+        return DialogueEvent(characterId: characterId, message: message, nextStep: event?.nextStep)
     }
     
     func saveDialogue(_ dialogue: DialogueEvent, with id: String) {

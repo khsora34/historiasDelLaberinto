@@ -11,7 +11,7 @@ class EventsFetcherManagerImpl: EventsFetcherManager {
         var loadedEvent: Event?
         switch eventType {
         case .dialogue:
-            loadedEvent = getDialogueFromDao(id: id)
+            loadedEvent = getDialogue(with: id)
         case .choice:
             loadedEvent = getChoice(with: id)
         case .reward:
@@ -38,12 +38,6 @@ class EventsFetcherManagerImpl: EventsFetcherManager {
         default:
             fatalError()
         }
-    }
-    
-    private func getDialogueFromDao(id: String) -> DialogueEvent? {
-        guard let dialogueDao = getDialogue(with: id) else { return nil }
-        guard let characterId = dialogueDao.characterId, let message = dialogueDao.message else { return nil }
-        return DialogueEvent(characterId: characterId, message: message, nextStep: dialogueDao.nextStep)
     }
 }
 
