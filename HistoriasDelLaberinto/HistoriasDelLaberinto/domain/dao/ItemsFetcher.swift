@@ -4,6 +4,7 @@ import CoreData
 protocol ItemsFetcher {
     func getItem(with id: String) -> Item?
     func saveItem(for item: Item, with id: String) -> Bool
+    func deleteAllItems()
 }
 
 extension ItemsFetcher {
@@ -80,6 +81,28 @@ extension ItemsFetcher {
         } catch let error as NSError {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
             return false
+        }
+    }
+    
+    func deleteAllItems() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let itemFetchRequest: NSFetchRequest<ItemDAO> = ItemDAO.fetchRequest()
+        
+        do {
+            let results = try managedContext.fetch(itemFetchRequest)
+            for result in results {
+                if let weapon = result.weaponInfo {
+                    managedContext.delete(weapon)
+                }
+                managedContext.delete(result)
+            }
+            
+            try managedContext.save()
+            
+        } catch {
+            print(error)
         }
     }
 }

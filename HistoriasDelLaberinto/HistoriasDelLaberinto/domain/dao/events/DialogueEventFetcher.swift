@@ -4,6 +4,7 @@ import CoreData
 protocol DialogueEventFetcher {
     func getDialogue(with id: String) -> DialogueEvent?
     func saveDialogue(_ dialogue: DialogueEvent, with id: String)
+    func deleteAllDialogues()
 }
 
 extension DialogueEventFetcher {
@@ -45,6 +46,25 @@ extension DialogueEventFetcher {
             try managedContext.save()
         } catch let error as NSError {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
+        }
+    }
+    
+    func deleteAllDialogues() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest<DialogueEventDAO> = DialogueEventDAO.fetchRequest()
+        
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            for result in results {
+                managedContext.delete(result)
+            }
+            
+            try managedContext.save()
+            
+        } catch {
+            print(error)
         }
     }
 }

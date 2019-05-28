@@ -4,6 +4,7 @@ import CoreData
 protocol BattleEventFetcher {
     func getBattle(with id: String) -> BattleEvent?
     func saveBattle(_ battle: BattleEvent, with id: String)
+    func deleteAllBattles()
 }
 
 extension BattleEventFetcher {
@@ -43,6 +44,25 @@ extension BattleEventFetcher {
             try managedContext.save()
         } catch let error as NSError {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
+        }
+    }
+    
+    func deleteAllBattles() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest<BattleEventDAO> = BattleEventDAO.fetchRequest()
+        
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            for result in results {
+                managedContext.delete(result)
+            }
+            
+            try managedContext.save()
+            
+        } catch {
+            print(error)
         }
     }
 }
