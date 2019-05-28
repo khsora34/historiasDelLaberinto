@@ -3,7 +3,7 @@ import CoreData
 
 protocol ChoiceEventFetcher {
     func getChoice(with id: String) -> ChoiceEvent?
-    func saveChoice(_ choice: ChoiceEvent, with id: String)
+    func saveChoice(_ choice: ChoiceEvent, with id: String) -> Bool
     func deleteAllChoices()
 }
 
@@ -50,14 +50,14 @@ extension ChoiceEventFetcher {
         return ChoiceEvent(options: actions)
     }
     
-    func saveChoice(_ choice: ChoiceEvent, with id: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+    func saveChoice(_ choice: ChoiceEvent, with id: String) -> Bool {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
         guard
             let choiceEntity =
             NSEntityDescription.entity(forEntityName: "ChoiceEventDAO", in: managedContext),
-            let actionEntity = NSEntityDescription.entity(forEntityName: "ActionDAO", in: managedContext) else { return }
+            let actionEntity = NSEntityDescription.entity(forEntityName: "ActionDAO", in: managedContext) else { return false }
         
         let loadingEvent = NSManagedObject(entity: choiceEntity, insertInto: managedContext)
         loadingEvent.setValue(id, forKey: "id")
@@ -85,8 +85,10 @@ extension ChoiceEventFetcher {
         
         do {
             try managedContext.save()
+            return true
         } catch let error as NSError {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
+            return false
         }
     }
     

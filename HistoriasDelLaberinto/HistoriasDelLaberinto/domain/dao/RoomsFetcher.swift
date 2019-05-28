@@ -7,7 +7,7 @@ protocol RoomsFetcher {
     func deleteAllRooms()
 }
 
-extension RoomsFetcher {
+class RoomsFetcherImpl: RoomsFetcher {
     func getRoom(with id: String) -> Room? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -23,7 +23,7 @@ extension RoomsFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        guard let imageUrl = room?.imageUrl, let name = room?.name, let description = room?.descriptionString, let reloadWithPartner = room?.reloadWhenPartner, let isGeneric = room?.isGenericRoom, let actionsSet = room?.actions else { return nil }
+        guard let imageUrl = room?.imageUrl, let name = room?.name, let description = room?.descriptionString, let reloadWithPartner = room?.reloadWithPartner, let isGeneric = room?.isGenericRoom, let actionsSet = room?.actions else { return nil }
         
         var actions: [Action] = []
         
@@ -82,7 +82,7 @@ extension RoomsFetcher {
             managedActions.append(loadingAction)
         }
         
-        loadingRoom.setValue(NSOrderedSet(array: managedActions), forKey: "actions")
+        loadingRoom.setValue(NSSet(array: managedActions), forKey: "actions")
         
         do {
             try managedContext.save()

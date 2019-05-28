@@ -7,7 +7,7 @@ protocol CharactersFetcher {
     func deleteAllCharacters()
 }
 
-extension CharactersFetcher {
+class CharactersFetcherImpl: CharactersFetcher {
     func getCharacter(with id: String) -> GameCharacter? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext

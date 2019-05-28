@@ -3,7 +3,7 @@ import CoreData
 
 protocol RewardEventFetcher {
     func getReward(with id: String) -> RewardEvent?
-    func saveReward(_ reward: RewardEvent, with id: String)
+    func saveReward(_ reward: RewardEvent, with id: String) -> Bool
     func deleteAllRewards()
 }
 
@@ -37,14 +37,14 @@ extension RewardEventFetcher {
         return RewardEvent(message: message, rewards: rewards, nextStep: rewardEvent.nextStep)
     }
     
-    func saveReward(_ reward: RewardEvent, with id: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+    func saveReward(_ reward: RewardEvent, with id: String) -> Bool {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
         guard
             let eventEntity =
             NSEntityDescription.entity(forEntityName: "RewardEventDAO", in: managedContext),
-            let rewardEntity = NSEntityDescription.entity(forEntityName: "RewardDAO", in: managedContext) else { return }
+            let rewardEntity = NSEntityDescription.entity(forEntityName: "RewardDAO", in: managedContext) else { return false }
         
         let loadingEvent = NSManagedObject(entity: eventEntity, insertInto: managedContext)
         loadingEvent.setValue(id, forKey: "id")
@@ -65,8 +65,10 @@ extension RewardEventFetcher {
         
         do {
             try managedContext.save()
+            return true
         } catch let error as NSError {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
+            return false
         }
     }
     

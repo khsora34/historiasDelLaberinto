@@ -10,4 +10,8 @@ class RouterProvider {
     var exampleSceneRouter: ExampleSceneRoutingLogic {
         return ExampleSceneRouter(moduleProvider: moduleProvider, drawer: drawer)
     }
+    
+    var voidRouter: VoidRoutingLogic {
+        return VoidRouter(moduleProvider: moduleProvider, drawer: drawer)
+    }
 }

@@ -7,7 +7,7 @@ protocol ItemsFetcher {
     func deleteAllItems()
 }
 
-extension ItemsFetcher {
+class ItemsFetcherImpl: ItemsFetcher {
     func getItem(with id: String) -> Item? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext
