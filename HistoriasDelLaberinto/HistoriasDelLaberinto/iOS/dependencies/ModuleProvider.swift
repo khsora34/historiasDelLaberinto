@@ -11,4 +11,8 @@ class ModuleProvider {
     func exampleSceneModule() -> Module {
         return ExampleSceneModule(routerProvider: routerProvider, eventsFetcherManager: eventsFetcherManager)
     }
+    
+    func initialSceneModule() -> Module {
+        return InitialSceneModule(routerProvider: routerProvider, eventsFetcher: eventsFetcherManager, itemsFetcher: itemsFetcher, charactersFetcher: charactersFetcher, roomsFetcher: roomsFetcher, protagonistFetcher: protagonistFetcher)
+    }
 }

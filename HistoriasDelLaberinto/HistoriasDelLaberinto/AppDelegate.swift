@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         dependencies = Dependencies()
         
-        let exampleModule = dependencies.moduleProvider.exampleSceneModule()
+        let exampleModule = dependencies.moduleProvider.initialSceneModule()
         drawer.setRoot(viewController: exampleModule.viewController)
         
         return true
