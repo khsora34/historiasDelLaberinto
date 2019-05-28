@@ -1,4 +1,4 @@
-struct PlayableCharacter: CharacterStatus, ImageRepresentable {
+struct PlayableCharacter: CharacterStatus {
     let name: String
     
     var currentHealthPoints: Int
