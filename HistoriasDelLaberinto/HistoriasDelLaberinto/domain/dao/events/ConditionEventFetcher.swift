@@ -3,7 +3,7 @@ import CoreData
 
 protocol ConditionEventFetcher {
     func getCondition(with id: String) -> ConditionEvent?
-    func saveCondition(_ condition: ConditionEvent, with id: String)
+    func saveCondition(_ condition: ConditionEvent, with id: String) -> Bool
     func deleteAllConditions()
 }
 
@@ -41,11 +41,11 @@ extension ConditionEventFetcher {
         return ConditionEvent(condition: safeCondition, nextStepIfTrue: nextTrueStep, nextStepIfFalse: nextFalseStep)
     }
     
-    func saveCondition(_ condition: ConditionEvent, with id: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+    func saveCondition(_ condition: ConditionEvent, with id: String) -> Bool {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        guard let entity = NSEntityDescription.entity(forEntityName: "ConditionEventDAO", in: managedContext) else { return }
+        guard let entity = NSEntityDescription.entity(forEntityName: "ConditionEventDAO", in: managedContext) else { return false }
         let loadingEvent = NSManagedObject(entity: entity, insertInto: managedContext)
         
         loadingEvent.setValue(id, forKey: "id")
@@ -54,17 +54,19 @@ extension ConditionEventFetcher {
         
             switch condition.condition {
             case .item(id: let value):
-                loadingEvent.setValue("item", forKey: "conditionType")
-                loadingEvent.setValue(value, forKey: "conditionValue")
+                loadingEvent.setValue("item", forKey: "type")
+                loadingEvent.setValue(value, forKey: "value")
             case .partner(id: let value):
-                loadingEvent.setValue("partner", forKey: "conditionType")
-                loadingEvent.setValue(value, forKey: "conditionValue")
+                loadingEvent.setValue("partner", forKey: "type")
+                loadingEvent.setValue(value, forKey: "value")
             }
         
         do {
             try managedContext.save()
+            return true
         } catch let error as NSError {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
+            return false
         }
     }
     

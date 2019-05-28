@@ -1,6 +1,6 @@
 protocol EventsFetcherManager {
     func getEvent(with id: String) -> Event?
-    func saveEvent(_ event: Event, with id: String)
+    func saveEvent(_ event: Event, with id: String) -> Bool
     func deleteAll()
 }
 
@@ -26,24 +26,24 @@ class EventsFetcherManagerImpl: EventsFetcherManager {
         return loadedEvent
     }
     
-    func saveEvent(_ event: Event, with id: String) {
-        guard saveEventType(for: event, with: id), let type = EventType(event: event) else { return }
+    func saveEvent(_ event: Event, with id: String) -> Bool {
+        guard saveEventType(for: event, with: id), let type = EventType(event: event) else { return false }
         switch type {
         case .dialogue:
-            guard let event = event as? DialogueEvent else { return }
-            saveDialogue(event, with: id)
+            guard let event = event as? DialogueEvent else { return false }
+            return saveDialogue(event, with: id)
         case .choice:
-            guard let event = event as? ChoiceEvent else { return }
-            saveChoice(event, with: id)
+            guard let event = event as? ChoiceEvent else { return false }
+            return saveChoice(event, with: id)
         case .reward:
-            guard let event = event as? RewardEvent else { return }
-            saveReward(event, with: id)
+            guard let event = event as? RewardEvent else { return false }
+            return saveReward(event, with: id)
         case .battle:
-            guard let event = event as? BattleEvent else { return }
-            saveBattle(event, with: id)
+            guard let event = event as? BattleEvent else { return false }
+            return saveBattle(event, with: id)
         case .condition:
-            guard let event = event as? ConditionEvent else { return }
-            saveCondition(event, with: id)
+            guard let event = event as? ConditionEvent else { return false }
+            return saveCondition(event, with: id)
         }
     }
     

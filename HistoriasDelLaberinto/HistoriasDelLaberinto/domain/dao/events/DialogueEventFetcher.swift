@@ -3,7 +3,7 @@ import CoreData
 
 protocol DialogueEventFetcher {
     func getDialogue(with id: String) -> DialogueEvent?
-    func saveDialogue(_ dialogue: DialogueEvent, with id: String)
+    func saveDialogue(_ dialogue: DialogueEvent, with id: String) -> Bool
     func deleteAllDialogues()
 }
 
@@ -30,11 +30,11 @@ extension DialogueEventFetcher {
         return DialogueEvent(characterId: characterId, message: message, nextStep: event?.nextStep)
     }
     
-    func saveDialogue(_ dialogue: DialogueEvent, with id: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+    func saveDialogue(_ dialogue: DialogueEvent, with id: String) -> Bool {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false  }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        guard let entity = NSEntityDescription.entity(forEntityName: "DialogueEventDAO", in: managedContext) else { return }
+        guard let entity = NSEntityDescription.entity(forEntityName: "DialogueEventDAO", in: managedContext) else { return false }
         let loadingEvent = NSManagedObject(entity: entity, insertInto: managedContext)
         
         loadingEvent.setValue(id, forKey: "id")
@@ -44,8 +44,10 @@ extension DialogueEventFetcher {
         
         do {
             try managedContext.save()
+            return true
         } catch let error as NSError {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
+            return false
         }
     }
     

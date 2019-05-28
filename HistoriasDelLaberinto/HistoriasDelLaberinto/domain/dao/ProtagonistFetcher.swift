@@ -7,7 +7,7 @@ protocol ProtagonistFetcher {
     func deleteProtagonist()
 }
 
-extension ProtagonistFetcher {
+class ProtagonistFetcherImpl: ProtagonistFetcher {
     func getProtagonist() -> Protagonist? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -91,7 +91,7 @@ extension ProtagonistFetcher {
             managedItems.append(loadingItem)
         }
         
-        loadingProtagonist.setValue(NSOrderedSet(array: managedItems), forKey: "inventory")
+        loadingProtagonist.setValue(NSSet(array: managedItems), forKey: "inventory")
         
         var managedVisitedRooms: [NSManagedObject] = []
         
@@ -103,7 +103,7 @@ extension ProtagonistFetcher {
             managedVisitedRooms.append(loadingVisitedRoom)
         }
         
-        loadingProtagonist.setValue(NSOrderedSet(array: managedVisitedRooms), forKey: "visitedRooms")
+        loadingProtagonist.setValue(NSSet(array: managedVisitedRooms), forKey: "visitedRooms")
         
         do {
             try managedContext.save()
