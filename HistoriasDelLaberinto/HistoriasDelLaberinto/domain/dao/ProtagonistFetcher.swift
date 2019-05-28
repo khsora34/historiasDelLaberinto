@@ -4,6 +4,7 @@ import CoreData
 protocol ProtagonistFetcher {
     func getProtagonist() -> Protagonist?
     func saveProtagonist(for protagonist: Protagonist) -> Bool
+    func deleteProtagonist()
 }
 
 extension ProtagonistFetcher {
@@ -110,6 +111,43 @@ extension ProtagonistFetcher {
         } catch let error as NSError {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
             return false
+        }
+    }
+    
+    func deleteProtagonist() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let roomFetchRequest: NSFetchRequest<ProtagonistDAO> = ProtagonistDAO.fetchRequest()
+        
+        do {
+            let results = try managedContext.fetch(roomFetchRequest)
+            for result in results {
+                if let status = result.status {
+                    managedContext.delete(status)
+                }
+                if let inventory = result.inventory {
+                    for item in inventory {
+                        if let item = item as? NSManagedObject {
+                            managedContext.delete(item)
+                        }
+                    }
+                }
+                
+                if let visitedRooms = result.visitedRooms {
+                    for room in visitedRooms {
+                        if let room = room as? NSManagedObject {
+                            managedContext.delete(room)
+                        }
+                    }
+                }
+                managedContext.delete(result)
+            }
+            
+            try managedContext.save()
+            
+        } catch {
+            print(error)
         }
     }
 }

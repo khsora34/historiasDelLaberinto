@@ -4,6 +4,7 @@ import CoreData
 protocol ConditionEventFetcher {
     func getCondition(with id: String) -> ConditionEvent?
     func saveCondition(_ condition: ConditionEvent, with id: String)
+    func deleteAllConditions()
 }
 
 extension ConditionEventFetcher {
@@ -64,6 +65,25 @@ extension ConditionEventFetcher {
             try managedContext.save()
         } catch let error as NSError {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
+        }
+    }
+    
+    func deleteAllConditions() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest<ConditionEventDAO> = ConditionEventDAO.fetchRequest()
+        
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            for result in results {
+                managedContext.delete(result)
+            }
+            
+            try managedContext.save()
+            
+        } catch {
+            print(error)
         }
     }
 }

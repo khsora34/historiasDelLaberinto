@@ -1,6 +1,7 @@
 protocol EventsFetcherManager {
     func getEvent(with id: String) -> Event?
     func saveEvent(_ event: Event, with id: String)
+    func deleteAll()
 }
 
 class EventsFetcherManagerImpl: EventsFetcherManager {
@@ -44,6 +45,15 @@ class EventsFetcherManagerImpl: EventsFetcherManager {
             guard let event = event as? ConditionEvent else { return }
             saveCondition(event, with: id)
         }
+    }
+    
+    func deleteAll() {
+        deleteAllBattles()
+        deleteAllChoices()
+        deleteAllRewards()
+        deleteAllDialogues()
+        deleteAllConditions()
+        deleteAllEventTypes()
     }
 }
 

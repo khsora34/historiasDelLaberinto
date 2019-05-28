@@ -4,6 +4,7 @@ import CoreData
 protocol CharactersFetcher {
     func getCharacter(with id: String) -> GameCharacter?
     func saveCharacter(for character: GameCharacter, with id: String) -> Bool
+    func deleteAllCharacters()
 }
 
 extension CharactersFetcher {
@@ -60,6 +61,28 @@ extension CharactersFetcher {
         } catch let error as NSError {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
             return false
+        }
+    }
+    
+    func deleteAllCharacters() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let characterFetchRequest: NSFetchRequest<CharacterDAO> = CharacterDAO.fetchRequest()
+        
+        do {
+            let results = try managedContext.fetch(characterFetchRequest)
+            for result in results {
+                if let status = result.status {
+                    managedContext.delete(status)
+                }
+                managedContext.delete(result)
+            }
+            
+            try managedContext.save()
+            
+        } catch {
+            print(error)
         }
     }
 }

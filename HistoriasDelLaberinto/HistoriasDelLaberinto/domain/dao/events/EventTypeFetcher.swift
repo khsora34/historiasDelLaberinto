@@ -4,6 +4,7 @@ import CoreData
 protocol EventTypeFetcher {
     func getEventType(with id: String) -> EventDAO?
     func saveEventType(for event: Event, with id: String) -> Bool
+    func deleteAllEventTypes()
 }
 
 extension EventTypeFetcher {
@@ -36,6 +37,25 @@ extension EventTypeFetcher {
         } catch let error as NSError {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
             return false
+        }
+    }
+    
+    func deleteAllEventTypes() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest<EventDAO> = EventDAO.fetchRequest()
+        
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            for result in results {
+                managedContext.delete(result)
+            }
+            
+            try managedContext.save()
+            
+        } catch {
+            print(error)
         }
     }
 }

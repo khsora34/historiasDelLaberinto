@@ -4,6 +4,7 @@ import CoreData
 protocol RoomsFetcher {
     func getRoom(with id: String) -> Room?
     func saveRoom(for room: Room, with id: String) -> Bool
+    func deleteAllRooms()
 }
 
 extension RoomsFetcher {
@@ -89,6 +90,32 @@ extension RoomsFetcher {
         } catch let error as NSError {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
             return false
+        }
+    }
+    
+    func deleteAllRooms() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let roomFetchRequest: NSFetchRequest<RoomDAO> = RoomDAO.fetchRequest()
+        
+        do {
+            let results = try managedContext.fetch(roomFetchRequest)
+            for result in results {
+                if let actions = result.actions {
+                    for action in actions {
+                        if let action = action as? NSManagedObject {
+                            managedContext.delete(action)
+                        }
+                    }
+                }
+                managedContext.delete(result)
+            }
+            
+            try managedContext.save()
+            
+        } catch {
+            print(error)
         }
     }
 }
