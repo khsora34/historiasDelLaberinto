@@ -57,8 +57,8 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="partner" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="inventory" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ObtainedItemsDAO" inverseName="parentProtagonist" inverseEntity="ObtainedItemsDAO" syncable="YES"/>
-        <relationship name="status" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StatusDAO" inverseName="parentProtagonist" inverseEntity="StatusDAO" syncable="YES"/>
-        <relationship name="visitedRooms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RoomVisitedDAO" inverseName="parentProtagonist" inverseEntity="RoomVisitedDAO" syncable="YES"/>
+        <relationship name="status" maxCount="1" deletionRule="Nullify" destinationEntity="StatusDAO" inverseName="parentProtagonist" inverseEntity="StatusDAO" syncable="YES"/>
+        <relationship name="visitedRooms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VisitedRoomDAO" inverseName="parentProtagonist" inverseEntity="VisitedRoomDAO" syncable="YES"/>
     </entity>
     <entity name="RewardDAO" representedClassName="RewardDAO" syncable="YES" codeGenerationType="class">
         <attribute name="name" attributeType="String" syncable="YES"/>
@@ -80,12 +80,6 @@
         <attribute name="reloadWhenPartner" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="actions" toMany="YES" deletionRule="Nullify" destinationEntity="ActionDAO" inverseName="parentRoom" inverseEntity="ActionDAO" syncable="YES"/>
     </entity>
-    <entity name="RoomVisitedDAO" representedClassName="RoomVisitedDAO" syncable="YES" codeGenerationType="class">
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="isVisited" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="isVisitedWithPartner" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="parentProtagonist" maxCount="1" deletionRule="Nullify" destinationEntity="ProtagonistDAO" inverseName="visitedRooms" inverseEntity="ProtagonistDAO" syncable="YES"/>
-    </entity>
     <entity name="StatusDAO" representedClassName="StatusDAO" syncable="YES" codeGenerationType="class">
         <attribute name="agility" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="attack" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -95,6 +89,12 @@
         <attribute name="weapon" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="parentCharacter" maxCount="1" deletionRule="Nullify" destinationEntity="CharacterDAO" inverseName="status" inverseEntity="CharacterDAO" syncable="YES"/>
         <relationship name="parentProtagonist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProtagonistDAO" inverseName="status" inverseEntity="ProtagonistDAO" syncable="YES"/>
+    </entity>
+    <entity name="VisitedRoomDAO" representedClassName="VisitedRoomDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="isVisited" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isVisitedWithPartner" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="parentProtagonist" maxCount="1" deletionRule="Nullify" destinationEntity="ProtagonistDAO" inverseName="visitedRooms" inverseEntity="ProtagonistDAO" syncable="YES"/>
     </entity>
     <entity name="WeaponDAO" representedClassName="WeaponDAO" syncable="YES" codeGenerationType="class">
         <attribute name="ailment" optional="YES" attributeType="String" syncable="YES"/>
@@ -112,13 +112,13 @@
         <element name="DialogueEventDAO" positionX="12.6171875" positionY="-54.9140625" width="128" height="105"/>
         <element name="EventDAO" positionX="-75.8203125" positionY="-198.2578125" width="128" height="75"/>
         <element name="ItemDAO" positionX="-90" positionY="-27" width="128" height="135"/>
+        <element name="ObtainedItemsDAO" positionX="-90" positionY="-27" width="128" height="90"/>
+        <element name="ProtagonistDAO" positionX="-108" positionY="-45" width="128" height="120"/>
         <element name="RewardDAO" positionX="-307.515625" positionY="62.94921875" width="128" height="90"/>
         <element name="RewardEventDAO" positionX="240.0546875" positionY="35.94921875" width="128" height="105"/>
         <element name="RoomDAO" positionX="-54" positionY="9" width="128" height="150"/>
+        <element name="VisitedRoomDAO" positionX="-99" positionY="-36" width="128" height="105"/>
         <element name="StatusDAO" positionX="-99" positionY="-27" width="128" height="165"/>
         <element name="WeaponDAO" positionX="-81" positionY="-18" width="128" height="120"/>
-        <element name="ProtagonistDAO" positionX="-108" positionY="-45" width="128" height="120"/>
-        <element name="RoomVisitedDAO" positionX="-99" positionY="-36" width="128" height="105"/>
-        <element name="ObtainedItemsDAO" positionX="-90" positionY="-27" width="128" height="90"/>
     </elements>
 </model>

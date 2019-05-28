@@ -12,7 +12,7 @@ struct Protagonist: CharacterStatus, Codable {
     var weapon: String?
     
     var items: [String: Int]
-    var visitedRooms: [Int: VisitedRoom]
+    var visitedRooms: [String: VisitedRoom]
 }
 
 struct VisitedRoom: Codable {
