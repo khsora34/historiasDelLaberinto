@@ -13,7 +13,7 @@ class ExampleSceneInteractor: ExampleSceneBusinessLogic {
     // MARK: Do something
     
     func doSomething(request: ExampleSceneModels.Something.Request) -> ExampleSceneModels.Something.Response {
-        let worker = ExampleScenePerformer()
+        let worker = ExampleSceneWorker()
         let result = worker.doSomeWork(entry: request.input)
         
         return ExampleSceneModels.Something.Response(output: result)
