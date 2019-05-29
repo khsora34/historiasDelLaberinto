@@ -2,6 +2,7 @@ import UIKit
 
 class Dependencies {
     var moduleProvider: ModuleProvider!
+    var databaseFetcherProvider: DatabaseFetcherProvider!
     
     lazy var routerProvider: RouterProvider = {
         guard let drawer = UIApplication.shared.keyWindow?.rootViewController as? MainViewController else {
@@ -12,11 +13,17 @@ class Dependencies {
     }()
     
     init() {
+        databaseFetcherProvider = createDatabaseFetcherProvider()
         createModuleProvider()
     }
     
     private func createModuleProvider() {
         moduleProvider = ModuleProvider()
         moduleProvider.routerProvider = routerProvider
+        moduleProvider.databaseFetcherProvider = databaseFetcherProvider
+    }
+    
+    private func createDatabaseFetcherProvider() -> DatabaseFetcherProvider {
+        return DatabaseFetcherProvider(eventsFetcherManager: EventsFetcherManagerImpl(), itemsFetcher: ItemsFetcherImpl(), charactersFetcher: CharactersFetcherImpl(), roomsFetcher: RoomsFetcherImpl(), protagonistFetcher: ProtagonistFetcherImpl())
     }
 }

@@ -1,4 +1,4 @@
-enum ExampleScene {
+enum ExampleSceneModels {
     // MARK: Use cases
     
     enum Something {
@@ -10,6 +10,25 @@ enum ExampleScene {
         }
         struct ViewModel {
             let modeledValue: String?
+        }
+    }
+    
+    enum DatabaseSaving {
+        struct Request {
+            let id: String
+            let event: Event
+        }
+    }
+    
+    enum DatabaseGetting {
+        struct Request {
+            let id: String
+        }
+        struct Response {
+            let event: Event?
+        }
+        struct ViewModel {
+            let nextStep: String?
         }
     }
 }

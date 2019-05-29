@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ActionDAO" representedClassName="ActionDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="conditionType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="conditionValue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="nextStep" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="BattleEventDAO" representedClassName="BattleEventDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="enemyId" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="nextStep" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="CharacterDAO" representedClassName="CharacterDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="imageUrl" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="status" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StatusDAO" syncable="YES"/>
+    </entity>
+    <entity name="ChoiceEventDAO" representedClassName="ChoiceEventDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <relationship name="actionsAssociated" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ActionDAO" syncable="YES"/>
+    </entity>
+    <entity name="ConditionEventDAO" representedClassName="ConditionEventDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="nextStepIfFalse" attributeType="String" syncable="YES"/>
+        <attribute name="nextStepIfTrue" attributeType="String" syncable="YES"/>
+        <attribute name="type" attributeType="String" syncable="YES"/>
+        <attribute name="value" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="DialogueEventDAO" representedClassName="DialogueEventDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="characterId" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="message" attributeType="String" syncable="YES"/>
+        <attribute name="nextStep" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="EventDAO" representedClassName="EventDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="type" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ItemDAO" representedClassName="ItemDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="descriptionString" attributeType="String" syncable="YES"/>
+        <attribute name="healthRecovered" optional="YES" attributeType="Integer 16" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="imageUrl" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="weaponInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeaponDAO" syncable="YES"/>
+    </entity>
+    <entity name="ObtainedItemsDAO" representedClassName="ObtainedItemsDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="quantity" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="ProtagonistDAO" representedClassName="ProtagonistDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="partner" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="inventory" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ObtainedItemsDAO" syncable="YES"/>
+        <relationship name="status" maxCount="1" deletionRule="Nullify" destinationEntity="StatusDAO" syncable="YES"/>
+        <relationship name="visitedRooms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VisitedRoomDAO" syncable="YES"/>
+    </entity>
+    <entity name="RewardDAO" representedClassName="RewardDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="quantity" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="RewardEventDAO" representedClassName="RewardEventDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="message" attributeType="String" syncable="YES"/>
+        <attribute name="nextStep" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="rewardsAssociated" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="RewardDAO" syncable="YES"/>
+    </entity>
+    <entity name="RoomDAO" representedClassName="RoomDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="descriptionString" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="imageUrl" attributeType="String" syncable="YES"/>
+        <attribute name="isGenericRoom" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="reloadWithPartner" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="actions" toMany="YES" deletionRule="Nullify" destinationEntity="ActionDAO" syncable="YES"/>
+    </entity>
+    <entity name="StatusDAO" representedClassName="StatusDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="agility" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="attack" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="currentHealthPoints" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="defense" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="maxHealthPoints" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="weapon" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="VisitedRoomDAO" representedClassName="VisitedRoomDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="isVisited" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isVisitedWithPartner" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="WeaponDAO" representedClassName="WeaponDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="ailment" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="extraDamage" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="hitRate" attributeType="Integer 16" minValueString="0" maxValueString="100" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="induceRate" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="100" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ActionDAO" positionX="-315.48828125" positionY="-173.1796875" width="128" height="135"/>
+        <element name="BattleEventDAO" positionX="-21.6875" positionY="113.86328125" width="128" height="90"/>
+        <element name="CharacterDAO" positionX="-108" positionY="-36" width="128" height="105"/>
+        <element name="ChoiceEventDAO" positionX="110.76953125" positionY="-157.91796875" width="128" height="75"/>
+        <element name="ConditionEventDAO" positionX="-167" positionY="31.16015625" width="128" height="120"/>
+        <element name="DialogueEventDAO" positionX="12.6171875" positionY="-54.9140625" width="128" height="105"/>
+        <element name="EventDAO" positionX="-75.8203125" positionY="-198.2578125" width="128" height="75"/>
+        <element name="ItemDAO" positionX="-90" positionY="-27" width="128" height="135"/>
+        <element name="ObtainedItemsDAO" positionX="-90" positionY="-27" width="128" height="90"/>
+        <element name="ProtagonistDAO" positionX="-108" positionY="-45" width="128" height="120"/>
+        <element name="RewardDAO" positionX="-307.515625" positionY="62.94921875" width="128" height="90"/>
+        <element name="RewardEventDAO" positionX="240.0546875" positionY="35.94921875" width="128" height="105"/>
+        <element name="RoomDAO" positionX="-54" positionY="9" width="128" height="150"/>
+        <element name="VisitedRoomDAO" positionX="-99" positionY="-36" width="128" height="105"/>
+        <element name="StatusDAO" positionX="-99" positionY="-27" width="128" height="165"/>
+        <element name="WeaponDAO" positionX="-81" positionY="-18" width="128" height="120"/>
+    </elements>
+</model>
