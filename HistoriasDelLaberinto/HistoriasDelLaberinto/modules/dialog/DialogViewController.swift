@@ -62,11 +62,27 @@ class DialogViewController: BaseViewController {
         }
         
         if newConfigurator.imageUrl != configurator.imageUrl {
-            characterImageView.image = nil
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: UIView.AnimationOptions.transitionCrossDissolve, animations: {
+                self.characterImageView.alpha = 0.3
+                self.dialogView.alpha = 0.3
+            }, completion: { _ in
+                //Once the label is completely invisible, set the text and fade it back in
+                self.configurator = newConfigurator
+                self.setupConfiguration()
+                
+                // Fade in
+                UIView.animate(withDuration: 0.2, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, animations: {
+                    self.characterImageView.alpha = 1.0
+                    self.dialogView.alpha = 0.95
+                }, completion: nil)
+            })
+            
+//            characterImageView.image = nil
+        } else {
+            configurator = newConfigurator
+            setupConfiguration()
+
         }
-        
-        configurator = newConfigurator
-        setupConfiguration()
     }
 }
 
