@@ -12,6 +12,7 @@ class InitialSceneViewController: BaseViewController {
     @IBOutlet weak var loadFilesButton: UIButton!
     @IBOutlet weak var deleteFilesButton: UIButton!
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var nextViewButton: UIButton!
     
     // MARK: Setup
     
@@ -31,6 +32,10 @@ class InitialSceneViewController: BaseViewController {
     }
     @IBAction func didDeleteFilesButtonTap(_ sender: Any) {
         presenter?.deleteFiles()
+    }
+    
+    @IBAction func didTapNextViewButton(_ sender: Any) {
+        presenter?.goToExampleView()
     }
 }
 

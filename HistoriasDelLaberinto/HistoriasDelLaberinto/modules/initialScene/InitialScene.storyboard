@@ -44,13 +44,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R4c-gb-h0H" userLabel="Next View Button">
+                                <rect key="frame" x="119" y="365" width="137" height="30"/>
+                                <state key="normal" title="Ir a vista de ejemplo"/>
+                                <connections>
+                                    <action selector="didTapNextViewButton:" destination="1OK-57-ttH" eventType="touchUpInside" id="ILG-Mz-lwk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="mtC-4D-8EJ" firstAttribute="leading" secondItem="bJ0-Vb-V2S" secondAttribute="leading" constant="10" id="1Sm-QB-rI1"/>
                             <constraint firstItem="QMO-iy-7HL" firstAttribute="top" secondItem="BbK-8f-Rl8" secondAttribute="bottom" constant="40" id="7HX-Up-5OP"/>
                             <constraint firstItem="bJ0-Vb-V2S" firstAttribute="trailing" secondItem="mtC-4D-8EJ" secondAttribute="trailing" constant="10" id="8sc-SQ-AI0"/>
+                            <constraint firstItem="R4c-gb-h0H" firstAttribute="top" secondItem="mtC-4D-8EJ" secondAttribute="bottom" constant="34.5" id="9M8-Dc-BDz"/>
                             <constraint firstItem="mtC-4D-8EJ" firstAttribute="top" secondItem="QMO-iy-7HL" secondAttribute="bottom" constant="40" id="BnH-CX-jEu"/>
+                            <constraint firstItem="R4c-gb-h0H" firstAttribute="centerX" secondItem="2XX-zF-JIM" secondAttribute="centerX" id="Eo8-wG-A2D"/>
                             <constraint firstItem="v1Q-fs-s8h" firstAttribute="top" secondItem="bJ0-Vb-V2S" secondAttribute="top" constant="67" id="LO1-2T-NL3"/>
                             <constraint firstItem="BbK-8f-Rl8" firstAttribute="top" secondItem="v1Q-fs-s8h" secondAttribute="bottom" constant="50" id="QFZ-Te-150"/>
                             <constraint firstItem="QMO-iy-7HL" firstAttribute="centerX" secondItem="2XX-zF-JIM" secondAttribute="centerX" id="Ysg-qp-CPB"/>
@@ -63,6 +72,7 @@
                         <outlet property="deleteFilesButton" destination="QMO-iy-7HL" id="tlh-kB-q2d"/>
                         <outlet property="label" destination="mtC-4D-8EJ" id="IXi-WD-rbe"/>
                         <outlet property="loadFilesButton" destination="BbK-8f-Rl8" id="W7H-v6-7bd"/>
+                        <outlet property="nextViewButton" destination="R4c-gb-h0H" id="MYs-dz-huv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CUY-2N-uS6" userLabel="First Responder" sceneMemberID="firstResponder"/>
