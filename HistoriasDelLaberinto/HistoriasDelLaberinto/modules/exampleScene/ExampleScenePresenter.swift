@@ -2,6 +2,8 @@ import UIKit
 
 protocol ExampleScenePresentationLogic: Presenter {
     func calculateValueWith(string: String?)
+    func navigateToPlace()
+    func navigateToNewPlace()
     func saveToDb()
     func getFromDb()
 }
