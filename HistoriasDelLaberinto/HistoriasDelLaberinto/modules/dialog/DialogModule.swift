@@ -15,6 +15,6 @@ class DialogModule: Module {
         presenter._interactor = interactor
         presenter._router = router
         presenter._viewController = viewController
-        
+        (viewController as? DialogViewController)?.initView()
     }
 }
