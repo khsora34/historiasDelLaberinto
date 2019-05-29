@@ -1,20 +1,24 @@
 PODS:
+  - Kingfisher (5.5.0)
   - SwiftLint (0.32.0)
   - Yams (2.0.0)
 
 DEPENDENCIES:
+  - Kingfisher (= 5.5.0)
   - SwiftLint
   - Yams
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
+    - Kingfisher
     - SwiftLint
     - Yams
 
 SPEC CHECKSUMS:
+  Kingfisher: 6fe5e67a90fd335e49b0f5c075ff55ac5ebedd94
   SwiftLint: 009a898ef2a1c851f45e1b59349bf6ff2ddc990d
   Yams: cb96472112d99e4b368f8dae9ab62e8a3eb8a3f9
 
-PODFILE CHECKSUM: a1f4b0628071b90aff18e5f3d3f5527e2b4d6147
+PODFILE CHECKSUM: 47f2dd590f11876b6d3a61914745a8548d0976c1
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.6.1
