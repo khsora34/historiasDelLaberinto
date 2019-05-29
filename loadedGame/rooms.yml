@@ -3,6 +3,7 @@ rooms:
     name: "Primera habitación"
     description: "Esta es la primera habitación"
     reloadWhenPartner: true
+    imageUrl: "http://LALALAND.com/room_17_image"
     actions:
       - action: "Hablar"
         nextStep: "room17Conversation"
@@ -15,6 +16,7 @@ rooms:
   "genericRoom1":
     name: "Habitación genérica"
     description: "Esta es una habitación genérica"
+    imageUrl: "http://LALALAND.com/generic_room_1_image"
     reloadWhenPartner: false
     isGenericRoom: true
     actions:
@@ -26,6 +28,7 @@ rooms:
     description: "Esta es una habitación con un malvado"
     reloadWhenPartner: false
     isGenericRoom: true
+    imageUrl: "http://LALALAND.com/generic_room_battle_1_image"
     actions:
       - action: "Luchar"
         nextStep: "genericRoomStartBattle"

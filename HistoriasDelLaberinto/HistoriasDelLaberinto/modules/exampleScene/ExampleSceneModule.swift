@@ -6,12 +6,12 @@ class ExampleSceneModule: Module {
     var presenter: Presenter
     var router: RouterLogic
 
-    init(routerProvider: RouterProvider) {
+    init(routerProvider: RouterProvider, eventsFetcherManager: EventsFetcherManager) {
         viewController = ViewCreator.createFrom(storyboardName: storyboardName, forController: controllerName)
         let presenterInput = ExampleScenePresenterInput()
         presenter = ExampleScenePresenter(input: presenterInput)
         router = routerProvider.exampleSceneRouter
-        interactor = ExampleSceneInteractor()
+        interactor = ExampleSceneInteractor(eventsFetcherManager: eventsFetcherManager)
         viewController._presenter = presenter
         presenter._interactor = interactor
         presenter._router = router
