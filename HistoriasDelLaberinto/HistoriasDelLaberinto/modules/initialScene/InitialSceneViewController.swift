@@ -30,6 +30,7 @@ class InitialSceneViewController: BaseViewController {
         presenter?.loadFiles()
     }
     @IBAction func didDeleteFilesButtonTap(_ sender: Any) {
+        presenter?.deleteFiles()
     }
 }
 
