@@ -35,6 +35,7 @@
 		6D4C4404229F289200D5A9E5 /* DialogWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C4403229F289200D5A9E5 /* DialogWorker.swift */; };
 		6D4C4406229F30DD00D5A9E5 /* DialogRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C4405229F30DD00D5A9E5 /* DialogRouter.swift */; };
 		6D4C4408229F31E100D5A9E5 /* DialogModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C4407229F31E100D5A9E5 /* DialogModule.swift */; };
+		6D4C440A229F382A00D5A9E5 /* InitialSceneRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C4409229F382A00D5A9E5 /* InitialSceneRouter.swift */; };
 		6D5D8FF6226861FC00D11390 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D8FF5226861FC00D11390 /* BaseViewController.swift */; };
 		6D5D8FF82268620D00D11390 /* ViewCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D8FF72268620D00D11390 /* ViewCreator.swift */; };
 		6D5D8FFC226862E500D11390 /* BasePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D8FFB226862E500D11390 /* BasePresenter.swift */; };
@@ -133,6 +134,7 @@
 		6D4C4403229F289200D5A9E5 /* DialogWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogWorker.swift; sourceTree = "<group>"; };
 		6D4C4405229F30DD00D5A9E5 /* DialogRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogRouter.swift; sourceTree = "<group>"; };
 		6D4C4407229F31E100D5A9E5 /* DialogModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogModule.swift; sourceTree = "<group>"; };
+		6D4C4409229F382A00D5A9E5 /* InitialSceneRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSceneRouter.swift; sourceTree = "<group>"; };
 		6D5D8FF5226861FC00D11390 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		6D5D8FF72268620D00D11390 /* ViewCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewCreator.swift; sourceTree = "<group>"; };
 		6D5D8FFB226862E500D11390 /* BasePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePresenter.swift; sourceTree = "<group>"; };
@@ -271,13 +273,13 @@
 		6D45B011226A28A900906FBB /* exampleScene */ = {
 			isa = PBXGroup;
 			children = (
-				6D8CBC15229EE9CF005336DA /* ExampleSceneViewController.swift */,
 				6D45B018226A28A900906FBB /* ExampleScene.storyboard */,
 				6D45B016226A28A900906FBB /* ExampleSceneInteractor.swift */,
 				6D45B015226A28A900906FBB /* ExampleSceneModels.swift */,
 				6D45B012226A28A900906FBB /* ExampleSceneModule.swift */,
 				6D45B017226A28A900906FBB /* ExampleScenePresenter.swift */,
 				6D45B013226A28A900906FBB /* ExampleSceneRouter.swift */,
+				6D8CBC15229EE9CF005336DA /* ExampleSceneViewController.swift */,
 				6D45B014226A28A900906FBB /* ExampleSceneWorker.swift */,
 			);
 			path = exampleScene;
@@ -388,13 +390,14 @@
 		6D71681D229DC39F00791A42 /* initialScene */ = {
 			isa = PBXGroup;
 			children = (
-				6D921205229DC74100440926 /* InitialScenePresenter.swift */,
-				6D921206229DC74100440926 /* InitialSceneWorker.swift */,
-				6D921208229DC74100440926 /* InitialSceneModels.swift */,
-				6D921209229DC74100440926 /* InitialSceneViewController.swift */,
-				6D92120A229DC74100440926 /* InitialSceneInteractor.swift */,
 				6D921211229DC75100440926 /* InitialScene.storyboard */,
+				6D92120A229DC74100440926 /* InitialSceneInteractor.swift */,
+				6D921208229DC74100440926 /* InitialSceneModels.swift */,
 				6D921213229DC8BF00440926 /* InitialSceneModule.swift */,
+				6D921205229DC74100440926 /* InitialScenePresenter.swift */,
+				6D4C4409229F382A00D5A9E5 /* InitialSceneRouter.swift */,
+				6D921209229DC74100440926 /* InitialSceneViewController.swift */,
+				6D921206229DC74100440926 /* InitialSceneWorker.swift */,
 			);
 			path = initialScene;
 			sourceTree = "<group>";
@@ -723,6 +726,7 @@
 				6D71681C229DAE1900791A42 /* ProtagonistFetcher.swift in Sources */,
 				6D8CBC16229EE9D0005336DA /* ExampleSceneViewController.swift in Sources */,
 				6DEF06592268866E00A5C454 /* ModuleProvider.swift in Sources */,
+				6D4C440A229F382A00D5A9E5 /* InitialSceneRouter.swift in Sources */,
 				6D43D904229D61A0008C7ED0 /* CharactersFetcher.swift in Sources */,
 				6D92121A229DD4E600440926 /* VoidRouter.swift in Sources */,
 				6DC67580224BD09700B795B6 /* BattleEvent.swift in Sources */,
