@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		28C116A2436248FA3DB4BC92 /* Pods_HistoriasDelLaberinto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FF6F3C6395790C0848EA61 /* Pods_HistoriasDelLaberinto.framework */; };
 		6D082A03229AB4A900B13A56 /* ItemsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D082A02229AB4A900B13A56 /* ItemsFetcher.swift */; };
+		6D2DA748229ED8DE00BC5C0D /* GameFilesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2DA747229ED8DE00BC5C0D /* GameFilesLoader.swift */; };
+		6D2DA74A229ED9C600BC5C0D /* DatabaseFetcherProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2DA749229ED9C600BC5C0D /* DatabaseFetcherProvider.swift */; };
 		6D43D904229D61A0008C7ED0 /* CharactersFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D43D903229D61A0008C7ED0 /* CharactersFetcher.swift */; };
 		6D43D906229DAA61008C7ED0 /* RoomsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D43D905229DAA61008C7ED0 /* RoomsFetcher.swift */; };
 		6D45AFB72269C5F700906FBB /* RouterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D45AFB62269C5F700906FBB /* RouterProvider.swift */; };
@@ -96,6 +98,8 @@
 
 /* Begin PBXFileReference section */
 		6D082A02229AB4A900B13A56 /* ItemsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsFetcher.swift; sourceTree = "<group>"; };
+		6D2DA747229ED8DE00BC5C0D /* GameFilesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFilesLoader.swift; sourceTree = "<group>"; };
+		6D2DA749229ED9C600BC5C0D /* DatabaseFetcherProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseFetcherProvider.swift; sourceTree = "<group>"; };
 		6D43D903229D61A0008C7ED0 /* CharactersFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersFetcher.swift; sourceTree = "<group>"; };
 		6D43D905229DAA61008C7ED0 /* RoomsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomsFetcher.swift; sourceTree = "<group>"; };
 		6D45AFB62269C5F700906FBB /* RouterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterProvider.swift; sourceTree = "<group>"; };
@@ -307,6 +311,7 @@
 			children = (
 				6D5D8FF72268620D00D11390 /* ViewCreator.swift */,
 				6DEF066022688C4C00A5C454 /* MainViewController.swift */,
+				6D2DA747229ED8DE00BC5C0D /* GameFilesLoader.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -479,6 +484,7 @@
 				6DEF06582268866E00A5C454 /* ModuleProvider.swift */,
 				6DEF065C2268898100A5C454 /* Dependencies.swift */,
 				6D45AFB62269C5F700906FBB /* RouterProvider.swift */,
+				6D2DA749229ED9C600BC5C0D /* DatabaseFetcherProvider.swift */,
 			);
 			path = dependencies;
 			sourceTree = "<group>";
@@ -693,8 +699,10 @@
 				6DA7E37922917CE2005182BA /* ChoiceEventFetcher.swift in Sources */,
 				6DC67570224BC91E00B795B6 /* Weapon.swift in Sources */,
 				6D92120F229DC74100440926 /* InitialSceneViewController.swift in Sources */,
+				6D2DA74A229ED9C600BC5C0D /* DatabaseFetcherProvider.swift in Sources */,
 				6D43D906229DAA61008C7ED0 /* RoomsFetcher.swift in Sources */,
 				6D9A45AE22874D04004F4D0C /* LoadedGame.xcdatamodeld in Sources */,
+				6D2DA748229ED8DE00BC5C0D /* GameFilesLoader.swift in Sources */,
 				6DB6AD75229AA61900B436D2 /* BattleEventFetcher.swift in Sources */,
 				6DE18D0D22981B0D00138012 /* RewardEventFetcher.swift in Sources */,
 				6DEF066122688C4C00A5C454 /* MainViewController.swift in Sources */,
