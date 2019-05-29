@@ -11,4 +11,8 @@ class ModuleProvider {
     func initialSceneModule() -> Module {
         return InitialSceneModule(routerProvider: routerProvider, databaseFetcherProvider: databaseFetcherProvider)
     }
+    
+    func dialogModule(nextStep: String) -> Module {
+        return DialogModule(nextStep: nextStep, routerProvider: routerProvider, databaseFetcherProvider: databaseFetcherProvider)
+    }
 }

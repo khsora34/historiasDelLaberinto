@@ -62,9 +62,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uTb-YT-0Sb" userLabel="ToNewView Button">
-                                <rect key="frame" x="121" y="471" width="172" height="30"/>
+                                <rect key="frame" x="153" y="471" width="108" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Navegar a nueva pantalla"/>
+                                <state key="normal" title="Mostrar diálogo"/>
                                 <connections>
                                     <action selector="toNewViewAction:" destination="Pea-PF-fbU" eventType="touchUpInside" id="HSf-iS-Rh6"/>
                                 </connections>

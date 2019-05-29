@@ -6,6 +6,11 @@ protocol ViewControllerDisplay: BaseViewController {
 
 class BaseViewController: UIViewController {
     var _presenter: Presenter?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        _presenter?.viewDidLoad()
+    }
 }
 
 extension BaseViewController: ViewControllerDisplay {}

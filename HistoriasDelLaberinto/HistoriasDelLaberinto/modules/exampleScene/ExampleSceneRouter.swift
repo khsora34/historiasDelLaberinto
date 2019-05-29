@@ -20,4 +20,9 @@ class ExampleSceneRouter: BaseRouter, ExampleSceneRoutingLogic {
         let module = moduleProvider.exampleSceneModule()
         navigator.setViewControllers([module.viewController], animated: true)
     }
+    
+    func showDialog(nextStep: String) {
+        let module = moduleProvider.dialogModule(nextStep: nextStep)
+        drawer?.present(module.viewController, animated: true, completion: nil)
+    }
 }

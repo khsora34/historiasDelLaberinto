@@ -2,8 +2,9 @@ import UIKit
 
 protocol ExampleScenePresentationLogic: Presenter {
     func calculateValueWith(string: String?)
-    func saveToDb()
-    func getFromDb()
+    func navigateToPlace()
+    func navigateToNewPlace()
+    func showDialog()
 }
 
 class ExampleScenePresenter: BasePresenter {
@@ -40,14 +41,7 @@ extension ExampleScenePresenter: ExampleScenePresentationLogic {
         viewController?.displaySomething(viewModel: viewModel)
     }
     
-    func saveToDb() {
-        let request = ExampleSceneModels.DatabaseSaving.Request(id: "choiceTest1", event: ChoiceEvent(options: [Action(name: "accion1", nextStep: "2", condition: nil), Action(name: "accion2", nextStep: nil, condition: .partner(id: "HOLA")), Action(name: "3", nextStep: "4", condition: .item(id: "potion"))]))
-        interactor?.saveDb(request: request)
-    }
-    
-    func getFromDb() {
-        let request = ExampleSceneModels.DatabaseGetting.Request(id: "choiceTest1")
-        let newEvent = interactor?.getDb(request: request).event
-        viewController?.displayNextStep(viewModel: ExampleSceneModels.DatabaseGetting.ViewModel(nextStep: (newEvent as? ChoiceEvent)?.options[0].nextStep))
+    func showDialog() {
+        router?.showDialog(nextStep: "exampleDialogue1")
     }
 }

@@ -100,5 +100,20 @@
   enemyId: "badMonster"
   nextStep: "ending"
 
-"si":
-  bien: "vale"
+"exampleDialogue1":
+  mode: "dialogue"
+  message: "¡Hola, soy Sora!"
+  characterId: "speedSora" #idCharacter
+  nextStep: "exampleDialogue2"
+
+"exampleDialogue2":
+  mode: "dialogue"
+  message: "¡Y yo también soy Sora!"
+  characterId: "shieldSora" #idCharacter
+  nextStep: "exampleDialogue3"
+
+"exampleDialogue3":
+  mode: "dialogue"
+  message: "¡Pues yo soy el original!"
+  characterId: "sora" #idCharacter
+  nextStep: ""

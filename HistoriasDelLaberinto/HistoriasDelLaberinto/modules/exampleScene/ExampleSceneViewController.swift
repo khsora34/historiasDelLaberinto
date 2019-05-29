@@ -25,8 +25,7 @@ class ExampleSceneViewController: BaseViewController {
     // MARK: Actions
     
     @IBAction func calculateValue(_ sender: Any) {
-        presenter?.saveToDb()
-        presenter?.getFromDb()
+        presenter?.calculateValueWith(string: textField.text)
     }
     
     @IBAction func navigateToPlace(_ sender: Any) {
@@ -34,7 +33,7 @@ class ExampleSceneViewController: BaseViewController {
     }
     
     @IBAction func toNewViewAction(_ sender: Any) {
-        presenter?.navigateToNewPlace()
+        presenter?.showDialog()
     }
 }
 

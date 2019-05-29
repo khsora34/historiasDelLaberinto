@@ -1,6 +1,7 @@
 protocol InitialScenePresentationLogic: Presenter {
     func loadFiles()
     func deleteFiles()
+    func goToExampleView()
 }
 
 class InitialScenePresenter: BasePresenter {
@@ -10,6 +11,10 @@ class InitialScenePresenter: BasePresenter {
     
     var interactor: InitialSceneInteractor? {
         return _interactor as? InitialSceneInteractor
+    }
+    
+    var router: InitialSceneRoutingLogic? {
+        return _router as? InitialSceneRoutingLogic
     }
 }
 
@@ -21,5 +26,9 @@ extension InitialScenePresenter: InitialScenePresentationLogic {
     
     func deleteFiles() {
         interactor?.deleteAllFiles()
+    }
+    
+    func goToExampleView() {
+        router?.goToExampleView()
     }
 }

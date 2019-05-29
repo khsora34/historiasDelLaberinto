@@ -11,7 +11,15 @@ class RouterProvider {
         return ExampleSceneRouter(moduleProvider: moduleProvider, drawer: drawer)
     }
     
+    var initialSceneRouter: InitialSceneRoutingLogic {
+        return InitialSceneRouter(moduleProvider: moduleProvider, drawer: drawer)
+    }
+    
     var voidRouter: VoidRoutingLogic {
         return VoidRouter(moduleProvider: moduleProvider, drawer: drawer)
+    }
+    
+    var dialogRouter: DialogRoutingLogic {
+        return DialogRouter(moduleProvider: moduleProvider, drawer: drawer)
     }
 }
