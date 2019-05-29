@@ -8,7 +8,6 @@ class ExampleSceneModule: Module {
 
     init(routerProvider: RouterProvider, eventsFetcherManager: EventsFetcherManager) {
         viewController = ViewCreator.createFrom(storyboardName: storyboardName, forController: controllerName)
-        let presenterInput = ExampleScenePresenterInput()
         presenter = ExampleScenePresenter()
         router = routerProvider.exampleSceneRouter
         interactor = ExampleSceneInteractor(eventsFetcherManager: eventsFetcherManager)

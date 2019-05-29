@@ -20,7 +20,7 @@ class ExampleSceneInteractor: ExampleSceneBusinessLogic {
     }
     
     func saveDb(request: ExampleSceneModels.DatabaseSaving.Request) {
-        eventsFetcherManager.saveEvent(request.event, with: request.id)
+        _ = eventsFetcherManager.saveEvent(request.event, with: request.id)
     }
     
     func getDb(request: ExampleSceneModels.DatabaseGetting.Request) -> ExampleSceneModels.DatabaseGetting.Response {
