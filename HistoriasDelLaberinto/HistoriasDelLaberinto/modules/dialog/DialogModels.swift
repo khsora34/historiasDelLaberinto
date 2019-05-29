@@ -6,10 +6,16 @@ enum DialogModels {
         let id: String
     }
     enum Response {
+        struct OkOutput {
+            let characterName: String
+            let characterImageUrl: String
+            let message: String
+            let nextStep: String?
+        }
         enum Error {
             case eventNotFound, characterNotFound
         }
-        case success(characterName: String, characterImageUrl: String, message: String)
+        case success(OkOutput)
         case error(Error)
     }
     struct ViewModel {

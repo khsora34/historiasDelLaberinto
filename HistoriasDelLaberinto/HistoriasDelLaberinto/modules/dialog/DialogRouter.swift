@@ -9,4 +9,3 @@ class DialogRouter: BaseRouter, DialogRoutingLogic {
         drawer?.dismiss(animated: true, completion: nil)
     }
 }
-

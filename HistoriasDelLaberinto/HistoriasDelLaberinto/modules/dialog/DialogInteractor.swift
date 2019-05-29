@@ -24,7 +24,7 @@ class DialogInteractor: DialogBusinessLogic {
         }
         
         let message = worker.extractMessage(event: safeEvent)
-        return .success(characterName: safeCharacter.name, characterImageUrl: safeCharacter.imageUrl, message: message)
+        let output = DialogModels.EventFetcher.Response.OkOutput(characterName: safeCharacter.name, characterImageUrl: safeCharacter.imageUrl, message: message, nextStep: safeEvent.nextStep)
+        return .success(output)
     }
 }
-
