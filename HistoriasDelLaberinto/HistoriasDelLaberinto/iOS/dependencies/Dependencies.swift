@@ -1,8 +1,8 @@
 import UIKit
 
 class Dependencies {
-    var eventsFetcherManager: EventsFetcherManager!
     var moduleProvider: ModuleProvider!
+    var databaseFetcherProvider: DatabaseFetcherProvider!
     
     lazy var routerProvider: RouterProvider = {
         guard let drawer = UIApplication.shared.keyWindow?.rootViewController as? MainViewController else {
@@ -13,17 +13,17 @@ class Dependencies {
     }()
     
     init() {
-        eventsFetcherManager = createEventFetcher()
+        databaseFetcherProvider = createDatabaseFetcherProvider()
         createModuleProvider()
     }
     
     private func createModuleProvider() {
         moduleProvider = ModuleProvider()
         moduleProvider.routerProvider = routerProvider
-        moduleProvider.eventsFetcherManager = eventsFetcherManager
+        moduleProvider.databaseFetcherProvider = databaseFetcherProvider
     }
     
-    private func createEventFetcher() -> EventsFetcherManager {
-        return EventsFetcherManagerImpl()
+    private func createDatabaseFetcherProvider() -> DatabaseFetcherProvider {
+        return DatabaseFetcherProvider(eventsFetcherManager: EventsFetcherManagerImpl(), itemsFetcher: ItemsFetcherImpl(), charactersFetcher: CharactersFetcherImpl(), roomsFetcher: RoomsFetcherImpl(), protagonistFetcher: ProtagonistFetcherImpl())
     }
 }

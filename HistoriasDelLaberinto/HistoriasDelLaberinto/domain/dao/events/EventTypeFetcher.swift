@@ -1,12 +1,13 @@
-import UIKit
+import UIKit.UIApplication
 import CoreData
 
-protocol EventTypeDao {
+protocol EventTypeFetcher {
     func getEventType(with id: String) -> EventDAO?
     func saveEventType(for event: Event, with id: String) -> Bool
+    func deleteAllEventTypes()
 }
 
-extension EventTypeDao {
+extension EventTypeFetcher {
     func getEventType(with id: String) -> EventDAO? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -36,6 +37,25 @@ extension EventTypeDao {
         } catch let error as NSError {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
             return false
+        }
+    }
+    
+    func deleteAllEventTypes() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest<EventDAO> = EventDAO.fetchRequest()
+        
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            for result in results {
+                managedContext.delete(result)
+            }
+            
+            try managedContext.save()
+            
+        } catch {
+            print(error)
         }
     }
 }

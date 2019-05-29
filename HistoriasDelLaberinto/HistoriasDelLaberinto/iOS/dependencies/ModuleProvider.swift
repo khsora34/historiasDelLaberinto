@@ -1,10 +1,14 @@
 class ModuleProvider {
     var routerProvider: RouterProvider!
-    var eventsFetcherManager: EventsFetcherManager!
+    var databaseFetcherProvider: DatabaseFetcherProvider!
     
     init() {}
     
     func exampleSceneModule() -> Module {
-        return ExampleSceneModule(routerProvider: routerProvider, eventsFetcherManager: eventsFetcherManager)
+        return ExampleSceneModule(routerProvider: routerProvider, eventsFetcherManager: databaseFetcherProvider.eventsFetcherManager)
+    }
+    
+    func initialSceneModule() -> Module {
+        return InitialSceneModule(routerProvider: routerProvider, databaseFetcherProvider: databaseFetcherProvider)
     }
 }
