@@ -6,11 +6,11 @@ class InitialSceneModule: Module {
     var presenter: Presenter
     var router: RouterLogic
     
-    init(routerProvider: RouterProvider, eventsFetcher: EventsFetcherManager, itemsFetcher: ItemsFetcher, charactersFetcher: CharactersFetcher, roomsFetcher: RoomsFetcher, protagonistFetcher: ProtagonistFetcher) {
+    init(routerProvider: RouterProvider, databaseFetcherProvider: DatabaseFetcherProvider) {
         viewController = ViewCreator.createFrom(storyboardName: storyboardName, forController: controllerName)
         presenter = InitialScenePresenter()
         router = routerProvider.voidRouter
-        interactor = InitialSceneInteractor(eventsFetcher: eventsFetcher, itemsFetcher: itemsFetcher, charactersFetcher: charactersFetcher, roomsFetcher: roomsFetcher, protagonistFetcher: protagonistFetcher)
+        interactor = InitialSceneInteractor(eventsFetcher: eventsFetcher, databaseFetcherProvider: databaseFetcherProvider)
         viewController._presenter = presenter
         presenter._interactor = interactor
         presenter._router = router
