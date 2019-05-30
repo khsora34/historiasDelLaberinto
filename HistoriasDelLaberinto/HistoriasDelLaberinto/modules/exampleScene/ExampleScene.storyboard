@@ -53,6 +53,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fai-XN-aU2">
+                                <rect key="frame" x="128" y="433" width="159" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Navegar a otra pantalla"/>
+                                <connections>
+                                    <action selector="navigateToPlace:" destination="Pea-PF-fbU" eventType="touchUpInside" id="msz-wk-fHI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uTb-YT-0Sb" userLabel="ToNewView Button">
+                                <rect key="frame" x="153" y="471" width="108" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Mostrar diálogo"/>
+                                <connections>
+                                    <action selector="toNewViewAction:" destination="Pea-PF-fbU" eventType="touchUpInside" id="HSf-iS-Rh6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -62,8 +78,10 @@
                         <viewLayoutGuide key="safeArea" id="c2c-Gu-Ac5"/>
                     </view>
                     <connections>
+                        <outlet property="navigateButton" destination="fai-XN-aU2" id="Fi0-mj-2WQ"/>
                         <outlet property="returnValueLabel" destination="X1z-zf-ics" id="Fhb-GL-H56"/>
                         <outlet property="textField" destination="H2O-yM-AqV" id="ITj-o0-pbI"/>
+                        <outlet property="toNewViewButton" destination="uTb-YT-0Sb" id="e8V-T1-e50"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W4X-oh-PiO" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -17,9 +17,12 @@ class ExampleSceneRouter: BaseRouter, ExampleSceneRoutingLogic {
     
     func goToNewView() {
         guard let navigator = drawer?.currentRootViewController as? UINavigationController else { return }
-        if let globalPositionVC = navigator.viewControllers.first {
-            let module = moduleProvider.exampleSceneModule()
-            navigator.setViewControllers([globalPositionVC, module.viewController], animated: true)
-        }
+        let module = moduleProvider.exampleSceneModule()
+        navigator.setViewControllers([module.viewController], animated: true)
+    }
+    
+    func showDialog(nextStep: String) {
+        let module = moduleProvider.dialogModule(nextStep: nextStep)
+        drawer?.present(module.viewController, animated: true, completion: nil)
     }
 }

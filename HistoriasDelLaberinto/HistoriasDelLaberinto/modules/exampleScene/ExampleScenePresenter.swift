@@ -2,8 +2,9 @@ import UIKit
 
 protocol ExampleScenePresentationLogic: Presenter {
     func calculateValueWith(string: String?)
-    func saveToDb()
-    func getFromDb()
+    func navigateToPlace()
+    func navigateToNewPlace()
+    func showDialog()
 }
 
 class ExampleScenePresenter: BasePresenter {
@@ -24,6 +25,14 @@ class ExampleScenePresenter: BasePresenter {
 // MARK: Do something
 
 extension ExampleScenePresenter: ExampleScenePresentationLogic {
+    func navigateToNewPlace() {
+        router?.goToNewView()
+    }
+    
+    func navigateToPlace() {
+        router?.goToNextView()
+    }
+    
     func calculateValueWith(string: String?) {
         guard let interactor = interactor else { return }
         let request = ExampleSceneModels.Something.Request(input: string)
@@ -32,14 +41,15 @@ extension ExampleScenePresenter: ExampleScenePresentationLogic {
         viewController?.displaySomething(viewModel: viewModel)
     }
     
-    func saveToDb() {
-        let request = ExampleSceneModels.DatabaseSaving.Request(id: "choiceTest1", event: ChoiceEvent(options: [Action(name: "accion1", nextStep: "2", condition: nil), Action(name: "accion2", nextStep: nil, condition: .partner(id: "HOLA")), Action(name: "3", nextStep: "4", condition: .item(id: "potion"))]))
-        interactor?.saveDb(request: request)
-    }
-    
-    func getFromDb() {
-        let request = ExampleSceneModels.DatabaseGetting.Request(id: "choiceTest1")
-        let newEvent = interactor?.getDb(request: request).event
-        viewController?.displayNextStep(viewModel: ExampleSceneModels.DatabaseGetting.ViewModel(nextStep: (newEvent as? ChoiceEvent)?.options[0].nextStep))
+    func showDialog() {
+        let request = ExampleSceneModels.DialogAvailable.Request(id: "exampleDialogue1")
+        guard let response = interactor?.dialogIsAvailable(request: request) else { return }
+        switch response {
+        case .ok:
+            router?.showDialog(nextStep: request.id)
+        case .error(let error):
+            print(error)
+        }
+        
     }
 }
