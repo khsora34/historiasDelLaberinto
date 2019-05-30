@@ -1,6 +1,6 @@
 protocol ExampleSceneBusinessLogic: BusinessLogic {
     func doSomething(request: ExampleSceneModels.Something.Request) -> ExampleSceneModels.Something.Response
-    
+    func dialogIsAvailable(request: ExampleSceneModels.DialogAvailable.Request) -> ExampleSceneModels.DialogAvailable.Response
 }
 
 class ExampleSceneInteractor: ExampleSceneBusinessLogic {
@@ -26,5 +26,14 @@ class ExampleSceneInteractor: ExampleSceneBusinessLogic {
     func getDb(request: ExampleSceneModels.DatabaseGetting.Request) -> ExampleSceneModels.DatabaseGetting.Response {
         let event = eventsFetcherManager.getEvent(with: request.id)
         return ExampleSceneModels.DatabaseGetting.Response(event: event)
+    }
+}
+
+extension ExampleSceneInteractor: IsEventAvailableCheckable {
+    func dialogIsAvailable(request: ExampleSceneModels.DialogAvailable.Request) -> ExampleSceneModels.DialogAvailable.Response {
+        guard checkEventAvailable(with: request.id, eventFetcher: eventsFetcherManager) else {
+            return .error(ExampleSceneModels.DialogAvailable.Response.Error(reason: "Event not available."))
+        }
+        return .ok
     }
 }
