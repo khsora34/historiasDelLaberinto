@@ -42,6 +42,14 @@ extension ExampleScenePresenter: ExampleScenePresentationLogic {
     }
     
     func showDialog() {
-        router?.showDialog(nextStep: "exampleDialogue1")
+        let request = ExampleSceneModels.DialogAvailable.Request(id: "exampleDialogue1")
+        guard let response = interactor?.dialogIsAvailable(request: request) else { return }
+        switch response {
+        case .ok:
+            router?.showDialog(nextStep: request.id)
+        case .error(let error):
+            print(error)
+        }
+        
     }
 }

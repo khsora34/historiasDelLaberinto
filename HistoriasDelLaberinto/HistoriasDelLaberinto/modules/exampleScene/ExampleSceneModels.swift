@@ -20,6 +20,22 @@ enum ExampleSceneModels {
         }
     }
     
+    enum DialogAvailable {
+        struct Request {
+            let id: String
+        }
+        enum Response {
+            struct Error {
+                let reason: String
+            }
+            case ok
+            case error(Error)
+        }
+        struct ViewModel {
+            let nextStep: String?
+        }
+    }
+    
     enum DatabaseGetting {
         struct Request {
             let id: String

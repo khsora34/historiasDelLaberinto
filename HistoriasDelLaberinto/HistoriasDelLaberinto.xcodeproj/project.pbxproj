@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -94,6 +94,7 @@
 		6DEF065D2268898100A5C454 /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEF065C2268898100A5C454 /* Dependencies.swift */; };
 		6DEF065F22688B5200A5C454 /* BaseModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEF065E22688B5200A5C454 /* BaseModule.swift */; };
 		6DEF066122688C4C00A5C454 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEF066022688C4C00A5C454 /* MainViewController.swift */; };
+		6DFE3FBE22A0537A000C3C2F /* IsEventAvailableCheckable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFE3FBD22A0537A000C3C2F /* IsEventAvailableCheckable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -197,6 +198,7 @@
 		6DEF065C2268898100A5C454 /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		6DEF065E22688B5200A5C454 /* BaseModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModule.swift; sourceTree = "<group>"; };
 		6DEF066022688C4C00A5C454 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		6DFE3FBD22A0537A000C3C2F /* IsEventAvailableCheckable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsEventAvailableCheckable.swift; sourceTree = "<group>"; };
 		7233A83E5CB3B122ECDD5D3B /* Pods-HistoriasDelLaberinto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HistoriasDelLaberinto.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto.debug.xcconfig"; sourceTree = "<group>"; };
 		B18D44CD4BED83926DE99D1B /* Pods-HistoriasDelLaberinto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HistoriasDelLaberinto.release.xcconfig"; path = "Pods/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto.release.xcconfig"; sourceTree = "<group>"; };
 		C1FF6F3C6395790C0848EA61 /* Pods_HistoriasDelLaberinto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HistoriasDelLaberinto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -246,12 +248,12 @@
 			isa = PBXGroup;
 			children = (
 				6D4C43FB229F1EF700D5A9E5 /* DialogConfigurator.swift */,
-				6D4C43FD229F241600D5A9E5 /* DialogInteractor.swift */,
 				6D4C4401229F26AC00D5A9E5 /* DialogModels.swift */,
+				6D4C43FD229F241600D5A9E5 /* DialogInteractor.swift */,
 				6D4C43FF229F243200D5A9E5 /* DialogPresenter.swift */,
+				6D4C4403229F289200D5A9E5 /* DialogWorker.swift */,
 				6D4C4405229F30DD00D5A9E5 /* DialogRouter.swift */,
 				6D2DA750229EE49200BC5C0D /* DialogViewController.swift */,
-				6D4C4403229F289200D5A9E5 /* DialogWorker.swift */,
 				6D2DA751229EE49200BC5C0D /* DialogView.xib */,
 				6D4C4407229F31E100D5A9E5 /* DialogModule.swift */,
 			);
@@ -262,9 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				6D2DA74F229EE49200BC5C0D /* dialog */,
-				6D921218229DD4DC00440926 /* void */,
 				6D71681D229DC39F00791A42 /* initialScene */,
-				6D9A45A622874C51004F4D0C /* testController */,
 				6D45B011226A28A900906FBB /* exampleScene */,
 			);
 			path = modules;
@@ -346,6 +346,8 @@
 		6D5D8FF92268621200D11390 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				6DFE3FBC22A05366000C3C2F /* interactors */,
+				6D921218229DD4DC00440926 /* void */,
 				6D5D8FF72268620D00D11390 /* ViewCreator.swift */,
 				6DEF066022688C4C00A5C454 /* MainViewController.swift */,
 				6D2DA747229ED8DE00BC5C0D /* GameFilesLoader.swift */,
@@ -509,6 +511,7 @@
 		6DEF065A2268893900A5C454 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				6D9A45A622874C51004F4D0C /* testController */,
 				6DEF065B2268894F00A5C454 /* dependencies */,
 				6D5D8FF92268621200D11390 /* common */,
 				6D5D8FF4226861F000D11390 /* base */,
@@ -525,6 +528,14 @@
 				6D2DA749229ED9C600BC5C0D /* DatabaseFetcherProvider.swift */,
 			);
 			path = dependencies;
+			sourceTree = "<group>";
+		};
+		6DFE3FBC22A05366000C3C2F /* interactors */ = {
+			isa = PBXGroup;
+			children = (
+				6DFE3FBD22A0537A000C3C2F /* IsEventAvailableCheckable.swift */,
+			);
+			path = interactors;
 			sourceTree = "<group>";
 		};
 		86DB7E70A5ECCE502975804F /* Pods */ = {
@@ -681,15 +692,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/Yams/Yams.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Yams.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -716,6 +724,7 @@
 				6D4B57DE224A9528001779DC /* Action.swift in Sources */,
 				6D45B01B226A28A900906FBB /* ExampleSceneRouter.swift in Sources */,
 				6DC67569224BC81E00B795B6 /* NotPlayableCharacter.swift in Sources */,
+				6DFE3FBE22A0537A000C3C2F /* IsEventAvailableCheckable.swift in Sources */,
 				6D823B222267694400522756 /* EventBuilder.swift in Sources */,
 				6D90B09E225E383200362CDA /* YamlParser.swift in Sources */,
 				6DBC01A42254FAE4004A97AD /* Item.swift in Sources */,
