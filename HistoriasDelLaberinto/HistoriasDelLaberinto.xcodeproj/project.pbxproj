@@ -681,15 +681,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/Yams/Yams.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Yams.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
