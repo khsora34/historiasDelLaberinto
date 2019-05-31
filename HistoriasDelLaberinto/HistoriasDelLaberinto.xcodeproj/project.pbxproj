@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		28C116A2436248FA3DB4BC92 /* Pods_HistoriasDelLaberinto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FF6F3C6395790C0848EA61 /* Pods_HistoriasDelLaberinto.framework */; };
-		6D082A03229AB4A900B13A56 /* ItemsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D082A02229AB4A900B13A56 /* ItemsFetcher.swift */; };
+		6D082A03229AB4A900B13A56 /* ItemFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D082A02229AB4A900B13A56 /* ItemFetcher.swift */; };
 		6D2DA748229ED8DE00BC5C0D /* GameFilesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2DA747229ED8DE00BC5C0D /* GameFilesLoader.swift */; };
 		6D2DA74A229ED9C600BC5C0D /* DatabaseFetcherProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2DA749229ED9C600BC5C0D /* DatabaseFetcherProvider.swift */; };
 		6D2DA752229EE49200BC5C0D /* DialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2DA750229EE49200BC5C0D /* DialogViewController.swift */; };
 		6D2DA753229EE49200BC5C0D /* DialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D2DA751229EE49200BC5C0D /* DialogView.xib */; };
-		6D43D904229D61A0008C7ED0 /* CharactersFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D43D903229D61A0008C7ED0 /* CharactersFetcher.swift */; };
-		6D43D906229DAA61008C7ED0 /* RoomsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D43D905229DAA61008C7ED0 /* RoomsFetcher.swift */; };
+		6D43D904229D61A0008C7ED0 /* CharacterFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D43D903229D61A0008C7ED0 /* CharacterFetcher.swift */; };
+		6D43D906229DAA61008C7ED0 /* RoomFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D43D905229DAA61008C7ED0 /* RoomFetcher.swift */; };
 		6D45AFB72269C5F700906FBB /* RouterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D45AFB62269C5F700906FBB /* RouterProvider.swift */; };
 		6D45B01A226A28A900906FBB /* ExampleSceneModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D45B012226A28A900906FBB /* ExampleSceneModule.swift */; };
 		6D45B01B226A28A900906FBB /* ExampleSceneRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D45B013226A28A900906FBB /* ExampleSceneRouter.swift */; };
@@ -29,22 +29,19 @@
 		6D4B57E3224A9621001779DC /* Protagonist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4B57E2224A9621001779DC /* Protagonist.swift */; };
 		6D4B57E8224A9A27001779DC /* StatusAilment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4B57E7224A9A27001779DC /* StatusAilment.swift */; };
 		6D4C43FC229F1EF700D5A9E5 /* DialogConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C43FB229F1EF700D5A9E5 /* DialogConfigurator.swift */; };
-		6D4C43FE229F241600D5A9E5 /* DialogInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C43FD229F241600D5A9E5 /* DialogInteractor.swift */; };
-		6D4C4400229F243200D5A9E5 /* DialogPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C43FF229F243200D5A9E5 /* DialogPresenter.swift */; };
-		6D4C4402229F26AC00D5A9E5 /* DialogModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C4401229F26AC00D5A9E5 /* DialogModels.swift */; };
-		6D4C4404229F289200D5A9E5 /* DialogWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C4403229F289200D5A9E5 /* DialogWorker.swift */; };
-		6D4C4406229F30DD00D5A9E5 /* DialogRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C4405229F30DD00D5A9E5 /* DialogRouter.swift */; };
-		6D4C4408229F31E100D5A9E5 /* DialogModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C4407229F31E100D5A9E5 /* DialogModule.swift */; };
 		6D4C440A229F382A00D5A9E5 /* InitialSceneRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C4409229F382A00D5A9E5 /* InitialSceneRouter.swift */; };
 		6D5D8FF6226861FC00D11390 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D8FF5226861FC00D11390 /* BaseViewController.swift */; };
 		6D5D8FF82268620D00D11390 /* ViewCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D8FF72268620D00D11390 /* ViewCreator.swift */; };
 		6D5D8FFC226862E500D11390 /* BasePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D8FFB226862E500D11390 /* BasePresenter.swift */; };
 		6D5D8FFE2268644800D11390 /* BaseRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D8FFD2268644800D11390 /* BaseRouter.swift */; };
+		6D5DB0D422A1A49C00C8745E /* EventHandlerRoutingLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DB0D322A1A49C00C8745E /* EventHandlerRoutingLogic.swift */; };
+		6D5DB0D922A1B1DB00C8745E /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DB0D822A1B1DB00C8745E /* UITextFieldExtension.swift */; };
+		6D5DB0DB22A1B38200C8745E /* UITextViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DB0DA22A1B38200C8745E /* UITextViewExtension.swift */; };
 		6D6DE4B9221DB40600C92B94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */; };
 		6D6DE4C3221DB40700C92B94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DE4C1221DB40700C92B94 /* LaunchScreen.storyboard */; };
 		6D71681C229DAE1900791A42 /* ProtagonistFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D71681B229DAE1900791A42 /* ProtagonistFetcher.swift */; };
 		6D75802522899D57009A48D7 /* EventTypeFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D75802422899D57009A48D7 /* EventTypeFetcher.swift */; };
-		6D81DA2C228B18FE006DF3D0 /* EventsFetcherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D81DA2B228B18FE006DF3D0 /* EventsFetcherManager.swift */; };
+		6D81DA2C228B18FE006DF3D0 /* EventFetcherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D81DA2B228B18FE006DF3D0 /* EventFetcherManager.swift */; };
 		6D823B222267694400522756 /* EventBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D823B212267694400522756 /* EventBuilder.swift */; };
 		6D880CDA228ACBF2008D0509 /* loadedGame in Resources */ = {isa = PBXBuildFile; fileRef = 6D880CD9228ACBF2008D0509 /* loadedGame */; };
 		6D880CDC228ACBF2008D0509 /* CharactersFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D880CDB228ACBF2008D0509 /* CharactersFile.swift */; };
@@ -90,6 +87,9 @@
 		6DDF3662225FBAD300391B1D /* ModelParsersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDF3661225FBAD300391B1D /* ModelParsersTests.swift */; };
 		6DDF3668225FBDCD00391B1D /* RoomsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDF3667225FBDCD00391B1D /* RoomsFile.swift */; };
 		6DE18D0D22981B0D00138012 /* RewardEventFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE18D0C22981B0D00138012 /* RewardEventFetcher.swift */; };
+		6DEC0C9322A194F30050849F /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEC0C9222A194F30050849F /* EventHandler.swift */; };
+		6DEC0C9522A1966B0050849F /* EventsHandlerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEC0C9422A1966B0050849F /* EventsHandlerModels.swift */; };
+		6DEC0C9822A196E10050849F /* EventHandlerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEC0C9722A196E10050849F /* EventHandlerInteractor.swift */; };
 		6DEF06592268866E00A5C454 /* ModuleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEF06582268866E00A5C454 /* ModuleProvider.swift */; };
 		6DEF065D2268898100A5C454 /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEF065C2268898100A5C454 /* Dependencies.swift */; };
 		6DEF065F22688B5200A5C454 /* BaseModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEF065E22688B5200A5C454 /* BaseModule.swift */; };
@@ -108,13 +108,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6D082A02229AB4A900B13A56 /* ItemsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsFetcher.swift; sourceTree = "<group>"; };
+		6D082A02229AB4A900B13A56 /* ItemFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemFetcher.swift; sourceTree = "<group>"; };
 		6D2DA747229ED8DE00BC5C0D /* GameFilesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFilesLoader.swift; sourceTree = "<group>"; };
 		6D2DA749229ED9C600BC5C0D /* DatabaseFetcherProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseFetcherProvider.swift; sourceTree = "<group>"; };
 		6D2DA750229EE49200BC5C0D /* DialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogViewController.swift; sourceTree = "<group>"; };
 		6D2DA751229EE49200BC5C0D /* DialogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DialogView.xib; sourceTree = "<group>"; };
-		6D43D903229D61A0008C7ED0 /* CharactersFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersFetcher.swift; sourceTree = "<group>"; };
-		6D43D905229DAA61008C7ED0 /* RoomsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomsFetcher.swift; sourceTree = "<group>"; };
+		6D43D903229D61A0008C7ED0 /* CharacterFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterFetcher.swift; sourceTree = "<group>"; };
+		6D43D905229DAA61008C7ED0 /* RoomFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomFetcher.swift; sourceTree = "<group>"; };
 		6D45AFB62269C5F700906FBB /* RouterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterProvider.swift; sourceTree = "<group>"; };
 		6D45B012226A28A900906FBB /* ExampleSceneModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleSceneModule.swift; sourceTree = "<group>"; };
 		6D45B013226A28A900906FBB /* ExampleSceneRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleSceneRouter.swift; sourceTree = "<group>"; };
@@ -129,24 +129,21 @@
 		6D4B57E2224A9621001779DC /* Protagonist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protagonist.swift; sourceTree = "<group>"; };
 		6D4B57E7224A9A27001779DC /* StatusAilment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusAilment.swift; sourceTree = "<group>"; };
 		6D4C43FB229F1EF700D5A9E5 /* DialogConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogConfigurator.swift; sourceTree = "<group>"; };
-		6D4C43FD229F241600D5A9E5 /* DialogInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogInteractor.swift; sourceTree = "<group>"; };
-		6D4C43FF229F243200D5A9E5 /* DialogPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogPresenter.swift; sourceTree = "<group>"; };
-		6D4C4401229F26AC00D5A9E5 /* DialogModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogModels.swift; sourceTree = "<group>"; };
-		6D4C4403229F289200D5A9E5 /* DialogWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogWorker.swift; sourceTree = "<group>"; };
-		6D4C4405229F30DD00D5A9E5 /* DialogRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogRouter.swift; sourceTree = "<group>"; };
-		6D4C4407229F31E100D5A9E5 /* DialogModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogModule.swift; sourceTree = "<group>"; };
 		6D4C4409229F382A00D5A9E5 /* InitialSceneRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSceneRouter.swift; sourceTree = "<group>"; };
 		6D5D8FF5226861FC00D11390 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		6D5D8FF72268620D00D11390 /* ViewCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewCreator.swift; sourceTree = "<group>"; };
 		6D5D8FFB226862E500D11390 /* BasePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePresenter.swift; sourceTree = "<group>"; };
 		6D5D8FFD2268644800D11390 /* BaseRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRouter.swift; sourceTree = "<group>"; };
+		6D5DB0D322A1A49C00C8745E /* EventHandlerRoutingLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventHandlerRoutingLogic.swift; sourceTree = "<group>"; };
+		6D5DB0D822A1B1DB00C8745E /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
+		6D5DB0DA22A1B38200C8745E /* UITextViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextViewExtension.swift; sourceTree = "<group>"; };
 		6D6DE4B5221DB40600C92B94 /* HistoriasDelLaberinto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HistoriasDelLaberinto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D6DE4C2221DB40700C92B94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6D6DE4C4221DB40700C92B94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D71681B229DAE1900791A42 /* ProtagonistFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtagonistFetcher.swift; sourceTree = "<group>"; };
 		6D75802422899D57009A48D7 /* EventTypeFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTypeFetcher.swift; sourceTree = "<group>"; };
-		6D81DA2B228B18FE006DF3D0 /* EventsFetcherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsFetcherManager.swift; sourceTree = "<group>"; };
+		6D81DA2B228B18FE006DF3D0 /* EventFetcherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFetcherManager.swift; sourceTree = "<group>"; };
 		6D823B212267694400522756 /* EventBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBuilder.swift; sourceTree = "<group>"; };
 		6D880CD9228ACBF2008D0509 /* loadedGame */ = {isa = PBXFileReference; lastKnownFileType = folder; name = loadedGame; path = ../loadedGame; sourceTree = "<group>"; };
 		6D880CDB228ACBF2008D0509 /* CharactersFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersFile.swift; sourceTree = "<group>"; };
@@ -194,6 +191,9 @@
 		6DDF3661225FBAD300391B1D /* ModelParsersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelParsersTests.swift; sourceTree = "<group>"; };
 		6DDF3667225FBDCD00391B1D /* RoomsFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomsFile.swift; sourceTree = "<group>"; };
 		6DE18D0C22981B0D00138012 /* RewardEventFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardEventFetcher.swift; sourceTree = "<group>"; };
+		6DEC0C9222A194F30050849F /* EventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
+		6DEC0C9422A1966B0050849F /* EventsHandlerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsHandlerModels.swift; sourceTree = "<group>"; };
+		6DEC0C9722A196E10050849F /* EventHandlerInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventHandlerInteractor.swift; sourceTree = "<group>"; };
 		6DEF06582268866E00A5C454 /* ModuleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleProvider.swift; sourceTree = "<group>"; };
 		6DEF065C2268898100A5C454 /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		6DEF065E22688B5200A5C454 /* BaseModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModule.swift; sourceTree = "<group>"; };
@@ -248,14 +248,8 @@
 			isa = PBXGroup;
 			children = (
 				6D4C43FB229F1EF700D5A9E5 /* DialogConfigurator.swift */,
-				6D4C4401229F26AC00D5A9E5 /* DialogModels.swift */,
-				6D4C43FD229F241600D5A9E5 /* DialogInteractor.swift */,
-				6D4C43FF229F243200D5A9E5 /* DialogPresenter.swift */,
-				6D4C4403229F289200D5A9E5 /* DialogWorker.swift */,
-				6D4C4405229F30DD00D5A9E5 /* DialogRouter.swift */,
 				6D2DA750229EE49200BC5C0D /* DialogViewController.swift */,
 				6D2DA751229EE49200BC5C0D /* DialogView.xib */,
-				6D4C4407229F31E100D5A9E5 /* DialogModule.swift */,
 			);
 			path = dialog;
 			sourceTree = "<group>";
@@ -346,6 +340,7 @@
 		6D5D8FF92268621200D11390 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				6DEC0C9122A194C50050849F /* eventsHandler */,
 				6DFE3FBC22A05366000C3C2F /* interactors */,
 				6D921218229DD4DC00440926 /* void */,
 				6D5D8FF72268620D00D11390 /* ViewCreator.swift */,
@@ -353,6 +348,15 @@
 				6D2DA747229ED8DE00BC5C0D /* GameFilesLoader.swift */,
 			);
 			path = common;
+			sourceTree = "<group>";
+		};
+		6D5DB0D722A1B1CA00C8745E /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				6D5DB0D822A1B1DB00C8745E /* UITextFieldExtension.swift */,
+				6D5DB0DA22A1B38200C8745E /* UITextViewExtension.swift */,
+			);
+			path = extensions;
 			sourceTree = "<group>";
 		};
 		6D6DE4AC221DB40600C92B94 = {
@@ -407,12 +411,12 @@
 		6D75802322899CC0009A48D7 /* dao */ = {
 			isa = PBXGroup;
 			children = (
-				6D81DA2B228B18FE006DF3D0 /* EventsFetcherManager.swift */,
+				6D81DA2B228B18FE006DF3D0 /* EventFetcherManager.swift */,
 				6D0829FF229AB46F00B13A56 /* events */,
 				6D9A45AC22874D04004F4D0C /* LoadedGame.xcdatamodeld */,
-				6D082A02229AB4A900B13A56 /* ItemsFetcher.swift */,
-				6D43D903229D61A0008C7ED0 /* CharactersFetcher.swift */,
-				6D43D905229DAA61008C7ED0 /* RoomsFetcher.swift */,
+				6D082A02229AB4A900B13A56 /* ItemFetcher.swift */,
+				6D43D903229D61A0008C7ED0 /* CharacterFetcher.swift */,
+				6D43D905229DAA61008C7ED0 /* RoomFetcher.swift */,
 				6D71681B229DAE1900791A42 /* ProtagonistFetcher.swift */,
 			);
 			path = dao;
@@ -508,9 +512,21 @@
 			path = parser;
 			sourceTree = "<group>";
 		};
+		6DEC0C9122A194C50050849F /* eventsHandler */ = {
+			isa = PBXGroup;
+			children = (
+				6DEC0C9222A194F30050849F /* EventHandler.swift */,
+				6DEC0C9722A196E10050849F /* EventHandlerInteractor.swift */,
+				6D5DB0D322A1A49C00C8745E /* EventHandlerRoutingLogic.swift */,
+				6DEC0C9422A1966B0050849F /* EventsHandlerModels.swift */,
+			);
+			path = eventsHandler;
+			sourceTree = "<group>";
+		};
 		6DEF065A2268893900A5C454 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				6D5DB0D722A1B1CA00C8745E /* extensions */,
 				6D9A45A622874C51004F4D0C /* testController */,
 				6DEF065B2268894F00A5C454 /* dependencies */,
 				6D5D8FF92268621200D11390 /* common */,
@@ -712,7 +728,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D92120C229DC74100440926 /* InitialSceneWorker.swift in Sources */,
-				6D082A03229AB4A900B13A56 /* ItemsFetcher.swift in Sources */,
+				6D082A03229AB4A900B13A56 /* ItemFetcher.swift in Sources */,
 				6D9A45AB22874C51004F4D0C /* TestViewController.swift in Sources */,
 				6DC67582224BD0FB00B795B6 /* RewardEvent.swift in Sources */,
 				6DC67574224BC9E400B795B6 /* KeyItem.swift in Sources */,
@@ -727,6 +743,7 @@
 				6DFE3FBE22A0537A000C3C2F /* IsEventAvailableCheckable.swift in Sources */,
 				6D823B222267694400522756 /* EventBuilder.swift in Sources */,
 				6D90B09E225E383200362CDA /* YamlParser.swift in Sources */,
+				6D5DB0D922A1B1DB00C8745E /* UITextFieldExtension.swift in Sources */,
 				6DBC01A42254FAE4004A97AD /* Item.swift in Sources */,
 				6DC67579224BCCE700B795B6 /* DialogueEvent.swift in Sources */,
 				6DA2D2502267430800D1B8DF /* ItemsFile.swift in Sources */,
@@ -736,7 +753,7 @@
 				6D8CBC16229EE9D0005336DA /* ExampleSceneViewController.swift in Sources */,
 				6DEF06592268866E00A5C454 /* ModuleProvider.swift in Sources */,
 				6D4C440A229F382A00D5A9E5 /* InitialSceneRouter.swift in Sources */,
-				6D43D904229D61A0008C7ED0 /* CharactersFetcher.swift in Sources */,
+				6D43D904229D61A0008C7ED0 /* CharacterFetcher.swift in Sources */,
 				6D92121A229DD4E600440926 /* VoidRouter.swift in Sources */,
 				6DC67580224BD09700B795B6 /* BattleEvent.swift in Sources */,
 				6D45AFB72269C5F700906FBB /* RouterProvider.swift in Sources */,
@@ -745,15 +762,16 @@
 				6DC67572224BC99C00B795B6 /* ConsumableItem.swift in Sources */,
 				6D92120E229DC74100440926 /* InitialSceneModels.swift in Sources */,
 				6D5D8FF82268620D00D11390 /* ViewCreator.swift in Sources */,
-				6D81DA2C228B18FE006DF3D0 /* EventsFetcherManager.swift in Sources */,
+				6D81DA2C228B18FE006DF3D0 /* EventFetcherManager.swift in Sources */,
 				6DEF065F22688B5200A5C454 /* BaseModule.swift in Sources */,
 				6DC6756B224BC85400B795B6 /* GameCharacter.swift in Sources */,
 				6DA7E37922917CE2005182BA /* ChoiceEventFetcher.swift in Sources */,
 				6DC67570224BC91E00B795B6 /* Weapon.swift in Sources */,
 				6D92120F229DC74100440926 /* InitialSceneViewController.swift in Sources */,
 				6D2DA74A229ED9C600BC5C0D /* DatabaseFetcherProvider.swift in Sources */,
-				6D4C4408229F31E100D5A9E5 /* DialogModule.swift in Sources */,
-				6D43D906229DAA61008C7ED0 /* RoomsFetcher.swift in Sources */,
+				6D43D906229DAA61008C7ED0 /* RoomFetcher.swift in Sources */,
+				6DEC0C9822A196E10050849F /* EventHandlerInteractor.swift in Sources */,
+				6DEC0C9522A1966B0050849F /* EventsHandlerModels.swift in Sources */,
 				6D9A45AE22874D04004F4D0C /* LoadedGame.xcdatamodeld in Sources */,
 				6D2DA748229ED8DE00BC5C0D /* GameFilesLoader.swift in Sources */,
 				6DB6AD75229AA61900B436D2 /* BattleEventFetcher.swift in Sources */,
@@ -768,25 +786,23 @@
 				6D45B01C226A28A900906FBB /* ExampleSceneWorker.swift in Sources */,
 				6D921210229DC74100440926 /* InitialSceneInteractor.swift in Sources */,
 				6D4B57E3224A9621001779DC /* Protagonist.swift in Sources */,
-				6D4C4406229F30DD00D5A9E5 /* DialogRouter.swift in Sources */,
 				6DC6757E224BD04E00B795B6 /* ChoiceEvent.swift in Sources */,
 				6DA2D25222674A0100D1B8DF /* EventParser.swift in Sources */,
-				6D4C4400229F243200D5A9E5 /* DialogPresenter.swift in Sources */,
 				6D9250902268CD3000F2A3E3 /* BaseModels.swift in Sources */,
 				6D4B57E8224A9A27001779DC /* StatusAilment.swift in Sources */,
-				6D4C4404229F289200D5A9E5 /* DialogWorker.swift in Sources */,
 				6D6DE4B9221DB40600C92B94 /* AppDelegate.swift in Sources */,
 				6D9A45B022875045004F4D0C /* ConditionEvent.swift in Sources */,
-				6D4C43FE229F241600D5A9E5 /* DialogInteractor.swift in Sources */,
 				6D45B01A226A28A900906FBB /* ExampleSceneModule.swift in Sources */,
 				6DB6AD73229AA38300B436D2 /* ConditionEventFetcher.swift in Sources */,
-				6D4C4402229F26AC00D5A9E5 /* DialogModels.swift in Sources */,
+				6DEC0C9322A194F30050849F /* EventHandler.swift in Sources */,
 				6D2DA752229EE49200BC5C0D /* DialogViewController.swift in Sources */,
 				6D4B57DC224A9489001779DC /* Room.swift in Sources */,
 				6D45B01E226A28A900906FBB /* ExampleSceneInteractor.swift in Sources */,
 				6D4B57E0224A9591001779DC /* Condition.swift in Sources */,
+				6D5DB0D422A1A49C00C8745E /* EventHandlerRoutingLogic.swift in Sources */,
 				6DC67567224BC7A800B795B6 /* ImageRepresentable.swift in Sources */,
 				6D880CDC228ACBF2008D0509 /* CharactersFile.swift in Sources */,
+				6D5DB0DB22A1B38200C8745E /* UITextViewExtension.swift in Sources */,
 				6D92120B229DC74100440926 /* InitialScenePresenter.swift in Sources */,
 				6DC67565224BC78400B795B6 /* PlayableCharacter.swift in Sources */,
 			);

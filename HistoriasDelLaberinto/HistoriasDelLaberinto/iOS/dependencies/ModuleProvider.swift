@@ -5,14 +5,10 @@ class ModuleProvider {
     init() {}
     
     func exampleSceneModule() -> Module {
-        return ExampleSceneModule(routerProvider: routerProvider, eventsFetcherManager: databaseFetcherProvider.eventsFetcherManager)
+        return ExampleSceneModule(routerProvider: routerProvider, databaseFetcherProvider: databaseFetcherProvider)
     }
     
     func initialSceneModule() -> Module {
         return InitialSceneModule(routerProvider: routerProvider, databaseFetcherProvider: databaseFetcherProvider)
-    }
-    
-    func dialogModule(nextStep: String) -> Module {
-        return DialogModule(nextStep: nextStep, routerProvider: routerProvider, databaseFetcherProvider: databaseFetcherProvider)
     }
 }

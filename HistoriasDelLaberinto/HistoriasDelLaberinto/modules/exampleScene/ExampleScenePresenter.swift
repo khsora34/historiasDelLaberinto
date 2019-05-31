@@ -20,6 +20,11 @@ class ExampleScenePresenter: BasePresenter {
         return _router as? ExampleSceneRouter
     }
     
+    // MARK: Event handler
+    
+    var dialog: DialogDisplayLogic?
+    var actualEvent: Event?
+    
 }
 
 // MARK: Do something
@@ -42,14 +47,16 @@ extension ExampleScenePresenter: ExampleScenePresentationLogic {
     }
     
     func showDialog() {
-        let request = ExampleSceneModels.DialogAvailable.Request(id: "exampleDialogue1")
-        guard let response = interactor?.dialogIsAvailable(request: request) else { return }
-        switch response {
-        case .ok:
-            router?.showDialog(nextStep: request.id)
-        case .error(let error):
-            print(error)
-        }
-        
+        startEvent(with: "exampleDialogue1")
+    }
+}
+
+extension ExampleScenePresenter: EventHandler {
+    var eventHandlerRouter: EventHandlerRoutingLogic? {
+        return _router as? EventHandlerRoutingLogic
+    }
+    
+    var eventHandlerInteractor: EventHandlerInteractor? {
+        return _interactor as? EventHandlerInteractor
     }
 }

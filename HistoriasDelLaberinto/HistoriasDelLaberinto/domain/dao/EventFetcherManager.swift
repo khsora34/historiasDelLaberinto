@@ -1,10 +1,10 @@
-protocol EventsFetcherManager {
+protocol EventFetcherManager {
     func getEvent(with id: String) -> Event?
     func saveEvent(_ event: Event, with id: String) -> Bool
     func deleteAll()
 }
 
-class EventsFetcherManagerImpl: EventsFetcherManager {
+class EventFetcherManagerImpl: EventFetcherManager {
     
     func getEvent(with id: String) -> Event? {
         guard let eventType = EventType(rawValue: getEventType(with: id)?.type ?? "") else { return nil }
@@ -57,9 +57,9 @@ class EventsFetcherManagerImpl: EventsFetcherManager {
     }
 }
 
-extension EventsFetcherManagerImpl: EventTypeFetcher {}
-extension EventsFetcherManagerImpl: DialogueEventFetcher {}
-extension EventsFetcherManagerImpl: ChoiceEventFetcher {}
-extension EventsFetcherManagerImpl: RewardEventFetcher {}
-extension EventsFetcherManagerImpl: ConditionEventFetcher {}
-extension EventsFetcherManagerImpl: BattleEventFetcher {}
+extension EventFetcherManagerImpl: EventTypeFetcher {}
+extension EventFetcherManagerImpl: DialogueEventFetcher {}
+extension EventFetcherManagerImpl: ChoiceEventFetcher {}
+extension EventFetcherManagerImpl: RewardEventFetcher {}
+extension EventFetcherManagerImpl: ConditionEventFetcher {}
+extension EventFetcherManagerImpl: BattleEventFetcher {}

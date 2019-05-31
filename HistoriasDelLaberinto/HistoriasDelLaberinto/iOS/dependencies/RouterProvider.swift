@@ -18,8 +18,4 @@ class RouterProvider {
     var voidRouter: VoidRoutingLogic {
         return VoidRouter(moduleProvider: moduleProvider, drawer: drawer)
     }
-    
-    var dialogRouter: DialogRoutingLogic {
-        return DialogRouter(moduleProvider: moduleProvider, drawer: drawer)
-    }
 }
