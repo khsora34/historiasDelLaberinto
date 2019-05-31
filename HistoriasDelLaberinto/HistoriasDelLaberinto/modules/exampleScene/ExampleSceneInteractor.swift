@@ -39,6 +39,10 @@ extension ExampleSceneInteractor: IsEventAvailableCheckable {
 }
 
 extension ExampleSceneInteractor: EventHandlerInteractor {
+    var protagonistFetcher: ProtagonistFetcher {
+        return databaseFetcherProvider.protagonistFetcher
+    }
+    
     var eventFetcher: EventFetcherManager {
         return databaseFetcherProvider.eventsFetcherManager
     }

@@ -15,11 +15,20 @@ enum EventsHandlerModels {
             let configurator: DialogConfigurator?
         }
     }
+    enum CompareCondition {
+        struct Request {
+            let condition: Condition
+        }
+        struct Response {
+            let result: Bool
+        }
+    }
 }
 
 enum EventsHandlerError {
     case defaultError
     case eventNotFound
     case characterNotFound
+    case determinedCondition
     case custom
 }

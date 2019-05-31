@@ -1,4 +1,4 @@
-protocol EventHandler: class {
+protocol EventHandler: class, Evaluator {
     var eventHandlerRouter: EventHandlerRoutingLogic? { get }
     var eventHandlerInteractor: EventHandlerInteractor? { get }
     var dialog: DialogDisplayLogic? { get set }
@@ -16,6 +16,12 @@ extension EventHandler {
             showError(.eventNotFound)
             return
         }
+        
+        if let condition = event as? ConditionEvent {
+            startEvent(with: condition.nextStep(evaluator: self))
+            return
+        }
+        
         actualEvent = event
         
         determineAction(type: eventType)
@@ -30,6 +36,10 @@ extension EventHandler {
     }
     
     private func finishFlow() {
+        finishDialog()
+    }
+    
+    private func finishDialog() {
         eventHandlerRouter?.dismiss(animated: true)
         dialog = nil
     }
@@ -42,6 +52,8 @@ extension EventHandler {
         switch type {
         case .dialogue:
             showDialogue(actualEvent as! DialogueEvent)
+        case .condition:
+            showError(.determinedCondition)
         default:
             fatalError()
         }
@@ -78,6 +90,13 @@ extension EventHandler {
         let response = interactor.buildDialogue(request: request)
         return response.configurator
     }
+    
+    private func compare(with condition: Condition) -> Bool {
+        guard let interactor = eventHandlerInteractor else { return false }
+        let request = EventsHandlerModels.CompareCondition.Request(condition: condition)
+        let response = interactor.compareCondition(request: request)
+        return response.result
+    }
 }
 
 // MARK: - Error
@@ -95,6 +114,9 @@ extension EventHandler {
         case .defaultError:
             let errorEvent = DialogueEvent(characterId: "Cisco", message: "An error ocurred, sorry about that...", nextStep: nil)
             showErrorDialogue(errorEvent)
+        case .determinedCondition:
+            let errorEvent = DialogueEvent(characterId: "Cisco", message: "It seems the condition went way too far.", nextStep: nil)
+            showErrorDialogue(errorEvent)
         case .custom:
             fatalError()
         }
@@ -110,5 +132,11 @@ extension EventHandler {
         } else {
             dialog?.setNextConfigurator(newConfigurator: configurator)
         }
+    }
+}
+
+extension EventHandler {
+    func evaluate(_ condition: Condition) -> Bool {
+        return compare(with: condition)
     }
 }
