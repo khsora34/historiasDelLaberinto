@@ -1,6 +1,6 @@
 import UIKit
 
-protocol ExampleSceneRoutingLogic: RouterLogic {
+protocol ExampleSceneRoutingLogic: EventHandlerRoutingLogic {
     func goToNextView()
     func goToNewView()
 }
@@ -21,8 +21,11 @@ class ExampleSceneRouter: BaseRouter, ExampleSceneRoutingLogic {
         navigator.setViewControllers([module.viewController], animated: true)
     }
     
-    func showDialog(nextStep: String) {
-        let module = moduleProvider.dialogModule(nextStep: nextStep)
-        drawer?.present(module.viewController, animated: true, completion: nil)
+    func present(_ controller: UIViewController, animated: Bool) {
+        drawer?.present(controller, animated: animated, completion: nil)
+    }
+    
+    func dismiss(animated: Bool) {
+        drawer?.dismiss(animated: animated, completion: nil)
     }
 }
