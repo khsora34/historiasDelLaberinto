@@ -104,7 +104,15 @@
   mode: "dialogue"
   message: "¡Hola, soy Sora!"
   characterId: "speedSora" #idCharacter
-  nextStep: "exampleDialogue2"
+  nextStep: "exampleDialogue2_3"
+
+"exampleDialogue2_3":
+  mode: "condition"
+  condition:
+    kind: "item" #For items, the keyword is "item".
+    required: "potion" #Item's or partner's id.
+  nextStepIfTrue: "exampleDialogue2"
+  nextStepIfFalse: "exampleDialogue3"
 
 "exampleDialogue2":
   mode: "dialogue"
