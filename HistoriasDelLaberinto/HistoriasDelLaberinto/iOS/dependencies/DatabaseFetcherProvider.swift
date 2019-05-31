@@ -1,11 +1,11 @@
 class DatabaseFetcherProvider {
-    var eventsFetcherManager: EventsFetcherManager
-    var itemsFetcher: ItemsFetcher
-    var charactersFetcher: CharactersFetcher
-    var roomsFetcher: RoomsFetcher
+    var eventsFetcherManager: EventFetcherManager
+    var itemsFetcher: ItemFetcher
+    var charactersFetcher: CharacterFetcher
+    var roomsFetcher: RoomFetcher
     var protagonistFetcher: ProtagonistFetcher
 
-    init(eventsFetcherManager: EventsFetcherManager, itemsFetcher: ItemsFetcher, charactersFetcher: CharactersFetcher, roomsFetcher: RoomsFetcher, protagonistFetcher: ProtagonistFetcher) {
+    init(eventsFetcherManager: EventFetcherManager, itemsFetcher: ItemFetcher, charactersFetcher: CharacterFetcher, roomsFetcher: RoomFetcher, protagonistFetcher: ProtagonistFetcher) {
         self.eventsFetcherManager = eventsFetcherManager
         self.itemsFetcher = itemsFetcher
         self.charactersFetcher = charactersFetcher

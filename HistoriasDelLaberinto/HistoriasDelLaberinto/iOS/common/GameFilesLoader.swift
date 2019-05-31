@@ -1,10 +1,10 @@
 import Foundation
 protocol GameFilesLoader {
     func saveProtagonist(with protagonistFetcher: ProtagonistFetcher) -> Bool
-    func saveCharacters(with charactersFetcher: CharactersFetcher) -> Bool
-    func saveItems(with itemsFetcher: ItemsFetcher) -> Bool
-    func saveRooms(with roomsFetcher: RoomsFetcher) -> Bool
-    func saveEvents(with eventsFetcher: EventsFetcherManager) -> Bool
+    func saveCharacters(with charactersFetcher: CharacterFetcher) -> Bool
+    func saveItems(with itemsFetcher: ItemFetcher) -> Bool
+    func saveRooms(with roomsFetcher: RoomFetcher) -> Bool
+    func saveEvents(with eventsFetcher: EventFetcherManager) -> Bool
 }
 
 extension GameFilesLoader {
@@ -20,7 +20,7 @@ extension GameFilesLoader {
         return protagonistFetcher.saveProtagonist(for: protagonist)
     }
     
-    func saveCharacters(with charactersFetcher: CharactersFetcher) -> Bool {
+    func saveCharacters(with charactersFetcher: CharacterFetcher) -> Bool {
         guard let path = Bundle.main.path(forResource: "characters", ofType: "yml", inDirectory: "loadedGame"), let fileContent = try? String(contentsOfFile: path) else {
             return false
         }
@@ -43,7 +43,7 @@ extension GameFilesLoader {
         return bool
     }
     
-    func saveItems(with itemsFetcher: ItemsFetcher) -> Bool {
+    func saveItems(with itemsFetcher: ItemFetcher) -> Bool {
         guard let path = Bundle.main.path(forResource: "items", ofType: "yml", inDirectory: "loadedGame"), let fileContent = try? String(contentsOfFile: path) else {
             return false
         }
@@ -70,7 +70,7 @@ extension GameFilesLoader {
         return bool
     }
     
-    func saveRooms(with roomsFetcher: RoomsFetcher) -> Bool {
+    func saveRooms(with roomsFetcher: RoomFetcher) -> Bool {
         guard let path = Bundle.main.path(forResource: "rooms", ofType: "yml", inDirectory: "loadedGame"), let fileContent = try? String(contentsOfFile: path) else {
             return false
         }
@@ -89,7 +89,7 @@ extension GameFilesLoader {
         return bool
     }
     
-    func saveEvents(with eventsFetcher: EventsFetcherManager) -> Bool {
+    func saveEvents(with eventsFetcher: EventFetcherManager) -> Bool {
         guard let path = Bundle.main.path(forResource: "events", ofType: "yml", inDirectory: "loadedGame"), let fileContent = try? String(contentsOfFile: path) else {
             return false
         }

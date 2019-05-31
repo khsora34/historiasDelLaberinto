@@ -1,13 +1,13 @@
 import UIKit.UIApplication
 import CoreData
 
-protocol CharactersFetcher {
+protocol CharacterFetcher {
     func getCharacter(with id: String) -> GameCharacter?
     func saveCharacter(for character: GameCharacter, with id: String) -> Bool
     func deleteAllCharacters()
 }
 
-class CharactersFetcherImpl: CharactersFetcher {
+class CharacterFetcherImpl: CharacterFetcher {
     func getCharacter(with id: String) -> GameCharacter? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext

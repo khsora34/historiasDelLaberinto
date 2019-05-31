@@ -1,13 +1,13 @@
 import UIKit.UIApplication
 import CoreData
 
-protocol RoomsFetcher {
+protocol RoomFetcher {
     func getRoom(with id: String) -> Room?
     func saveRoom(for room: Room, with id: String) -> Bool
     func deleteAllRooms()
 }
 
-class RoomsFetcherImpl: RoomsFetcher {
+class RoomFetcherImpl: RoomFetcher {
     func getRoom(with id: String) -> Room? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext
