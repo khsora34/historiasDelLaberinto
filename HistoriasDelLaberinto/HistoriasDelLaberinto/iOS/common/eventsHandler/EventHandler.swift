@@ -1,4 +1,4 @@
-protocol EventHandler: class {
+protocol EventHandler: class, Evaluator {
     var eventHandlerRouter: EventHandlerRoutingLogic? { get }
     var eventHandlerInteractor: EventHandlerInteractor? { get }
     var dialog: DialogDisplayLogic? { get set }
@@ -110,5 +110,11 @@ extension EventHandler {
         } else {
             dialog?.setNextConfigurator(newConfigurator: configurator)
         }
+    }
+}
+
+extension EventHandler {
+    func evaluate(_ condition: Condition) -> Bool {
+        return compare(with: condition)
     }
 }
