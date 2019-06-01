@@ -2,13 +2,13 @@ consumableItems:
   "potion":
     name: "Poción"
     description: "Restaura puntos de vida."
-    imageUrl: "http://LALALAND.com/potion_image"
+    imageUrl: "https://cdn.bulbagarden.net/upload/2/2e/GO_Potion.png"
     healthRecovered: 40
 
   "high_potion":
     name: "Poción grande"
     description: "Restaura puntos de vida."
-    imageUrl: "http://LALALAND.com/high_option_image"
+    imageUrl: "https://cdn.bulbagarden.net/upload/b/b5/GO_Super_Potion.png"
     healthRecovered: 140
 
 keyItems:

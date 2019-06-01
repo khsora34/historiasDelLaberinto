@@ -40,7 +40,7 @@
   rewards:
     "potion": "2"
     "high_potion": "1"
-  nextStep: "ending"
+  nextStep: ""
 
 "room17Conversation_3":
   mode: "dialogue"
@@ -104,7 +104,7 @@
   mode: "dialogue"
   message: "¡Hola, soy Sora!"
   characterId: "speedSora" #idCharacter
-  nextStep: "exampleDialogue2_3"
+  nextStep: "room17BattleReward"
 
 "exampleDialogue2_3":
   mode: "condition"
