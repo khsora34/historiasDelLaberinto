@@ -39,11 +39,19 @@ extension ExampleSceneInteractor: IsEventAvailableCheckable {
 }
 
 extension ExampleSceneInteractor: EventHandlerInteractor {
+    var protagonistFetcher: ProtagonistFetcher {
+        return databaseFetcherProvider.protagonistFetcher
+    }
+    
     var eventFetcher: EventFetcherManager {
         return databaseFetcherProvider.eventsFetcherManager
     }
     
     var characterFetcher: CharacterFetcher {
         return databaseFetcherProvider.charactersFetcher
+    }
+    
+    var itemFetcher: ItemFetcher {
+        return databaseFetcherProvider.itemsFetcher
     }
 }

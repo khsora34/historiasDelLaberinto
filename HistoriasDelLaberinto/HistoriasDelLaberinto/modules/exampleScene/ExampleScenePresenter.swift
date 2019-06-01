@@ -47,7 +47,7 @@ extension ExampleScenePresenter: ExampleScenePresentationLogic {
     }
     
     func showDialog() {
-        startEvent(with: "exampleDialogue1")
+        startEvent(with: "exampleChoice")
     }
 }
 

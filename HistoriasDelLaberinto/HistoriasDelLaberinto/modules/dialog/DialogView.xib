@@ -15,6 +15,7 @@
                 <outlet property="characterImageView" destination="G35-6G-vZJ" id="NED-NZ-bqd"/>
                 <outlet property="characterLabel" destination="zEC-cM-yDA" id="zRQ-XJ-42T"/>
                 <outlet property="dialogView" destination="wBb-sU-uyb" id="VmJ-qY-TuY"/>
+                <outlet property="stackView" destination="y6w-nP-0GT" id="PP2-Lh-i1f"/>
                 <outlet property="tapWindowGesture" destination="FUk-3c-fs7" id="RB3-fH-pf4"/>
                 <outlet property="textView" destination="Vcq-Vh-Tgk" id="wqJ-Xl-8bH"/>
                 <outlet property="view" destination="iN0-l3-epB" id="oor-ic-e1F"/>
@@ -45,7 +46,7 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                     </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.0" green="0.47978357090702239" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="Vcq-Vh-Tgk" firstAttribute="top" secondItem="zEC-cM-yDA" secondAttribute="bottom" constant="8" id="2Om-cc-5jD"/>
                         <constraint firstAttribute="bottom" secondItem="Vcq-Vh-Tgk" secondAttribute="bottom" constant="10" id="6Yo-48-AsX"/>
@@ -55,17 +56,37 @@
                         <constraint firstAttribute="trailing" secondItem="Vcq-Vh-Tgk" secondAttribute="trailing" constant="10" id="bX8-aO-yig"/>
                     </constraints>
                 </view>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" bounces="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PnS-Ex-2Am">
+                    <rect key="frame" x="15" y="45" width="345" height="395.5"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="y6w-nP-0GT">
+                            <rect key="frame" x="0.0" y="0.0" width="345" height="128"/>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="y6w-nP-0GT" secondAttribute="trailing" id="AzQ-rZ-uwv"/>
+                        <constraint firstItem="y6w-nP-0GT" firstAttribute="width" secondItem="PnS-Ex-2Am" secondAttribute="width" id="Uvq-Bj-eTK"/>
+                        <constraint firstItem="y6w-nP-0GT" firstAttribute="top" secondItem="PnS-Ex-2Am" secondAttribute="top" id="ZhN-hT-rsi"/>
+                        <constraint firstAttribute="bottom" secondItem="y6w-nP-0GT" secondAttribute="bottom" id="gva-y8-DAS"/>
+                        <constraint firstItem="y6w-nP-0GT" firstAttribute="leading" secondItem="PnS-Ex-2Am" secondAttribute="leading" id="xRt-ub-h9g"/>
+                    </constraints>
+                </scrollView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="G35-6G-vZJ" secondAttribute="trailing" id="0tF-Vs-vI1"/>
                 <constraint firstItem="G35-6G-vZJ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="2Nm-XS-3z2"/>
+                <constraint firstItem="PnS-Ex-2Am" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="5ps-4o-Ov5"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="wBb-sU-uyb" secondAttribute="trailing" constant="10" id="8uv-rE-v06"/>
                 <constraint firstItem="wBb-sU-uyb" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.25" id="FtJ-Yw-VNe"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="wBb-sU-uyb" secondAttribute="bottom" constant="10" id="MX5-DA-S42"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="PnS-Ex-2Am" secondAttribute="trailing" constant="15" id="Nfz-fa-Iio"/>
                 <constraint firstItem="wBb-sU-uyb" firstAttribute="bottom" secondItem="G35-6G-vZJ" secondAttribute="bottom" id="O0K-fi-zOM"/>
+                <constraint firstItem="PnS-Ex-2Am" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="45" id="RO2-1C-y4E"/>
+                <constraint firstItem="wBb-sU-uyb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="PnS-Ex-2Am" secondAttribute="bottom" constant="30" id="Zy1-GO-xFq"/>
                 <constraint firstItem="wBb-sU-uyb" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="aYt-y4-FIM"/>
+                <constraint firstItem="wBb-sU-uyb" firstAttribute="top" secondItem="PnS-Ex-2Am" secondAttribute="bottom" priority="750" constant="30" id="mhh-Qz-YIl"/>
                 <constraint firstItem="G35-6G-vZJ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="snf-a9-0Uy"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
