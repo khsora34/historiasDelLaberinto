@@ -1,4 +1,4 @@
-protocol EventHandler: class, Evaluator {
+protocol EventHandler: class, ConditionEvaluator {
     var eventHandlerRouter: EventHandlerRoutingLogic? { get }
     var eventHandlerInteractor: EventHandlerInteractor? { get }
     var dialog: DialogDisplayLogic? { get set }
@@ -28,7 +28,7 @@ extension EventHandler {
     }
     
     func continueFlow() {
-        guard let nextStep = actualEvent?.nextStep else {
+        guard let nextStep = actualEvent?.nextStep, !nextStep.isEmpty else {
             finishFlow()
             return
         }
@@ -52,6 +52,8 @@ extension EventHandler {
         switch type {
         case .dialogue:
             showDialogue(actualEvent as! DialogueEvent)
+        case .reward:
+            showReward(actualEvent as! RewardEvent)
         case .condition:
             showError(.determinedCondition)
         default:
@@ -66,7 +68,20 @@ extension EventHandler {
         }
         
         if dialog == nil {
-            dialog = Dialog.createDialog(with: configurator, delegate: self)
+            dialog = Dialog.createDialogue(configurator, delegate: self)
+            eventHandlerRouter?.present(dialog!, animated: true)
+        } else {
+            dialog?.setNextConfigurator(newConfigurator: configurator)
+        }
+    }
+    
+    private func showReward(_ event: RewardEvent) {
+        guard let configurator = getRewardConfigurator(reward: event) else {
+            showError(.missingItems)
+            return
+        }
+        if dialog == nil {
+            dialog = Dialog.createReward(configurator, delegate: self)
             eventHandlerRouter?.present(dialog!, animated: true)
         } else {
             dialog?.setNextConfigurator(newConfigurator: configurator)
@@ -84,7 +99,7 @@ extension EventHandler {
         return response.event
     }
     
-    private func getDialogueConfigurator(dialogue: DialogueEvent) -> DialogConfigurator? {
+    private func getDialogueConfigurator(dialogue: DialogueEvent) -> DialogueConfigurator? {
         guard let interactor = eventHandlerInteractor else { return nil }
         let request = EventsHandlerModels.BuildDialogue.Request(event: dialogue)
         let response = interactor.buildDialogue(request: request)
@@ -96,6 +111,13 @@ extension EventHandler {
         let request = EventsHandlerModels.CompareCondition.Request(condition: condition)
         let response = interactor.compareCondition(request: request)
         return response.result
+    }
+    
+    private func getRewardConfigurator(reward: RewardEvent) -> RewardConfigurator? {
+        guard let interactor = eventHandlerInteractor else { return nil }
+        let request = EventsHandlerModels.BuildItems.Request(event: reward)
+        let response = interactor.buildReward(request: request)
+        return response.configurator
     }
 }
 
@@ -117,6 +139,9 @@ extension EventHandler {
         case .determinedCondition:
             let errorEvent = DialogueEvent(characterId: "Cisco", message: "It seems the condition went way too far.", nextStep: nil)
             showErrorDialogue(errorEvent)
+        case .missingItems:
+            let errorEvent = DialogueEvent(characterId: "Cisco", message: "There was a problem finding the items rewarded. Sorry for that...", nextStep: nil)
+            showErrorDialogue(errorEvent)
         case .custom:
             fatalError()
         }
@@ -124,10 +149,10 @@ extension EventHandler {
     
     func showErrorDialogue(_ event: DialogueEvent) {
         actualEvent = event
-        let configurator = DialogConfigurator(name: event.characterId, message: event.message, imageUrl: "cisco")
+        let configurator = DialogueConfigurator(name: event.characterId, message: event.message, imageUrl: "cisco")
         
         if dialog == nil {
-            dialog = Dialog.createDialog(with: configurator, delegate: self)
+            dialog = Dialog.createDialogue(configurator, delegate: self)
             eventHandlerRouter?.present(dialog!, animated: true)
         } else {
             dialog?.setNextConfigurator(newConfigurator: configurator)

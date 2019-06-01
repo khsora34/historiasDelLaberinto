@@ -26,7 +26,7 @@ playable:
 
     currentHealthPoints: 1000
     maxHealthPoints: 1000
-    attack: 26
+    attack: 25
     defense: 22
     agility: 10
 

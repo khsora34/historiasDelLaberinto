@@ -12,7 +12,7 @@ enum EventsHandlerModels {
             let event: DialogueEvent
         }
         struct Response {
-            let configurator: DialogConfigurator?
+            let configurator: DialogueConfigurator?
         }
     }
     enum CompareCondition {
@@ -23,6 +23,15 @@ enum EventsHandlerModels {
             let result: Bool
         }
     }
+    
+    enum BuildItems {
+        struct Request {
+            let event: RewardEvent
+        }
+        struct Response {
+            let configurator: RewardConfigurator
+        }
+    }
 }
 
 enum EventsHandlerError {
@@ -30,5 +39,6 @@ enum EventsHandlerError {
     case eventNotFound
     case characterNotFound
     case determinedCondition
+    case missingItems
     case custom
 }
