@@ -50,4 +50,8 @@ extension ExampleSceneInteractor: EventHandlerInteractor {
     var characterFetcher: CharacterFetcher {
         return databaseFetcherProvider.charactersFetcher
     }
+    
+    var itemFetcher: ItemFetcher {
+        return databaseFetcherProvider.itemsFetcher
+    }
 }

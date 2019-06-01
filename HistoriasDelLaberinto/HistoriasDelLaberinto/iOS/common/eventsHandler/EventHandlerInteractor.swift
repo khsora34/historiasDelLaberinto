@@ -2,9 +2,11 @@ protocol EventHandlerInteractor {
     var eventFetcher: EventFetcherManager { get }
     var characterFetcher: CharacterFetcher { get }
     var protagonistFetcher: ProtagonistFetcher { get }
+    var itemFetcher: ItemFetcher { get }
     func getEvent(request: EventsHandlerModels.FetchEvent.Request) -> EventsHandlerModels.FetchEvent.Response
     func buildDialogue(request: EventsHandlerModels.BuildDialogue.Request) -> EventsHandlerModels.BuildDialogue.Response
     func compareCondition(request: EventsHandlerModels.CompareCondition.Request) -> EventsHandlerModels.CompareCondition.Response
+    func buildReward(request: EventsHandlerModels.BuildItems.Request) -> EventsHandlerModels.BuildItems.Response
 }
 
 extension EventHandlerInteractor {
@@ -38,5 +40,28 @@ extension EventHandlerInteractor {
             result = prota.partner == id
         }
         return EventsHandlerModels.CompareCondition.Response(result: result)
+    }
+    
+    func buildReward(request: EventsHandlerModels.BuildItems.Request) -> EventsHandlerModels.BuildItems.Response {
+        var protagonist = protagonistFetcher.getProtagonist()
+        let event = request.event
+        
+        var items: [(Item, Int)] = []
+        for (key, value) in event.rewards {
+            if let item = itemFetcher.getItem(with: key) {
+                items.append((item, value))
+                if let inventoryQuantity = protagonist?.items[key] {
+                    protagonist?.items[key] = inventoryQuantity + value
+                } else {
+                    protagonist?.items[key] = value
+                }
+            }
+        }
+        if let protagonist = protagonist {
+            protagonistFetcher.saveProtagonist(for: protagonist)
+        }
+        
+        let configurator = RewardConfigurator(name: "", message: event.message, items: items)
+        return EventsHandlerModels.BuildItems.Response(configurator: configurator)
     }
 }
