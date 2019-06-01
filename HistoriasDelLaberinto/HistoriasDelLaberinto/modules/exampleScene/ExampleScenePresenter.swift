@@ -47,7 +47,7 @@ extension ExampleScenePresenter: ExampleScenePresentationLogic {
     }
     
     func showDialog() {
-        startEvent(with: "room17BattleReward")
+        startEvent(with: "exampleChoice")
     }
 }
 
