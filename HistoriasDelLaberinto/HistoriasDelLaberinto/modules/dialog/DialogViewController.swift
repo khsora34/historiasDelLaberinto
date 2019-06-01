@@ -15,10 +15,17 @@ class Dialog {
         dialog.initView()
         return dialog
     }
+    
+    static func createChoice(_ choice: ChoiceConfigurator, delegate: EventHandler) -> DialogDisplayLogic {
+        let dialog = DialogViewController(choice)
+        dialog.delegate = delegate
+        dialog.initView()
+        return dialog
+    }
 }
 
 protocol DialogDisplayLogic: UIViewController {
-    func setNextConfigurator(newConfigurator: DialogConfigurator)
+    func setNextConfigurator(_ newConfigurator: DialogConfigurator)
 }
 
 class DialogViewController: UIViewController {
@@ -65,7 +72,7 @@ class DialogViewController: UIViewController {
         textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
     }
     
-    private func setupConfiguration() {
+    private func setupConfiguration(newConfigurator: DialogConfigurator? = nil) {
         initView()
         characterLabel.text = configurator.name
         textView.text = ""
@@ -73,6 +80,10 @@ class DialogViewController: UIViewController {
             setup(dialogue: dialogue)
         } else if let reward = configurator as? RewardConfigurator {
             setup(reward: reward)
+        } else if let choice = configurator as? ChoiceConfigurator {
+            setup(choice: choice)
+        } else {
+            setup(dialogue: DialogueConfigurator(name: "Cisco", message: "Error looking for configurator.", imageUrl: ""))
         }
     }
     
@@ -82,29 +93,33 @@ class DialogViewController: UIViewController {
 }
 
 extension DialogViewController: DialogDisplayLogic {
-    func setNextConfigurator(newConfigurator: DialogConfigurator) {
-        if newConfigurator.imageUrl != configurator.imageUrl {
-            UIView.animate(withDuration: 0.3, delay: 0.0, options: UIView.AnimationOptions.transitionCrossDissolve, animations: {
-                self.characterImageView.alpha = self.transitionAlpha
-                self.stackView.isHidden = true
-                self.dialogView.alpha = self.transitionAlpha
-            }, completion: { _ in
-                self.configurator = newConfigurator
-                self.setupConfiguration()
-                
-                UIView.animate(withDuration: 0.2, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, animations: {
-                    self.characterImageView.alpha = 1.0
-                    self.dialogView.alpha = self.dialogViewDefaultAlpha
-                }, completion: { _ in
-                    self.textView.setTypingText(message: self.configurator.message, timeInterval: self.typingTimeInterval)
-                })
-            })
+    func setNextConfigurator(_ newConfigurator: DialogConfigurator) {
+        if !newConfigurator.sharesStruct(with: configurator) {
+            changeForDifferent(configurator: newConfigurator)
             
         } else {
             configurator = newConfigurator
             setupConfiguration()
             textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
         }
+    }
+    
+    private func changeForDifferent(configurator newConfigurator: DialogConfigurator) {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: UIView.AnimationOptions.transitionCrossDissolve, animations: {
+            self.characterImageView.alpha = self.transitionAlpha
+            self.stackView.isHidden = true
+            self.dialogView.alpha = self.transitionAlpha
+        }, completion: { _ in
+            self.configurator = newConfigurator
+            self.setupConfiguration()
+            
+            UIView.animate(withDuration: 0.2, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, animations: {
+                self.characterImageView.alpha = 1.0
+                self.dialogView.alpha = self.dialogViewDefaultAlpha
+            }, completion: { _ in
+                self.textView.setTypingText(message: self.configurator.message, timeInterval: self.typingTimeInterval)
+            })
+        })
     }
 }
 
@@ -123,11 +138,10 @@ extension DialogViewController {
     }
     
     private func setup(reward: RewardConfigurator) {
-        self.stackView.isHidden = false
+        stackView.isHidden = false
+        stackView.spacing = 0
         
-        guard let items = reward.items else { return }
-        
-        for (item, quantity) in items {
+        for (item, quantity) in reward.items {
             let newView = RewardView(frame: CGRect(x: 0, y: 0, width: self.stackView.frame.width, height: 80.0))
             newView.item = item.name
             newView.quantity = "\(quantity)"
@@ -138,5 +152,46 @@ extension DialogViewController {
             self.stackView.addArrangedSubview(newView)
         }
         (stackView.arrangedSubviews.last as? RewardView)?.isLast = true
+    }
+    
+    private func setup(choice: ChoiceConfigurator) {
+        stackView.isHidden = false
+        stackView.backgroundColor = UIColor.gray.withAlphaComponent(0.85)
+        stackView.spacing = 10
+        
+        let actions = choice.actions
+        
+        for i in 0...(actions.count/2) {
+            let buttonStackView: UIStackView
+            if i == actions.count/2, actions.count % 2 == 1 {
+                let button = RoundedButton(type: .custom)
+                button.setTitle(actions[(2*i)].name, for: .normal)
+                button.tag = (i * 2)
+                button.addTarget(self, action: #selector(buttonSelected(sender:)), for: .touchUpInside)
+                buttonStackView = UIStackView(arrangedSubviews: [button])
+            } else {
+                let firstButton = RoundedButton(type: .custom)
+                firstButton.setTitle(actions[2*i].name, for: .normal)
+                firstButton.tag = i * 2
+                firstButton.addTarget(self, action: #selector(buttonSelected(sender:)), for: .touchUpInside)
+                
+                let secondButton = RoundedButton(type: .custom)
+                secondButton.setTitle(actions[(2*i)+1].name, for: .normal)
+                secondButton.tag = (i * 2) + 1
+                secondButton.addTarget(self, action: #selector(buttonSelected(sender:)), for: .touchUpInside)
+                
+                buttonStackView = UIStackView(arrangedSubviews: [firstButton, secondButton])
+            }
+            buttonStackView.axis = .horizontal
+            buttonStackView.distribution = .fillEqually
+            buttonStackView.alignment = .center
+            buttonStackView.spacing = 20
+            NSLayoutConstraint(item: buttonStackView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 60).isActive = true
+            stackView.addArrangedSubview(buttonStackView)
+        }
+    }
+    
+    @objc func buttonSelected(sender: UIButton) {
+        delegate?.performChoice(tag: sender.tag)
     }
 }

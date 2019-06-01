@@ -108,11 +108,29 @@
   enemyId: "badMonster"
   nextStep: "ending"
 
+"exampleChoice":
+  mode: "choice"
+  options:
+    - action: "Sora normal"
+      nextStep: "exampleDialogue3"
+    - action: "Sora veloz"
+      nextStep: "exampleDialogue1"
+      condition:
+        kind: "item"
+        required: "potion"
+    - action: "BUFF SORA"
+      nextStep: "exampleDialogue2_3"
+      condition:
+        kind: "partner"
+        required: "sora"
+    - action: "Mejor déjalo"
+      nextStep: ""
+
 "exampleDialogue1":
   mode: "dialogue"
   message: "¡Hola, soy Sora!"
   characterId: "speedSora" #idCharacter
-  nextStep: "room17BattleReward"
+  nextStep: ""
 
 "exampleDialogue2_3":
   mode: "condition"

@@ -28,6 +28,8 @@ extension EventHandler {
     }
     
     func continueFlow() {
+        if actualEvent is ChoiceEvent { return }
+        
         guard let nextStep = actualEvent?.nextStep, !nextStep.isEmpty else {
             finishFlow()
             return
@@ -43,6 +45,18 @@ extension EventHandler {
         eventHandlerRouter?.dismiss(animated: true)
         dialog = nil
     }
+    
+    func performChoice(tag: Int) {
+        guard let event = actualEvent as? ChoiceEvent else {
+            showError(.invalidChoiceExecution)
+            return
+        }
+        guard let nextStep = event.options[tag].nextStep, !nextStep.isEmpty else {
+            finishFlow()
+            return
+        }
+        startEvent(with: nextStep)
+    }
 }
 
 // MARK: - Determiner
@@ -54,6 +68,8 @@ extension EventHandler {
             showDialogue(actualEvent as! DialogueEvent)
         case .reward:
             showReward(actualEvent as! RewardEvent)
+        case .choice:
+            showChoice(actualEvent as! ChoiceEvent)
         case .condition:
             showError(.determinedCondition)
         default:
@@ -66,25 +82,37 @@ extension EventHandler {
             showError(.characterNotFound)
             return
         }
-        
         if dialog == nil {
             dialog = Dialog.createDialogue(configurator, delegate: self)
             eventHandlerRouter?.present(dialog!, animated: true)
         } else {
-            dialog?.setNextConfigurator(newConfigurator: configurator)
+            dialog?.setNextConfigurator(configurator)
         }
     }
     
     private func showReward(_ event: RewardEvent) {
         guard let configurator = getRewardConfigurator(reward: event) else {
-            showError(.missingItems)
+            showError(.itemsNotFound)
             return
         }
         if dialog == nil {
             dialog = Dialog.createReward(configurator, delegate: self)
             eventHandlerRouter?.present(dialog!, animated: true)
         } else {
-            dialog?.setNextConfigurator(newConfigurator: configurator)
+            dialog?.setNextConfigurator(configurator)
+        }
+    }
+    
+    private func showChoice(_ event: ChoiceEvent) {
+        guard let configurator = getChoiceConfigurator(choice: event) else {
+            showError(.characterNotFound)
+            return
+        }
+        if dialog == nil {
+            dialog = Dialog.createChoice(configurator, delegate: self)
+            eventHandlerRouter?.present(dialog!, animated: true)
+        } else {
+            dialog?.setNextConfigurator(configurator)
         }
     }
 }
@@ -119,6 +147,15 @@ extension EventHandler {
         let response = interactor.buildReward(request: request)
         return response.configurator
     }
+    
+    private func getChoiceConfigurator(choice: ChoiceEvent) -> ChoiceConfigurator? {
+        guard let interactor = eventHandlerInteractor else { return nil }
+        let request = EventsHandlerModels.BuildChoice.Request(event: choice)
+        let response = interactor.buildChoice(request: request)
+        guard let actions = response.configurator?.actions, !actions.isEmpty else { return nil }
+        actualEvent = ChoiceEvent(options: actions)
+        return response.configurator
+    }
 }
 
 // MARK: - Error
@@ -139,8 +176,11 @@ extension EventHandler {
         case .determinedCondition:
             let errorEvent = DialogueEvent(characterId: "Cisco", message: "It seems the condition went way too far.", nextStep: nil)
             showErrorDialogue(errorEvent)
-        case .missingItems:
+        case .itemsNotFound:
             let errorEvent = DialogueEvent(characterId: "Cisco", message: "There was a problem finding the items rewarded. Sorry for that...", nextStep: nil)
+            showErrorDialogue(errorEvent)
+        case .invalidChoiceExecution:
+            let errorEvent = DialogueEvent(characterId: "Cisco", message: "The function for a choice was executed without asking for it.", nextStep: nil)
             showErrorDialogue(errorEvent)
         case .custom:
             fatalError()
@@ -155,7 +195,7 @@ extension EventHandler {
             dialog = Dialog.createDialogue(configurator, delegate: self)
             eventHandlerRouter?.present(dialog!, animated: true)
         } else {
-            dialog?.setNextConfigurator(newConfigurator: configurator)
+            dialog?.setNextConfigurator(configurator)
         }
     }
 }

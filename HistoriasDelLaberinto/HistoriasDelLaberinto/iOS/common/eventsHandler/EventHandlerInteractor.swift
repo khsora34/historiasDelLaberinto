@@ -7,6 +7,7 @@ protocol EventHandlerInteractor {
     func buildDialogue(request: EventsHandlerModels.BuildDialogue.Request) -> EventsHandlerModels.BuildDialogue.Response
     func compareCondition(request: EventsHandlerModels.CompareCondition.Request) -> EventsHandlerModels.CompareCondition.Response
     func buildReward(request: EventsHandlerModels.BuildItems.Request) -> EventsHandlerModels.BuildItems.Response
+    func buildChoice(request: EventsHandlerModels.BuildChoice.Request) -> EventsHandlerModels.BuildChoice.Response
 }
 
 extension EventHandlerInteractor {
@@ -32,14 +33,19 @@ extension EventHandlerInteractor {
         guard let prota = protagonistFetcher.getProtagonist() else {
             return EventsHandlerModels.CompareCondition.Response(result: false)
         }
-        let result: Bool
+        
+        let result = evaluateConditions(for: condition, with: prota)
+        
+        return EventsHandlerModels.CompareCondition.Response(result: result)
+    }
+    
+    private func evaluateConditions(for condition: Condition, with protagonist: Protagonist) -> Bool {
         switch condition {
         case .item(let id):
-            result = prota.items[id] != nil
+            return protagonist.items[id] != nil
         case .partner(let id):
-            result = prota.partner == id
+            return protagonist.partner == id
         }
-        return EventsHandlerModels.CompareCondition.Response(result: result)
     }
     
     func buildReward(request: EventsHandlerModels.BuildItems.Request) -> EventsHandlerModels.BuildItems.Response {
@@ -58,10 +64,22 @@ extension EventHandlerInteractor {
             }
         }
         if let protagonist = protagonist {
-            protagonistFetcher.saveProtagonist(for: protagonist)
+            _ = protagonistFetcher.saveProtagonist(for: protagonist)
         }
         
         let configurator = RewardConfigurator(name: "", message: event.message, items: items)
         return EventsHandlerModels.BuildItems.Response(configurator: configurator)
+    }
+    
+    func buildChoice(request: EventsHandlerModels.BuildChoice.Request) -> EventsHandlerModels.BuildChoice.Response {
+        let event = request.event
+        guard let prota = protagonistFetcher.getProtagonist() else {
+            return EventsHandlerModels.BuildChoice.Response(configurator: nil)
+        }
+        let filtered = event.options.filter {
+            $0.condition == nil || evaluateConditions(for: $0.condition!, with: prota)
+        }
+        let configurator = ChoiceConfigurator(actions: filtered)
+        return EventsHandlerModels.BuildChoice.Response(configurator: configurator)
     }
 }
