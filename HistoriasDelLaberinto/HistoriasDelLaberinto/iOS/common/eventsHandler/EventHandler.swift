@@ -28,7 +28,7 @@ extension EventHandler {
     }
     
     func continueFlow() {
-        guard let nextStep = actualEvent?.nextStep else {
+        guard let nextStep = actualEvent?.nextStep, !nextStep.isEmpty else {
             finishFlow()
             return
         }
