@@ -12,7 +12,7 @@ enum EventsHandlerModels {
             let event: DialogueEvent
         }
         struct Response {
-            let configurator: DialogConfigurator?
+            let configurator: DialogueConfigurator?
         }
     }
     enum CompareCondition {

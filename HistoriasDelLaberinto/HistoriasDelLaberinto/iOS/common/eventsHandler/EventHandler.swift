@@ -66,7 +66,7 @@ extension EventHandler {
         }
         
         if dialog == nil {
-            dialog = Dialog.createDialog(with: configurator, delegate: self)
+            dialog = Dialog.createDialogue(configurator, delegate: self)
             eventHandlerRouter?.present(dialog!, animated: true)
         } else {
             dialog?.setNextConfigurator(newConfigurator: configurator)
@@ -84,7 +84,7 @@ extension EventHandler {
         return response.event
     }
     
-    private func getDialogueConfigurator(dialogue: DialogueEvent) -> DialogConfigurator? {
+    private func getDialogueConfigurator(dialogue: DialogueEvent) -> DialogueConfigurator? {
         guard let interactor = eventHandlerInteractor else { return nil }
         let request = EventsHandlerModels.BuildDialogue.Request(event: dialogue)
         let response = interactor.buildDialogue(request: request)
@@ -124,10 +124,10 @@ extension EventHandler {
     
     func showErrorDialogue(_ event: DialogueEvent) {
         actualEvent = event
-        let configurator = DialogConfigurator(name: event.characterId, message: event.message, imageUrl: "cisco")
+        let configurator = DialogueConfigurator(name: event.characterId, message: event.message, imageUrl: "cisco")
         
         if dialog == nil {
-            dialog = Dialog.createDialog(with: configurator, delegate: self)
+            dialog = Dialog.createDialogue(configurator, delegate: self)
             eventHandlerRouter?.present(dialog!, animated: true)
         } else {
             dialog?.setNextConfigurator(newConfigurator: configurator)

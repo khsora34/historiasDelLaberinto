@@ -2,8 +2,8 @@ import UIKit
 import Kingfisher
 
 class Dialog {
-    static func createDialog(with configurator: DialogConfigurator, delegate: EventHandler) -> DialogDisplayLogic {
-        let dialog = DialogViewController(configurator)
+    static func createDialogue(_ dialogue: DialogueConfigurator, delegate: EventHandler) -> DialogDisplayLogic {
+        let dialog = DialogViewController(dialogue)
         dialog.delegate = delegate
         dialog.initView()
         return dialog
@@ -16,6 +16,8 @@ protocol DialogDisplayLogic: UIViewController {
 
 class DialogViewController: UIViewController {
     private let typingTimeInterval: TimeInterval = 0.02
+    private let dialogViewDefaultAlpha: CGFloat = 0.95
+    private let transitionAlpha: CGFloat = 0.3
     
     private var configurator: DialogConfigurator
     
@@ -41,6 +43,8 @@ class DialogViewController: UIViewController {
     func initView() {
         view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.75)
         dialogView.layer.cornerRadius = 6.0
+        dialogView.alpha = dialogViewDefaultAlpha
+        characterImageView.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,17 +54,11 @@ class DialogViewController: UIViewController {
     }
     
     private func setupConfiguration() {
+        initView()
         characterLabel.text = configurator.name
         textView.text = ""
-        let url = URL(string: configurator.imageUrl)
-        characterImageView.kf.setImage(with: url, placeholder: nil, options: [.transition(.fade(0.1))]) { [weak self] (result) in
-            switch result {
-            case .success:
-                self?.characterImageView.isHidden = false
-            case .failure:
-                self?.characterImageView.image = nil
-                self?.characterImageView.isHidden = true
-            }
+        if let dialogue = configurator as? DialogueConfigurator {
+            setup(dialogue: dialogue)
         }
     }
     
@@ -73,15 +71,15 @@ extension DialogViewController: DialogDisplayLogic {
     func setNextConfigurator(newConfigurator: DialogConfigurator) {
         if newConfigurator.imageUrl != configurator.imageUrl {
             UIView.animate(withDuration: 0.3, delay: 0.0, options: UIView.AnimationOptions.transitionCrossDissolve, animations: {
-                self.characterImageView.alpha = 0.3
-                self.dialogView.alpha = 0.3
+                self.characterImageView.alpha = self.transitionAlpha
+                self.dialogView.alpha = self.transitionAlpha
             }, completion: { _ in
                 self.configurator = newConfigurator
                 self.setupConfiguration()
                 
                 UIView.animate(withDuration: 0.2, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, animations: {
                     self.characterImageView.alpha = 1.0
-                    self.dialogView.alpha = 0.95
+                    self.dialogView.alpha = self.dialogViewDefaultAlpha
                 }, completion: { _ in
                     self.textView.setTypingText(message: self.configurator.message, timeInterval: self.typingTimeInterval)
                 })
@@ -91,6 +89,21 @@ extension DialogViewController: DialogDisplayLogic {
             configurator = newConfigurator
             setupConfiguration()
             textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
+        }
+    }
+}
+
+extension DialogViewController {
+    private func setup(dialogue: DialogueConfigurator) {
+        let url = URL(string: dialogue.imageUrl)
+        characterImageView.kf.setImage(with: url, placeholder: nil, options: [.transition(.fade(0.1))]) { [weak self] (result) in
+            switch result {
+            case .success:
+                self?.characterImageView.isHidden = false
+            case .failure:
+                self?.characterImageView.image = nil
+                self?.characterImageView.isHidden = true
+            }
         }
     }
 }
