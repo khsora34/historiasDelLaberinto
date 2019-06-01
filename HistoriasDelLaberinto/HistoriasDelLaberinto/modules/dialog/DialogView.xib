@@ -46,7 +46,7 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                     </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.47934520244598389" blue="0.99908632040023804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.0" green="0.47978357090702239" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="Vcq-Vh-Tgk" firstAttribute="top" secondItem="zEC-cM-yDA" secondAttribute="bottom" constant="8" id="2Om-cc-5jD"/>
                         <constraint firstAttribute="bottom" secondItem="Vcq-Vh-Tgk" secondAttribute="bottom" constant="10" id="6Yo-48-AsX"/>
