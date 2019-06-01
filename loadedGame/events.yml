@@ -40,7 +40,15 @@
   rewards:
     "potion": "2"
     "high_potion": "1"
-  nextStep: "ending"
+    "potion2": "3"
+    "high_potion2": "4"
+    "potion3": "2"
+    "high_potion3": "1"
+    "potion4": "2"
+    "high_potion4": "1"
+    "potion5": "2"
+    "high_potion5": "1"
+  nextStep: ""
 
 "room17Conversation_3":
   mode: "dialogue"
@@ -100,5 +108,46 @@
   enemyId: "badMonster"
   nextStep: "ending"
 
-"si":
-  bien: "vale"
+"exampleChoice":
+  mode: "choice"
+  options:
+    - action: "Sora normal"
+      nextStep: "exampleDialogue3"
+    - action: "Sora veloz"
+      nextStep: "exampleDialogue1"
+      condition:
+        kind: "item"
+        required: "potion"
+    - action: "BUFF SORA"
+      nextStep: "exampleDialogue2_3"
+      condition:
+        kind: "partner"
+        required: "sora"
+    - action: "Mejor déjalo"
+      nextStep: ""
+
+"exampleDialogue1":
+  mode: "dialogue"
+  message: "¡Hola, soy Sora!"
+  characterId: "speedSora" #idCharacter
+  nextStep: ""
+
+"exampleDialogue2_3":
+  mode: "condition"
+  condition:
+    kind: "item" #For items, the keyword is "item".
+    required: "potion" #Item's or partner's id.
+  nextStepIfTrue: "exampleDialogue2"
+  nextStepIfFalse: "exampleDialogue3"
+
+"exampleDialogue2":
+  mode: "dialogue"
+  message: "¡Y yo también soy Sora!"
+  characterId: "shieldSora" #idCharacter
+  nextStep: "exampleDialogue3"
+
+"exampleDialogue3":
+  mode: "dialogue"
+  message: "¡Pues yo soy el original!"
+  characterId: "sora" #idCharacter
+  nextStep: ""

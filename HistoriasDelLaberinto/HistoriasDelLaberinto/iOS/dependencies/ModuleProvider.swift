@@ -5,7 +5,7 @@ class ModuleProvider {
     init() {}
     
     func exampleSceneModule() -> Module {
-        return ExampleSceneModule(routerProvider: routerProvider, eventsFetcherManager: databaseFetcherProvider.eventsFetcherManager)
+        return ExampleSceneModule(routerProvider: routerProvider, databaseFetcherProvider: databaseFetcherProvider)
     }
     
     func initialSceneModule() -> Module {

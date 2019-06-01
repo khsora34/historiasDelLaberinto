@@ -1,13 +1,13 @@
 import UIKit.UIApplication
 import CoreData
 
-protocol ItemsFetcher {
+protocol ItemFetcher {
     func getItem(with id: String) -> Item?
     func saveItem(for item: Item, with id: String) -> Bool
     func deleteAllItems()
 }
 
-class ItemsFetcherImpl: ItemsFetcher {
+class ItemFetcherImpl: ItemFetcher {
     func getItem(with id: String) -> Item? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext

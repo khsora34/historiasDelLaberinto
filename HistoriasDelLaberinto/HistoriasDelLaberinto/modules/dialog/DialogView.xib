@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DialogViewController" customModule="HistoriasDelLaberinto" customModuleProvider="target">
+            <connections>
+                <outlet property="characterImageView" destination="G35-6G-vZJ" id="NED-NZ-bqd"/>
+                <outlet property="characterLabel" destination="zEC-cM-yDA" id="zRQ-XJ-42T"/>
+                <outlet property="dialogView" destination="wBb-sU-uyb" id="VmJ-qY-TuY"/>
+                <outlet property="stackView" destination="y6w-nP-0GT" id="PP2-Lh-i1f"/>
+                <outlet property="tapWindowGesture" destination="FUk-3c-fs7" id="RB3-fH-pf4"/>
+                <outlet property="textView" destination="Vcq-Vh-Tgk" id="wqJ-Xl-8bH"/>
+                <outlet property="view" destination="iN0-l3-epB" id="oor-ic-e1F"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G35-6G-vZJ" userLabel="Character Image View">
+                    <rect key="frame" x="0.0" y="30" width="375" height="627"/>
+                </imageView>
+                <view alpha="0.94999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wBb-sU-uyb" userLabel="Dialog view">
+                    <rect key="frame" x="10" y="490.5" width="355" height="166.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="780" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zEC-cM-yDA" userLabel="Character name label">
+                            <rect key="frame" x="10" y="8" width="50" height="25.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vcq-Vh-Tgk">
+                            <rect key="frame" x="10" y="41.5" width="335" height="115"/>
+                            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="19"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.47978357090702239" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="Vcq-Vh-Tgk" firstAttribute="top" secondItem="zEC-cM-yDA" secondAttribute="bottom" constant="8" id="2Om-cc-5jD"/>
+                        <constraint firstAttribute="bottom" secondItem="Vcq-Vh-Tgk" secondAttribute="bottom" constant="10" id="6Yo-48-AsX"/>
+                        <constraint firstItem="Vcq-Vh-Tgk" firstAttribute="leading" secondItem="wBb-sU-uyb" secondAttribute="leading" constant="10" id="6oE-V8-X6D"/>
+                        <constraint firstItem="zEC-cM-yDA" firstAttribute="leading" secondItem="wBb-sU-uyb" secondAttribute="leading" constant="10" id="LBF-wC-ua1"/>
+                        <constraint firstItem="zEC-cM-yDA" firstAttribute="top" secondItem="wBb-sU-uyb" secondAttribute="top" constant="8" id="WL4-CO-gv5"/>
+                        <constraint firstAttribute="trailing" secondItem="Vcq-Vh-Tgk" secondAttribute="trailing" constant="10" id="bX8-aO-yig"/>
+                    </constraints>
+                </view>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" bounces="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PnS-Ex-2Am">
+                    <rect key="frame" x="15" y="45" width="345" height="395.5"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="y6w-nP-0GT">
+                            <rect key="frame" x="0.0" y="0.0" width="345" height="128"/>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="y6w-nP-0GT" secondAttribute="trailing" id="AzQ-rZ-uwv"/>
+                        <constraint firstItem="y6w-nP-0GT" firstAttribute="width" secondItem="PnS-Ex-2Am" secondAttribute="width" id="Uvq-Bj-eTK"/>
+                        <constraint firstItem="y6w-nP-0GT" firstAttribute="top" secondItem="PnS-Ex-2Am" secondAttribute="top" id="ZhN-hT-rsi"/>
+                        <constraint firstAttribute="bottom" secondItem="y6w-nP-0GT" secondAttribute="bottom" id="gva-y8-DAS"/>
+                        <constraint firstItem="y6w-nP-0GT" firstAttribute="leading" secondItem="PnS-Ex-2Am" secondAttribute="leading" id="xRt-ub-h9g"/>
+                    </constraints>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="G35-6G-vZJ" secondAttribute="trailing" id="0tF-Vs-vI1"/>
+                <constraint firstItem="G35-6G-vZJ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="2Nm-XS-3z2"/>
+                <constraint firstItem="PnS-Ex-2Am" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="5ps-4o-Ov5"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="wBb-sU-uyb" secondAttribute="trailing" constant="10" id="8uv-rE-v06"/>
+                <constraint firstItem="wBb-sU-uyb" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.25" id="FtJ-Yw-VNe"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="wBb-sU-uyb" secondAttribute="bottom" constant="10" id="MX5-DA-S42"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="PnS-Ex-2Am" secondAttribute="trailing" constant="15" id="Nfz-fa-Iio"/>
+                <constraint firstItem="wBb-sU-uyb" firstAttribute="bottom" secondItem="G35-6G-vZJ" secondAttribute="bottom" id="O0K-fi-zOM"/>
+                <constraint firstItem="PnS-Ex-2Am" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="45" id="RO2-1C-y4E"/>
+                <constraint firstItem="wBb-sU-uyb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="PnS-Ex-2Am" secondAttribute="bottom" constant="30" id="Zy1-GO-xFq"/>
+                <constraint firstItem="wBb-sU-uyb" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="aYt-y4-FIM"/>
+                <constraint firstItem="wBb-sU-uyb" firstAttribute="top" secondItem="PnS-Ex-2Am" secondAttribute="bottom" priority="750" constant="30" id="mhh-Qz-YIl"/>
+                <constraint firstItem="G35-6G-vZJ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="snf-a9-0Uy"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="FUk-3c-fs7" appends="YES" id="fga-4e-no5"/>
+            </connections>
+            <point key="canvasLocation" x="66.666666666666671" y="63.616071428571423"/>
+        </view>
+        <tapGestureRecognizer id="FUk-3c-fs7">
+            <connections>
+                <action selector="didTouchView:" destination="-1" id="hK3-aB-V9i"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+</document>

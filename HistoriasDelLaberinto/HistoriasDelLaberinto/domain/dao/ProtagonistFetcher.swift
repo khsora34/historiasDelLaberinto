@@ -67,6 +67,9 @@ class ProtagonistFetcherImpl: ProtagonistFetcher {
             let statusEntity = NSEntityDescription.entity(forEntityName: "StatusDAO", in: managedContext),
             let itemsEntity = NSEntityDescription.entity(forEntityName: "ObtainedItemsDAO", in: managedContext),
             let visitedRoomsEntity = NSEntityDescription.entity(forEntityName: "VisitedRoomDAO", in: managedContext) else { return false }
+        
+        deleteProtagonist()
+        
         let loadingProtagonist = NSManagedObject(entity: protagonistEntity, insertInto: managedContext)
         
         loadingProtagonist.setValue(protagonist.name, forKey: "name")

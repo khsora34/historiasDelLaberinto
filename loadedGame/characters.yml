@@ -8,7 +8,40 @@ playable:
     defense: 22
     agility: 19
 
-    imageUrl: "http://www.lalaland.com/gerar_image"
+    imageUrl: "https://lh6.googleusercontent.com/qMjNUhWDV2JZXVY25nb1CMtFlhGsuqQ9BSIydaKe8ZkgaHzRdVhmwxV7Sw19HIVgtGDGLQR3YlWbb4ljJ-pa=w2560-h1328"
+
+  "speedSora":
+    name: "Blizzard claws Sora"
+
+    currentHealthPoints: 600
+    maxHealthPoints: 600
+    attack: 30
+    defense: 13
+    agility: 30
+
+    imageUrl: "https://vignette.wikia.nocookie.net/kingdomhearts/images/f/f4/Sora_%28Blitz_Form%29_KHIII.png/revision/latest?cb=20190325141138"
+
+  "shieldSora":
+    name: "Shield Sora"
+
+    currentHealthPoints: 1000
+    maxHealthPoints: 1000
+    attack: 25
+    defense: 22
+    agility: 10
+
+    imageUrl: "https://images.khinsider.com/KINGDOM%20HEARTS%20III/Renders/Main%20Characters/SoraGF.png"
+
+  "sora":
+    name: "Sora"
+
+    currentHealthPoints: 500
+    maxHealthPoints: 500
+    attack: 33
+    defense: 15
+    agility: 18
+
+    imageUrl: "https://images.khinsider.com/KINGDOM%20HEARTS%20III/Renders/Main%20Characters/Sora03.png"
 
   "badMonster":
     name: "Monstruo"

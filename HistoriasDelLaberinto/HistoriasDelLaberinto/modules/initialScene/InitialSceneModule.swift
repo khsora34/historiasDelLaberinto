@@ -9,7 +9,7 @@ class InitialSceneModule: Module {
     init(routerProvider: RouterProvider, databaseFetcherProvider: DatabaseFetcherProvider) {
         viewController = ViewCreator.createFrom(storyboardName: storyboardName, forController: controllerName)
         presenter = InitialScenePresenter()
-        router = routerProvider.voidRouter
+        router = routerProvider.initialSceneRouter
         interactor = InitialSceneInteractor(databaseFetcherProvider: databaseFetcherProvider)
         viewController._presenter = presenter
         presenter._interactor = interactor

@@ -2,8 +2,10 @@ struct ConditionEvent: Event, Codable {
     let condition: Condition
     let nextStepIfTrue: String
     let nextStepIfFalse: String
-    var nextStep: String? {
-        return condition.evaluate() ? nextStepIfTrue: nextStepIfFalse
+    let nextStep: String? = ""
+    
+    func nextStep(evaluator: ConditionEvaluator) -> String {
+        return condition.evaluate(evaluator: evaluator) ? nextStepIfTrue: nextStepIfFalse
     }
 }
 
