@@ -32,6 +32,15 @@ enum EventsHandlerModels {
             let configurator: RewardConfigurator
         }
     }
+    
+    enum BuildChoice {
+        struct Request {
+            let event: ChoiceEvent
+        }
+        struct Response {
+            let configurator: ChoiceConfigurator?
+        }
+    }
 }
 
 enum EventsHandlerError {
@@ -39,6 +48,7 @@ enum EventsHandlerError {
     case eventNotFound
     case characterNotFound
     case determinedCondition
-    case missingItems
+    case itemsNotFound
+    case invalidChoiceExecution
     case custom
 }
