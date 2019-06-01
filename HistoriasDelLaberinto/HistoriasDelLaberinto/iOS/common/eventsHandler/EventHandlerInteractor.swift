@@ -58,7 +58,7 @@ extension EventHandlerInteractor {
             }
         }
         if let protagonist = protagonist {
-            protagonistFetcher.saveProtagonist(for: protagonist)
+            _ = protagonistFetcher.saveProtagonist(for: protagonist)
         }
         
         let configurator = RewardConfigurator(name: "", message: event.message, items: items)

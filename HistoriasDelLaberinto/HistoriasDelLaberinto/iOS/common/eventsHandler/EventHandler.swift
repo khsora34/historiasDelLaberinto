@@ -66,12 +66,11 @@ extension EventHandler {
             showError(.characterNotFound)
             return
         }
-        
         if dialog == nil {
             dialog = Dialog.createDialogue(configurator, delegate: self)
             eventHandlerRouter?.present(dialog!, animated: true)
         } else {
-            dialog?.setNextConfigurator(newConfigurator: configurator)
+            dialog?.setNextConfigurator(configurator)
         }
     }
     
@@ -84,7 +83,11 @@ extension EventHandler {
             dialog = Dialog.createReward(configurator, delegate: self)
             eventHandlerRouter?.present(dialog!, animated: true)
         } else {
-            dialog?.setNextConfigurator(newConfigurator: configurator)
+            dialog?.setNextConfigurator(configurator)
+        }
+    }
+        } else {
+            dialog?.setNextConfigurator(configurator)
         }
     }
 }
@@ -155,7 +158,7 @@ extension EventHandler {
             dialog = Dialog.createDialogue(configurator, delegate: self)
             eventHandlerRouter?.present(dialog!, animated: true)
         } else {
-            dialog?.setNextConfigurator(newConfigurator: configurator)
+            dialog?.setNextConfigurator(configurator)
         }
     }
 }

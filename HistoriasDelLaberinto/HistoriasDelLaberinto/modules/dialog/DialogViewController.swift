@@ -18,7 +18,7 @@ class Dialog {
 }
 
 protocol DialogDisplayLogic: UIViewController {
-    func setNextConfigurator(newConfigurator: DialogConfigurator)
+    func setNextConfigurator(_ newConfigurator: DialogConfigurator)
 }
 
 class DialogViewController: UIViewController {
@@ -82,7 +82,7 @@ class DialogViewController: UIViewController {
 }
 
 extension DialogViewController: DialogDisplayLogic {
-    func setNextConfigurator(newConfigurator: DialogConfigurator) {
+    func setNextConfigurator(_ newConfigurator: DialogConfigurator) {
         if newConfigurator.imageUrl != configurator.imageUrl {
             UIView.animate(withDuration: 0.3, delay: 0.0, options: UIView.AnimationOptions.transitionCrossDissolve, animations: {
                 self.characterImageView.alpha = self.transitionAlpha
