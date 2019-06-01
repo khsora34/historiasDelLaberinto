@@ -32,7 +32,7 @@ class DialogViewController: UIViewController {
     @IBOutlet weak var characterLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var characterImageView: UIImageView!
-    @IBOutlet weak var rewardsStackView: UIStackView!
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet var tapWindowGesture: UITapGestureRecognizer!
     
     weak var delegate: EventHandler?
@@ -52,7 +52,10 @@ class DialogViewController: UIViewController {
         view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.75)
         dialogView.layer.cornerRadius = 6.0
         dialogView.alpha = dialogViewDefaultAlpha
-        rewardsStackView.isHidden = true
+        stackView.isHidden = true
+        for view in stackView.arrangedSubviews {
+            stackView.removeArrangedSubview(view)
+        }
         characterImageView.isHidden = true
     }
     
@@ -83,7 +86,7 @@ extension DialogViewController: DialogDisplayLogic {
         if newConfigurator.imageUrl != configurator.imageUrl {
             UIView.animate(withDuration: 0.3, delay: 0.0, options: UIView.AnimationOptions.transitionCrossDissolve, animations: {
                 self.characterImageView.alpha = self.transitionAlpha
-                self.rewardsStackView.isHidden = true
+                self.stackView.isHidden = true
                 self.dialogView.alpha = self.transitionAlpha
             }, completion: { _ in
                 self.configurator = newConfigurator
@@ -120,20 +123,20 @@ extension DialogViewController {
     }
     
     private func setup(reward: RewardConfigurator) {
-        self.rewardsStackView.isHidden = false
+        self.stackView.isHidden = false
         
         guard let items = reward.items else { return }
         
         for (item, quantity) in items {
-            let newView = RewardView(frame: CGRect(x: 0, y: 0, width: self.rewardsStackView.frame.width, height: 80.0))
+            let newView = RewardView(frame: CGRect(x: 0, y: 0, width: self.stackView.frame.width, height: 80.0))
             newView.item = item.name
             newView.quantity = "\(quantity)"
             let url = URL(string: item.imageUrl)
             newView.imageView.kf.setImage(with: url) { _ in
                 newView.imageView.isHidden = false
             }
-            self.rewardsStackView.addArrangedSubview(newView)
+            self.stackView.addArrangedSubview(newView)
         }
-        (rewardsStackView.arrangedSubviews.last as? RewardView)?.isLast = true
+        (stackView.arrangedSubviews.last as? RewardView)?.isLast = true
     }
 }
