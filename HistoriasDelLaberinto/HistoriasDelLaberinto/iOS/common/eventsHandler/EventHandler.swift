@@ -1,4 +1,4 @@
-protocol EventHandler: class, Evaluator {
+protocol EventHandler: class, ConditionEvaluator {
     var eventHandlerRouter: EventHandlerRoutingLogic? { get }
     var eventHandlerInteractor: EventHandlerInteractor? { get }
     var dialog: DialogDisplayLogic? { get set }

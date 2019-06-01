@@ -2,7 +2,7 @@ enum Condition {
     case partner(id: String)
     case item(id: String)
     
-    func evaluate(evaluator: Evaluator?) -> Bool {
+    func evaluate(evaluator: ConditionEvaluator?) -> Bool {
         return evaluator?.evaluate(self) ?? false
     }
 }
