@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Room Scene View Controller-->
+        <scene sceneID="sb5-tg-XQw">
+            <objects>
+                <viewController storyboardIdentifier="RoomSceneViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QZp-Kb-tkR" customClass="RoomSceneViewController" customModule="HistoriasDelLaberinto" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9al-ld-Icc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GenericRoom1" translatesAutoresizingMaskIntoConstraints="NO" id="bIG-Lf-dW3" userLabel="BackgroundImageView">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vyx-6Q-6Rh" userLabel="Top View">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UJo-ZN-znG">
+                                <rect key="frame" x="0.0" y="627.33333333333337" width="414" height="268.66666666666663"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="RKV-kT-YfV">
+                                        <rect key="frame" x="10" y="0.0" width="394" height="234.66666666666666"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="qeP-xG-uKI">
+                                                <rect key="frame" x="0.0" y="0.0" width="394" height="234.66666666666666"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Sx-wf-UBK" customClass="RoundedButton" customModule="HistoriasDelLaberinto" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="187" height="234.66666666666666"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <connections>
+                                                            <action selector="action:" destination="QZp-Kb-tkR" eventType="touchUpInside" id="MCG-ly-1W6"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpx-x8-VOA" customClass="RoundedButton" customModule="HistoriasDelLaberinto" customModuleProvider="target">
+                                                        <rect key="frame" x="207" y="0.0" width="187" height="234.66666666666666"/>
+                                                        <state key="normal" title="Button"/>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="RKV-kT-YfV" firstAttribute="top" secondItem="UJo-ZN-znG" secondAttribute="top" id="0rM-hy-RFm"/>
+                                    <constraint firstItem="RKV-kT-YfV" firstAttribute="leading" secondItem="UJo-ZN-znG" secondAttribute="leading" constant="10" id="2fv-vs-XtS"/>
+                                    <constraint firstAttribute="trailing" secondItem="RKV-kT-YfV" secondAttribute="trailing" constant="10" id="f4B-3W-7vR"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="bIG-Lf-dW3" firstAttribute="leading" secondItem="qEU-MJ-lfA" secondAttribute="leading" id="4ai-cI-ocg"/>
+                            <constraint firstItem="vyx-6Q-6Rh" firstAttribute="leading" secondItem="qEU-MJ-lfA" secondAttribute="leading" id="8ft-uZ-kcx"/>
+                            <constraint firstItem="vyx-6Q-6Rh" firstAttribute="top" secondItem="9al-ld-Icc" secondAttribute="top" id="9de-WN-FoE"/>
+                            <constraint firstItem="qEU-MJ-lfA" firstAttribute="trailing" secondItem="bIG-Lf-dW3" secondAttribute="trailing" id="DKr-tt-Q2s"/>
+                            <constraint firstItem="qEU-MJ-lfA" firstAttribute="top" secondItem="vyx-6Q-6Rh" secondAttribute="bottom" id="FwT-Wl-fTT"/>
+                            <constraint firstItem="RKV-kT-YfV" firstAttribute="bottom" secondItem="qEU-MJ-lfA" secondAttribute="bottom" id="L35-7z-Xfo"/>
+                            <constraint firstAttribute="bottom" secondItem="UJo-ZN-znG" secondAttribute="bottom" id="LYX-8j-Td7">
+                                <variation key="heightClass=regular" constant="0.0"/>
+                            </constraint>
+                            <constraint firstItem="bIG-Lf-dW3" firstAttribute="top" secondItem="9al-ld-Icc" secondAttribute="top" id="VWO-3n-p0z"/>
+                            <constraint firstAttribute="bottom" secondItem="bIG-Lf-dW3" secondAttribute="bottom" id="YM4-wF-tr6"/>
+                            <constraint firstItem="qEU-MJ-lfA" firstAttribute="trailing" secondItem="UJo-ZN-znG" secondAttribute="trailing" id="aAQ-F2-j9E"/>
+                            <constraint firstItem="qEU-MJ-lfA" firstAttribute="trailing" secondItem="vyx-6Q-6Rh" secondAttribute="trailing" id="ozl-fb-8Z6"/>
+                            <constraint firstItem="UJo-ZN-znG" firstAttribute="height" secondItem="9al-ld-Icc" secondAttribute="height" multiplier="0.3" id="rCu-d0-718"/>
+                            <constraint firstItem="UJo-ZN-znG" firstAttribute="leading" secondItem="qEU-MJ-lfA" secondAttribute="leading" id="z3J-2t-DLP"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qEU-MJ-lfA"/>
+                    </view>
+                    <connections>
+                        <outlet property="backgroundButtonView" destination="UJo-ZN-znG" id="tZj-94-6mG"/>
+                        <outlet property="backgroundImageView" destination="bIG-Lf-dW3" id="nAE-gu-rHE"/>
+                        <outlet property="topView" destination="vyx-6Q-6Rh" id="WKg-2W-veU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RH4-6K-Ik1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-86" y="50"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="GenericRoom1" width="944" height="944"/>
+    </resources>
+</document>
