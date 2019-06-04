@@ -35,3 +35,19 @@ rooms:
         condition:
           kind: "item"
           required: "potion"
+
+  "exampleRoom":
+    name: "Habitación de ejemplo"
+    description: "Esta es la habitación de ejemplo"
+    reloadWhenPartner: true
+    imageUrl: "https://images.pexels.com/photos/2121121/pexels-photo-2121121.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=2&h=1920&w=1080"
+    actions:
+      - action: "Hablar con Sora"
+        nextStep: "exampleDialogue3"
+      - action: "Observar"
+        nextStep: "room17LookAround"
+        condition:
+          kind: "partner" #For items, the keyword is "item".
+          required: "gerar" #Item's or partner's id.
+      - action: "Forma escudo"
+        nextStep: "exampleChoice"

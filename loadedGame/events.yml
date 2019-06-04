@@ -124,7 +124,7 @@
         kind: "partner"
         required: "sora"
     - action: "Mejor déjalo"
-      nextStep: ""
+      nextStep: "room17BattleReward"
 
 "exampleDialogue1":
   mode: "dialogue"
@@ -144,7 +144,7 @@
   mode: "dialogue"
   message: "¡Y yo también soy Sora!"
   characterId: "shieldSora" #idCharacter
-  nextStep: "exampleDialogue3"
+  nextStep: ""
 
 "exampleDialogue3":
   mode: "dialogue"
