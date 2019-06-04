@@ -32,6 +32,8 @@ extension ConditionEventFetcher {
             condition = .item(id: value)
         case "partner":
             condition = .partner(id: value)
+        case "roomVisited":
+            condition = .roomVisited(id: value)
         default:
             condition = nil
         }
@@ -53,11 +55,14 @@ extension ConditionEventFetcher {
         loadingEvent.setValue(condition.nextStepIfFalse, forKey: "nextStepIfFalse")
         
             switch condition.condition {
-            case .item(id: let value):
+            case .item(let value):
                 loadingEvent.setValue("item", forKey: "type")
                 loadingEvent.setValue(value, forKey: "value")
-            case .partner(id: let value):
+            case .partner(let value):
                 loadingEvent.setValue("partner", forKey: "type")
+                loadingEvent.setValue(value, forKey: "value")
+            case .roomVisited(let value):
+                loadingEvent.setValue("roomVisited", forKey: "type")
                 loadingEvent.setValue(value, forKey: "value")
             }
         

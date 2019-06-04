@@ -1,6 +1,7 @@
 enum Condition {
     case partner(id: String)
     case item(id: String)
+    case roomVisited(id: String)
     
     func evaluate(evaluator: ConditionEvaluator?) -> Bool {
         return evaluator?.evaluate(self) ?? false
@@ -27,6 +28,9 @@ extension Condition: Codable {
         case "item":
             let itemId = try container.decode(String.self, forKey: .associatedValue)
             self = .item(id: itemId)
+        case "roomVisited":
+            let roomId = try container.decode(String.self, forKey: .associatedValue)
+            self = .item(id: roomId)
         default:
             throw CodingError.unknownValue
         }
@@ -41,6 +45,9 @@ extension Condition: Codable {
         case .item(let itemId):
             try container.encode("item", forKey: .rawValue)
             try container.encode(itemId, forKey: .associatedValue)
+        case .roomVisited(let roomId):
+            try container.encode("roomVisited", forKey: .rawValue)
+            try container.encode(roomId, forKey: .associatedValue)
         }
     }
 }

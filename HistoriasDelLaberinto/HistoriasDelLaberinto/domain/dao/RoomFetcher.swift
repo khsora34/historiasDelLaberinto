@@ -37,6 +37,8 @@ class RoomFetcherImpl: RoomFetcher {
                         condition = .item(id: value)
                     case "partner":
                         condition = .partner(id: value)
+                    case "roomVisited":
+                        condition = .roomVisited(id: value)
                     default:
                         condition = nil
                     }
@@ -77,6 +79,9 @@ class RoomFetcherImpl: RoomFetcher {
                 case .partner(id: let next):
                     loadingAction.setValue("partner", forKey: "conditionType")
                     loadingAction.setValue(next, forKey: "conditionValue")
+                case .roomVisited(let value):
+                    loadingAction.setValue("roomVisited", forKey: "conditionType")
+                    loadingAction.setValue(value, forKey: "conditionValue")
                 }
             }
             managedActions.append(loadingAction)

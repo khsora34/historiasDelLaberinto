@@ -4,8 +4,8 @@ protocol EventHandlerInteractor {
     var protagonistFetcher: ProtagonistFetcher { get }
     var itemFetcher: ItemFetcher { get }
     func getEvent(request: EventsHandlerModels.FetchEvent.Request) -> EventsHandlerModels.FetchEvent.Response
-    func buildDialogue(request: EventsHandlerModels.BuildDialogue.Request) -> EventsHandlerModels.BuildDialogue.Response
     func compareCondition(request: EventsHandlerModels.CompareCondition.Request) -> EventsHandlerModels.CompareCondition.Response
+    func buildDialogue(request: EventsHandlerModels.BuildDialogue.Request) -> EventsHandlerModels.BuildDialogue.Response
     func buildReward(request: EventsHandlerModels.BuildItems.Request) -> EventsHandlerModels.BuildItems.Response
     func buildChoice(request: EventsHandlerModels.BuildChoice.Request) -> EventsHandlerModels.BuildChoice.Response
 }
@@ -14,18 +14,6 @@ extension EventHandlerInteractor {
     func getEvent(request: EventsHandlerModels.FetchEvent.Request) -> EventsHandlerModels.FetchEvent.Response {
         let event = eventFetcher.getEvent(with: request.id)
         return EventsHandlerModels.FetchEvent.Response(event: event)
-    }
-    
-    func buildDialogue(request: EventsHandlerModels.BuildDialogue.Request) -> EventsHandlerModels.BuildDialogue.Response {
-        let dialogue = request.event
-        
-        let character = characterFetcher.getCharacter(with: dialogue.characterId)
-        guard let safeCharacter = character else {
-            return EventsHandlerModels.BuildDialogue.Response(configurator: nil)
-        }
-        
-        let configurator = DialogueConfigurator(name: safeCharacter.name, message: dialogue.message, imageUrl: safeCharacter.imageUrl)
-        return EventsHandlerModels.BuildDialogue.Response(configurator: configurator)
     }
     
     func compareCondition(request: EventsHandlerModels.CompareCondition.Request) -> EventsHandlerModels.CompareCondition.Response {
@@ -45,7 +33,26 @@ extension EventHandlerInteractor {
             return protagonist.items[id] != nil
         case .partner(let id):
             return protagonist.partner == id
+        case .roomVisited(let id):
+            if protagonist.partner != nil {
+                return protagonist.visitedRooms[id]?.isVisitedWithPartner ?? false
+            } else {
+                return protagonist.visitedRooms[id]?.isVisited ?? false
+            }
         }
+    }
+    
+    
+    func buildDialogue(request: EventsHandlerModels.BuildDialogue.Request) -> EventsHandlerModels.BuildDialogue.Response {
+        let dialogue = request.event
+        
+        let character = characterFetcher.getCharacter(with: dialogue.characterId)
+        guard let safeCharacter = character else {
+            return EventsHandlerModels.BuildDialogue.Response(configurator: nil)
+        }
+        
+        let configurator = DialogueConfigurator(name: safeCharacter.name, message: dialogue.message, imageUrl: safeCharacter.imageUrl)
+        return EventsHandlerModels.BuildDialogue.Response(configurator: configurator)
     }
     
     func buildReward(request: EventsHandlerModels.BuildItems.Request) -> EventsHandlerModels.BuildItems.Response {
