@@ -291,14 +291,14 @@
 		6D398A2222A3002400D19FF8 /* roomScene */ = {
 			isa = PBXGroup;
 			children = (
-				6D997A4922A3049D0025DC8D /* RoomScenePresenter.swift */,
-				6D997A4A22A3049D0025DC8D /* RoomSceneWorker.swift */,
-				6D997A4B22A3049D0025DC8D /* RoomSceneRouter.swift */,
-				6D997A4C22A3049D0025DC8D /* RoomSceneModels.swift */,
-				6D997A4D22A3049D0025DC8D /* RoomSceneViewController.swift */,
-				6D997A4E22A3049D0025DC8D /* RoomSceneInteractor.swift */,
 				6D997A5522A304AB0025DC8D /* RoomScene.storyboard */,
+				6D997A4E22A3049D0025DC8D /* RoomSceneInteractor.swift */,
+				6D997A4C22A3049D0025DC8D /* RoomSceneModels.swift */,
 				6D997A5722A309460025DC8D /* RoomSceneModule.swift */,
+				6D997A4922A3049D0025DC8D /* RoomScenePresenter.swift */,
+				6D997A4B22A3049D0025DC8D /* RoomSceneRouter.swift */,
+				6D997A4D22A3049D0025DC8D /* RoomSceneViewController.swift */,
+				6D997A4A22A3049D0025DC8D /* RoomSceneWorker.swift */,
 			);
 			path = roomScene;
 			sourceTree = "<group>";

@@ -102,7 +102,7 @@ extension DialogViewController: DialogDisplayLogic {
         } else {
             configurator = newConfigurator
             setupConfiguration()
-            textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
+            timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
         }
     }
     

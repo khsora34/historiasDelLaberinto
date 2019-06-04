@@ -1,6 +1,6 @@
 protocol RoomScenePresentationLogic: Presenter {
     func start(for tag: Int)
-    func showInfo()
+    func getInfoMessage() -> String
     func showMenu()
 }
 
@@ -47,9 +47,10 @@ extension RoomScenePresenter: RoomScenePresentationLogic {
         startEvent(with: nextStep)
     }
     
-    func showInfo() {
-        
+    func getInfoMessage() -> String {
+        return room.description
     }
+    
     func showMenu() {
         
     }
