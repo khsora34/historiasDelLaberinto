@@ -2,7 +2,7 @@ import UIKit
 
 protocol InitialSceneRoutingLogic: RouterLogic {
     func goToExampleView()
-    func goToRoomView(room: Room)
+    func goToRoomView(roomId: String, room: Room)
 }
 
 class InitialSceneRouter: BaseRouter, InitialSceneRoutingLogic {
@@ -12,9 +12,9 @@ class InitialSceneRouter: BaseRouter, InitialSceneRoutingLogic {
         navigation.pushViewController(module.viewController, animated: true)
     }
     
-    func goToRoomView(room: Room) {
+    func goToRoomView(roomId: String, room: Room) {
         guard let navigation = drawer?.currentRootViewController as? UINavigationController else { return }
-        let module = moduleProvider.roomSceneModule(room: room)
+        let module = moduleProvider.roomSceneModule(roomId: roomId, room: room)
         navigation.pushViewController(module.viewController, animated: true)
     }
 }

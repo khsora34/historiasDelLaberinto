@@ -5,6 +5,7 @@ protocol EventHandlerInteractor {
     var itemFetcher: ItemFetcher { get }
     func getEvent(request: EventsHandlerModels.FetchEvent.Request) -> EventsHandlerModels.FetchEvent.Response
     func compareCondition(request: EventsHandlerModels.CompareCondition.Request) -> EventsHandlerModels.CompareCondition.Response
+    func setIsVisited(request: EventsHandlerModels.SetVisited.Request)
     func buildDialogue(request: EventsHandlerModels.BuildDialogue.Request) -> EventsHandlerModels.BuildDialogue.Response
     func buildReward(request: EventsHandlerModels.BuildItems.Request) -> EventsHandlerModels.BuildItems.Response
     func buildChoice(request: EventsHandlerModels.BuildChoice.Request) -> EventsHandlerModels.BuildChoice.Response
@@ -42,6 +43,16 @@ extension EventHandlerInteractor {
         }
     }
     
+    func setIsVisited(request: EventsHandlerModels.SetVisited.Request) {
+        guard var prota = protagonistFetcher.getProtagonist() else { return }
+        if prota.partner != nil {
+            prota.visitedRooms[request.roomId]?.isVisitedWithPartner = true
+        } else {
+            prota.visitedRooms[request.roomId]?.isVisited = true
+        }
+        
+        _ = protagonistFetcher.saveProtagonist(for: prota)
+    }
     
     func buildDialogue(request: EventsHandlerModels.BuildDialogue.Request) -> EventsHandlerModels.BuildDialogue.Response {
         let dialogue = request.event
