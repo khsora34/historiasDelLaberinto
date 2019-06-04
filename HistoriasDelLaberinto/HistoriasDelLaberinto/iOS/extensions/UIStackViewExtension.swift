@@ -1,7 +1,7 @@
 import UIKit
 
 extension UIStackView {
-    func setButtonsInColumns(names: [String], action: Selector, for view: ButtonSelectableView, numberOfColumns: Int = 2, fixedHeight: Bool = false) {
+    func setButtonsInColumns(names: [String], action: Selector, for view: Any, numberOfColumns: Int = 2, fixedHeight: Bool = false) {
         for i in 0...((names.count-1)/numberOfColumns) {
             let buttonStackView: UIStackView
             

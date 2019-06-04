@@ -164,9 +164,6 @@ extension DialogViewController {
         stackView.setButtonsInColumns(names: actions.map({$0.name}), action: #selector(buttonSelected(sender:)), for: self, numberOfColumns: 2, fixedHeight: true)
     }
     
-}
-
-extension DialogViewController: ButtonSelectableView {
     @objc func buttonSelected(sender: UIButton) {
         delegate?.performChoice(tag: sender.tag)
     }
