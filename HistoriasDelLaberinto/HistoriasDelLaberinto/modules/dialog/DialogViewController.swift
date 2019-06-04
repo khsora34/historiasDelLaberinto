@@ -161,7 +161,7 @@ extension DialogViewController {
         
         let actions = choice.actions
         
-        for i in 0...(actions.count/2) {
+        for i in 0...((actions.count-1)/2) {
             let buttonStackView: UIStackView
             if i == actions.count/2, actions.count % 2 == 1 {
                 let button = RoundedButton(type: .custom)
