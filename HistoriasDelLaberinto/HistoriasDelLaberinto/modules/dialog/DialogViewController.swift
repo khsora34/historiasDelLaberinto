@@ -34,6 +34,7 @@ class DialogViewController: UIViewController {
     private let transitionAlpha: CGFloat = 0.3
     
     private var configurator: DialogConfigurator
+    private var timer: Timer?
     
     @IBOutlet weak var dialogView: UIView!
     @IBOutlet weak var characterLabel: UILabel!
@@ -69,7 +70,7 @@ class DialogViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupConfiguration()
-        textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
+        timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
     }
     
     private func setupConfiguration(newConfigurator: DialogConfigurator? = nil) {
@@ -88,6 +89,7 @@ class DialogViewController: UIViewController {
     }
     
     @IBAction func didTouchView(_ sender: Any) {
+        timer?.invalidate()
         delegate?.continueFlow()
     }
 }
@@ -117,7 +119,7 @@ extension DialogViewController: DialogDisplayLogic {
                 self.characterImageView.alpha = 1.0
                 self.dialogView.alpha = self.dialogViewDefaultAlpha
             }, completion: { _ in
-                self.textView.setTypingText(message: self.configurator.message, timeInterval: self.typingTimeInterval)
+                self.timer = self.textView.setTypingText(message: self.configurator.message, timeInterval: self.typingTimeInterval)
             })
         })
     }
