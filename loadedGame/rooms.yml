@@ -45,9 +45,6 @@ rooms:
       - action: "Hablar con Sora"
         nextStep: "exampleDialogue3"
       - action: "Observar"
-        nextStep: "room17LookAround"
-        condition:
-          kind: "partner" #For items, the keyword is "item".
-          required: "gerar" #Item's or partner's id.
+        nextStep: "exampleDialogue4"
       - action: "Forma escudo"
         nextStep: "exampleChoice"

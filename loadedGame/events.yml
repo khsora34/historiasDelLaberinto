@@ -151,3 +151,11 @@
   message: "¡Pues yo soy el original!"
   characterId: "sora" #idCharacter
   nextStep: ""
+
+"exampleDialogue4":
+  mode: "condition"
+  condition:
+    kind: "roomVisited"
+    required: "exampleRoom"
+  nextStepIfTrue: "exampleDialogue1"
+  nextStepIfFalse: "exampleDialogue3"
