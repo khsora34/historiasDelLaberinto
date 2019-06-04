@@ -1,5 +1,7 @@
 protocol RoomScenePresentationLogic: Presenter {
     func start()
+    func showInfo()
+    func showMenu()
 }
 
 class RoomScenePresenter: BasePresenter {
@@ -28,6 +30,12 @@ class RoomScenePresenter: BasePresenter {
 extension RoomScenePresenter: RoomScenePresentationLogic {
     func start() {
         startEvent(with: "exampleChoice")
+    }
+    func showInfo() {
+        
+    }
+    func showMenu() {
+        
     }
 }
 
