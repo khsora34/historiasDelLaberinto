@@ -34,6 +34,7 @@ class RoomScenePresenter: BasePresenter {
             let request = EventsHandlerModels.CompareCondition.Request(condition: condition)
             return interactor?.compareCondition(request: request).result ?? false
         }
+        room.actions = filteredActions
         let modeledActions = filteredActions.map({ $0.name })
         viewController?.set(actions: modeledActions)
         
