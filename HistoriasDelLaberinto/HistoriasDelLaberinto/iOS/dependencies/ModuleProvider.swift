@@ -12,7 +12,7 @@ class ModuleProvider {
         return InitialSceneModule(routerProvider: routerProvider, databaseFetcherProvider: databaseFetcherProvider)
     }
     
-    func roomSceneModule(room: Room) -> Module {
-        return RoomSceneModule(room: room, routerProvider: routerProvider, databaseFetcherProvider: databaseFetcherProvider)
+    func roomSceneModule(roomId: String, room: Room) -> Module {
+        return RoomSceneModule(roomId: roomId, room: room, routerProvider: routerProvider, databaseFetcherProvider: databaseFetcherProvider)
     }
 }

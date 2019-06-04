@@ -7,6 +7,9 @@ enum InitialScene {
         }
     }
     enum RoomBuilder {
+        struct Request {
+            let roomId: String
+        }
         struct Response {
             let room: Room?
         }

@@ -18,10 +18,14 @@ class RoomScenePresenter: BasePresenter {
     }
     
     private var room: Room
+    
+    var roomId: String
+    var shouldSetVisitedWhenFinished: Bool = false
     var dialog: DialogDisplayLogic?
     var actualEvent: Event?
     
-    init(room: Room) {
+    init(roomId: String, room: Room) {
+        self.roomId = roomId
         self.room = room
     }
     
@@ -57,6 +61,11 @@ extension RoomScenePresenter: RoomScenePresentationLogic {
 }
 
 extension RoomScenePresenter: EventHandler {
+    
+    func onFinish() {
+        
+    }
+    
     var eventHandlerRouter: EventHandlerRoutingLogic? {
         return _router as? EventHandlerRoutingLogic
     }

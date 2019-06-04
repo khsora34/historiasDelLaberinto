@@ -38,6 +38,8 @@ extension ChoiceEventFetcher {
                         condition = .item(id: value)
                     case "partner":
                         condition = .partner(id: value)
+                    case "roomVisited":
+                        condition = .roomVisited(id: value)
                     default:
                         condition = nil
                     }
@@ -70,12 +72,15 @@ extension ChoiceEventFetcher {
             loadingAction.setValue(action.nextStep, forKey: "nextStep")
             if let condition = action.condition {
                 switch condition {
-                case .item(id: let next):
+                case .item(let next):
                     loadingAction.setValue("item", forKey: "conditionType")
                     loadingAction.setValue(next, forKey: "conditionValue")
-                case .partner(id: let next):
+                case .partner(let next):
                     loadingAction.setValue("partner", forKey: "conditionType")
                     loadingAction.setValue(next, forKey: "conditionValue")
+                case .roomVisited(let value):
+                    loadingAction.setValue("roomVisited", forKey: "conditionType")
+                    loadingAction.setValue(value, forKey: "conditionValue")
                 }
             }
             managedActions.append(loadingAction)

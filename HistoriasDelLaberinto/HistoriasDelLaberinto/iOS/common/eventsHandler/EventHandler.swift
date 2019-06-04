@@ -1,10 +1,13 @@
 protocol EventHandler: class, ConditionEvaluator {
     var eventHandlerRouter: EventHandlerRoutingLogic? { get }
     var eventHandlerInteractor: EventHandlerInteractor? { get }
+    var roomId: String { get }
     var dialog: DialogDisplayLogic? { get set }
     var actualEvent: Event? { get set }
+    var shouldSetVisitedWhenFinished: Bool { get set }
     func startEvent(with id: String)
     func continueFlow()
+    func onFinish()
     func showError(_ error: EventsHandlerError)
 }
 
@@ -18,6 +21,9 @@ extension EventHandler {
         }
         
         if let condition = event as? ConditionEvent {
+            if case Condition.roomVisited = condition.condition {
+                shouldSetVisitedWhenFinished = true
+            }
             startEvent(with: condition.nextStep(evaluator: self))
             return
         }
@@ -39,6 +45,11 @@ extension EventHandler {
     
     private func finishFlow() {
         finishDialog()
+        if shouldSetVisitedWhenFinished {
+            let request = EventsHandlerModels.SetVisited.Request(roomId: roomId)
+            eventHandlerInteractor?.setIsVisited(request: request)
+        }
+        onFinish()
     }
     
     private func finishDialog() {
