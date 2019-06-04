@@ -1,0 +1,4 @@
+class RoomSceneWorker {
+  func doSomeWork() {
+  }
+}

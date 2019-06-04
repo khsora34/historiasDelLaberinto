@@ -1,6 +1,6 @@
 import UIKit
 
-protocol ViewControllerDisplay: BaseViewController {
+protocol ViewControllerDisplay: UIViewController {
     var _presenter: Presenter? { get set }
 }
 
