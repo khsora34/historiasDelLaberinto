@@ -49,7 +49,7 @@ class RoomSceneViewController: BaseViewController {
 extension RoomSceneViewController: RoomSceneDisplayLogic {
     func set(title: String) {
         self.title = title
-        
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24)]
     }
     
     func setImage(with literal: String) {
