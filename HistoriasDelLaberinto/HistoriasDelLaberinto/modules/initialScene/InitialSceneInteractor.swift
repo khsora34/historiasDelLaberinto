@@ -3,6 +3,7 @@ import Foundation
 protocol InitialSceneBusinessLogic: BusinessLogic {
     func loadAllFiles() -> InitialScene.LoadFiles.Response
     func deleteAllFiles()
+    func getRoom() -> InitialScene.RoomBuilder.Response
 }
 
 class InitialSceneInteractor: InitialSceneBusinessLogic {
@@ -35,6 +36,11 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
         databaseFetcherProvider.protagonistFetcher.deleteProtagonist()
         databaseFetcherProvider.roomsFetcher.deleteAllRooms()
         print("😂 Finished in \(Date().timeIntervalSinceReferenceDate - now)")
+    }
+    
+    func getRoom() -> InitialScene.RoomBuilder.Response {
+        let room = databaseFetcherProvider.roomsFetcher.getRoom(with: "exampleRoom")
+        return InitialScene.RoomBuilder.Response(room: room)
     }
 }
 

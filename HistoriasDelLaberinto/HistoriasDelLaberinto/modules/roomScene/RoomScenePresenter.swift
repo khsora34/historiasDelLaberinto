@@ -1,14 +1,10 @@
 protocol RoomScenePresentationLogic: Presenter {
-    func start()
+    func start(for tag: Int)
     func showInfo()
     func showMenu()
 }
 
 class RoomScenePresenter: BasePresenter {
-    var dialog: DialogDisplayLogic?
-    
-    var actualEvent: Event?
-    
     var viewController: RoomSceneDisplayLogic? {
         return _viewController as? RoomSceneDisplayLogic
     }
@@ -21,16 +17,35 @@ class RoomScenePresenter: BasePresenter {
         return _router as? RoomSceneRouter
     }
     
+    private var room: Room
+    var dialog: DialogDisplayLogic?
+    var actualEvent: Event?
+    
+    init(room: Room) {
+        self.room = room
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewController?.set(title: "Hola")
+        viewController?.set(title: room.name)
+        viewController?.setImage(with: room.imageUrl)
+        let filteredActions = room.actions.filter { action in
+            guard let condition = action.condition else { return true }
+            let request = EventsHandlerModels.CompareCondition.Request(condition: condition)
+            return interactor?.compareCondition(request: request).result ?? false
+        }
+        let modeledActions = filteredActions.map({ $0.name })
+        viewController?.set(actions: modeledActions)
+        
     }
 }
 
 extension RoomScenePresenter: RoomScenePresentationLogic {
-    func start() {
-        startEvent(with: "exampleChoice")
+    func start(for tag: Int) {
+        guard let nextStep = room.actions[tag].nextStep else { return }
+        startEvent(with: nextStep)
     }
+    
     func showInfo() {
         
     }

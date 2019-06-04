@@ -1,8 +1,10 @@
 import UIKit
+import Kingfisher
 
 protocol RoomSceneDisplayLogic: ViewControllerDisplay {
     func set(title: String)
     func setImage(with literal: String)
+    func set(actions: [String])
 }
 
 class RoomSceneViewController: BaseViewController {
@@ -13,6 +15,7 @@ class RoomSceneViewController: BaseViewController {
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var backgroundButtonView: UIView!
+    @IBOutlet weak var buttonStackView: UIStackView!
     
     // MARK: View lifecycle
     
@@ -40,10 +43,6 @@ class RoomSceneViewController: BaseViewController {
         let infoBarButtonItem = UIBarButtonItem(customView: infoButton)
         navigationItem.leftBarButtonItem = infoBarButtonItem
     }
-    
-    @IBAction func action(_ sender: Any) {
-        presenter?.start()
-    }
 }
 
 extension RoomSceneViewController: RoomSceneDisplayLogic {
@@ -53,12 +52,24 @@ extension RoomSceneViewController: RoomSceneDisplayLogic {
     }
     
     func setImage(with literal: String) {
-        let image = UIImage(named: "GenericRoom1")
-        backgroundImageView.image = image
+        if literal.isEmpty {
+            let image = UIImage(named: "GenericRoom1")
+            backgroundImageView.image = image
+        }
+        
+        backgroundImageView.kf.setImage(with: URL(string: literal))
+    }
+    
+    func set(actions: [String]) {
+        buttonStackView.setButtonsInColumns(names: actions, action: #selector(didTapOption), for: self, numberOfColumns: 2, fixedHeight: false)
     }
 }
 
 extension RoomSceneViewController {
+    @objc func didTapOption(sender: UIButton) {
+        presenter?.start(for: sender.tag)
+    }
+    
     @objc func didTappedInfoButton() {
         presenter?.showInfo()
     }
