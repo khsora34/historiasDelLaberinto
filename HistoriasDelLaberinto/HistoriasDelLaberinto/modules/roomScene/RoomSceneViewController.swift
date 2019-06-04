@@ -23,21 +23,21 @@ class RoomSceneViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addNavigationBarButtons()
+    }
+    
+    private func addNavigationBarButtons() {
         let image = UIImage(named: "menuIcon")
         let button = UIButton(type: .custom)
-//        //set image for button
         button.setImage(image, for: .normal)
-////        button.addTarget(self, action: nil, for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTappedMenuButton), for: .touchUpInside)
         button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-//
         let barButton = UIBarButtonItem(customView: button)
         self.navigationItem.rightBarButtonItem = barButton
+        
         let infoButton = UIButton(type: .infoLight)
-        
-//        infoButton.addTarget(self, action: #selector(getInfoAction), for: .touchUpInside)
-        
+        infoButton.addTarget(self, action: #selector(didTappedInfoButton), for: .touchUpInside)
         let infoBarButtonItem = UIBarButtonItem(customView: infoButton)
-        
         navigationItem.leftBarButtonItem = infoBarButtonItem
     }
     
@@ -55,5 +55,15 @@ extension RoomSceneViewController: RoomSceneDisplayLogic {
     func setImage(with literal: String) {
         let image = UIImage(named: "GenericRoom1")
         backgroundImageView.image = image
+    }
+}
+
+extension RoomSceneViewController {
+    @objc func didTappedInfoButton() {
+        presenter?.showInfo()
+    }
+    
+    @objc func didTappedMenuButton() {
+        presenter?.showMenu()
     }
 }
