@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Movement Scene View Controller-->
+        <scene sceneID="l5O-bX-94g">
+            <objects>
+                <viewController storyboardIdentifier="MovementSceneViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="w1R-xI-xpw" customClass="MovementSceneViewController" customModule="HistoriasDelLaberinto" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CxI-Ag-CGe">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DO0-J0-R52">
+                                <rect key="frame" x="30" y="291" width="354" height="354"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q47-Ra-hxX" userLabel="Down Button">
+                                        <rect key="frame" x="145" y="290" width="64" height="64"/>
+                                        <state key="normal" image="arrowDown"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fhv-Ff-dSI" userLabel="Left Button">
+                                        <rect key="frame" x="0.0" y="145" width="64" height="64"/>
+                                        <state key="normal" image="arrowLeft"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V9C-hz-2p3" userLabel="Right Button">
+                                        <rect key="frame" x="290" y="145" width="64" height="64"/>
+                                        <state key="normal" image="arrowRight"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HTA-DY-tdu" userLabel="Up Button">
+                                        <rect key="frame" x="145" y="0.0" width="64" height="64"/>
+                                        <state key="normal" image="arrowUp"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstItem="Fhv-Ff-dSI" firstAttribute="centerY" secondItem="DO0-J0-R52" secondAttribute="centerY" id="43l-FC-nCU"/>
+                                    <constraint firstAttribute="bottom" secondItem="q47-Ra-hxX" secondAttribute="bottom" id="5mJ-pO-BFQ"/>
+                                    <constraint firstItem="HTA-DY-tdu" firstAttribute="centerX" secondItem="DO0-J0-R52" secondAttribute="centerX" id="F3M-Ni-fjN"/>
+                                    <constraint firstAttribute="width" secondItem="DO0-J0-R52" secondAttribute="height" id="OY9-tm-3b2"/>
+                                    <constraint firstItem="HTA-DY-tdu" firstAttribute="top" secondItem="DO0-J0-R52" secondAttribute="top" id="UDk-5V-Mtk"/>
+                                    <constraint firstItem="q47-Ra-hxX" firstAttribute="centerX" secondItem="DO0-J0-R52" secondAttribute="centerX" id="Wot-W0-yFZ"/>
+                                    <constraint firstItem="Fhv-Ff-dSI" firstAttribute="leading" secondItem="DO0-J0-R52" secondAttribute="leading" id="cSl-wR-rvX"/>
+                                    <constraint firstAttribute="trailing" secondItem="V9C-hz-2p3" secondAttribute="trailing" id="phg-To-2xv"/>
+                                    <constraint firstItem="V9C-hz-2p3" firstAttribute="centerY" secondItem="DO0-J0-R52" secondAttribute="centerY" id="vOM-Ig-VSa"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Te encuentras en la sala" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s5z-vj-WHU">
+                                <rect key="frame" x="20" y="191.5" width="374" height="25.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sala X" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0nG-MI-U0u">
+                                <rect key="frame" x="174" y="232" width="66" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="s5z-vj-WHU" firstAttribute="centerX" secondItem="CxI-Ag-CGe" secondAttribute="centerX" id="2J8-Zm-V3U"/>
+                            <constraint firstItem="s5z-vj-WHU" firstAttribute="leading" secondItem="l1O-VM-E05" secondAttribute="leading" constant="20" id="3vB-Vf-IN1"/>
+                            <constraint firstItem="0nG-MI-U0u" firstAttribute="top" secondItem="s5z-vj-WHU" secondAttribute="bottom" constant="15" id="C17-7l-Dec"/>
+                            <constraint firstItem="DO0-J0-R52" firstAttribute="centerY" secondItem="CxI-Ag-CGe" secondAttribute="centerY" constant="20" id="GR1-eK-XhP"/>
+                            <constraint firstItem="s5z-vj-WHU" firstAttribute="top" relation="greaterThanOrEqual" secondItem="l1O-VM-E05" secondAttribute="top" constant="10" id="cti-JQ-AuD"/>
+                            <constraint firstItem="DO0-J0-R52" firstAttribute="leading" secondItem="l1O-VM-E05" secondAttribute="leading" constant="30" id="iSX-V8-MeP"/>
+                            <constraint firstItem="DO0-J0-R52" firstAttribute="centerX" secondItem="CxI-Ag-CGe" secondAttribute="centerX" id="pbd-wQ-kYG"/>
+                            <constraint firstItem="DO0-J0-R52" firstAttribute="top" secondItem="0nG-MI-U0u" secondAttribute="bottom" constant="30" id="qKE-AP-OuV"/>
+                            <constraint firstItem="0nG-MI-U0u" firstAttribute="centerX" secondItem="CxI-Ag-CGe" secondAttribute="centerX" id="yFw-8H-g4C"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="l1O-VM-E05"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Koy-Ao-ZR5" appends="YES" id="GPG-wO-VPn"/>
+                        </connections>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pNL-HX-1lV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Koy-Ao-ZR5">
+                    <connections>
+                        <action selector="didTouchView:" destination="w1R-xI-xpw" id="oR8-hI-Bn1"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="40.579710144927539" y="95.758928571428569"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="arrowDown" width="64" height="64"/>
+        <image name="arrowLeft" width="64" height="64"/>
+        <image name="arrowRight" width="64" height="64"/>
+        <image name="arrowUp" width="64" height="64"/>
+    </resources>
+</document>
