@@ -161,36 +161,12 @@ extension DialogViewController {
         
         let actions = choice.actions
         
-        for i in 0...((actions.count-1)/2) {
-            let buttonStackView: UIStackView
-            if i == actions.count/2, actions.count % 2 == 1 {
-                let button = RoundedButton(type: .custom)
-                button.setTitle(actions[(2*i)].name, for: .normal)
-                button.tag = (i * 2)
-                button.addTarget(self, action: #selector(buttonSelected(sender:)), for: .touchUpInside)
-                buttonStackView = UIStackView(arrangedSubviews: [button])
-            } else {
-                let firstButton = RoundedButton(type: .custom)
-                firstButton.setTitle(actions[2*i].name, for: .normal)
-                firstButton.tag = i * 2
-                firstButton.addTarget(self, action: #selector(buttonSelected(sender:)), for: .touchUpInside)
-                
-                let secondButton = RoundedButton(type: .custom)
-                secondButton.setTitle(actions[(2*i)+1].name, for: .normal)
-                secondButton.tag = (i * 2) + 1
-                secondButton.addTarget(self, action: #selector(buttonSelected(sender:)), for: .touchUpInside)
-                
-                buttonStackView = UIStackView(arrangedSubviews: [firstButton, secondButton])
-            }
-            buttonStackView.axis = .horizontal
-            buttonStackView.distribution = .fillEqually
-            buttonStackView.alignment = .center
-            buttonStackView.spacing = 20
-            NSLayoutConstraint(item: buttonStackView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 60).isActive = true
-            stackView.addArrangedSubview(buttonStackView)
-        }
+        stackView.setButtonsInColumns(names: actions.map({$0.name}), action: #selector(buttonSelected(sender:)), for: self, numberOfColumns: 2, fixedHeight: true)
     }
     
+}
+
+extension DialogViewController: ButtonSelectableView {
     @objc func buttonSelected(sender: UIButton) {
         delegate?.performChoice(tag: sender.tag)
     }
