@@ -1,11 +1,11 @@
 import UIKit
 
 extension UITextView {
-    func setTypingText(message: String, timeInterval: TimeInterval) {
+    func setTypingText(message: String, timeInterval: TimeInterval) -> Timer {
         let characters = message.map { $0 }
         let count = message.count
         var index = 0
-        Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true, block: { [weak self] timer in
+        return Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true, block: { [weak self] timer in
             if index < count {
                 if let self = self {
                     let char = characters[index]
@@ -20,4 +20,3 @@ extension UITextView {
         })
     }
 }
-

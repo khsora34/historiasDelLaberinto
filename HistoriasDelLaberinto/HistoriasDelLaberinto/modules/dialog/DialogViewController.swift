@@ -34,6 +34,7 @@ class DialogViewController: UIViewController {
     private let transitionAlpha: CGFloat = 0.3
     
     private var configurator: DialogConfigurator
+    private var timer: Timer?
     
     @IBOutlet weak var dialogView: UIView!
     @IBOutlet weak var characterLabel: UILabel!
@@ -69,7 +70,7 @@ class DialogViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupConfiguration()
-        textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
+        timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
     }
     
     private func setupConfiguration(newConfigurator: DialogConfigurator? = nil) {
@@ -88,6 +89,7 @@ class DialogViewController: UIViewController {
     }
     
     @IBAction func didTouchView(_ sender: Any) {
+        timer?.invalidate()
         delegate?.continueFlow()
     }
 }
@@ -100,7 +102,7 @@ extension DialogViewController: DialogDisplayLogic {
         } else {
             configurator = newConfigurator
             setupConfiguration()
-            textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
+            timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
         }
     }
     
@@ -117,7 +119,7 @@ extension DialogViewController: DialogDisplayLogic {
                 self.characterImageView.alpha = 1.0
                 self.dialogView.alpha = self.dialogViewDefaultAlpha
             }, completion: { _ in
-                self.textView.setTypingText(message: self.configurator.message, timeInterval: self.typingTimeInterval)
+                self.timer = self.textView.setTypingText(message: self.configurator.message, timeInterval: self.typingTimeInterval)
             })
         })
     }
@@ -161,34 +163,7 @@ extension DialogViewController {
         
         let actions = choice.actions
         
-        for i in 0...(actions.count/2) {
-            let buttonStackView: UIStackView
-            if i == actions.count/2, actions.count % 2 == 1 {
-                let button = RoundedButton(type: .custom)
-                button.setTitle(actions[(2*i)].name, for: .normal)
-                button.tag = (i * 2)
-                button.addTarget(self, action: #selector(buttonSelected(sender:)), for: .touchUpInside)
-                buttonStackView = UIStackView(arrangedSubviews: [button])
-            } else {
-                let firstButton = RoundedButton(type: .custom)
-                firstButton.setTitle(actions[2*i].name, for: .normal)
-                firstButton.tag = i * 2
-                firstButton.addTarget(self, action: #selector(buttonSelected(sender:)), for: .touchUpInside)
-                
-                let secondButton = RoundedButton(type: .custom)
-                secondButton.setTitle(actions[(2*i)+1].name, for: .normal)
-                secondButton.tag = (i * 2) + 1
-                secondButton.addTarget(self, action: #selector(buttonSelected(sender:)), for: .touchUpInside)
-                
-                buttonStackView = UIStackView(arrangedSubviews: [firstButton, secondButton])
-            }
-            buttonStackView.axis = .horizontal
-            buttonStackView.distribution = .fillEqually
-            buttonStackView.alignment = .center
-            buttonStackView.spacing = 20
-            NSLayoutConstraint(item: buttonStackView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 60).isActive = true
-            stackView.addArrangedSubview(buttonStackView)
-        }
+        stackView.setButtonsInColumns(names: actions.map({$0.name}), action: #selector(buttonSelected(sender:)), for: self, numberOfColumns: 2, fixedHeight: true)
     }
     
     @objc func buttonSelected(sender: UIButton) {

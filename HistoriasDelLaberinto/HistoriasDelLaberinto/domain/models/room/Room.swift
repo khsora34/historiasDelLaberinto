@@ -4,7 +4,7 @@ struct Room: Codable, ImageRepresentable {
     let imageUrl: String
     let reloadWithPartner: Bool
     var isGenericRoom: Bool?
-    let actions: [Action]
+    var actions: [Action]
     
     private enum CodingKeys: String, CodingKey {
         case name
