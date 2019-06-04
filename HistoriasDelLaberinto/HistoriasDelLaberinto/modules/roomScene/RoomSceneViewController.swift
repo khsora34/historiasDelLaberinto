@@ -71,7 +71,11 @@ extension RoomSceneViewController {
     }
     
     @objc func didTappedInfoButton() {
-        presenter?.showInfo()
+        let alert = UIAlertController(title: title, message: presenter?.getInfoMessage(), preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: nil))
+        
+        self.present(alert, animated: true)
     }
     
     @objc func didTappedMenuButton() {
