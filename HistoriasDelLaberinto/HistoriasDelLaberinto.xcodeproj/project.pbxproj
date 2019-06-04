@@ -100,7 +100,6 @@
 		6DC6757E224BD04E00B795B6 /* ChoiceEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC6757D224BD04E00B795B6 /* ChoiceEvent.swift */; };
 		6DC67580224BD09700B795B6 /* BattleEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC6757F224BD09700B795B6 /* BattleEvent.swift */; };
 		6DC67582224BD0FB00B795B6 /* RewardEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC67581224BD0FB00B795B6 /* RewardEvent.swift */; };
-		6DDA433D22A6DB09003C7993 /* ButtonSelectableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDA433C22A6DB09003C7993 /* ButtonSelectableView.swift */; };
 		6DDF365A225FBAA400391B1D /* HistoriasDelLaberintoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDF3659225FBAA400391B1D /* HistoriasDelLaberintoTests.swift */; };
 		6DDF3662225FBAD300391B1D /* ModelParsersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDF3661225FBAD300391B1D /* ModelParsersTests.swift */; };
 		6DDF3668225FBDCD00391B1D /* RoomsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDF3667225FBDCD00391B1D /* RoomsFile.swift */; };
@@ -220,7 +219,6 @@
 		6DC6757D224BD04E00B795B6 /* ChoiceEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceEvent.swift; sourceTree = "<group>"; };
 		6DC6757F224BD09700B795B6 /* BattleEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleEvent.swift; sourceTree = "<group>"; };
 		6DC67581224BD0FB00B795B6 /* RewardEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardEvent.swift; sourceTree = "<group>"; };
-		6DDA433C22A6DB09003C7993 /* ButtonSelectableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonSelectableView.swift; sourceTree = "<group>"; };
 		6DDF3657225FBAA400391B1D /* HistoriasDelLaberintoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HistoriasDelLaberintoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DDF3659225FBAA400391B1D /* HistoriasDelLaberintoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoriasDelLaberintoTests.swift; sourceTree = "<group>"; };
 		6DDF365B225FBAA400391B1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -399,7 +397,6 @@
 				6DEF066022688C4C00A5C454 /* MainViewController.swift */,
 				6D2DA747229ED8DE00BC5C0D /* GameFilesLoader.swift */,
 				6D5DB0DC22A1DED700C8745E /* ConditionEvaluator.swift */,
-				6DDA433C22A6DB09003C7993 /* ButtonSelectableView.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -865,7 +862,6 @@
 				6DEC0C9522A1966B0050849F /* EventsHandlerModels.swift in Sources */,
 				6D9A45AE22874D04004F4D0C /* LoadedGame.xcdatamodeld in Sources */,
 				6D2DA748229ED8DE00BC5C0D /* GameFilesLoader.swift in Sources */,
-				6DDA433D22A6DB09003C7993 /* ButtonSelectableView.swift in Sources */,
 				6DB6AD75229AA61900B436D2 /* BattleEventFetcher.swift in Sources */,
 				6DE18D0D22981B0D00138012 /* RewardEventFetcher.swift in Sources */,
 				6D398A1D22A2D39D00D19FF8 /* ChoiceConfigurator.swift in Sources */,
