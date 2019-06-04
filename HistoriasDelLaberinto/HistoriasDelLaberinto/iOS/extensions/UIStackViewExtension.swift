@@ -7,7 +7,7 @@ extension UIStackView {
             
             if i == names.count/numberOfColumns {
                 var buttons: [UIButton] = []
-                for j in numberOfColumns*i...numberOfColumns*(names.count - (names.count/numberOfColumns)*numberOfColumns) {
+                for j in numberOfColumns*i...(numberOfColumns*i)+(names.count - 1 - (names.count/numberOfColumns)*numberOfColumns) {
                     let button = RoundedButton(type: .custom)
                     button.setTitle(names[(j)], for: .normal)
                     button.tag = j

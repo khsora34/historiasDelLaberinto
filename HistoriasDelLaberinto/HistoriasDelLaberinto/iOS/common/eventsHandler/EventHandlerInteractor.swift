@@ -35,7 +35,7 @@ extension EventHandlerInteractor {
         case .partner(let id):
             return protagonist.partner == id
         case .roomVisited(let id):
-            if protagonist.partner != nil {
+            if let partner = protagonist.partner, !partner.isEmpty {
                 return protagonist.visitedRooms[id]?.isVisitedWithPartner ?? false
             } else {
                 return protagonist.visitedRooms[id]?.isVisited ?? false
@@ -45,7 +45,10 @@ extension EventHandlerInteractor {
     
     func setIsVisited(request: EventsHandlerModels.SetVisited.Request) {
         guard var prota = protagonistFetcher.getProtagonist() else { return }
-        if prota.partner != nil {
+        if prota.visitedRooms[request.roomId] == nil {
+            prota.visitedRooms[request.roomId] = VisitedRoom(isVisited: false, isVisitedWithPartner: false)
+        }
+        if let partner = prota.partner, !partner.isEmpty {
             prota.visitedRooms[request.roomId]?.isVisitedWithPartner = true
         } else {
             prota.visitedRooms[request.roomId]?.isVisited = true

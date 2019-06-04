@@ -30,7 +30,7 @@ extension Condition: Codable {
             self = .item(id: itemId)
         case "roomVisited":
             let roomId = try container.decode(String.self, forKey: .associatedValue)
-            self = .item(id: roomId)
+            self = .roomVisited(id: roomId)
         default:
             throw CodingError.unknownValue
         }
