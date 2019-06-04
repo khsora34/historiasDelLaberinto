@@ -29,6 +29,10 @@ extension InitialScenePresenter: InitialScenePresentationLogic {
     }
     
     func goToExampleView() {
-        router?.goToExampleView()
+        let roomId = "exampleRoom"
+        let request = InitialScene.RoomBuilder.Request(roomId: roomId)
+        let response = interactor?.getRoom(request: request)
+        guard let room = response?.room else { return }
+        router?.goToRoomView(roomId: roomId, room: room)
     }
 }

@@ -1,7 +1,7 @@
 struct Protagonist: CharacterStatus, Codable {
     let name: String
     let imageUrl: String = ""
-    var partner: String
+    var partner: String?
 
     var currentHealthPoints: Int
     let maxHealthPoints: Int

@@ -25,9 +25,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let initialModule = dependencies.moduleProvider.initialSceneModule()
         let nav = UINavigationController(rootViewController: initialModule.viewController)
+        
+        setNavigationBarProperties()
+        
         drawer.setRoot(viewController: nav)
         
         return true
+    }
+    
+    private func setNavigationBarProperties() {
+        UINavigationBar.appearance().barStyle = .black
+        UINavigationBar.appearance().isTranslucent = true
+        UINavigationBar.appearance().tintColor = .white
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

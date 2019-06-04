@@ -1,6 +1,14 @@
 import UIKit
 
+@IBDesignable
 class RoundedButton: UIButton {
+    
+    @IBInspectable
+    public var highlightedBackgroundColor: UIColor = .clear {
+        didSet {
+            setBackgroundColor(color: highlightedBackgroundColor, forState: .highlighted)
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -18,13 +26,12 @@ class RoundedButton: UIButton {
         setTitleColor(.white, for: .normal)
         titleLabel?.font = UIFont(name: "Helvetica Neue", size: 18.0)
         NSLayoutConstraint(item: titleLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 10).isActive = true
-        setBackgroundColor(color: .darkCoolBlue, forState: .highlighted)
+        highlightedBackgroundColor = .darkCoolBlue
     }
 }
 
 extension UIButton {
-    func setBackgroundColor(color: UIColor, forState: UIControl.State) {
-        
+    fileprivate func setBackgroundColor(color: UIColor, forState: UIControl.State) {
         let minimumSize: CGSize = CGSize(width: 1.0, height: 1.0)
         
         UIGraphicsBeginImageContext(minimumSize)

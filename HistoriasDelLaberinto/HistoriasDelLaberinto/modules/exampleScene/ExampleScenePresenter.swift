@@ -22,6 +22,8 @@ class ExampleScenePresenter: BasePresenter {
     
     // MARK: Event handler
     
+    var roomId: String = ""
+    var shouldSetVisitedWhenFinished: Bool = false
     var dialog: DialogDisplayLogic?
     var actualEvent: Event?
     
@@ -52,6 +54,11 @@ extension ExampleScenePresenter: ExampleScenePresentationLogic {
 }
 
 extension ExampleScenePresenter: EventHandler {
+    
+    func onFinish() {
+        
+    }
+    
     var eventHandlerRouter: EventHandlerRoutingLogic? {
         return _router as? EventHandlerRoutingLogic
     }
