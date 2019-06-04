@@ -16,9 +16,14 @@ class ExampleSceneRouter: BaseRouter, ExampleSceneRoutingLogic {
     }
     
     func goToNewView() {
-        guard let navigator = drawer?.currentRootViewController as? UINavigationController else { return }
-        let module = moduleProvider.exampleSceneModule()
-        navigator.setViewControllers([module.viewController], animated: true)
+        let controller = moduleProvider.movementSceneModule().viewController
+        controller.providesPresentationContextTransitionStyle = true
+        controller.definesPresentationContext = true
+        controller.modalPresentationStyle = .overCurrentContext
+        addBlur()
+        drawer?.present(controller, animated: true, completion: nil)
+    }
+    
     private func addBlur() {
         guard let drawer = drawer else { return }
         let blurView = UIVisualEffectView()
