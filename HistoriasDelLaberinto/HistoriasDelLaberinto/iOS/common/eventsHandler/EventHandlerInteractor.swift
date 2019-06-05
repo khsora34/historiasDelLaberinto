@@ -40,6 +40,13 @@ extension EventHandlerInteractor {
             } else {
                 return protagonist.visitedRooms[id]?.isVisited ?? false
             }
+        case .roomNotVisited(let id):
+            if let partner = protagonist.partner, !partner.isEmpty {
+                return !(protagonist.visitedRooms[id]?.isVisitedWithPartner ?? false)
+            } else {
+                return !(protagonist.visitedRooms[id]?.isVisited ?? false)
+            }
+            
         }
     }
     
