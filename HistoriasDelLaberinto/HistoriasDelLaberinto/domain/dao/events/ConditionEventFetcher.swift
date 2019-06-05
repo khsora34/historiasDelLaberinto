@@ -34,6 +34,8 @@ extension ConditionEventFetcher {
             condition = .partner(id: value)
         case "roomVisited":
             condition = .roomVisited(id: value)
+        case "roomNotVisited":
+            condition = .roomNotVisited(id: value)
         default:
             condition = nil
         }
@@ -64,6 +66,9 @@ extension ConditionEventFetcher {
             case .roomVisited(let value):
                 loadingEvent.setValue("roomVisited", forKey: "type")
                 loadingEvent.setValue(value, forKey: "value")
+            case .roomNotVisited(let value):
+                loadingEvent.setValue("roomNotVisited", forKey: "conditionType")
+                loadingEvent.setValue(value, forKey: "conditionValue")
             }
         
         do {
