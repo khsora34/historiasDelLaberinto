@@ -2,6 +2,7 @@ import UIKit.UIApplication
 import CoreData
 
 protocol MovementFetcher {
+    func createMovement() -> Movement
     func getMovement() -> Movement?
     func save() -> Bool
     func removeMovement()
@@ -21,6 +22,24 @@ class MovementFetcherImpl: MovementFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         return nil
+    }
+    
+    func createMovement() -> Movement {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { fatalError() }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        guard let movementEntity = NSEntityDescription.entity(forEntityName: "Movement", in: managedContext) else { fatalError() }
+        
+        let newMovement = Movement(entity: movementEntity, insertInto: managedContext)
+        
+        newMovement.actualX = 0
+        newMovement.actualY = 0
+        newMovement.compassPoint = "north"
+        newMovement.map = NSSet()
+        
+        _ = save()
+        
+        return newMovement
     }
     
     func save() -> Bool {
