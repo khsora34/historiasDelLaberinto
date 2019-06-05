@@ -83,7 +83,7 @@
         <relationship name="actions" toMany="YES" deletionRule="Nullify" destinationEntity="ActionDAO" syncable="YES"/>
     </entity>
     <entity name="RoomPosition" representedClassName="RoomPosition" syncable="YES" codeGenerationType="class">
-        <attribute name="roomId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="roomId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="x" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="y" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
