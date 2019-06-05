@@ -18,6 +18,7 @@ class RoomScenePresenter: BasePresenter {
     }
     
     private var room: Room
+    private var filteredActions: [Action] = []
     
     var roomId: String
     var shouldSetVisitedWhenFinished: Bool = false
@@ -33,21 +34,24 @@ class RoomScenePresenter: BasePresenter {
         super.viewDidLoad()
         viewController?.set(title: room.name)
         viewController?.setImage(with: room.imageUrl)
+        loadActions()
+    }
+    
+    private func loadActions() {
         let filteredActions = room.actions.filter { action in
             guard let condition = action.condition else { return true }
             let request = EventsHandlerModels.CompareCondition.Request(condition: condition)
             return interactor?.compareCondition(request: request).result ?? false
         }
-        room.actions = filteredActions
+        self.filteredActions = filteredActions
         let modeledActions = filteredActions.map({ $0.name })
         viewController?.set(actions: modeledActions)
-        
     }
 }
 
 extension RoomScenePresenter: RoomScenePresentationLogic {
     func start(for tag: Int) {
-        guard let nextStep = room.actions[tag].nextStep else { return }
+        guard let nextStep = filteredActions[tag].nextStep else { return }
         startEvent(with: nextStep)
     }
     
@@ -63,7 +67,7 @@ extension RoomScenePresenter: RoomScenePresentationLogic {
 extension RoomScenePresenter: EventHandler {
     
     func onFinish() {
-        
+        loadActions()
     }
     
     var eventHandlerRouter: EventHandlerRoutingLogic? {

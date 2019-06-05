@@ -61,6 +61,10 @@ extension RoomSceneViewController: RoomSceneDisplayLogic {
     }
     
     func set(actions: [String]) {
+        for stack in buttonStackView.arrangedSubviews {
+            buttonStackView.removeArrangedSubview(stack)
+            stack.removeFromSuperview()
+        }
         buttonStackView.setButtonsInColumns(names: actions, action: #selector(didTapOption), for: self, numberOfColumns: 2, fixedHeight: false)
     }
 }
