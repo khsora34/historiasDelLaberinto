@@ -5,6 +5,7 @@ protocol MovementFetcher {
     func createMovement() -> Movement
     func getMovement() -> Movement?
     func save() -> Bool
+    func setNewLocation(location: (x: Int, y: Int), roomId: String, on managed: Movement)
     func removeMovement()
 }
 
@@ -28,7 +29,7 @@ class MovementFetcherImpl: MovementFetcher {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { fatalError() }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        guard let movementEntity = NSEntityDescription.entity(forEntityName: "Movement", in: managedContext) else { fatalError() }
+        guard let movementEntity = NSEntityDescription.entity(forEntityName: "Movement", in: managedContext), let positionEntity = NSEntityDescription.entity(forEntityName: "RoomPosition", in: managedContext) else { fatalError() }
         
         let newMovement = Movement(entity: movementEntity, insertInto: managedContext)
         
@@ -36,10 +37,29 @@ class MovementFetcherImpl: MovementFetcher {
         newMovement.actualY = 0
         newMovement.compassPoint = "north"
         newMovement.map = NSSet()
+        let firstPosition = RoomPosition(entity: positionEntity, insertInto: managedContext)
+        firstPosition.x = 0
+        firstPosition.y = 0
+        firstPosition.roomId = "startRoom"
+        newMovement.addToMap(firstPosition)
         
         _ = save()
         
         return newMovement
+    }
+    
+    func setNewLocation(location: (x: Int, y: Int), roomId: String, on managed: Movement) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        guard let positionEntity = NSEntityDescription.entity(forEntityName: "RoomPosition", in: managedContext) else { return }
+        managed.actualX = Int16(location.x)
+        managed.actualY = Int16(location.y)
+        let position = RoomPosition(entity: positionEntity, insertInto: managedContext)
+        position.x = Int16(location.x)
+        position.y = Int16(location.y)
+        position.roomId = roomId
+        managed.addToMap(position)
     }
     
     func save() -> Bool {

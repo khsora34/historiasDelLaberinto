@@ -1,6 +1,7 @@
 protocol MovementSceneBusinessLogic: BusinessLogic {
     func getMovement() -> MovementScene.GetMovement.Response
     func saveMovement()
+    func setNewLocation(request: MovementScene.SetLocation.Request)
     func getRoom(request: MovementScene.GetRoom.Request) -> MovementScene.GetRoom.Response
     func getAllRooms(request: MovementScene.GetAllRooms.Request) -> MovementScene.GetAllRooms.Response
 }
@@ -25,6 +26,16 @@ class MovementSceneInteractor: BaseInteractor, MovementSceneBusinessLogic {
         _ = movementFetcher.save()
     }
     
+    func setNewLocation(request: MovementScene.SetLocation.Request) {
+        let location = request.location
+        let id = request.roomId
+        let movement = request.movement
+        
+        movementFetcher.setNewLocation(location: location, roomId: id, on: movement)
+        
+        saveMovement()
+    }
+    
     func getRoom(request: MovementScene.GetRoom.Request) -> MovementScene.GetRoom.Response {
         let id = request.id
         let room = roomFetcher.getRoom(with: id)
@@ -39,7 +50,7 @@ class MovementSceneInteractor: BaseInteractor, MovementSceneBusinessLogic {
         var availableRooms: [Room] = rooms.filter({ $0.isGenericRoom == false})
         
         if let items = movement.map, let map = Array(items) as? [RoomPosition] {
-            availableRooms = rooms.filter { room in map.filter({ $0.roomId == room.id }).isEmpty }
+            availableRooms = availableRooms.filter { room in map.filter({ $0.roomId == room.id }).isEmpty }
         }
         
         return MovementScene.GetAllRooms.Response(availableRooms: availableRooms, genericRooms: genericRooms)
