@@ -15,9 +15,28 @@ class MovementScenePresenter: BasePresenter {
         return _router as? MovementSceneRouter
     }
     
+    private var movement: Movement!
+    private var genericRooms: [Room]!
+    private var availableRooms: [Room]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getMovement()
+        getRooms()
+        
+    }
+    
+    private func getMovement() {
+        let response = interactor?.getMovement()
+        movement = response?.movement
+    }
+    
+    private func getRooms() {
+        let request = MovementScene.GetAllRooms.Request(movement: movement)
+        let response = interactor?.getAllRooms(request: request)
+        genericRooms = response?.genericRooms
+        availableRooms = response?.availableRooms
     }
 }
 

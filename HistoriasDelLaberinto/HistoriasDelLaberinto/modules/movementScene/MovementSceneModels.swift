@@ -1,11 +1,26 @@
 enum MovementScene {
+    enum GetMovement {
+        struct Response {
+            let movement: Movement
+        }
+    }
     
-  enum Something {
-    struct Request {
+    enum GetRoom {
+        struct Request {
+            let id: String
+        }
+        struct Response {
+            let room: Room?
+        }
     }
-    struct Response {
+    
+    enum GetAllRooms {
+        struct Request {
+            let movement: Movement
+        }
+        struct Response {
+            let availableRooms: [Room]
+            let genericRooms: [Room]
+        }
     }
-    struct ViewModel {
-    }
-  }
 }
