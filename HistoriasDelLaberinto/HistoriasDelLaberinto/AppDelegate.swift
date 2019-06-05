@@ -25,11 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dependencies = Dependencies()
         
         let initialModule = dependencies.moduleProvider.initialSceneModule()
+        let nav = UINavigationController(rootViewController: initialModule.viewController)
+        nav.isNavigationBarHidden = true
         
         setNavigationBarProperties()
         configureCache()
         
-        drawer.setRoot(viewController: initialModule.viewController)
+        drawer.setRoot(viewController: nav)
         
         return true
     }

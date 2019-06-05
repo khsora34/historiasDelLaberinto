@@ -1,7 +1,7 @@
 import UIKit
 
 protocol InitialSceneDisplayLogic: ViewControllerDisplay {
-    func setLabelText(with text: String)
+    func showUnableToStartGame()
 }
 
 class InitialSceneViewController: BaseViewController {
@@ -30,13 +30,18 @@ class InitialSceneViewController: BaseViewController {
     @IBAction func didDeleteFilesButtonTap(_ sender: Any) {
         presenter?.deleteFiles()
     }
-    
-    @IBAction func didTapNextViewButton(_ sender: Any) {
-        presenter?.goToExampleView()
+
+    @IBAction func didTapNewGame(_ sender: Any) {
+        presenter?.startNewGame()
     }
 }
 
 extension InitialSceneViewController: InitialSceneDisplayLogic {
-    func setLabelText(with text: String) {
+    func showUnableToStartGame() {
+        let alert = UIAlertController(title: nil, message: "Ha habido un error intentando comenzar una nueva partida.", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Qué bien", style: .default, handler: nil))
+        
+        self.present(alert, animated: true)
     }
 }
