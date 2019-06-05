@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         dependencies = Dependencies()
         
-        let initialModule = dependencies.moduleProvider.initialSceneModule()
+        let initialModule = dependencies.moduleProvider.exampleSceneModule()
         let nav = UINavigationController(rootViewController: initialModule.viewController)
         
         setNavigationBarProperties()
