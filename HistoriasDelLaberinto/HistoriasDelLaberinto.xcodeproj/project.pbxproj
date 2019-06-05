@@ -42,6 +42,7 @@
 		6D5DB0D922A1B1DB00C8745E /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DB0D822A1B1DB00C8745E /* UITextFieldExtension.swift */; };
 		6D5DB0DB22A1B38200C8745E /* UITextViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DB0DA22A1B38200C8745E /* UITextViewExtension.swift */; };
 		6D5DB0DD22A1DED700C8745E /* ConditionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DB0DC22A1DED700C8745E /* ConditionEvaluator.swift */; };
+		6D62D34822A8141500C2CB60 /* MovementFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D62D34722A8141500C2CB60 /* MovementFetcher.swift */; };
 		6D6DE4B9221DB40600C92B94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */; };
 		6D6DE4C3221DB40700C92B94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DE4C1221DB40700C92B94 /* LaunchScreen.storyboard */; };
 		6D71681C229DAE1900791A42 /* ProtagonistFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D71681B229DAE1900791A42 /* ProtagonistFetcher.swift */; };
@@ -100,6 +101,14 @@
 		6DC6757E224BD04E00B795B6 /* ChoiceEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC6757D224BD04E00B795B6 /* ChoiceEvent.swift */; };
 		6DC67580224BD09700B795B6 /* BattleEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC6757F224BD09700B795B6 /* BattleEvent.swift */; };
 		6DC67582224BD0FB00B795B6 /* RewardEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC67581224BD0FB00B795B6 /* RewardEvent.swift */; };
+		6DDA434522A701F2003C7993 /* MovementScenePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDA433F22A701F1003C7993 /* MovementScenePresenter.swift */; };
+		6DDA434622A701F2003C7993 /* MovementSceneWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDA434022A701F1003C7993 /* MovementSceneWorker.swift */; };
+		6DDA434722A701F2003C7993 /* MovementSceneRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDA434122A701F1003C7993 /* MovementSceneRouter.swift */; };
+		6DDA434822A701F2003C7993 /* MovementSceneModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDA434222A701F2003C7993 /* MovementSceneModels.swift */; };
+		6DDA434922A701F2003C7993 /* MovementSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDA434322A701F2003C7993 /* MovementSceneViewController.swift */; };
+		6DDA434A22A701F2003C7993 /* MovementSceneInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDA434422A701F2003C7993 /* MovementSceneInteractor.swift */; };
+		6DDA434C22A7049B003C7993 /* MovementScene.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DDA434B22A7049B003C7993 /* MovementScene.storyboard */; };
+		6DDA434E22A706C0003C7993 /* MovementSceneModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDA434D22A706C0003C7993 /* MovementSceneModule.swift */; };
 		6DDF365A225FBAA400391B1D /* HistoriasDelLaberintoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDF3659225FBAA400391B1D /* HistoriasDelLaberintoTests.swift */; };
 		6DDF3662225FBAD300391B1D /* ModelParsersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDF3661225FBAD300391B1D /* ModelParsersTests.swift */; };
 		6DDF3668225FBDCD00391B1D /* RoomsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDF3667225FBDCD00391B1D /* RoomsFile.swift */; };
@@ -159,6 +168,7 @@
 		6D5DB0D822A1B1DB00C8745E /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		6D5DB0DA22A1B38200C8745E /* UITextViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextViewExtension.swift; sourceTree = "<group>"; };
 		6D5DB0DC22A1DED700C8745E /* ConditionEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionEvaluator.swift; sourceTree = "<group>"; };
+		6D62D34722A8141500C2CB60 /* MovementFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementFetcher.swift; sourceTree = "<group>"; };
 		6D6DE4B5221DB40600C92B94 /* HistoriasDelLaberinto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HistoriasDelLaberinto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D6DE4C2221DB40700C92B94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -219,6 +229,14 @@
 		6DC6757D224BD04E00B795B6 /* ChoiceEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceEvent.swift; sourceTree = "<group>"; };
 		6DC6757F224BD09700B795B6 /* BattleEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleEvent.swift; sourceTree = "<group>"; };
 		6DC67581224BD0FB00B795B6 /* RewardEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardEvent.swift; sourceTree = "<group>"; };
+		6DDA433F22A701F1003C7993 /* MovementScenePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementScenePresenter.swift; sourceTree = "<group>"; };
+		6DDA434022A701F1003C7993 /* MovementSceneWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementSceneWorker.swift; sourceTree = "<group>"; };
+		6DDA434122A701F1003C7993 /* MovementSceneRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementSceneRouter.swift; sourceTree = "<group>"; };
+		6DDA434222A701F2003C7993 /* MovementSceneModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementSceneModels.swift; sourceTree = "<group>"; };
+		6DDA434322A701F2003C7993 /* MovementSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementSceneViewController.swift; sourceTree = "<group>"; };
+		6DDA434422A701F2003C7993 /* MovementSceneInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementSceneInteractor.swift; sourceTree = "<group>"; };
+		6DDA434B22A7049B003C7993 /* MovementScene.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MovementScene.storyboard; sourceTree = "<group>"; };
+		6DDA434D22A706C0003C7993 /* MovementSceneModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementSceneModule.swift; sourceTree = "<group>"; };
 		6DDF3657225FBAA400391B1D /* HistoriasDelLaberintoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HistoriasDelLaberintoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DDF3659225FBAA400391B1D /* HistoriasDelLaberintoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoriasDelLaberintoTests.swift; sourceTree = "<group>"; };
 		6DDF365B225FBAA400391B1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -306,6 +324,7 @@
 		6D45B010226A28A900906FBB /* modules */ = {
 			isa = PBXGroup;
 			children = (
+				6DDA433E22A701D4003C7993 /* movementScene */,
 				6D398A2222A3002400D19FF8 /* roomScene */,
 				6D2DA74F229EE49200BC5C0D /* dialog */,
 				6D71681D229DC39F00791A42 /* initialScene */,
@@ -471,6 +490,7 @@
 				6D43D903229D61A0008C7ED0 /* CharacterFetcher.swift */,
 				6D43D905229DAA61008C7ED0 /* RoomFetcher.swift */,
 				6D71681B229DAE1900791A42 /* ProtagonistFetcher.swift */,
+				6D62D34722A8141500C2CB60 /* MovementFetcher.swift */,
 			);
 			path = dao;
 			sourceTree = "<group>";
@@ -556,6 +576,21 @@
 				6DC67581224BD0FB00B795B6 /* RewardEvent.swift */,
 			);
 			path = events;
+			sourceTree = "<group>";
+		};
+		6DDA433E22A701D4003C7993 /* movementScene */ = {
+			isa = PBXGroup;
+			children = (
+				6DDA434B22A7049B003C7993 /* MovementScene.storyboard */,
+				6DDA434422A701F2003C7993 /* MovementSceneInteractor.swift */,
+				6DDA434222A701F2003C7993 /* MovementSceneModels.swift */,
+				6DDA434D22A706C0003C7993 /* MovementSceneModule.swift */,
+				6DDA433F22A701F1003C7993 /* MovementScenePresenter.swift */,
+				6DDA434122A701F1003C7993 /* MovementSceneRouter.swift */,
+				6DDA434322A701F2003C7993 /* MovementSceneViewController.swift */,
+				6DDA434022A701F1003C7993 /* MovementSceneWorker.swift */,
+			);
+			path = movementScene;
 			sourceTree = "<group>";
 		};
 		6DDF3658225FBAA400391B1D /* HistoriasDelLaberintoTests */ = {
@@ -725,6 +760,7 @@
 			files = (
 				6D6DE4C3221DB40700C92B94 /* LaunchScreen.storyboard in Resources */,
 				6D2DA753229EE49200BC5C0D /* DialogView.xib in Resources */,
+				6DDA434C22A7049B003C7993 /* MovementScene.storyboard in Resources */,
 				6D45B020226A28A900906FBB /* ExampleScene.storyboard in Resources */,
 				6D997A5622A304AB0025DC8D /* RoomScene.storyboard in Resources */,
 				6D921212229DC75100440926 /* InitialScene.storyboard in Resources */,
@@ -808,8 +844,10 @@
 				6D082A03229AB4A900B13A56 /* ItemFetcher.swift in Sources */,
 				6D9A45AB22874C51004F4D0C /* TestViewController.swift in Sources */,
 				6DC67582224BD0FB00B795B6 /* RewardEvent.swift in Sources */,
+				6DDA434622A701F2003C7993 /* MovementSceneWorker.swift in Sources */,
 				6DC67574224BC9E400B795B6 /* KeyItem.swift in Sources */,
 				6D5D8FFE2268644800D11390 /* BaseRouter.swift in Sources */,
+				6DDA434822A701F2003C7993 /* MovementSceneModels.swift in Sources */,
 				6DDF3668225FBDCD00391B1D /* RoomsFile.swift in Sources */,
 				6D4C43FC229F1EF700D5A9E5 /* DialogConfigurator.swift in Sources */,
 				6DA2D25522674A5700D1B8DF /* EventsFile.swift in Sources */,
@@ -832,6 +870,7 @@
 				6DBC01A42254FAE4004A97AD /* Item.swift in Sources */,
 				6DC67579224BCCE700B795B6 /* DialogueEvent.swift in Sources */,
 				6DA2D2502267430800D1B8DF /* ItemsFile.swift in Sources */,
+				6DDA434522A701F2003C7993 /* MovementScenePresenter.swift in Sources */,
 				6D5D8FFC226862E500D11390 /* BasePresenter.swift in Sources */,
 				6D5D8FF6226861FC00D11390 /* BaseViewController.swift in Sources */,
 				6D71681C229DAE1900791A42 /* ProtagonistFetcher.swift in Sources */,
@@ -853,6 +892,7 @@
 				6DEF065F22688B5200A5C454 /* BaseModule.swift in Sources */,
 				6DC6756B224BC85400B795B6 /* GameCharacter.swift in Sources */,
 				6DA7E37922917CE2005182BA /* ChoiceEventFetcher.swift in Sources */,
+				6D62D34822A8141500C2CB60 /* MovementFetcher.swift in Sources */,
 				6DBC4D7422A2937E00F93FA8 /* RewardView.swift in Sources */,
 				6DC67570224BC91E00B795B6 /* Weapon.swift in Sources */,
 				6D92120F229DC74100440926 /* InitialSceneViewController.swift in Sources */,
@@ -868,6 +908,7 @@
 				6DEF066122688C4C00A5C454 /* MainViewController.swift in Sources */,
 				6D45B01D226A28A900906FBB /* ExampleSceneModels.swift in Sources */,
 				6D90B09C225E361500362CDA /* Parser.swift in Sources */,
+				6DDA434E22A706C0003C7993 /* MovementSceneModule.swift in Sources */,
 				6DC67577224BCB6B00B795B6 /* Event.swift in Sources */,
 				6D921214229DC8BF00440926 /* InitialSceneModule.swift in Sources */,
 				6D75802522899D57009A48D7 /* EventTypeFetcher.swift in Sources */,
@@ -880,6 +921,7 @@
 				6DA2D25222674A0100D1B8DF /* EventParser.swift in Sources */,
 				6D9250902268CD3000F2A3E3 /* BaseModels.swift in Sources */,
 				6D398A1F22A2E4FC00D19FF8 /* RoundedButton.swift in Sources */,
+				6DDA434722A701F2003C7993 /* MovementSceneRouter.swift in Sources */,
 				6D4B57E8224A9A27001779DC /* StatusAilment.swift in Sources */,
 				6D6DE4B9221DB40600C92B94 /* AppDelegate.swift in Sources */,
 				6D9A45B022875045004F4D0C /* ConditionEvent.swift in Sources */,
@@ -896,7 +938,9 @@
 				6D5DB0DB22A1B38200C8745E /* UITextViewExtension.swift in Sources */,
 				6D92120B229DC74100440926 /* InitialScenePresenter.swift in Sources */,
 				6DC67565224BC78400B795B6 /* PlayableCharacter.swift in Sources */,
+				6DDA434922A701F2003C7993 /* MovementSceneViewController.swift in Sources */,
 				6D997A5222A3049D0025DC8D /* RoomSceneModels.swift in Sources */,
+				6DDA434A22A701F2003C7993 /* MovementSceneInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

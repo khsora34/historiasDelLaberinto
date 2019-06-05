@@ -33,7 +33,7 @@ class ExampleScenePresenter: BasePresenter {
 
 extension ExampleScenePresenter: ExampleScenePresentationLogic {
     func navigateToNewPlace() {
-        router?.goToNewView()
+        router?.goToNewView(room: Room(id: "23", name: "Hola", description: "Si", imageUrl: "", reloadWithPartner: true, isGenericRoom: true, actions: []))
     }
     
     func navigateToPlace() {

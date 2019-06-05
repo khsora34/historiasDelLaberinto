@@ -3,6 +3,7 @@ import CoreData
 
 protocol RoomFetcher {
     func getRoom(with id: String) -> Room?
+    func getAllRooms() -> [Room]
     func saveRoom(for room: Room, with id: String) -> Bool
     func deleteAllRooms()
 }
@@ -23,7 +24,7 @@ class RoomFetcherImpl: RoomFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        guard let imageUrl = room?.imageUrl, let name = room?.name, let description = room?.descriptionString, let reloadWithPartner = room?.reloadWithPartner, let isGeneric = room?.isGenericRoom, let actionsSet = room?.actions else { return nil }
+        guard let roomId = room?.id, let imageUrl = room?.imageUrl, let name = room?.name, let description = room?.descriptionString, let reloadWithPartner = room?.reloadWithPartner, let isGeneric = room?.isGenericRoom, let actionsSet = room?.actions else { return nil }
         
         var actions: [Action] = []
         
@@ -49,7 +50,53 @@ class RoomFetcherImpl: RoomFetcher {
             }
         }
         
-        return Room(name: name, description: description, imageUrl: imageUrl, reloadWithPartner: reloadWithPartner, isGenericRoom: isGeneric, actions: actions)
+        return Room(id: roomId, name: name, description: description, imageUrl: imageUrl, reloadWithPartner: reloadWithPartner, isGenericRoom: isGeneric, actions: actions)
+    }
+    
+    func getAllRooms() -> [Room] {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return [] }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest<RoomDAO> = RoomDAO.fetchRequest()
+        
+        var rooms: [RoomDAO] = []
+        do {
+            rooms = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("No ha sido posible guardar \(error), \(error.userInfo)")
+        }
+        
+        var modeledRooms: [Room] = []
+        
+        for room in rooms {
+            guard let roomId = room.id, let imageUrl = room.imageUrl, let name = room.name, let description = room.descriptionString, let actionsSet = room.actions else { continue }
+            
+            var actions: [Action] = []
+            
+            for action in actionsSet {
+                if let actionManaged = action as? ActionDAO, let name = actionManaged.name {
+                    var condition: Condition?
+                    
+                    if let type = actionManaged.conditionType, let value = actionManaged.conditionValue {
+                        switch type {
+                        case "item":
+                            condition = .item(id: value)
+                        case "partner":
+                            condition = .partner(id: value)
+                        case "roomVisited":
+                            condition = .roomVisited(id: value)
+                        default:
+                            condition = nil
+                        }
+                    }
+                    actions.append(Action(name: name, nextStep: actionManaged.nextStep, condition: condition))
+                }
+            }
+            
+            let modeledRoom = Room(id: roomId, name: name, description: description, imageUrl: imageUrl, reloadWithPartner: room.reloadWithPartner, isGenericRoom: room.isGenericRoom, actions: actions)
+            modeledRooms.append(modeledRoom)
+        }
+        return modeledRooms
     }
     
     func saveRoom(for room: Room, with id: String) -> Bool {

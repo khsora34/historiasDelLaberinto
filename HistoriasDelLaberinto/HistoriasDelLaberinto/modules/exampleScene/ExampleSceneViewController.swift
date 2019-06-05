@@ -29,7 +29,7 @@ class ExampleSceneViewController: BaseViewController {
     }
     
     @IBAction func navigateToPlace(_ sender: Any) {
-        presenter?.navigateToPlace()
+        presenter?.navigateToNewPlace()
     }
     
     @IBAction func toNewViewAction(_ sender: Any) {
