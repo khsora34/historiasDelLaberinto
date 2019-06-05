@@ -17,6 +17,6 @@ class ModuleProvider {
     }
     
     func movementSceneModule() -> Module {
-        return MovementSceneModule(routerProvider: routerProvider)
+        return MovementSceneModule(routerProvider: routerProvider, databaseProvider: databaseFetcherProvider)
     }
 }
