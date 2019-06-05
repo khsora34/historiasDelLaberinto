@@ -6,9 +6,9 @@ class MovementSceneModule: Module {
     var presenter: Presenter
     var router: RouterLogic
     
-    init(routerProvider: RouterProvider, databaseProvider: DatabaseFetcherProvider) {
+    init(room: Room, routerProvider: RouterProvider, databaseProvider: DatabaseFetcherProvider) {
         viewController = ViewCreator.createFrom(storyboardName: storyboardName, forController: controllerName)
-        presenter = MovementScenePresenter()
+        presenter = MovementScenePresenter(room: room)
         router = routerProvider.movementSceneRouter
         interactor = MovementSceneInteractor(roomFetcher: databaseProvider.roomsFetcher, movementFetcher: databaseProvider.movementFetcher)
         viewController._presenter = presenter
