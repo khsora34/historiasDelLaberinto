@@ -48,3 +48,6 @@ rooms:
         nextStep: "exampleDialogue4"
       - action: "Forma escudo"
         nextStep: "exampleChoice"
+        condition:
+          kind: "roomVisited"
+          required: "exampleRoom"
