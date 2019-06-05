@@ -11,13 +11,10 @@ class InitialSceneViewController: BaseViewController {
     
     @IBOutlet weak var loadFilesButton: UIButton!
     @IBOutlet weak var deleteFilesButton: UIButton!
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var nextViewButton: UIButton!
     
     // MARK: Setup
     
     private func setup() {
-        label.numberOfLines = 0
     }
     
     // MARK: View lifecycle
@@ -41,6 +38,5 @@ class InitialSceneViewController: BaseViewController {
 
 extension InitialSceneViewController: InitialSceneDisplayLogic {
     func setLabelText(with text: String) {
-        label.text = text
     }
 }
