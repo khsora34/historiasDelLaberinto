@@ -23,12 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         dependencies = Dependencies()
         
-        let initialModule = dependencies.moduleProvider.exampleSceneModule()
-        let nav = UINavigationController(rootViewController: initialModule.viewController)
+        let initialModule = dependencies.moduleProvider.initialSceneModule()
         
         setNavigationBarProperties()
         
-        drawer.setRoot(viewController: nav)
+        drawer.setRoot(viewController: initialModule.viewController)
         
         return true
     }
