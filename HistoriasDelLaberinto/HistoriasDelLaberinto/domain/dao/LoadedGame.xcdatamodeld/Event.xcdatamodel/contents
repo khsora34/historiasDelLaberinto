@@ -49,7 +49,7 @@
     <entity name="Movement" representedClassName="Movement" syncable="YES" codeGenerationType="class">
         <attribute name="actualX" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="actualY" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="compassDirection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="compassPoint" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="map" toMany="YES" deletionRule="Nullify" destinationEntity="RoomPosition" syncable="YES"/>
     </entity>
     <entity name="ObtainedItemsDAO" representedClassName="ObtainedItemsDAO" syncable="YES" codeGenerationType="class">
@@ -123,7 +123,7 @@
         <element name="StatusDAO" positionX="-99" positionY="-27" width="128" height="165"/>
         <element name="VisitedRoomDAO" positionX="-99" positionY="-36" width="128" height="105"/>
         <element name="WeaponDAO" positionX="-81" positionY="-18" width="128" height="120"/>
-        <element name="Movement" positionX="-209.3671875" positionY="218.03125" width="128" height="105"/>
-        <element name="RoomPosition" positionX="53.50390625" positionY="267.18359375" width="128" height="90"/>
+        <element name="Movement" positionX="-209.3671875" positionY="218.03125" width="128" height="103"/>
+        <element name="RoomPosition" positionX="53.50390625" positionY="267.18359375" width="128" height="88"/>
     </elements>
 </model>
