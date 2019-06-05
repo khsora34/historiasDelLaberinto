@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Kingfisher
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let initialModule = dependencies.moduleProvider.initialSceneModule()
         
         setNavigationBarProperties()
+        configureCache()
         
         drawer.setRoot(viewController: initialModule.viewController)
         
@@ -36,6 +38,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barStyle = .black
         UINavigationBar.appearance().isTranslucent = true
         UINavigationBar.appearance().tintColor = .white
+    }
+    
+    private func configureCache() {
+        let cache = ImageCache.default
+        cache.memoryStorage.config.expiration = .seconds(600)
+        cache.diskStorage.config.expiration = .days(7)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
