@@ -2,7 +2,7 @@ import UIKit
 
 protocol ExampleSceneRoutingLogic: EventHandlerRoutingLogic {
     func goToNextView()
-    func goToNewView()
+    func goToNewView(room: Room)
 }
 
 class ExampleSceneRouter: BaseRouter, ExampleSceneRoutingLogic {
@@ -15,8 +15,8 @@ class ExampleSceneRouter: BaseRouter, ExampleSceneRoutingLogic {
         navigation.pushViewController(module.viewController, animated: true)
     }
     
-    func goToNewView() {
-        let controller = moduleProvider.movementSceneModule().viewController
+    func goToNewView(room: Room) {
+        let controller = moduleProvider.movementSceneModule(room: room).viewController
         controller.providesPresentationContextTransitionStyle = true
         controller.definesPresentationContext = true
         controller.modalPresentationStyle = .overCurrentContext

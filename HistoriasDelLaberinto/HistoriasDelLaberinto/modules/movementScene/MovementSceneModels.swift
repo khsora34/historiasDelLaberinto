@@ -23,4 +23,12 @@ enum MovementScene {
             let genericRooms: [Room]
         }
     }
+    
+    enum SetLocation {
+        struct Request {
+            let location: (Int, Int)
+            let roomId: String
+            let movement: Movement
+        }
+    }
 }
