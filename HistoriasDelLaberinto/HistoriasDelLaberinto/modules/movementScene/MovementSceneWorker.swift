@@ -1,0 +1,4 @@
+class MovementSceneWorker {
+  func doSomeWork() {
+  }
+}

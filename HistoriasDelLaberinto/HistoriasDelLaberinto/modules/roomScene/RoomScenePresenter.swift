@@ -44,13 +44,19 @@ class RoomScenePresenter: BasePresenter {
             return interactor?.compareCondition(request: request).result ?? false
         }
         self.filteredActions = filteredActions
-        let modeledActions = filteredActions.map({ $0.name })
+        var modeledActions = filteredActions.map({ $0.name })
+        modeledActions.append("Moverse")
         viewController?.set(actions: modeledActions)
     }
 }
 
 extension RoomScenePresenter: RoomScenePresentationLogic {
     func start(for tag: Int) {
+        if tag == room.actions.count {
+            router?.goToMovementView(actualRoom: room)
+            return
+        }
+        
         guard let nextStep = filteredActions[tag].nextStep else { return }
         startEvent(with: nextStep)
     }

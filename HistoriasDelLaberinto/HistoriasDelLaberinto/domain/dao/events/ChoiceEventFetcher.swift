@@ -40,6 +40,8 @@ extension ChoiceEventFetcher {
                         condition = .partner(id: value)
                     case "roomVisited":
                         condition = .roomVisited(id: value)
+                    case "roomNotVisited":
+                        condition = .roomNotVisited(id: value)
                     default:
                         condition = nil
                     }
@@ -80,6 +82,9 @@ extension ChoiceEventFetcher {
                     loadingAction.setValue(next, forKey: "conditionValue")
                 case .roomVisited(let value):
                     loadingAction.setValue("roomVisited", forKey: "conditionType")
+                    loadingAction.setValue(value, forKey: "conditionValue")
+                case .roomNotVisited(let value):
+                    loadingAction.setValue("roomNotVisited", forKey: "conditionType")
                     loadingAction.setValue(value, forKey: "conditionValue")
                 }
             }

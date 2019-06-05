@@ -46,6 +46,13 @@
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="weaponInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeaponDAO" syncable="YES"/>
     </entity>
+    <entity name="Movement" representedClassName="Movement" syncable="YES" codeGenerationType="class">
+        <attribute name="actualX" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="actualY" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="compassPoint" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="genericProb" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="map" toMany="YES" deletionRule="Nullify" destinationEntity="RoomPosition" syncable="YES"/>
+    </entity>
     <entity name="ObtainedItemsDAO" representedClassName="ObtainedItemsDAO" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="quantity" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -76,6 +83,11 @@
         <attribute name="reloadWithPartner" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="actions" toMany="YES" deletionRule="Nullify" destinationEntity="ActionDAO" syncable="YES"/>
     </entity>
+    <entity name="RoomPosition" representedClassName="RoomPosition" syncable="YES" codeGenerationType="class">
+        <attribute name="roomId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="x" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="y" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
     <entity name="StatusDAO" representedClassName="StatusDAO" syncable="YES" codeGenerationType="class">
         <attribute name="agility" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="attack" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -104,13 +116,15 @@
         <element name="DialogueEventDAO" positionX="12.6171875" positionY="-54.9140625" width="128" height="105"/>
         <element name="EventDAO" positionX="-75.8203125" positionY="-198.2578125" width="128" height="75"/>
         <element name="ItemDAO" positionX="-90" positionY="-27" width="128" height="135"/>
+        <element name="Movement" positionX="-209.3671875" positionY="218.03125" width="128" height="120"/>
         <element name="ObtainedItemsDAO" positionX="-90" positionY="-27" width="128" height="90"/>
         <element name="ProtagonistDAO" positionX="-108" positionY="-45" width="128" height="120"/>
         <element name="RewardDAO" positionX="-307.515625" positionY="62.94921875" width="128" height="90"/>
         <element name="RewardEventDAO" positionX="240.0546875" positionY="35.94921875" width="128" height="105"/>
         <element name="RoomDAO" positionX="-54" positionY="9" width="128" height="150"/>
-        <element name="VisitedRoomDAO" positionX="-99" positionY="-36" width="128" height="105"/>
+        <element name="RoomPosition" positionX="53.50390625" positionY="267.18359375" width="128" height="88"/>
         <element name="StatusDAO" positionX="-99" positionY="-27" width="128" height="165"/>
+        <element name="VisitedRoomDAO" positionX="-99" positionY="-36" width="128" height="105"/>
         <element name="WeaponDAO" positionX="-81" positionY="-18" width="128" height="120"/>
     </elements>
 </model>

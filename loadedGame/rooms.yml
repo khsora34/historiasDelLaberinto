@@ -1,5 +1,6 @@
 rooms:
   "room17":
+    id: "room17"
     name: "Primera habitación"
     description: "Esta es la primera habitación"
     reloadWhenPartner: true
@@ -14,6 +15,7 @@ rooms:
         nextStep: "room17LookAround"
 
   "genericRoom1":
+    id: "genericRoom1"
     name: "Habitación genérica"
     description: "Esta es una habitación genérica"
     imageUrl: "http://LALALAND.com/generic_room_1_image"
@@ -24,6 +26,7 @@ rooms:
         nextStep: "emptyRoomTalk"
 
   "genericRoomBattle1":
+    id: "genericRoomBattle1"
     name: "Habitación de batalla genérica"
     description: "Esta es una habitación con un malvado"
     reloadWhenPartner: false
@@ -37,6 +40,7 @@ rooms:
           required: "potion"
 
   "exampleRoom":
+    id: "exampleRoom"
     name: "Habitación de ejemplo"
     description: "Esta es la habitación de ejemplo"
     reloadWhenPartner: true
@@ -51,3 +55,18 @@ rooms:
         condition:
           kind: "roomVisited"
           required: "exampleRoom"
+
+  "startRoom":
+    id: "startRoom"
+    name: "Primera habitación"
+    description: "Esta es la primera habitación"
+    reloadWhenPartner: true
+    imageUrl: "https://images.pexels.com/photos/2633/nature-france-rocks-caves.jpg?auto=format%2Ccompress&cs=tinysrgb&dpr=2&h=1080&w=1626"
+    actions:
+      - action: "Hablar"
+        nextStep: "room17Conversation"
+        condition:
+          kind: "partner" #For items, the keyword is "item".
+          required: "gerar" #Item's or partner's id.
+      - action: "Observar"
+        nextStep: "room17LookAround"
