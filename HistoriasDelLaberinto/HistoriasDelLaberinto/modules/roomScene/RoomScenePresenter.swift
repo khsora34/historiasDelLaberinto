@@ -52,7 +52,7 @@ class RoomScenePresenter: BasePresenter {
 
 extension RoomScenePresenter: RoomScenePresentationLogic {
     func start(for tag: Int) {
-        if tag == room.actions.count {
+        if tag == filteredActions.count {
             router?.goToMovementView(actualRoom: room)
             return
         }
