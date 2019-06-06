@@ -1,6 +1,4 @@
 protocol InitialScenePresentationLogic: Presenter {
-    func loadFiles()
-    func deleteFiles()
     func startNewGame()
 }
 
@@ -19,14 +17,6 @@ class InitialScenePresenter: BasePresenter {
 }
 
 extension InitialScenePresenter: InitialScenePresentationLogic {
-    func loadFiles() {
-        interactor?.loadAllFiles()
-    }
-    
-    func deleteFiles() {
-        interactor?.deleteAllFiles()
-    }
-    
     func startNewGame() {
         interactor?.deleteAllFiles()
         interactor?.loadAllFiles()

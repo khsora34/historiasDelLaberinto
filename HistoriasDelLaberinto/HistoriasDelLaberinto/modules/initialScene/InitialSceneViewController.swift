@@ -9,26 +9,16 @@ class InitialSceneViewController: BaseViewController {
         return _presenter as? InitialScenePresentationLogic
     }
     
-    @IBOutlet weak var loadFilesButton: UIButton!
-    @IBOutlet weak var deleteFilesButton: UIButton!
-    
+    @IBOutlet weak var loadGameButton: UIButton!
     // MARK: Setup
     
-    private func setup() {
-    }
+    private func setup() {}
     
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-    }
-    
-    @IBAction func didLoadFilesButtonTap(_ sender: Any) {
-        presenter?.loadFiles()
-    }
-    @IBAction func didDeleteFilesButtonTap(_ sender: Any) {
-        presenter?.deleteFiles()
     }
 
     @IBAction func didTapNewGame(_ sender: Any) {
