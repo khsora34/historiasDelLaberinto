@@ -10,61 +10,6 @@ consumableItems:
     description: "Restaura puntos de vida."
     imageUrl: "https://cdn.bulbagarden.net/upload/b/b5/GO_Super_Potion.png"
     healthRecovered: 140
-  "potion2":
-    name: "Poción"
-    description: "Restaura puntos de vida."
-    imageUrl: "https://cdn.bulbagarden.net/upload/2/2e/GO_Potion.png"
-    healthRecovered: 40
-
-  "high_potion2":
-    name: "Poción grande"
-    description: "Restaura puntos de vida."
-    imageUrl: "https://cdn.bulbagarden.net/upload/b/b5/GO_Super_Potion.png"
-    healthRecovered: 140
-  "potion3":
-    name: "Poción"
-    description: "Restaura puntos de vida."
-    imageUrl: "https://cdn.bulbagarden.net/upload/2/2e/GO_Potion.png"
-    healthRecovered: 40
-
-  "high_potion3":
-    name: "Poción grande"
-    description: "Restaura puntos de vida."
-    imageUrl: "https://cdn.bulbagarden.net/upload/b/b5/GO_Super_Potion.png"
-    healthRecovered: 140
-  "potion4":
-    name: "Poción"
-    description: "Restaura puntos de vida."
-    imageUrl: "https://cdn.bulbagarden.net/upload/2/2e/GO_Potion.png"
-    healthRecovered: 40
-
-  "high_potion4":
-    name: "Poción grande"
-    description: "Restaura puntos de vida."
-    imageUrl: "https://cdn.bulbagarden.net/upload/b/b5/GO_Super_Potion.png"
-    healthRecovered: 140
-  "potion5":
-    name: "Poción"
-    description: "Restaura puntos de vida."
-    imageUrl: "https://cdn.bulbagarden.net/upload/2/2e/GO_Potion.png"
-    healthRecovered: 40
-
-  "high_potion5":
-    name: "Poción grande"
-    description: "Restaura puntos de vida."
-    imageUrl: "https://cdn.bulbagarden.net/upload/b/b5/GO_Super_Potion.png"
-    healthRecovered: 140
-  "potion6":
-    name: "Poción"
-    description: "Restaura puntos de vida."
-    imageUrl: "https://cdn.bulbagarden.net/upload/2/2e/GO_Potion.png"
-    healthRecovered: 40
-
-  "high_potion6":
-    name: "Poción grande"
-    description: "Restaura puntos de vida."
-    imageUrl: "https://cdn.bulbagarden.net/upload/b/b5/GO_Super_Potion.png"
-    healthRecovered: 140
 
 keyItems:
   "small_key":

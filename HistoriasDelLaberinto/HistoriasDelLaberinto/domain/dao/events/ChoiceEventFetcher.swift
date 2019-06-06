@@ -121,7 +121,9 @@ extension ChoiceEventFetcher {
                 managedContext.delete(result)
             }
             
-            try managedContext.save()
+            if managedContext.hasChanges {
+                try managedContext.save()
+            }
             
         } catch {
             print(error)

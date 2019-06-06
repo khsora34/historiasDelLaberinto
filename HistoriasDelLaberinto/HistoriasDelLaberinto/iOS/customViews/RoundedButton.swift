@@ -21,11 +21,12 @@ class RoundedButton: UIButton {
     }
     
     private func setStyle() {
-        backgroundColor = .coolBlue
+        backgroundColor = UIColor.coolBlue.withAlphaComponent(0.9)
         layer.cornerRadius = 4.0
         setTitleColor(.white, for: .normal)
         titleLabel?.font = UIFont(name: "Helvetica Neue", size: 18.0)
         NSLayoutConstraint(item: titleLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 50).isActive = true
         highlightedBackgroundColor = .darkCoolBlue
     }
 }

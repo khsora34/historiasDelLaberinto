@@ -1,7 +1,8 @@
 import UIKit
 
 protocol InitialSceneDisplayLogic: ViewControllerDisplay {
-    func setLabelText(with text: String)
+    func showUnableToStartGame()
+    func setLoadButton(isHidden: Bool)
 }
 
 class InitialSceneViewController: BaseViewController {
@@ -9,16 +10,10 @@ class InitialSceneViewController: BaseViewController {
         return _presenter as? InitialScenePresentationLogic
     }
     
-    @IBOutlet weak var loadFilesButton: UIButton!
-    @IBOutlet weak var deleteFilesButton: UIButton!
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var nextViewButton: UIButton!
-    
+    @IBOutlet weak var loadGameButton: UIButton!
     // MARK: Setup
     
-    private func setup() {
-        label.numberOfLines = 0
-    }
+    private func setup() {}
     
     // MARK: View lifecycle
     
@@ -26,21 +21,26 @@ class InitialSceneViewController: BaseViewController {
         super.viewDidLoad()
         setup()
     }
-    
-    @IBAction func didLoadFilesButtonTap(_ sender: Any) {
-        presenter?.loadFiles()
-    }
-    @IBAction func didDeleteFilesButtonTap(_ sender: Any) {
-        presenter?.deleteFiles()
+
+    @IBAction func didTapNewGame(_ sender: Any) {
+        presenter?.startNewGame()
     }
     
-    @IBAction func didTapNextViewButton(_ sender: Any) {
-        presenter?.goToExampleView()
+    @IBAction func didTapLoadGame(_ sender: Any) {
+        presenter?.loadGame()
     }
 }
 
 extension InitialSceneViewController: InitialSceneDisplayLogic {
-    func setLabelText(with text: String) {
-        label.text = text
+    func showUnableToStartGame() {
+        let alert = UIAlertController(title: nil, message: "Ha habido un error intentando comenzar una nueva partida.", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Qué bien", style: .default, handler: nil))
+        
+        self.present(alert, animated: true)
+    }
+    
+    func setLoadButton(isHidden: Bool) {
+        loadGameButton.isHidden = isHidden
     }
 }

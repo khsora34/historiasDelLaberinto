@@ -5,7 +5,7 @@ protocol MovementFetcher {
     func createMovement() -> Movement
     func getMovement() -> Movement?
     func save() -> Bool
-    func setNewLocation(location: (x: Int, y: Int), roomId: String, on managed: Movement)
+    func registerPosition(location: (x: Int, y: Int), roomId: String, on managed: Movement)
     func removeMovement()
 }
 
@@ -48,13 +48,12 @@ class MovementFetcherImpl: MovementFetcher {
         return newMovement
     }
     
-    func setNewLocation(location: (x: Int, y: Int), roomId: String, on managed: Movement) {
+    func registerPosition(location: (x: Int, y: Int), roomId: String, on managed: Movement) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         
         guard let positionEntity = NSEntityDescription.entity(forEntityName: "RoomPosition", in: managedContext) else { return }
-        managed.actualX = Int16(location.x)
-        managed.actualY = Int16(location.y)
+        
         let position = RoomPosition(entity: positionEntity, insertInto: managedContext)
         position.x = Int16(location.x)
         position.y = Int16(location.y)
