@@ -26,7 +26,7 @@ extension BattleEventFetcher {
         
         guard let enemyId = event?.enemyId else { return nil }
         
-        return BattleEvent(enemyId: enemyId, nextStep: event?.nextStep)
+        return BattleEvent(enemyId: enemyId, shouldSetVisited: event?.shouldSetVisited, nextStep: event?.nextStep)
     }
     
     func saveBattle(_ battle: BattleEvent, with id: String) -> Bool {
@@ -38,6 +38,7 @@ extension BattleEventFetcher {
         
         loadingEvent.setValue(id, forKey: "id")
         loadingEvent.setValue(battle.enemyId, forKey: "enemyId")
+        loadingEvent.setValue(battle.shouldSetVisited, forKey: "shouldSetVisited")
         loadingEvent.setValue(battle.nextStep, forKey: "nextStep")
         
         do {

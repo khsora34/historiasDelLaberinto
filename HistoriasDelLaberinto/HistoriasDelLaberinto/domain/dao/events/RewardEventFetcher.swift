@@ -34,7 +34,7 @@ extension RewardEventFetcher {
             }
         }
         
-        return RewardEvent(message: message, rewards: rewards, nextStep: rewardEvent.nextStep)
+        return RewardEvent(message: message, rewards: rewards, shouldSetVisited: rewardEvent.shouldSetVisited, nextStep: rewardEvent.nextStep)
     }
     
     func saveReward(_ reward: RewardEvent, with id: String) -> Bool {
@@ -49,6 +49,7 @@ extension RewardEventFetcher {
         let loadingEvent = NSManagedObject(entity: eventEntity, insertInto: managedContext)
         loadingEvent.setValue(id, forKey: "id")
         loadingEvent.setValue(reward.message, forKey: "message")
+        loadingEvent.setValue(reward.shouldSetVisited, forKey: "shouldSetVisited")
         loadingEvent.setValue(reward.nextStep, forKey: "nextStep")
         
         var managedRewards: [NSManagedObject] = []

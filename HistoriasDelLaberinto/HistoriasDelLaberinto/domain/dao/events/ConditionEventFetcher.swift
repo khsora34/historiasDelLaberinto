@@ -42,7 +42,7 @@ extension ConditionEventFetcher {
         
         guard let safeCondition = condition else { return nil }
         
-        return ConditionEvent(condition: safeCondition, nextStepIfTrue: nextTrueStep, nextStepIfFalse: nextFalseStep)
+        return ConditionEvent(condition: safeCondition, shouldSetVisited: conditionEvent.shouldSetVisited, nextStepIfTrue: nextTrueStep, nextStepIfFalse: nextFalseStep)
     }
     
     func saveCondition(_ condition: ConditionEvent, with id: String) -> Bool {
@@ -53,6 +53,7 @@ extension ConditionEventFetcher {
         let loadingEvent = NSManagedObject(entity: entity, insertInto: managedContext)
         
         loadingEvent.setValue(id, forKey: "id")
+        loadingEvent.setValue(condition.shouldSetVisited, forKey: "shouldSetVisited")
         loadingEvent.setValue(condition.nextStepIfTrue, forKey: "nextStepIfTrue")
         loadingEvent.setValue(condition.nextStepIfFalse, forKey: "nextStepIfFalse")
         

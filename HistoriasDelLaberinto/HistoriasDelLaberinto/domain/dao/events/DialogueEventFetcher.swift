@@ -27,7 +27,7 @@ extension DialogueEventFetcher {
         
         guard let characterId = event?.characterId, let message = event?.message else { return nil }
         
-        return DialogueEvent(characterId: characterId, message: message, nextStep: event?.nextStep)
+        return DialogueEvent(characterId: characterId, message: message, shouldSetVisited: event?.shouldSetVisited, nextStep: event?.nextStep)
     }
     
     func saveDialogue(_ dialogue: DialogueEvent, with id: String) -> Bool {
@@ -41,6 +41,7 @@ extension DialogueEventFetcher {
         loadingEvent.setValue(dialogue.characterId, forKey: "characterId")
         loadingEvent.setValue(dialogue.message, forKey: "message")
         loadingEvent.setValue(dialogue.nextStep, forKey: "nextStep")
+        loadingEvent.setValue(dialogue.shouldSetVisited, forKey: "shouldSetVisited")
         
         do {
             try managedContext.save()

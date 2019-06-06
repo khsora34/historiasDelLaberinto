@@ -51,7 +51,7 @@ extension ChoiceEventFetcher {
             }
         }
         
-        return ChoiceEvent(options: actions)
+        return ChoiceEvent(options: actions, shouldSetVisited: event?.shouldSetVisited)
     }
     
     func saveChoice(_ choice: ChoiceEvent, with id: String) -> Bool {
@@ -65,6 +65,7 @@ extension ChoiceEventFetcher {
         
         let loadingEvent = NSManagedObject(entity: choiceEntity, insertInto: managedContext)
         loadingEvent.setValue(id, forKey: "id")
+        loadingEvent.setValue(choice.shouldSetVisited, forKey: "shouldSetVisited")
         
         var managedActions: [NSManagedObject] = []
         

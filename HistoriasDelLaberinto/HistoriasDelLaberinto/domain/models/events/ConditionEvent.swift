@@ -1,5 +1,6 @@
 struct ConditionEvent: Event, Codable {
     let condition: Condition
+    let shouldSetVisited: Bool?
     let nextStepIfTrue: String
     let nextStepIfFalse: String
     let nextStep: String? = ""

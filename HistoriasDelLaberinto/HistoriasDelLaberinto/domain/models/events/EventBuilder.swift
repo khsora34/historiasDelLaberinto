@@ -36,7 +36,7 @@ struct EventBuilder {
             }
         }
 
-        return ChoiceEvent(options: actions)
+        return ChoiceEvent(options: actions, shouldSetVisited: node["shouldSetVisited"]?.bool)
         
     }
 }
