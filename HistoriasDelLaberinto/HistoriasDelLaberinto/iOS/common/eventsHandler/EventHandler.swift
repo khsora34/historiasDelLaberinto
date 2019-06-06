@@ -164,7 +164,7 @@ extension EventHandler {
         let request = EventsHandlerModels.BuildChoice.Request(event: choice)
         let response = interactor.buildChoice(request: request)
         guard let actions = response.configurator?.actions, !actions.isEmpty else { return nil }
-        actualEvent = ChoiceEvent(options: actions)
+        actualEvent = ChoiceEvent(options: actions, shouldSetVisited: choice.shouldSetVisited)
         return response.configurator
     }
 }
@@ -176,22 +176,22 @@ extension EventHandler {
         actualEvent = nil
         switch error {
         case .eventNotFound:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "This event doesn't seem to be available. Sorry for the inconveniences!", nextStep: nil)
+            let errorEvent = DialogueEvent(characterId: "Cisco", message: "This event doesn't seem to be available. Sorry for the inconveniences!", shouldSetVisited: false, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .characterNotFound:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "It seems we encountered a problem showing the character. So sorry for that.", nextStep: nil)
+            let errorEvent = DialogueEvent(characterId: "Cisco", message: "It seems we encountered a problem showing the character. So sorry for that.", shouldSetVisited: false, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .defaultError:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "An error ocurred, sorry about that...", nextStep: nil)
+            let errorEvent = DialogueEvent(characterId: "Cisco", message: "An error ocurred, sorry about that...", shouldSetVisited: false, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .determinedCondition:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "It seems the condition went way too far.", nextStep: nil)
+            let errorEvent = DialogueEvent(characterId: "Cisco", message: "It seems the condition went way too far.", shouldSetVisited: false, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .itemsNotFound:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "There was a problem finding the items rewarded. Sorry for that...", nextStep: nil)
+            let errorEvent = DialogueEvent(characterId: "Cisco", message: "There was a problem finding the items rewarded. Sorry for that...", shouldSetVisited: false, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .invalidChoiceExecution:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "The function for a choice was executed without asking for it.", nextStep: nil)
+            let errorEvent = DialogueEvent(characterId: "Cisco", message: "The function for a choice was executed without asking for it.", shouldSetVisited: false, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .custom:
             fatalError()

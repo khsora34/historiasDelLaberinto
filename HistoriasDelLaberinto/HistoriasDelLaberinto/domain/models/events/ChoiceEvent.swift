@@ -1,5 +1,6 @@
 struct ChoiceEvent: Event, Codable {
-    let options: [Action]
+    var options: [Action]
+    let shouldSetVisited: Bool?
     let nextStep: String? = nil
 }
 

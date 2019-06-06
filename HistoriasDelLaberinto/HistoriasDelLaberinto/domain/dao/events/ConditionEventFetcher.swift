@@ -42,7 +42,7 @@ extension ConditionEventFetcher {
         
         guard let safeCondition = condition else { return nil }
         
-        return ConditionEvent(condition: safeCondition, nextStepIfTrue: nextTrueStep, nextStepIfFalse: nextFalseStep)
+        return ConditionEvent(condition: safeCondition, shouldSetVisited: conditionEvent.shouldSetVisited, nextStepIfTrue: nextTrueStep, nextStepIfFalse: nextFalseStep)
     }
     
     func saveCondition(_ condition: ConditionEvent, with id: String) -> Bool {
