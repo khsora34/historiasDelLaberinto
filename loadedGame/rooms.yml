@@ -48,10 +48,10 @@ rooms:
     actions:
       - action: "Hablar con Sora"
         nextStep: "exampleDialogue3"
-      - action: "Observar"
-        nextStep: "exampleDialogue4"
-      - action: "Forma escudo"
-        nextStep: "exampleChoice"
+      - action: "Hablar con Sora veloz"
+        nextStep: "exampleDialogue1"
+      - action: "Hablar con Sora defensor"
+        nextStep: "exampleDialogue2"
         condition:
           kind: "roomVisited"
           required: "exampleRoom"

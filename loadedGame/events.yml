@@ -142,6 +142,7 @@
   mode: "dialogue"
   message: "¡Pues yo soy el original!"
   characterId: "sora" #idCharacter
+  shouldSetVisited: true
   nextStep: ""
 
 "exampleDialogue4":
