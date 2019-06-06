@@ -38,10 +38,24 @@ class RoomScenePresenter: BasePresenter {
     }
     
     private func loadActions() {
-        let filteredActions = room.actions.filter { action in
+        var filteredActions = room.actions.filter { action in
             guard let condition = action.condition else { return true }
             let request = EventsHandlerModels.CompareCondition.Request(condition: condition)
             return interactor?.compareCondition(request: request).result ?? false
+        }
+        if !self.filteredActions.isEmpty {
+            let newActions = filteredActions.filter { action in
+                for extAction in self.filteredActions where extAction == action {
+                    return false
+                }
+                return true
+            }
+            let maintainingActions = self.filteredActions.filter { action in
+                filteredActions.contains(where: { second in
+                    return action == second
+                })
+            }
+            filteredActions = maintainingActions + newActions
         }
         self.filteredActions = filteredActions
         var modeledActions = filteredActions.map({ $0.name })
