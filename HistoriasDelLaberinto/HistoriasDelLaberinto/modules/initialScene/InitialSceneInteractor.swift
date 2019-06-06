@@ -4,6 +4,7 @@ protocol InitialSceneBusinessLogic: BusinessLogic {
     func loadAllFiles()
     func deleteAllFiles()
     func getRoom(request: InitialScene.RoomBuilder.Request) -> InitialScene.RoomBuilder.Response
+    func getMovement() -> InitialScene.MovementGetter.Response
 }
 
 class InitialSceneInteractor: InitialSceneBusinessLogic {
@@ -65,6 +66,11 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
         databaseFetcherProvider.roomsFetcher.deleteAllRooms()
         databaseFetcherProvider.movementFetcher.removeMovement()
         print("😂 Finished in \(Date().timeIntervalSinceReferenceDate - now)")
+    }
+    
+    func getMovement() -> InitialScene.MovementGetter.Response {
+        let movement = databaseFetcherProvider.movementFetcher.getMovement()
+        return InitialScene.MovementGetter.Response(movement: movement)
     }
     
     func getRoom(request: InitialScene.RoomBuilder.Request) -> InitialScene.RoomBuilder.Response {

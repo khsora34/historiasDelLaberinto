@@ -8,4 +8,10 @@ enum InitialScene {
             let room: Room?
         }
     }
+    
+    enum MovementGetter {
+        struct Response {
+            let movement: Movement?
+        }
+    }
 }
