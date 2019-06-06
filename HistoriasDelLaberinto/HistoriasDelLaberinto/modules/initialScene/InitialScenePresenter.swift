@@ -20,17 +20,18 @@ extension InitialScenePresenter: InitialScenePresentationLogic {
     func startNewGame() {
         interactor?.deleteAllFiles()
         interactor?.loadAllFiles()
-        goToStartRoom()
+        goToRoom(id: "startRoom")
     }
     
-    private func goToStartRoom() {
-        let request = InitialScene.RoomBuilder.Request(roomId: "startRoom")
+    
+    private func goToRoom(id: String) {
+        let request = InitialScene.RoomBuilder.Request(roomId: id)
         let response = interactor?.getRoom(request: request)
         
         guard let room = response?.room else {
             viewController?.showUnableToStartGame()
             return
         }
-        router?.goToRoomView(roomId: "startRoom", room: room)
+        router?.goToRoomView(roomId: id, room: room)
     }
 }
