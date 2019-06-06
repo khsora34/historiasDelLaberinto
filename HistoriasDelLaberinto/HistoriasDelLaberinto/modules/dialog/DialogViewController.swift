@@ -96,7 +96,11 @@ class DialogViewController: UIViewController {
 
 extension DialogViewController: DialogDisplayLogic {
     func setNextConfigurator(_ newConfigurator: DialogConfigurator) {
-        if !newConfigurator.sharesStruct(with: configurator) {
+        if newConfigurator is ChoiceConfigurator && configurator is DialogueConfigurator {
+            configurator = newConfigurator
+            setupConfiguration()
+            timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
+        } else if !newConfigurator.sharesStruct(with: configurator) {
             changeForDifferent(configurator: newConfigurator)
             
         } else {
@@ -157,6 +161,7 @@ extension DialogViewController {
     }
     
     private func setup(choice: ChoiceConfigurator) {
+        characterImageView.isHidden = false
         stackView.isHidden = false
         stackView.backgroundColor = UIColor.gray.withAlphaComponent(0.85)
         stackView.spacing = 10
