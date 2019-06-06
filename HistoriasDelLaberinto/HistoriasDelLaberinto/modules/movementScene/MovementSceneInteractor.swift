@@ -31,7 +31,16 @@ class MovementSceneInteractor: BaseInteractor, MovementSceneBusinessLogic {
         let id = request.roomId
         let movement = request.movement
         
-        movementFetcher.setNewLocation(location: location, roomId: id, on: movement)
+        movement.actualX = Int16(location.0)
+        movement.actualY = Int16(location.1)
+        
+        if let items = movement.map, let map = Array(items) as? [RoomPosition], !map.isEmpty {
+            let searchRoom = map.filter({ $0.x == location.0 && $0.y == location.1 })
+            
+            if searchRoom.count == 0 {
+                movementFetcher.registerPosition(location: location, roomId: id, on: movement)
+            }
+        }
         
         saveMovement()
     }

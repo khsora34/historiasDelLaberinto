@@ -45,7 +45,6 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                             <connections>
-                                                <action selector="didLoadFilesButtonTap:" destination="1OK-57-ttH" eventType="touchUpInside" id="anM-5R-mBi"/>
                                                 <action selector="didTapNewGame:" destination="1OK-57-ttH" eventType="touchUpInside" id="0sW-Dz-QDA"/>
                                             </connections>
                                         </button>
@@ -56,7 +55,7 @@
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </state>
                                             <connections>
-                                                <action selector="didDeleteFilesButtonTap:" destination="1OK-57-ttH" eventType="touchUpInside" id="5WK-tM-MHU"/>
+                                                <action selector="didTapLoadGame:" destination="1OK-57-ttH" eventType="touchUpInside" id="H0Y-yd-W0u"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -88,8 +87,7 @@
                         <viewLayoutGuide key="safeArea" id="bJ0-Vb-V2S"/>
                     </view>
                     <connections>
-                        <outlet property="deleteFilesButton" destination="QMO-iy-7HL" id="tlh-kB-q2d"/>
-                        <outlet property="loadFilesButton" destination="BbK-8f-Rl8" id="W7H-v6-7bd"/>
+                        <outlet property="loadGameButton" destination="QMO-iy-7HL" id="mc1-tP-OS0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CUY-2N-uS6" userLabel="First Responder" sceneMemberID="firstResponder"/>
