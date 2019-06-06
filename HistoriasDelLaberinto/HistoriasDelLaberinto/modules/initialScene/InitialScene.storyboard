@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="startView1" translatesAutoresizingMaskIntoConstraints="NO" id="PTu-5w-yxk">
-                                <rect key="frame" x="0.0" y="0.0" width="375.00000000000182" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EB9-oZ-6cO">
                                 <rect key="frame" x="0.0" y="471" width="375" height="196"/>
@@ -46,6 +46,7 @@
                                             </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <action selector="didLoadFilesButtonTap:" destination="1OK-57-ttH" eventType="touchUpInside" id="anM-5R-mBi"/>
+                                                <action selector="didTapNewGame:" destination="1OK-57-ttH" eventType="touchUpInside" id="0sW-Dz-QDA"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QMO-iy-7HL" userLabel="Load Game Button">

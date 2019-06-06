@@ -1,7 +1,7 @@
 protocol InitialScenePresentationLogic: Presenter {
     func loadFiles()
     func deleteFiles()
-    func goToExampleView()
+    func startNewGame()
 }
 
 class InitialScenePresenter: BasePresenter {
@@ -20,19 +20,27 @@ class InitialScenePresenter: BasePresenter {
 
 extension InitialScenePresenter: InitialScenePresentationLogic {
     func loadFiles() {
-        let result = interactor?.loadAllFiles()
-        viewController?.setLabelText(with: "Loaded files: \(result?.stringResponse ?? "NO")")
+        interactor?.loadAllFiles()
     }
     
     func deleteFiles() {
         interactor?.deleteAllFiles()
     }
     
-    func goToExampleView() {
-        let roomId = "exampleRoom"
-        let request = InitialScene.RoomBuilder.Request(roomId: roomId)
+    func startNewGame() {
+        interactor?.deleteAllFiles()
+        interactor?.loadAllFiles()
+        goToStartRoom()
+    }
+    
+    private func goToStartRoom() {
+        let request = InitialScene.RoomBuilder.Request(roomId: "startRoom")
         let response = interactor?.getRoom(request: request)
-        guard let room = response?.room else { return }
-        router?.goToRoomView(roomId: roomId, room: room)
+        
+        guard let room = response?.room else {
+            viewController?.showUnableToStartGame()
+            return
+        }
+        router?.goToRoomView(roomId: "startRoom", room: room)
     }
 }

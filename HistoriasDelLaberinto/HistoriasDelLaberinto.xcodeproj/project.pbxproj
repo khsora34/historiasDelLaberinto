@@ -44,6 +44,7 @@
 		6D5DB0DD22A1DED700C8745E /* ConditionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DB0DC22A1DED700C8745E /* ConditionEvaluator.swift */; };
 		6D62D34822A8141500C2CB60 /* MovementFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D62D34722A8141500C2CB60 /* MovementFetcher.swift */; };
 		6D62D34A22A856B300C2CB60 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D62D34922A856B300C2CB60 /* ImageLoader.swift */; };
+		6D62D34D22A85DB900C2CB60 /* FilesSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D62D34C22A85DB900C2CB60 /* FilesSaver.swift */; };
 		6D6DE4B9221DB40600C92B94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */; };
 		6D6DE4C3221DB40700C92B94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DE4C1221DB40700C92B94 /* LaunchScreen.storyboard */; };
 		6D71681C229DAE1900791A42 /* ProtagonistFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D71681B229DAE1900791A42 /* ProtagonistFetcher.swift */; };
@@ -171,6 +172,7 @@
 		6D5DB0DC22A1DED700C8745E /* ConditionEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionEvaluator.swift; sourceTree = "<group>"; };
 		6D62D34722A8141500C2CB60 /* MovementFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementFetcher.swift; sourceTree = "<group>"; };
 		6D62D34922A856B300C2CB60 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		6D62D34C22A85DB900C2CB60 /* FilesSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FilesSaver.swift; path = /Users/setoncios/repos/historiasDelLaberinto/HistoriasDelLaberinto/HistoriasDelLaberinto/iOS/common/initialScene/FilesSaver.swift; sourceTree = "<absolute>"; };
 		6D6DE4B5221DB40600C92B94 /* HistoriasDelLaberinto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HistoriasDelLaberinto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D6DE4C2221DB40700C92B94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -411,14 +413,13 @@
 		6D5D8FF92268621200D11390 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				6D62D34B22A85D9D00C2CB60 /* initialScene */,
 				6DEC0C9122A194C50050849F /* eventsHandler */,
 				6DFE3FBC22A05366000C3C2F /* interactors */,
 				6D921218229DD4DC00440926 /* void */,
 				6D5D8FF72268620D00D11390 /* ViewCreator.swift */,
 				6DEF066022688C4C00A5C454 /* MainViewController.swift */,
-				6D2DA747229ED8DE00BC5C0D /* GameFilesLoader.swift */,
 				6D5DB0DC22A1DED700C8745E /* ConditionEvaluator.swift */,
-				6D62D34922A856B300C2CB60 /* ImageLoader.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -432,6 +433,16 @@
 				6D09612922A69C0D001BC15E /* UIStackViewExtension.swift */,
 			);
 			path = extensions;
+			sourceTree = "<group>";
+		};
+		6D62D34B22A85D9D00C2CB60 /* initialScene */ = {
+			isa = PBXGroup;
+			children = (
+				6D62D34922A856B300C2CB60 /* ImageLoader.swift */,
+				6D62D34C22A85DB900C2CB60 /* FilesSaver.swift */,
+				6D2DA747229ED8DE00BC5C0D /* GameFilesLoader.swift */,
+			);
+			path = initialScene;
 			sourceTree = "<group>";
 		};
 		6D6DE4AC221DB40600C92B94 = {
@@ -843,6 +854,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D62D34D22A85DB900C2CB60 /* FilesSaver.swift in Sources */,
 				6D92120C229DC74100440926 /* InitialSceneWorker.swift in Sources */,
 				6D082A03229AB4A900B13A56 /* ItemFetcher.swift in Sources */,
 				6D9A45AB22874C51004F4D0C /* TestViewController.swift in Sources */,
