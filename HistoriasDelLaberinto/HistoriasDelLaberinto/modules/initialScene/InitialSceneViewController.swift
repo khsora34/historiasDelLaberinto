@@ -2,6 +2,7 @@ import UIKit
 
 protocol InitialSceneDisplayLogic: ViewControllerDisplay {
     func showUnableToStartGame()
+    func setLoadButton(isHidden: Bool)
 }
 
 class InitialSceneViewController: BaseViewController {
@@ -24,6 +25,10 @@ class InitialSceneViewController: BaseViewController {
     @IBAction func didTapNewGame(_ sender: Any) {
         presenter?.startNewGame()
     }
+    
+    @IBAction func didTapLoadGame(_ sender: Any) {
+        presenter?.loadGame()
+    }
 }
 
 extension InitialSceneViewController: InitialSceneDisplayLogic {
@@ -33,5 +38,9 @@ extension InitialSceneViewController: InitialSceneDisplayLogic {
         alert.addAction(UIAlertAction(title: "Qué bien", style: .default, handler: nil))
         
         self.present(alert, animated: true)
+    }
+    
+    func setLoadButton(isHidden: Bool) {
+        loadGameButton.isHidden = isHidden
     }
 }
