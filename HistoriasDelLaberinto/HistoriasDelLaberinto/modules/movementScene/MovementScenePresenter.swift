@@ -5,6 +5,9 @@ protocol MovementScenePresentationLogic: Presenter {
 }
 
 class MovementScenePresenter: BasePresenter {
+    private let probabilityReducingFactor: Double = 0.2
+    private let probabilityRaisingFactor: Double = 0.1
+    
     var viewController: MovementSceneDisplayLogic? {
         return _viewController as? MovementSceneDisplayLogic
     }
@@ -95,10 +98,10 @@ extension MovementScenePresenter: MovementScenePresentationLogic {
         
         var usingRooms: [Room] = availableRooms
         if Double.random(in: 0..<1) < movement.genericProb, !genericRooms.isEmpty {
-            movement.genericProb = movement.genericProb - 0.3 < 0 ? 0: movement.genericProb - 0.3
+            movement.genericProb = movement.genericProb - probabilityReducingFactor < 0 ? 0: movement.genericProb - probabilityReducingFactor
             usingRooms = genericRooms
         } else {
-            movement.genericProb = movement.genericProb + 0.1 > 1 ? 1: movement.genericProb + 0.1
+            movement.genericProb = movement.genericProb + probabilityRaisingFactor > 1 ? 1: movement.genericProb + probabilityRaisingFactor
         }
         
         let randomIndex = usingRooms.count == 1 ? 0: Int.random(in: 0..<(usingRooms.count-1))

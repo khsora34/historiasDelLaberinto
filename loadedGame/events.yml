@@ -40,14 +40,6 @@
   rewards:
     "potion": "2"
     "high_potion": "1"
-    "potion2": "3"
-    "high_potion2": "4"
-    "potion3": "2"
-    "high_potion3": "1"
-    "potion4": "2"
-    "high_potion4": "1"
-    "potion5": "2"
-    "high_potion5": "1"
   nextStep: ""
 
 "room17Conversation_3":

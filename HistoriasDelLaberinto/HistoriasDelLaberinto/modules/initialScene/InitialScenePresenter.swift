@@ -1,7 +1,6 @@
 protocol InitialScenePresentationLogic: Presenter {
-    func loadFiles()
-    func deleteFiles()
-    func goToExampleView()
+    func startNewGame()
+    func loadGame()
 }
 
 class InitialScenePresenter: BasePresenter {
@@ -16,23 +15,58 @@ class InitialScenePresenter: BasePresenter {
     var router: InitialSceneRoutingLogic? {
         return _router as? InitialSceneRoutingLogic
     }
+    
+    var movement: Movement?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        movement = interactor?.getMovement().movement
+        viewController?.setLoadButton(isHidden: movement == nil)
+    }
 }
 
 extension InitialScenePresenter: InitialScenePresentationLogic {
-    func loadFiles() {
-        let result = interactor?.loadAllFiles()
-        viewController?.setLabelText(with: "Loaded files: \(result?.stringResponse ?? "NO")")
-    }
-    
-    func deleteFiles() {
+    func startNewGame() {
+        viewController?.showLoading()
         interactor?.deleteAllFiles()
+        let request = InitialScene.FileLoader.Request(imageDelegate: self)
+        interactor?.loadAllFiles(request: request)
     }
     
-    func goToExampleView() {
-        let roomId = "exampleRoom"
-        let request = InitialScene.RoomBuilder.Request(roomId: roomId)
+    func loadGame() {
+        guard let movement = movement else { return }
+        guard let items = movement.map, let map = Array(items) as? [RoomPosition], !map.isEmpty else {
+            viewController?.showUnableToStartGame()
+            return
+        }
+        let mapPositions = map.filter({ $0.x == movement.actualX && $0.y == movement.actualY })
+        guard mapPositions.count == 1, let roomId = mapPositions.first?.roomId else {
+            viewController?.showUnableToStartGame()
+            return
+        }
+        
+        goToRoom(id: roomId)
+    }
+}
+
+extension InitialScenePresenter {
+    
+    private func goToRoom(id: String) {
+        let request = InitialScene.RoomBuilder.Request(roomId: id)
         let response = interactor?.getRoom(request: request)
-        guard let room = response?.room else { return }
-        router?.goToRoomView(roomId: roomId, room: room)
+        
+        guard let room = response?.room else {
+            viewController?.showUnableToStartGame()
+            return
+        }
+        router?.goToRoomView(roomId: id, room: room)
+    }
+}
+
+extension InitialScenePresenter: ImageLoaderDelegate {
+    func finishedLoadingImages() {
+        viewController?.dismissLoading()
+        goToRoom(id: "startRoom")
     }
 }
