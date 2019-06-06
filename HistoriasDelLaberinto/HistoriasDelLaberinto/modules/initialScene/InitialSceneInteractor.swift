@@ -1,7 +1,7 @@
 import Foundation
 
 protocol InitialSceneBusinessLogic: BusinessLogic {
-    func loadAllFiles()
+    func loadAllFiles(request: InitialScene.FileLoader.Request)
     func deleteAllFiles()
     func getRoom(request: InitialScene.RoomBuilder.Request) -> InitialScene.RoomBuilder.Response
     func getMovement() -> InitialScene.MovementGetter.Response
@@ -10,15 +10,26 @@ protocol InitialSceneBusinessLogic: BusinessLogic {
 class InitialSceneInteractor: InitialSceneBusinessLogic {
     private let databaseFetcherProvider: DatabaseFetcherProvider
     
+    var operations: [Int: ImageLoadingOperation] = [:] {
+        didSet {
+            if operations.values.count == 0 {
+                print("😂 Finished loading images")
+                delegate?.finishedLoadingImages()
+            }
+        }
+    }
+    
     var stringUrlImages: [String] = []
+    weak var delegate: ImageLoaderDelegate?
     
     init(databaseFetcherProvider: DatabaseFetcherProvider) {
         self.databaseFetcherProvider = databaseFetcherProvider
     }
     
-    func loadAllFiles() {
+    func loadAllFiles(request: InitialScene.FileLoader.Request) {
         let now = Date().timeIntervalSinceReferenceDate
         print("😂 Start Uploading ")
+        delegate = request.imageDelegate
         parseFiles()
         print("😂 Finished in \(Date().timeIntervalSinceReferenceDate - now)")
     }
@@ -35,6 +46,7 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
     }
     
     private func loadImages(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile, _ eventsFile: EventsFile) {
+        print("😂 Starting to load images")
         var imageUrls: [String] = []
         imageUrls.append(protagonist.imageUrl)
         
@@ -46,6 +58,7 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
         imageUrls.append(contentsOf: itemsFile.consumableItems.values.map({$0.imageUrl}))
         imageUrls.append(contentsOf: itemsFile.keyItems.values.map({$0.imageUrl}))
         imageUrls.append(contentsOf: itemsFile.weapons.values.map({$0.imageUrl}))
+        loadImages(from: imageUrls)
     }
     
     private func save(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile, _ eventsFile: EventsFile) {
@@ -65,6 +78,7 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
         databaseFetcherProvider.protagonistFetcher.deleteProtagonist()
         databaseFetcherProvider.roomsFetcher.deleteAllRooms()
         databaseFetcherProvider.movementFetcher.removeMovement()
+        removeImageCache()
         print("😂 Finished in \(Date().timeIntervalSinceReferenceDate - now)")
     }
     

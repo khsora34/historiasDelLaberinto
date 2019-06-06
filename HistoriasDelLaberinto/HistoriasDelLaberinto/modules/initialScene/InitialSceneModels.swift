@@ -1,5 +1,11 @@
 enum InitialScene {
     // MARK: Use cases
+    enum FileLoader {
+        struct Request {
+            let imageDelegate: ImageLoaderDelegate
+        }
+    }
+    
     enum RoomBuilder {
         struct Request {
             let roomId: String

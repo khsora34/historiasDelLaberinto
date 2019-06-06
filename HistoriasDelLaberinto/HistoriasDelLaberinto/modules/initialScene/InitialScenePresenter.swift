@@ -28,9 +28,10 @@ class InitialScenePresenter: BasePresenter {
 
 extension InitialScenePresenter: InitialScenePresentationLogic {
     func startNewGame() {
+        viewController?.showLoading()
         interactor?.deleteAllFiles()
-        interactor?.loadAllFiles()
-        goToRoom(id: "startRoom")
+        let request = InitialScene.FileLoader.Request(imageDelegate: self)
+        interactor?.loadAllFiles(request: request)
     }
     
     func loadGame() {
@@ -60,5 +61,12 @@ extension InitialScenePresenter {
             return
         }
         router?.goToRoomView(roomId: id, room: room)
+    }
+}
+
+extension InitialScenePresenter: ImageLoaderDelegate {
+    func finishedLoadingImages() {
+        viewController?.dismissLoading()
+        goToRoom(id: "startRoom")
     }
 }
