@@ -38,6 +38,7 @@ extension BattleEventFetcher {
         
         loadingEvent.setValue(id, forKey: "id")
         loadingEvent.setValue(battle.enemyId, forKey: "enemyId")
+        loadingEvent.setValue(battle.shouldSetVisited, forKey: "shouldSetVisited")
         loadingEvent.setValue(battle.nextStep, forKey: "nextStep")
         
         do {

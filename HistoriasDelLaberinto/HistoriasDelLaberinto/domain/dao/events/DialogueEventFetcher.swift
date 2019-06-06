@@ -41,6 +41,7 @@ extension DialogueEventFetcher {
         loadingEvent.setValue(dialogue.characterId, forKey: "characterId")
         loadingEvent.setValue(dialogue.message, forKey: "message")
         loadingEvent.setValue(dialogue.nextStep, forKey: "nextStep")
+        loadingEvent.setValue(dialogue.shouldSetVisited, forKey: "shouldSetVisited")
         
         do {
             try managedContext.save()

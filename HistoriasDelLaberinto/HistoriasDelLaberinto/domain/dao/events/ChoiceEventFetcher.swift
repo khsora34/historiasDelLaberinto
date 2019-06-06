@@ -65,6 +65,7 @@ extension ChoiceEventFetcher {
         
         let loadingEvent = NSManagedObject(entity: choiceEntity, insertInto: managedContext)
         loadingEvent.setValue(id, forKey: "id")
+        loadingEvent.setValue(choice.shouldSetVisited, forKey: "shouldSetVisited")
         
         var managedActions: [NSManagedObject] = []
         

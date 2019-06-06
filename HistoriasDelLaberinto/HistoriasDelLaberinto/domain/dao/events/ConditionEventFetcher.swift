@@ -53,6 +53,7 @@ extension ConditionEventFetcher {
         let loadingEvent = NSManagedObject(entity: entity, insertInto: managedContext)
         
         loadingEvent.setValue(id, forKey: "id")
+        loadingEvent.setValue(condition.shouldSetVisited, forKey: "shouldSetVisited")
         loadingEvent.setValue(condition.nextStepIfTrue, forKey: "nextStepIfTrue")
         loadingEvent.setValue(condition.nextStepIfFalse, forKey: "nextStepIfFalse")
         
