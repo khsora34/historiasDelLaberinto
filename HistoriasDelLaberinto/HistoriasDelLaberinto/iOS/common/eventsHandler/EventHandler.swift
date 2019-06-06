@@ -20,10 +20,11 @@ extension EventHandler {
             return
         }
         
+        if !shouldSetVisitedWhenFinished, event.shouldSetVisited == true {
+            shouldSetVisitedWhenFinished = true
+        }
+        
         if let condition = event as? ConditionEvent {
-            if case Condition.roomVisited = condition.condition {
-                shouldSetVisitedWhenFinished = true
-            }
             startEvent(with: condition.nextStep(evaluator: self))
             return
         }
