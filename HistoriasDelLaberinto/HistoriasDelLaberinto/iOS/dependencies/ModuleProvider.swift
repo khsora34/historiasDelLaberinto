@@ -19,4 +19,8 @@ class ModuleProvider {
     func movementSceneModule(room: Room) -> Module {
         return MovementSceneModule(room: room, routerProvider: routerProvider, databaseProvider: databaseFetcherProvider)
     }
+    
+    func pauseMenuSceneModuleModule() -> Module {
+        return PauseMenuSceneModule(routerProvider: routerProvider)
+    }
 }

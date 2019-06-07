@@ -1,0 +1,4 @@
+class PauseMenuSceneWorker {
+  func doSomeWork() {
+  }
+}
