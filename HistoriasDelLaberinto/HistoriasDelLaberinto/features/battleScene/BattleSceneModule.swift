@@ -6,11 +6,11 @@ class BattleSceneModule: Module {
     var presenter: Presenter
     var router: RouterLogic
     
-    init(routerProvider: RouterProvider) {
+    init(enemy: PlayableCharacter, routerProvider: RouterProvider, protagonistFetcher: ProtagonistFetcher, characterFetcher: CharacterFetcher) {
         viewController = ViewCreator.createFrom(storyboardName: storyboardName, forController: controllerName)
-        presenter = BattleScenePresenter()
+        presenter = BattleScenePresenter(enemy: enemy)
         router = routerProvider.voidRouter
-        interactor = BattleSceneInteractor()
+        interactor = BattleSceneInteractor(protagonistFetcher: protagonistFetcher, characterFetcher: characterFetcher)
         viewController._presenter = presenter
         presenter._interactor = interactor
         presenter._router = router
