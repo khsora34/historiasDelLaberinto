@@ -80,7 +80,7 @@ class StatusViewController: UIView {
     }
     
     var didTouchView: (() -> Void)?
-
+    
     @IBOutlet var contentView: StatusViewController!
     @IBOutlet weak var portraitImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
@@ -94,6 +94,14 @@ class StatusViewController: UIView {
         portraitImageView.kf.setImage(with: URL(string: imageUrl))
     }
     
+    func setBackground(shouldDisplayForEnemy: Bool) {
+        if shouldDisplayForEnemy {
+            contentView.backgroundColor = UIColor.purple
+        } else {
+            contentView.backgroundColor = UIColor(red: 51/255, green: 220/255, blue: 1, alpha: 0.6)
+        }
+    }
+    
     @IBAction func didTouchView(_ sender: Any) {
         didTouchView?()
     }
@@ -101,8 +109,6 @@ class StatusViewController: UIView {
 
 extension StatusViewController {
     private func setup() {
-        backgroundColor = .clear
-        contentView.backgroundColor = UIColor(red: 51/255, green: 220/255, blue: 1, alpha: 0.6)
         contentView.layer.cornerRadius = 5
         contentView.layer.masksToBounds = true
         setFonts()
