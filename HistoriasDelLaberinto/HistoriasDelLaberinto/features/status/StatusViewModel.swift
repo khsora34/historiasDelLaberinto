@@ -6,6 +6,7 @@ struct StatusViewModel {
     let actualHealth: Int
     let maxHealth: Int
     let imageUrl: String
+    let isEnemy: Bool
     var didTouchView: (() -> Void)?
     
     func configure(view: StatusViewController) {
@@ -14,6 +15,7 @@ struct StatusViewModel {
         view.maxHealth = maxHealth
         view.ailment = ailment
         view.setImage(with: imageUrl)
+        view.setBackground(shouldDisplayForEnemy: isEnemy)
         view.didTouchView = didTouchView
     }
 }

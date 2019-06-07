@@ -1,11 +1,15 @@
 enum BattleScene {
-    
-  enum Something {
-    struct Request {
+    enum ProtagonistGetter {
+        struct Response {
+            let protagonist: Protagonist?
+        }
     }
-    struct Response {
+    enum CharacterGetter {
+        struct Request {
+            let id: String
+        }
+        struct Response {
+            let character: PlayableCharacter?
+        }
     }
-    struct ViewModel {
-    }
-  }
 }
