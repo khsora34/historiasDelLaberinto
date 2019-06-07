@@ -1,0 +1,4 @@
+class BattleSceneWorker {
+  func doSomeWork() {
+  }
+}

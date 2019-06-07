@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Battle Scene View Controller-->
+        <scene sceneID="HqS-yr-FSi">
+            <objects>
+                <viewController storyboardIdentifier="BattleSceneViewController" id="uc0-i1-VKd" customClass="BattleSceneViewController" customModule="HistoriasDelLaberinto" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QcK-MS-IcX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GenericRoom1" translatesAutoresizingMaskIntoConstraints="NO" id="dlu-ff-afN" userLabel="Background Image View">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Zoom_Alphonse" translatesAutoresizingMaskIntoConstraints="NO" id="mNw-KP-RNq" userLabel="Enemy Image View">
+                                <rect key="frame" x="0.0" y="104" width="414" height="792"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="0.20178262010942283" green="0.80217077681829529" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X7l-Dy-X9F">
+                                <rect key="frame" x="0.0" y="772" width="414" height="124"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="L0i-QE-EUD">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="124"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="cEz-EG-V0H" userLabel="Bottom Stack View">
+                                            <rect key="frame" x="10" y="10" width="394" height="70"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="YTi-Ga-ufg" userLabel="Buttons Stack View">
+                                                    <rect key="frame" x="0.0" y="0.0" width="394" height="50"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b3L-v9-byZ" userLabel="Attack Button" customClass="RoundedButton" customModule="HistoriasDelLaberinto" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="6" width="187" height="38"/>
+                                                            <state key="normal" title="Atacar"/>
+                                                            <connections>
+                                                                <action selector="didTapAttackButton:" destination="uc0-i1-VKd" eventType="touchUpInside" id="8oR-jH-kEO"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3X7-Wm-g8X" userLabel="Items Button" customClass="RoundedButton" customModule="HistoriasDelLaberinto" customModuleProvider="target">
+                                                            <rect key="frame" x="207" y="6" width="187" height="38"/>
+                                                            <state key="normal" title="Inventario"/>
+                                                            <connections>
+                                                                <action selector="didTapItemsButton:" destination="uc0-i1-VKd" eventType="touchUpInside" id="Ol4-qe-YN4"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="PrG-z1-RTm"/>
+                                                    </constraints>
+                                                </stackView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="8aM-d2-d0H" userLabel="Characters Stack View">
+                                                    <rect key="frame" x="0.0" y="70" width="394" height="0.0"/>
+                                                </stackView>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.1749861582828563" green="0.8407339547492223" blue="0.94654627904243893" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="cEz-EG-V0H" firstAttribute="top" secondItem="L0i-QE-EUD" secondAttribute="top" constant="10" id="7YI-y1-EcL"/>
+                                        <constraint firstAttribute="trailing" secondItem="cEz-EG-V0H" secondAttribute="trailing" constant="10" id="IyT-Ba-Eqd"/>
+                                        <constraint firstItem="cEz-EG-V0H" firstAttribute="leading" secondItem="L0i-QE-EUD" secondAttribute="leading" constant="10" id="RwL-R8-n11"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="X7l-Dy-X9F" secondAttribute="bottom" id="3iu-qu-3la"/>
+                            <constraint firstItem="dlu-ff-afN" firstAttribute="leading" secondItem="gAf-oC-bu7" secondAttribute="leading" id="3xn-Si-ubn"/>
+                            <constraint firstItem="gAf-oC-bu7" firstAttribute="trailing" secondItem="X7l-Dy-X9F" secondAttribute="trailing" id="9qa-72-Uw5"/>
+                            <constraint firstAttribute="bottom" secondItem="dlu-ff-afN" secondAttribute="bottom" id="Aj6-Vj-oKv"/>
+                            <constraint firstItem="mNw-KP-RNq" firstAttribute="top" secondItem="gAf-oC-bu7" secondAttribute="top" constant="60" id="NCQ-Jv-eOt"/>
+                            <constraint firstItem="dlu-ff-afN" firstAttribute="top" secondItem="QcK-MS-IcX" secondAttribute="top" id="Skp-J8-wtD"/>
+                            <constraint firstItem="gAf-oC-bu7" firstAttribute="trailing" secondItem="dlu-ff-afN" secondAttribute="trailing" id="Z9c-GZ-2hm"/>
+                            <constraint firstItem="gAf-oC-bu7" firstAttribute="trailing" secondItem="mNw-KP-RNq" secondAttribute="trailing" id="jQF-zG-GYF"/>
+                            <constraint firstItem="gAf-oC-bu7" firstAttribute="bottom" secondItem="cEz-EG-V0H" secondAttribute="bottom" constant="10" id="n1p-nE-JA7"/>
+                            <constraint firstItem="X7l-Dy-X9F" firstAttribute="leading" secondItem="gAf-oC-bu7" secondAttribute="leading" id="obw-Ov-srl"/>
+                            <constraint firstAttribute="bottom" secondItem="mNw-KP-RNq" secondAttribute="bottom" id="qHF-YB-Os7"/>
+                            <constraint firstItem="mNw-KP-RNq" firstAttribute="leading" secondItem="gAf-oC-bu7" secondAttribute="leading" id="x3x-rP-GbH"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="gAf-oC-bu7"/>
+                    </view>
+                    <connections>
+                        <outlet property="backgroundImageView" destination="dlu-ff-afN" id="Sw5-be-nvK"/>
+                        <outlet property="charactersStackView" destination="8aM-d2-d0H" id="7tZ-RA-Dxv"/>
+                        <outlet property="enemyImageView" destination="mNw-KP-RNq" id="H4q-9Y-cZZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2UH-gK-Vf8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="92.753623188405811" y="128.57142857142856"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="GenericRoom1" width="1416" height="1416"/>
+        <image name="Zoom_Alphonse" width="594" height="726.5"/>
+    </resources>
+</document>
