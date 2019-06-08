@@ -2,21 +2,21 @@ import UIKit
 import Kingfisher
 
 class Dialog {
-    static func createDialogue(_ dialogue: DialogueConfigurator, delegate: EventHandler) -> DialogDisplayLogic {
+    static func createDialogue(_ dialogue: DialogueConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
         let dialog = DialogViewController(dialogue)
         dialog.delegate = delegate
         dialog.initView()
         return dialog
     }
     
-    static func createReward(_ reward: RewardConfigurator, delegate: EventHandler) -> DialogDisplayLogic {
+    static func createReward(_ reward: RewardConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
         let dialog = DialogViewController(reward)
         dialog.delegate = delegate
         dialog.initView()
         return dialog
     }
     
-    static func createChoice(_ choice: ChoiceConfigurator, delegate: EventHandler) -> DialogDisplayLogic {
+    static func createChoice(_ choice: ChoiceConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
         let dialog = DialogViewController(choice)
         dialog.delegate = delegate
         dialog.initView()
@@ -43,7 +43,7 @@ class DialogViewController: UIViewController {
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet var tapWindowGesture: UITapGestureRecognizer!
     
-    weak var delegate: EventHandler?
+    weak var delegate: NextDialogHandler?
     
     fileprivate init(_ configurator: DialogConfigurator) {
         self.configurator = configurator
@@ -179,6 +179,6 @@ extension DialogViewController {
     }
     
     @objc func buttonSelected(sender: UIButton) {
-        delegate?.performChoice(tag: sender.tag)
+        delegate?.elementSelected(id: sender.tag)
     }
 }

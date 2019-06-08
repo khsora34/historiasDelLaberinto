@@ -1,4 +1,4 @@
-protocol EventHandler: class, ConditionEvaluator {
+protocol EventHandler: class, ConditionEvaluator, NextDialogHandler {
     var eventHandlerRouter: EventHandlerRoutingLogic? { get }
     var eventHandlerInteractor: EventHandlerInteractor? { get }
     var roomId: String { get }
@@ -6,7 +6,6 @@ protocol EventHandler: class, ConditionEvaluator {
     var actualEvent: Event? { get set }
     var shouldSetVisitedWhenFinished: Bool { get set }
     func startEvent(with id: String)
-    func continueFlow()
     func onFinish()
     func showError(_ error: EventsHandlerError)
 }
@@ -58,7 +57,11 @@ extension EventHandler {
         dialog = nil
     }
     
-    func performChoice(tag: Int) {
+    func elementSelected(id: Int) {
+        performChoice(tag: id)
+    }
+    
+    private func performChoice(tag: Int) {
         guard let event = actualEvent as? ChoiceEvent else {
             showError(.invalidChoiceExecution)
             return
