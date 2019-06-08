@@ -203,24 +203,41 @@ extension BattleScenePresenter {
         print("¡Chosen ataca a target!")
         
         var i = 0
-        while i < (Int(chosenCharacter.agility/targetCharacter.agility)), targetCharacter.currentHealthPoints > 0 {
+        // CALCULATE MULTIPLE ATTACKS CHANCE
+        var agilityRatio = chosenCharacter.agility/targetCharacter.agility
+        agilityRatio = agilityRatio <= 1 ? 1: agilityRatio
+        
+        while i < agilityRatio, targetCharacter.currentHealthPoints > 0 {
+            // MULTIPLE ATTACKS BASED ON AGILITY
             if i > 0 {
                 print("¡Ataca otra vez!")
             }
+            
+            // WILL THE ATTACK HIT?
             guard Double.random(in: 0..<1) < Double(actualWeapons[chosenCharacter.weapon ?? ""]?.hitRate ?? 100) / 100 else {
                 print("Pero falló el ataque...")
                 i += 1
                 continue
             }
-            let attackDamage = chosenCharacter.attack + Int.random(in: 0..<(actualWeapons[chosenCharacter.weapon ?? ""]?.extraDamage ?? 1))
+            
+            // DAMAGE CALCULATION PHASE
+            // If the chosen has any weapon, the max extra damage is the weapon's power. Else its one.
+            let maxExtraDamageOutput = actualWeapons[chosenCharacter.weapon ?? ""]?.extraDamage ?? Constants.extraDamageWithoutWeapon
+            let attackDamage = chosenCharacter.attack + Int.random(in: 0..<maxExtraDamageOutput)
             let calculatedDamage = attackDamage - targetCharacter.defense
+            
+            // IF ITS NEGATIVE, INSTEAD DO CERO DAMAGE
             guard calculatedDamage > 0 else {
                 print("Target absorbió al ataque.")
                 i += 1
                 continue
             }
+            
+            // APPLY DAMAGE
             targetCharacter.currentHealthPoints -= calculatedDamage
             targetCharacter.currentHealthPoints = targetCharacter.currentHealthPoints < 0 ? 0: targetCharacter.currentHealthPoints
+            
+            // CALCULATE IF THE CHOSEN CHARACTER CAN INDUCE AN AILMENT
             if calculateAilment(actualWeapons[chosenCharacter.weapon ?? ""]?.inducedAilment, to: targetCharacter) {
                 print(getAilmentMessage(from: actualWeapons[chosenCharacter.weapon ?? ""]?.inducedAilment?.ailment, for: targetCharacter))
                 targetCharacter.currentStatusAilment = actualWeapons[chosenCharacter.weapon ?? ""]?.inducedAilment?.ailment
@@ -228,6 +245,7 @@ extension BattleScenePresenter {
             setCharacter(to: target, using: targetCharacter)
             i += 1
         }
+        // TRIGGER BATTLE ENDING FUNC IF SPECIAL CONDITION MET
         _ = evaluateCurrentHealth(for: target)
     }
     
