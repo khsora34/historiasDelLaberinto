@@ -36,6 +36,13 @@ class StatusViewController: UIView {
         }
         set {
             actualhealthLabel.text = "\(newValue ?? -1)"
+            if newValue == 0 {
+                actualhealthLabel.textColor = .red
+            } else if Double(newValue ?? -1) < Double(maxHealth ?? -1) * 0.25 {
+                actualhealthLabel.textColor = .yellow
+            } else {
+                actualhealthLabel.textColor = .white
+            }
         }
     }
     
