@@ -11,8 +11,7 @@ struct StatusViewModel {
     
     func configure(view: StatusViewController) {
         view.name = name
-        view.maxHealth = maxHealth
-        view.actualHealth = actualHealth
+        view.setHealth(currentHealth: actualHealth, maxHealth: maxHealth)
         view.ailment = ailment
         view.setImage(with: imageUrl)
         view.setBackground(shouldDisplayForEnemy: isEnemy)

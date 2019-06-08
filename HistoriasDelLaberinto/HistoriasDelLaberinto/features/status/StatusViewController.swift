@@ -30,31 +30,6 @@ class StatusViewController: UIView {
         }
     }
     
-    var actualHealth: Int? {
-        get {
-            return Int(actualhealthLabel.text ?? "")
-        }
-        set {
-            actualhealthLabel.text = "\(newValue ?? -1)"
-            if newValue == 0 {
-                actualhealthLabel.textColor = .red
-            } else if Double(newValue ?? -1) < Double(maxHealth ?? -1) * 0.25 {
-                actualhealthLabel.textColor = .yellow
-            } else {
-                actualhealthLabel.textColor = .white
-            }
-        }
-    }
-    
-    var maxHealth: Int? {
-        get {
-            return Int(maxHealthLabel.text ?? "")
-        }
-        set {
-            maxHealthLabel.text = "\(newValue ?? -1)"
-        }
-    }
-    
     var ailment: StatusAilment? {
         get {
             switch ailmentLabel.text {
@@ -101,6 +76,22 @@ class StatusViewController: UIView {
         portraitImageView.kf.setImage(with: URL(string: imageUrl))
     }
     
+    func setHealth(currentHealth: Int, maxHealth: Int) {
+        if currentHealth == 0 {
+            actualhealthLabel.textColor = .red
+        } else if Double(currentHealth) < Double(maxHealth) * 0.25 {
+            actualhealthLabel.textColor = .yellow
+        } else if currentHealth == maxHealth {
+            actualhealthLabel.textColor = .green
+            maxHealthLabel.textColor = .green
+        } else {
+            actualhealthLabel.textColor = .white
+            maxHealthLabel.textColor = .white
+        }
+        actualhealthLabel.text = "\(currentHealth)"
+        maxHealthLabel.text = "\(maxHealth)"
+    }
+    
     func setBackground(shouldDisplayForEnemy: Bool) {
         if shouldDisplayForEnemy {
             contentView.backgroundColor = UIColor.darkCoolBlue
@@ -126,11 +117,11 @@ extension StatusViewController {
     
     private func setFonts() {
         nameLabel.font = UIFont.systemFont(ofSize: 20.0)
-        ailmentLabel.font = UIFont.systemFont(ofSize: 17.0)
+        ailmentLabel.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
         actualTitleLabel.font = UIFont.systemFont(ofSize: 15.0)
         actualhealthLabel.font = UIFont.systemFont(ofSize: 17.0)
         maxTitleLabel.font = UIFont.systemFont(ofSize: 15.0)
-        maxHealthLabel.font = UIFont.systemFont(ofSize: 17.0)
+        maxHealthLabel.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
     }
     
     private func setColors() {
