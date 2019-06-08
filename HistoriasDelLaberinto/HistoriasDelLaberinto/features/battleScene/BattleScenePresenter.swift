@@ -2,7 +2,7 @@ protocol BattleScenePresentationLogic: Presenter {
     func protaWillAttack()
 }
 
-class BattleScenePresenter: BasePresenter {
+extension BattleScenePresenter {
     enum CharacterChosen {
         case protagonist, partner, enemy
     }
@@ -12,6 +12,12 @@ class BattleScenePresenter: BasePresenter {
         case paralyzed(CharacterChosen)
     }
     
+    fileprivate struct Constants {
+        static let extraDamageWithoutWeapon: Int = 5
+    }
+}
+
+class BattleScenePresenter: BasePresenter {
     var viewController: BattleSceneDisplayLogic? {
         return _viewController as? BattleSceneDisplayLogic
     }
