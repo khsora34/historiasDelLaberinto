@@ -72,8 +72,12 @@ class StatusViewController: UIView {
     @IBOutlet private weak var maxTitleLabel: UILabel!
     @IBOutlet private weak var maxHealthLabel: UILabel!
     
-    func setImage(with imageUrl: String) {
-        portraitImageView.kf.setImage(with: URL(string: imageUrl))
+    func setImage(with imageUrl: String?) {
+        if let imageUrl = imageUrl {
+            portraitImageView.kf.setImage(with: URL(string: imageUrl))
+        } else {
+            portraitImageView.image = UIImage(named: "noPortraitImage")
+        }
     }
     
     func setHealth(currentHealth: Int, maxHealth: Int) {

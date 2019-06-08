@@ -5,7 +5,7 @@ struct StatusViewModel {
     var ailment: StatusAilment?
     var actualHealth: Int
     let maxHealth: Int
-    let imageUrl: String
+    let imageUrl: String?
     let isEnemy: Bool
     var didTouchView: (() -> Void)?
     
