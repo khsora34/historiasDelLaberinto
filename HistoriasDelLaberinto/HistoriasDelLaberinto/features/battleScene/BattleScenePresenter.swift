@@ -41,6 +41,7 @@ class BattleScenePresenter: BasePresenter {
         viewController?.setBackground(with: delegate?.imageUrl)
         getProtagonist()
         getPartner()
+        getWeapons()
         buildCharacters()
         buildEnemy()
     }
