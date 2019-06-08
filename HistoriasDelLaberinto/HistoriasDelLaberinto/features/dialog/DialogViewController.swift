@@ -83,6 +83,8 @@ class DialogViewController: UIViewController {
             setup(reward: reward)
         } else if let choice = configurator as? ChoiceConfigurator {
             setup(choice: choice)
+        } else if let battle = configurator as? BattleConfigurator {
+            setup(battle: battle)
         } else {
             setup(dialogue: DialogueConfigurator(name: "Cisco", message: "Error looking for configurator.", imageUrl: ""))
         }
@@ -169,6 +171,11 @@ extension DialogViewController {
         let actions = choice.actions
         
         stackView.setButtonsInColumns(names: actions.map({$0.name}), action: #selector(buttonSelected(sender:)), for: self, numberOfColumns: 2, fixedHeight: true)
+    }
+    
+    private func setup(battle: BattleConfigurator) {
+        characterImageView.isHidden = true
+        stackView.isHidden = true
     }
     
     @objc func buttonSelected(sender: UIButton) {
