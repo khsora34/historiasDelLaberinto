@@ -21,6 +21,6 @@ class ModuleProvider {
     }
     
     func battleSceneModule(enemy: PlayableCharacter) -> Module {
-        return BattleSceneModule(enemy: enemy, routerProvider: routerProvider, protagonistFetcher: databaseFetcherProvider.protagonistFetcher, characterFetcher: databaseFetcherProvider.charactersFetcher)
+        return BattleSceneModule(enemy: enemy, routerProvider: routerProvider, databaseProvider: databaseFetcherProvider)
     }
 }

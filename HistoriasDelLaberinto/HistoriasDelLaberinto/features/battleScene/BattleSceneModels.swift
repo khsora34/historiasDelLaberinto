@@ -12,4 +12,12 @@ enum BattleScene {
             let character: PlayableCharacter?
         }
     }
+    enum WeaponGetter {
+        struct Request {
+            let id: String
+        }
+        struct Response {
+            let weapon: Weapon?
+        }
+    }
 }

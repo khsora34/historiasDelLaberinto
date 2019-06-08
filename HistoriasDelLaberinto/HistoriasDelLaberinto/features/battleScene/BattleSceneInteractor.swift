@@ -5,10 +5,12 @@ protocol BattleSceneBusinessLogic: BusinessLogic {
 class BattleSceneInteractor: BaseInteractor, BattleSceneBusinessLogic {
     private let protagonistFetcher: ProtagonistFetcher
     private let characterFetcher: CharacterFetcher
+    private let itemFetcher: ItemFetcher
     
-    init(protagonistFetcher: ProtagonistFetcher, characterFetcher: CharacterFetcher) {
-        self.protagonistFetcher = protagonistFetcher
-        self.characterFetcher = characterFetcher
+    init(databaseProvider: DatabaseFetcherProvider) {
+        self.protagonistFetcher = databaseProvider.protagonistFetcher
+        self.characterFetcher = databaseProvider.charactersFetcher
+        self.itemFetcher = databaseProvider.itemsFetcher
     }
     
     func getProtagonist() -> BattleScene.ProtagonistGetter.Response {
@@ -21,6 +23,13 @@ class BattleSceneInteractor: BaseInteractor, BattleSceneBusinessLogic {
             return BattleScene.CharacterGetter.Response(character: nil)
         }
         return BattleScene.CharacterGetter.Response(character: partner)
+    }
+    
+    func getWeapon(request: BattleScene.WeaponGetter.Request) -> BattleScene.WeaponGetter.Response {
+        guard let weapon = itemFetcher.getItem(with: request.id) as? Weapon else {
+            return BattleScene.WeaponGetter.Response(weapon: nil)
+        }
+        return BattleScene.WeaponGetter.Response(weapon: weapon)
     }
     
 }
