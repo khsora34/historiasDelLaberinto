@@ -48,6 +48,7 @@
         <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="imageUrl" attributeType="String" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="type" attributeType="String" syncable="YES"/>
         <relationship name="weaponInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeaponDAO" syncable="YES"/>
     </entity>
     <entity name="Movement" representedClassName="Movement" syncable="YES" codeGenerationType="class">
@@ -120,7 +121,7 @@
         <element name="ConditionEventDAO" positionX="-167" positionY="31.16015625" width="128" height="135"/>
         <element name="DialogueEventDAO" positionX="12.6171875" positionY="-54.9140625" width="128" height="120"/>
         <element name="EventDAO" positionX="-75.8203125" positionY="-198.2578125" width="128" height="75"/>
-        <element name="ItemDAO" positionX="-90" positionY="-27" width="128" height="135"/>
+        <element name="ItemDAO" positionX="-90" positionY="-27" width="128" height="150"/>
         <element name="Movement" positionX="-209.3671875" positionY="218.03125" width="128" height="120"/>
         <element name="ObtainedItemsDAO" positionX="-90" positionY="-27" width="128" height="90"/>
         <element name="ProtagonistDAO" positionX="-108" positionY="-45" width="128" height="120"/>

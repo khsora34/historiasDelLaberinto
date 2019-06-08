@@ -5,6 +5,7 @@ protocol BattleSceneDisplayLogic: ViewControllerDisplay {
     func addCharactersStatus(_ models: [StatusViewModel])
     func setBackground(with imageUrl: String?)
     func setEnemyInfo(imageUrl: String, model: StatusViewModel)
+    func updateView(_ model: StatusViewModel)
 }
 
 class BattleSceneViewController: BaseViewController {
@@ -13,18 +14,25 @@ class BattleSceneViewController: BaseViewController {
         return _presenter as? BattleScenePresentationLogic
     }
     
+    var enemyStatus: StatusViewController!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var enemyImageView: UIImageView!
     @IBOutlet weak var charactersStackView: UIStackView!
     
     // MARK: View lifecycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.isHidden = false
+    }
+    
     @IBAction func didTapAttackButton(_ sender: Any) {
-        
+        presenter?.protaWillAttack()
     }
     
     @IBAction func didTapItemsButton(_ sender: Any) {
@@ -49,13 +57,23 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
     
     func setEnemyInfo(imageUrl: String, model: StatusViewModel) {
         enemyImageView.kf.setImage(with: URL(string: imageUrl))
-        let statusView = StatusViewController(frame: CGRect(x: 0, y: 0, width: 394, height: 100))
-        model.configure(view: statusView)
-        statusView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(statusView)
-        setEnemyViewConstraints(to: statusView)
+        enemyStatus = StatusViewController(frame: CGRect(x: 0, y: 0, width: 394, height: 100))
+        model.configure(view: enemyStatus)
+        enemyStatus.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(enemyStatus)
+        setEnemyViewConstraints(to: enemyStatus)
     }
     
+    func updateView(_ model: StatusViewModel) {
+        if model.isEnemy {
+            model.configure(view: enemyStatus)
+        } else if let view = charactersStackView.arrangedSubviews.filter({ ($0 as? StatusViewController)?.name == model.name && model.maxHealth == ($0 as? StatusViewController)?.maxHealth }).first as? StatusViewController {
+            model.configure(view: view)
+        }
+    }
+}
+
+extension BattleSceneViewController {
     private func setEnemyViewConstraints(to view: UIView) {
         let margins = self.view.layoutMarginsGuide
         NSLayoutConstraint.activate([
