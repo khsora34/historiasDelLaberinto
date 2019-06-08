@@ -23,11 +23,11 @@ class ItemFetcherImpl: ItemFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        guard let imageUrl = item?.imageUrl, let name = item?.name, let description = item?.descriptionString else { return nil }
+        guard let imageUrl = item?.imageUrl, let name = item?.name, let description = item?.descriptionString, let type = item?.type else { return nil }
         
-        if let healthRecovered = item?.healthRecovered {
+        if type == "consumable", let healthRecovered = item?.healthRecovered {
             return ConsumableItem(name: name, description: description, imageUrl: imageUrl, healthRecovered: Int(healthRecovered))
-        } else if let weaponInfo = item?.weaponInfo {
+        } else if type == "weapon", let weaponInfo = item?.weaponInfo {
             let inducedAilment: InduceAilment?
             
             switch weaponInfo.ailment {
@@ -62,17 +62,21 @@ class ItemFetcherImpl: ItemFetcher {
         
         if let item = item as? ConsumableItem {
             loadingItem.setValue(item.healthRecovered, forKey: "healthRecovered")
+            loadingItem.setValue("consumable", forKey: "type")
             
         } else if let item = item as? Weapon {
             let loadingInfo = NSManagedObject(entity: weaponInfoEntity, insertInto: managedContext)
             loadingInfo.setValue(item.extraDamage, forKey: "extraDamage")
             loadingInfo.setValue(item.hitRate, forKey: "hitRate")
+            loadingItem.setValue("weapon", forKey: "type")
             
             if let inducedAilment = item.inducedAilment {
                 loadingInfo.setValue(inducedAilment.ailment.rawValue, forKey: "ailment")
                 loadingInfo.setValue(inducedAilment.induceRate, forKey: "induceRate")
             }
             loadingItem.setValue(loadingInfo, forKey: "weaponInfo")
+        } else {
+            loadingItem.setValue("key", forKey: "type")
         }
         
         do {
