@@ -24,8 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         dependencies = Dependencies()
         
-        let enemy = PlayableCharacter(name: "Bad guy", currentHealthPoints: 1000, maxHealthPoints: 1000, attack: 10, defense: 10, agility: 10, currentStatusAilment: nil, weapon: nil, imageUrl: "https://i.imgur.com/U6RBjYo.png")
-        let initialModule = dependencies.moduleProvider.battleSceneModule(enemy: enemy)
+        let initialModule = dependencies.moduleProvider.initialSceneModule()
         let nav = UINavigationController(rootViewController: initialModule.viewController)
         nav.isNavigationBarHidden = true
         
