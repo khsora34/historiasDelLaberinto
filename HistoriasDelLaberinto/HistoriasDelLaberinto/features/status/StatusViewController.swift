@@ -61,6 +61,7 @@ class StatusViewController: UIView {
         }
     }
     
+    var characterChosen: CharacterChosen?
     var didTouchView: (() -> Void)?
     
     @IBOutlet var contentView: StatusViewController!
