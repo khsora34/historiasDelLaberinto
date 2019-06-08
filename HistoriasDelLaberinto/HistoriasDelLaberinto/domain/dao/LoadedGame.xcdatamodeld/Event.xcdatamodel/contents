@@ -16,6 +16,7 @@
         <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="imageUrl" attributeType="String" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="portraitUrl" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="status" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StatusDAO" syncable="YES"/>
     </entity>
     <entity name="ChoiceEventDAO" representedClassName="ChoiceEventDAO" syncable="YES" codeGenerationType="class">
@@ -63,8 +64,10 @@
         <attribute name="quantity" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="ProtagonistDAO" representedClassName="ProtagonistDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="imageUrl" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="partner" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="portraitUrl" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="inventory" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ObtainedItemsDAO" syncable="YES"/>
         <relationship name="status" maxCount="1" deletionRule="Nullify" destinationEntity="StatusDAO" syncable="YES"/>
         <relationship name="visitedRooms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VisitedRoomDAO" syncable="YES"/>
@@ -116,7 +119,7 @@
     <elements>
         <element name="ActionDAO" positionX="-315.48828125" positionY="-173.1796875" width="128" height="105"/>
         <element name="BattleEventDAO" positionX="-21.6875" positionY="113.86328125" width="128" height="105"/>
-        <element name="CharacterDAO" positionX="-108" positionY="-36" width="128" height="105"/>
+        <element name="CharacterDAO" positionX="-108" positionY="-36" width="128" height="120"/>
         <element name="ChoiceEventDAO" positionX="110.76953125" positionY="-157.91796875" width="128" height="90"/>
         <element name="ConditionEventDAO" positionX="-167" positionY="31.16015625" width="128" height="135"/>
         <element name="DialogueEventDAO" positionX="12.6171875" positionY="-54.9140625" width="128" height="120"/>
@@ -124,7 +127,7 @@
         <element name="ItemDAO" positionX="-90" positionY="-27" width="128" height="150"/>
         <element name="Movement" positionX="-209.3671875" positionY="218.03125" width="128" height="120"/>
         <element name="ObtainedItemsDAO" positionX="-90" positionY="-27" width="128" height="90"/>
-        <element name="ProtagonistDAO" positionX="-108" positionY="-45" width="128" height="120"/>
+        <element name="ProtagonistDAO" positionX="-108" positionY="-45" width="128" height="150"/>
         <element name="RewardDAO" positionX="-307.515625" positionY="62.94921875" width="128" height="90"/>
         <element name="RewardEventDAO" positionX="240.0546875" positionY="35.94921875" width="128" height="120"/>
         <element name="RoomDAO" positionX="-54" positionY="9" width="128" height="150"/>

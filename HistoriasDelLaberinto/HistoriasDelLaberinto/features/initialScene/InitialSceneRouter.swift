@@ -14,7 +14,7 @@ class InitialSceneRouter: BaseRouter, InitialSceneRoutingLogic {
     
     func goToRoomView(roomId: String, room: Room) {
         guard let navigation = drawer?.currentRootViewController as? UINavigationController else { return }
-        let enemy = PlayableCharacter(name: "Bad guy", currentHealthPoints: 1000, maxHealthPoints: 1000, attack: 10, defense: 10, agility: 10, currentStatusAilment: nil, weapon: nil, imageUrl: "https://i.imgur.com/U6RBjYo.png")
+        let enemy = PlayableCharacter(name: "Bad guy", imageUrl: "https://i.imgur.com/U6RBjYo.png", portraitUrl: "https://i.imgur.com/zDH1edR.png", currentHealthPoints: 1000, maxHealthPoints: 1000, attack: 10, defense: 10, agility: 10, currentStatusAilment: nil, weapon: nil)
         let module = moduleProvider.battleSceneModule(enemy: enemy)
 //        let module = moduleProvider.roomSceneModule(roomId: roomId, room: room)
         navigation.isNavigationBarHidden = false

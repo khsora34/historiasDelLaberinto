@@ -1,5 +1,7 @@
 struct PlayableCharacter: CharacterStatus {
     let name: String
+    let imageUrl: String
+    let portraitUrl: String?
     
     var currentHealthPoints: Int
     let maxHealthPoints: Int
@@ -8,6 +10,4 @@ struct PlayableCharacter: CharacterStatus {
     let agility: Int
     var currentStatusAilment: StatusAilment?
     var weapon: String?
-    
-    let imageUrl: String
 }

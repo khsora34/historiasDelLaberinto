@@ -22,10 +22,10 @@ class ProtagonistFetcherImpl: ProtagonistFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        guard let name = protagonist?.name, let partner = protagonist?.partner, let status = protagonist?.status else { return nil }
+        guard let name = protagonist?.name, let partner = protagonist?.partner, let status = protagonist?.status, let imageUrl = protagonist?.imageUrl else { return nil }
         
         return Protagonist(
-            name: name, partner: partner,
+            name: name, imageUrl: imageUrl, portraitUrl: protagonist?.portraitUrl, partner: partner,
             currentHealthPoints: Int(status.currentHealthPoints), maxHealthPoints: Int(status.maxHealthPoints), attack: Int(status.attack), defense: Int(status.defense), agility: Int(status.agility), currentStatusAilment: nil, weapon: status.weapon,
             items: getInventory(from: protagonist),
             visitedRooms: getVisitedRooms(from: protagonist))
@@ -74,6 +74,8 @@ class ProtagonistFetcherImpl: ProtagonistFetcher {
         
         loadingProtagonist.setValue(protagonist.name, forKey: "name")
         loadingProtagonist.setValue(protagonist.partner, forKey: "partner")
+        loadingProtagonist.setValue(protagonist.imageUrl, forKey: "imageUrl")
+        loadingProtagonist.setValue(protagonist.portraitUrl, forKey: "portraitUrl")
         
         let loadingStatus = NSManagedObject(entity: statusEntity, insertInto: managedContext)
         loadingStatus.setValue(protagonist.currentHealthPoints, forKey: "currentHealthPoints")

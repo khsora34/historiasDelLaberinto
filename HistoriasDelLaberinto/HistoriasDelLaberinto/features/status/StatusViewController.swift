@@ -30,31 +30,6 @@ class StatusViewController: UIView {
         }
     }
     
-    var actualHealth: Int? {
-        get {
-            return Int(actualhealthLabel.text ?? "")
-        }
-        set {
-            actualhealthLabel.text = "\(newValue ?? -1)"
-            if newValue == 0 {
-                actualhealthLabel.textColor = .red
-            } else if Double(newValue ?? -1) < Double(maxHealth ?? -1) * 0.25 {
-                actualhealthLabel.textColor = .yellow
-            } else {
-                actualhealthLabel.textColor = .white
-            }
-        }
-    }
-    
-    var maxHealth: Int? {
-        get {
-            return Int(maxHealthLabel.text ?? "")
-        }
-        set {
-            maxHealthLabel.text = "\(newValue ?? -1)"
-        }
-    }
-    
     var ailment: StatusAilment? {
         get {
             switch ailmentLabel.text {
@@ -86,6 +61,7 @@ class StatusViewController: UIView {
         }
     }
     
+    var characterChosen: CharacterChosen?
     var didTouchView: (() -> Void)?
     
     @IBOutlet var contentView: StatusViewController!
@@ -97,8 +73,28 @@ class StatusViewController: UIView {
     @IBOutlet private weak var maxTitleLabel: UILabel!
     @IBOutlet private weak var maxHealthLabel: UILabel!
     
-    func setImage(with imageUrl: String) {
-        portraitImageView.kf.setImage(with: URL(string: imageUrl))
+    func setImage(with imageUrl: String?) {
+        if let imageUrl = imageUrl {
+            portraitImageView.kf.setImage(with: URL(string: imageUrl))
+        } else {
+            portraitImageView.image = UIImage(named: "noPortraitImage")
+        }
+    }
+    
+    func setHealth(currentHealth: Int, maxHealth: Int) {
+        if currentHealth == 0 {
+            actualhealthLabel.textColor = .red
+        } else if Double(currentHealth) < Double(maxHealth) * 0.25 {
+            actualhealthLabel.textColor = .yellow
+        } else if currentHealth == maxHealth {
+            actualhealthLabel.textColor = .green
+            maxHealthLabel.textColor = .green
+        } else {
+            actualhealthLabel.textColor = .white
+            maxHealthLabel.textColor = .white
+        }
+        actualhealthLabel.text = "\(currentHealth)"
+        maxHealthLabel.text = "\(maxHealth)"
     }
     
     func setBackground(shouldDisplayForEnemy: Bool) {
@@ -126,11 +122,11 @@ extension StatusViewController {
     
     private func setFonts() {
         nameLabel.font = UIFont.systemFont(ofSize: 20.0)
-        ailmentLabel.font = UIFont.systemFont(ofSize: 17.0)
+        ailmentLabel.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
         actualTitleLabel.font = UIFont.systemFont(ofSize: 15.0)
         actualhealthLabel.font = UIFont.systemFont(ofSize: 17.0)
         maxTitleLabel.font = UIFont.systemFont(ofSize: 15.0)
-        maxHealthLabel.font = UIFont.systemFont(ofSize: 17.0)
+        maxHealthLabel.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
     }
     
     private func setColors() {

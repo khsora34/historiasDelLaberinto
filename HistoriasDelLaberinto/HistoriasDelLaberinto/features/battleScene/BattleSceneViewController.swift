@@ -67,7 +67,7 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
     func updateView(_ model: StatusViewModel) {
         if model.isEnemy {
             model.configure(view: enemyStatus)
-        } else if let view = charactersStackView.arrangedSubviews.filter({ ($0 as? StatusViewController)?.name == model.name && model.maxHealth == ($0 as? StatusViewController)?.maxHealth }).first as? StatusViewController {
+        } else if let view = charactersStackView.arrangedSubviews.filter({ ($0 as? StatusViewController)?.characterChosen == model.chosenCharacter }).first as? StatusViewController {
             model.configure(view: view)
         }
     }
