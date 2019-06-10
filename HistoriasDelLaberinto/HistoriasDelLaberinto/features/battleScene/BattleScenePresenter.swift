@@ -361,6 +361,8 @@ extension BattleScenePresenter: NextDialogHandler {
     
     private func performNextStep() {
         if let reason = finishedBattleReason {
+            router?.dismiss(animated: true)
+            router?.goBackToRoom()
             delegate?.onBattleFinished(reason: reason)
             return
         }
