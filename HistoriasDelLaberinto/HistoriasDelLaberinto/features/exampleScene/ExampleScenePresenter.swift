@@ -24,6 +24,7 @@ class ExampleScenePresenter: BasePresenter {
     
     var roomId: String = ""
     var shouldSetVisitedWhenFinished: Bool = false
+    var isDialogPresented: Bool = false
     var dialog: DialogDisplayLogic?
     var actualEvent: Event?
     
@@ -54,10 +55,13 @@ extension ExampleScenePresenter: ExampleScenePresentationLogic {
 }
 
 extension ExampleScenePresenter: EventHandler {
+    func onBattleFinished(reason: FinishedBattleReason) { }
     
-    func onFinish() {
-        
+    var imageUrl: String {
+        return ""
     }
+    
+    func onFinish() {}
     
     var eventHandlerRouter: EventHandlerRoutingLogic? {
         return _router as? EventHandlerRoutingLogic
