@@ -277,6 +277,8 @@ extension BattleScenePresenter {
         actualState = ActualState(step: .evaluateHealthAfterAttack, character: chosenCharacter, target: target)
         let configurator = BattleConfigurator(message: attackMessage)
         showDialog(with: configurator)
+        guard let model = models[target] else { return }
+        viewController?.performDamage(on: model)
     }
     
     private func battleEnd() {
