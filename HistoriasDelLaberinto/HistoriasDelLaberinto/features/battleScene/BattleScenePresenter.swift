@@ -60,7 +60,7 @@ class BattleScenePresenter: BasePresenter {
 
 extension BattleScenePresenter: BattleScenePresentationLogic {
     func showStartDialogue() {
-        showDialog(with: BattleConfigurator(message: "Un \(enemy.name) salvaje apareció."))
+        showDialog(with: BattleConfigurator(message: "Un \(enemy.name) salvaje apareció.", alignment: .bottom))
     }
     
     func protaWillAttack() {
@@ -86,7 +86,7 @@ extension BattleScenePresenter {
                 message = continueAilmentMessage(from: ailment, for: getCharacter(from: chosenCharacter))
             }
             actualState = ActualState(step: state.step.getNext(), character: chosenCharacter, target: nil)
-            let configurator = BattleConfigurator(message: message)
+            let configurator = BattleConfigurator(message: message, alignment: chosenCharacter == .enemy ? .top: .bottom)
             showDialog(with: configurator)
         } else {
             actualState = ActualState(step: state.step.getNext(), character: chosenCharacter, target: nil)
@@ -111,14 +111,14 @@ extension BattleScenePresenter {
         case .poisoned:
             calculatePoisonDamage(for: chosenCharacter)
             ailmentMessage = "\(characterName) pierde vida por el veneno."
-            let configurator = BattleConfigurator(message: ailmentMessage)
+            let configurator = BattleConfigurator(message: ailmentMessage, alignment: chosenCharacter == .enemy ? .bottom: .top)
             showDialog(with: configurator)
             return
         case .paralyzed:
             if Double.random(in: 0..<1) < 0.4 {
                 ailmentMessage = "\(characterName) está paralizado, no puede moverse."
                 actualState = ActualState(step: .shouldContinueAilment, character: chosenCharacter.next(), target: nil)
-                let configurator = BattleConfigurator(message: ailmentMessage)
+                let configurator = BattleConfigurator(message: ailmentMessage, alignment: chosenCharacter == .enemy ? .bottom: .top)
                 showDialog(with: configurator)
                 return
             }
@@ -210,10 +210,11 @@ extension BattleScenePresenter {
     }
     
     private func attackPhase() {
-        let character = getCharacter(from: actualState.character)
+        let chosenCharacter = actualState.character
+        let character = getCharacter(from: chosenCharacter)
         let message = "\(character.name) va a atacar."
         actualState = ActualState(step: actualState.step.getNext(), character: actualState.character, target: nil)
-        let configurator = BattleConfigurator(message: message)
+        let configurator = BattleConfigurator(message: message, alignment: chosenCharacter == .enemy ? .top: .bottom)
         showDialog(with: configurator)
     }
     
@@ -242,7 +243,7 @@ extension BattleScenePresenter {
         guard effectiveAttacks > 0 else {
             attackMessage = "Pero falló el ataque..."
             actualState = ActualState(step: actualState.step.getNext(), character: chosenCharacter, target: target)
-            let configurator = BattleConfigurator(message: attackMessage)
+            let configurator = BattleConfigurator(message: attackMessage, alignment: chosenCharacter == .enemy ? .top: .bottom)
             showDialog(with: configurator)
             return
         }
@@ -275,7 +276,7 @@ extension BattleScenePresenter {
         setCharacter(to: target, using: targetStatus)
         
         actualState = ActualState(step: .evaluateHealthAfterAttack, character: chosenCharacter, target: target)
-        let configurator = BattleConfigurator(message: attackMessage)
+        let configurator = BattleConfigurator(message: attackMessage, alignment: chosenCharacter == .enemy ? .top: .bottom)
         showDialog(with: configurator)
         guard let model = models[target] else { return }
         viewController?.performDamage(on: model)
@@ -284,7 +285,7 @@ extension BattleScenePresenter {
     private func battleEnd() {
         if protagonist.currentHealthPoints <= 0 {
             finishedBattleReason = .defeated(.protagonist)
-            let configurator = BattleConfigurator(message: "Empiezas a perder la consciencia.")
+            let configurator = BattleConfigurator(message: "Empiezas a perder la consciencia.", alignment: .bottom)
             showDialog(with: configurator)
             return
         }
@@ -294,7 +295,7 @@ extension BattleScenePresenter {
             showDialog(with: configurator)
             
         } else {
-            let configurator = BattleConfigurator(message: "Has conseguido derrotar al malo.")
+            let configurator = BattleConfigurator(message: "Has conseguido derrotar al malo.", alignment: .bottom)
             showDialog(with: configurator)
         }
     }

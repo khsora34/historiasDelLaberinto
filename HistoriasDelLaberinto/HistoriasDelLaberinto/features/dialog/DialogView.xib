@@ -14,6 +14,10 @@
             <connections>
                 <outlet property="characterImageView" destination="G35-6G-vZJ" id="NED-NZ-bqd"/>
                 <outlet property="characterLabel" destination="zEC-cM-yDA" id="zRQ-XJ-42T"/>
+                <outlet property="dialogBottomConstraint" destination="MX5-DA-S42" id="v7D-zy-v8a"/>
+                <outlet property="dialogHeightConstraint" destination="FtJ-Yw-VNe" id="gHb-zS-1eu"/>
+                <outlet property="dialogToScrollInequalityConstraint" destination="Zy1-GO-xFq" id="N90-yI-BmU"/>
+                <outlet property="dialogTopConstraint" destination="mhh-Qz-YIl" id="vS4-ak-0Y7"/>
                 <outlet property="dialogView" destination="wBb-sU-uyb" id="VmJ-qY-TuY"/>
                 <outlet property="stackView" destination="y6w-nP-0GT" id="PP2-Lh-i1f"/>
                 <outlet property="tapWindowGesture" destination="FUk-3c-fs7" id="RB3-fH-pf4"/>
