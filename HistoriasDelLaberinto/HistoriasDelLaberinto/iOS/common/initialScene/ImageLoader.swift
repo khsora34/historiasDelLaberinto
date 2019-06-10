@@ -1,6 +1,6 @@
 import Kingfisher
 
-protocol ImageLoader: OnFinishedLoadingImageDelegate {
+protocol ImageLoader: OnFinishedLoadingImageDelegate, ImageRemover {
     var operations: [Int: ImageLoadingOperation] { get set }
     func loadImages(from imageUrls: [String])
     func removeImageCache()
@@ -21,14 +21,20 @@ extension ImageLoader {
         }
     }
     
+    func onFinished(id: Int) {
+        operations[id] = nil
+    }
+}
+
+protocol ImageRemover {
+    func removeImageCache()
+}
+
+extension ImageRemover {
     func removeImageCache() {
         let cache = ImageCache.default
         cache.clearDiskCache()
         cache.clearMemoryCache()
-    }
-    
-    func onFinished(id: Int) {
-        operations[id] = nil
     }
 }
 
