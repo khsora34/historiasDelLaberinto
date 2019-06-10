@@ -1,18 +1,9 @@
 protocol BattleScenePresentationLogic: Presenter {
     func protaWillAttack()
-}
-
-enum CharacterChosen {
-    case protagonist, partner, enemy
     func showStartDialogue()
 }
 
 extension BattleScenePresenter {
-    enum FinishedBattleReason {
-        case defeated(CharacterChosen)
-        case paralyzed(CharacterChosen)
-    }
-    
     fileprivate struct Constants {
         static let extraDamageWithoutWeapon: Int = 5
     }
