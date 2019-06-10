@@ -22,6 +22,13 @@ class Dialog {
         dialog.initView()
         return dialog
     }
+    
+    static func createDialog(_ dialog: DialogConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
+        let dialog = DialogViewController(dialog)
+        dialog.delegate = delegate
+        dialog.initView()
+        return dialog
+    }
 }
 
 protocol DialogDisplayLogic: UIViewController {
@@ -58,6 +65,8 @@ class DialogViewController: UIViewController {
     
     func initView() {
         view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.75)
+        textView.backgroundColor = UIColor.coolBlue.withAlphaComponent(0.95)
+        textView.alpha = 0.95
         dialogView.layer.cornerRadius = 6.0
         dialogView.alpha = dialogViewDefaultAlpha
         stackView.isHidden = true
@@ -70,6 +79,7 @@ class DialogViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupConfiguration()
+        
         timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
     }
     
@@ -108,7 +118,9 @@ extension DialogViewController: DialogDisplayLogic {
         } else {
             configurator = newConfigurator
             setupConfiguration()
-            timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
+            if self.presentingViewController != nil {
+                timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
+            }
         }
     }
     
@@ -174,6 +186,9 @@ extension DialogViewController {
     }
     
     private func setup(battle: BattleConfigurator) {
+        view.backgroundColor = .clear
+        textView.backgroundColor = .coolBlue
+        textView.alpha = 1.0
         characterImageView.isHidden = true
         stackView.isHidden = true
     }
