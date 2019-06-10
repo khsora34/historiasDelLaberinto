@@ -38,4 +38,17 @@ extension RoomSceneRouter {
         drawer?.dismiss(animated: animated, completion: nil)
     }
     
+    func goToBattle(with enemy: PlayableCharacter, with delegate: BattleBuilderDelegate) {
+        guard let navigation = drawer?.currentRootViewController as? UINavigationController else { return }
+        let module = moduleProvider.battleSceneModule(enemy: enemy, delegate: delegate)
+        navigation.pushViewController(module.viewController, animated: true)
+    }
+    
+    func endGame() {
+        guard let navigation = drawer?.currentRootViewController as? UINavigationController else { return }
+        let module = moduleProvider.initialSceneModule()
+        navigation.setViewControllers([module.viewController], animated: true)
+    }
 }
+
+extension RoomSceneRouter: ImageRemover {}
