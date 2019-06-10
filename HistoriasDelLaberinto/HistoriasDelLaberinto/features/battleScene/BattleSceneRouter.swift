@@ -1,12 +1,16 @@
 import UIKit
 
 protocol BattleSceneRoutingLogic: RouterLogic {
-    func popToRoom()
+    func present(_ controller: UIViewController, animated: Bool)
+    func dismiss(animated: Bool)
 }
 
 class BattleSceneRouter: BaseRouter, BattleSceneRoutingLogic {
-    func popToRoom() {
-        guard let navigation = drawer?.currentRootViewController as? UINavigationController else { return }
-        navigation.popViewController(animated: true)
+    func present(_ controller: UIViewController, animated: Bool) {
+        drawer?.present(controller, animated: animated, completion: nil)
+    }
+    
+    func dismiss(animated: Bool) {
+        drawer?.dismiss(animated: animated, completion: nil)
     }
 }

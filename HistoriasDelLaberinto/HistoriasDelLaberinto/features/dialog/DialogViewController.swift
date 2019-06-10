@@ -2,22 +2,29 @@ import UIKit
 import Kingfisher
 
 class Dialog {
-    static func createDialogue(_ dialogue: DialogueConfigurator, delegate: EventHandler) -> DialogDisplayLogic {
+    static func createDialogue(_ dialogue: DialogueConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
         let dialog = DialogViewController(dialogue)
         dialog.delegate = delegate
         dialog.initView()
         return dialog
     }
     
-    static func createReward(_ reward: RewardConfigurator, delegate: EventHandler) -> DialogDisplayLogic {
+    static func createReward(_ reward: RewardConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
         let dialog = DialogViewController(reward)
         dialog.delegate = delegate
         dialog.initView()
         return dialog
     }
     
-    static func createChoice(_ choice: ChoiceConfigurator, delegate: EventHandler) -> DialogDisplayLogic {
+    static func createChoice(_ choice: ChoiceConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
         let dialog = DialogViewController(choice)
+        dialog.delegate = delegate
+        dialog.initView()
+        return dialog
+    }
+    
+    static func createDialog(_ dialog: DialogConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
+        let dialog = DialogViewController(dialog)
         dialog.delegate = delegate
         dialog.initView()
         return dialog
@@ -43,7 +50,7 @@ class DialogViewController: UIViewController {
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet var tapWindowGesture: UITapGestureRecognizer!
     
-    weak var delegate: EventHandler?
+    weak var delegate: NextDialogHandler?
     
     fileprivate init(_ configurator: DialogConfigurator) {
         self.configurator = configurator
@@ -58,6 +65,8 @@ class DialogViewController: UIViewController {
     
     func initView() {
         view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.75)
+        textView.backgroundColor = UIColor.coolBlue.withAlphaComponent(0.95)
+        textView.alpha = 0.95
         dialogView.layer.cornerRadius = 6.0
         dialogView.alpha = dialogViewDefaultAlpha
         stackView.isHidden = true
@@ -70,6 +79,7 @@ class DialogViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupConfiguration()
+        
         timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
     }
     
@@ -83,6 +93,8 @@ class DialogViewController: UIViewController {
             setup(reward: reward)
         } else if let choice = configurator as? ChoiceConfigurator {
             setup(choice: choice)
+        } else if let battle = configurator as? BattleConfigurator {
+            setup(battle: battle)
         } else {
             setup(dialogue: DialogueConfigurator(name: "Cisco", message: "Error looking for configurator.", imageUrl: ""))
         }
@@ -106,7 +118,9 @@ extension DialogViewController: DialogDisplayLogic {
         } else {
             configurator = newConfigurator
             setupConfiguration()
-            timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
+            if self.presentingViewController != nil {
+                timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
+            }
         }
     }
     
@@ -171,7 +185,15 @@ extension DialogViewController {
         stackView.setButtonsInColumns(names: actions.map({$0.name}), action: #selector(buttonSelected(sender:)), for: self, numberOfColumns: 2, fixedHeight: true)
     }
     
+    private func setup(battle: BattleConfigurator) {
+        view.backgroundColor = .clear
+        textView.backgroundColor = .coolBlue
+        textView.alpha = 1.0
+        characterImageView.isHidden = true
+        stackView.isHidden = true
+    }
+    
     @objc func buttonSelected(sender: UIButton) {
-        delegate?.performChoice(tag: sender.tag)
+        delegate?.elementSelected(id: sender.tag)
     }
 }

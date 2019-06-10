@@ -1,23 +1,21 @@
 protocol BattleScenePresentationLogic: Presenter {
     func protaWillAttack()
-}
-
-enum CharacterChosen {
-    case protagonist, partner, enemy
+    func showStartDialogue()
 }
 
 extension BattleScenePresenter {
-    enum FinishedBattleReason {
-        case defeated(CharacterChosen)
-        case paralyzed(CharacterChosen)
-    }
-    
     fileprivate struct Constants {
         static let extraDamageWithoutWeapon: Int = 5
     }
 }
 
 class BattleScenePresenter: BasePresenter {
+    struct ActualState {
+        var step: AttackPhase
+        var character: CharacterChosen
+        var target: CharacterChosen?
+    }
+    
     var viewController: BattleSceneDisplayLogic? {
         return _viewController as? BattleSceneDisplayLogic
     }
@@ -30,11 +28,18 @@ class BattleScenePresenter: BasePresenter {
         return _router as? BattleSceneRouter
     }
     
-    private var protagonist: CharacterStatus!
-    private var partner: CharacterStatus?
-    private var enemy: CharacterStatus
-    private var models: [CharacterChosen: StatusViewModel] = [:]
+    var models: [CharacterChosen: StatusViewModel] = [:]
+    var dialog: DialogDisplayLogic?
+    
+    var protagonist: CharacterStatus!
+    var partner: CharacterStatus?
+    var enemy: CharacterStatus
+    
     private var actualWeapons: [String: Weapon] = [:]
+    private var ailmentTurnsElapsed: [CharacterChosen: Int] = [:]
+    
+    private var actualState = ActualState(step: .userInput, character: .protagonist, target: nil)
+    private var finishedBattleReason: FinishedBattleReason?
     
     weak var delegate: BattleBuilderDelegate?
     
@@ -51,275 +56,244 @@ class BattleScenePresenter: BasePresenter {
         buildCharacters()
         buildEnemy()
     }
-    
-    func evaluateProtagonistBeforeAttack() -> FinishedBattleReason? {
-        guard evaluateAilment(for: .partner) else {
-            return getReasonForFinishingTurn()
-        }
-        return nil
-    }
-    
-    func partnerAttacks() -> FinishedBattleReason? {
-        guard partner != nil else { return nil }
-        guard evaluateAilment(for: .partner) else {
-            return getReasonForFinishingTurn()
-        }
-        calculateAttack(from: .partner, to: .enemy)
-        return getReasonForFinishingTurn()
-    }
-    
-    func enemyAttacks() -> FinishedBattleReason? {
-        guard evaluateAilment(for: .enemy) else {
-            return getReasonForFinishingTurn()
-        }
-        
-        var target: CharacterChosen = .protagonist
-        if partner != nil {
-            target = Double.random(in: 0..<1) < 0.5 ? .protagonist: .partner
-        }
-        calculateAttack(from: .enemy, to: target)
-        return getReasonForFinishingTurn()
-    }
-    
-    func onPlayerTurnFinished() {
-        if let reason = enemyAttacks() {
-            calculateNextAction(reason: reason)
-            return
-        }
-        if let reason = partnerAttacks() {
-            calculateNextAction(reason: reason)
-            return
-        }
-        if let reason = evaluateProtagonistBeforeAttack() {
-            calculateNextAction(reason: reason)
-            return
-        }
-    }
-    
-    func calculateNextAction(reason: FinishedBattleReason) {
-        if case FinishedBattleReason.defeated = reason {
-            return
-        } else if case FinishedBattleReason.paralyzed(let chosen) = reason {
-            var name = ""
-            switch chosen {
-            case .protagonist:
-                name += protagonist.name
-            case .partner:
-                guard let partner = partner else { return }
-                name += partner.name
-            case .enemy:
-                name += enemy.name
-            }
-            print("\(name) está paralizado, no puede moverse.")
-        } else {
-            endBattle(reason: reason)
-        }
-    }
-    
-    private func endBattle(reason: FinishedBattleReason) {
-        switch reason {
-        case .defeated(.enemy):
-            print("YAY, defeated ^^")
-        case .defeated(.protagonist):
-            print("No, we dead.")
-        case .defeated(.partner):
-            break
-        case .paralyzed:
-            break
-        }
-        router?.popToRoom()
-    }
 }
 
 extension BattleScenePresenter: BattleScenePresentationLogic {
+    func showStartDialogue() {
+        showDialog(with: BattleConfigurator(message: "Un \(enemy.name) salvaje apareció."))
+    }
+    
     func protaWillAttack() {
-        calculateAttack(from: .protagonist, to: .enemy)
-        if let reason = getReasonForFinishingTurn() {
-            endBattle(reason: reason)
-        } else {
-            onPlayerTurnFinished()
-        }
+        actualState = ActualState(step: .attackPhase, character: .protagonist, target: nil)
+        performNextStep()
     }
 }
 
 // MARK: - Battle logic
 
 extension BattleScenePresenter {
-    private func evaluateAilment(for character: CharacterChosen) -> Bool {
-        guard let safeAilment = getAilment(from: character) else { return true }
-        switch safeAilment {
-        case .poisoned:
-            calculatePoisonDamage(for: character)
-            return evaluateCurrentHealth(for: character)
-        case .paralyzed: return Double.random(in: 0..<1) < 0.4
-        case .blind: return true
+    private func shouldContinueAilment() {
+        let state = actualState
+        let chosenCharacter = actualState.character
+        if let ailment = getAilment(from: chosenCharacter), let turnsElapsed = ailmentTurnsElapsed[chosenCharacter] {
+            var character = getCharacter(from: chosenCharacter)
+            let message: String
+            if Double.random(in: 0..<1) < Double(turnsElapsed) * 0.2 {
+                message = finishedAilmentMessage(from: ailment, for: character)
+                character.currentStatusAilment = nil
+                setCharacter(to: chosenCharacter, using: character)
+            } else {
+                message = continueAilmentMessage(from: ailment, for: getCharacter(from: chosenCharacter))
+            }
+            actualState = ActualState(step: state.step.getNext(), character: chosenCharacter, target: nil)
+            let configurator = BattleConfigurator(message: message)
+            showDialog(with: configurator)
+        } else {
+            actualState = ActualState(step: state.step.getNext(), character: chosenCharacter, target: nil)
+            performNextStep()
         }
     }
     
-    private func evaluateCurrentHealth(for character: CharacterChosen) -> Bool {
-        switch character {
-        case .protagonist:
-            if protagonist.currentHealthPoints == 0 {
-                return false
-            }
-        case .partner:
-            guard partner != nil else {
-                print("💔 NO DEBERÍAS ESTAR AQUÍ.")
-                return false
-            }
-            if partner!.currentHealthPoints == 0 {
-                print("Lo siento, ya no puedo más...")
-                return false
-            }
-        case .enemy:
-            if enemy.currentHealthPoints == 0 {
-                return false
-            }
-        }
-        return true
-    }
-    
-    private func getReasonForFinishingTurn() -> FinishedBattleReason? {
-        if protagonist.currentHealthPoints <= 0 {
-            return .defeated(.protagonist)
-        } else if enemy.currentHealthPoints <= 0 {
-            return .defeated(.enemy)
-        } else if case protagonist.currentStatusAilment = StatusAilment.paralyzed {
-            return .paralyzed(.protagonist)
-        } else if case partner?.currentStatusAilment = StatusAilment.paralyzed {
-            return .paralyzed(.partner)
-        } else if case enemy.currentStatusAilment = StatusAilment.paralyzed {
-            return .paralyzed(.enemy)
-        }
-        return nil
-    }
-    
-    private func calculateAttack(from character: CharacterChosen, to target: CharacterChosen) {
-        guard let chosenCharacter = getCharacter(from: character), var targetCharacter = getCharacter(from: target) else {
-            print("💔 NO DEBERÍAS ESTAR AQUÍ TAMPOCO.")
+    private func evaluateAilment() {
+        let chosenCharacter = actualState.character
+        
+        // DOES THE CHARACTER HAVE AN AILMENT?
+        guard let safeAilment = getAilment(from: chosenCharacter) else {
+            actualState = ActualState(step: actualState.step.getNext(), character: chosenCharacter, target: nil)
+            performNextStep()
             return
         }
         
-        print("¡Chosen ataca a target!")
+        let ailmentMessage: String
+        let characterName = getCharacter(from: chosenCharacter).name
         
-        var i = 0
+        switch safeAilment {
+        case .poisoned:
+            calculatePoisonDamage(for: chosenCharacter)
+            ailmentMessage = "\(characterName) pierde vida por el veneno."
+            let configurator = BattleConfigurator(message: ailmentMessage)
+            showDialog(with: configurator)
+            return
+        case .paralyzed:
+            if Double.random(in: 0..<1) < 0.4 {
+                ailmentMessage = "\(characterName) está paralizado, no puede moverse."
+                actualState = ActualState(step: .shouldContinueAilment, character: chosenCharacter.next(), target: nil)
+                let configurator = BattleConfigurator(message: ailmentMessage)
+                showDialog(with: configurator)
+                return
+            }
+        case .blind:
+            actualState = ActualState(step: actualState.step.getNext(), character: chosenCharacter, target: nil)
+            performNextStep()
+        }
+    }
+    
+    private func evaluateHealth() {
+        let character = actualState.character
+        switch character {
+        case .protagonist:
+            if protagonist.currentHealthPoints == 0 {
+                actualState = ActualState(step: .battleEnd, character: .protagonist, target: nil)
+            } else {
+                actualState = ActualState(step: .userInput, character: .protagonist, target: nil)
+            }
+        case .partner:
+            guard let partner = partner else {
+                print("💔 NO DEBERÍAS ESTAR AQUÍ.")
+                actualState = ActualState(step: actualState.step.getNext(), character: .enemy, target: nil)
+                performNextStep()
+                return
+            }
+            if partner.currentHealthPoints == 0 {
+                actualState = ActualState(step: .shouldContinueAilment, character: .protagonist, target: nil)
+                let configurator = DialogueConfigurator(name: partner.name, message: "Lo siento, ya no puedo más...", imageUrl: partner.imageUrl)
+                showDialog(with: configurator)
+                return
+            } else {
+                actualState = ActualState(step: actualState.step.getNext(), character: .partner, target: nil)
+            }
+        case .enemy:
+            if enemy.currentHealthPoints == 0 {
+                actualState = ActualState(step: .battleEnd, character: .enemy, target: nil)
+            } else {
+                actualState = ActualState(step: actualState.step.getNext(), character: .enemy, target: nil)
+            }
+        }
+        performNextStep()
+    }
+    
+    private func evaluateHealth(for target: CharacterChosen?) {
+        guard let safeTarget = target else {
+            actualState = ActualState(step: AttackPhase.startPhase(), character: .protagonist, target: nil)
+            performNextStep()
+            return
+        }
+        switch safeTarget {
+        case .protagonist:
+            if protagonist.currentHealthPoints == 0 {
+                actualState = ActualState(step: .battleEnd, character: .protagonist, target: nil)
+            } else {
+                actualState = ActualState(step: AttackPhase.startPhase(), character: actualState.character.next(), target: nil)
+            }
+            performNextStep()
+        case .partner:
+            guard let partner = partner else {
+                print("💔 NO DEBERÍAS ESTAR AQUÍ.")
+                actualState = ActualState(step: AttackPhase.startPhase(), character: .enemy, target: nil)
+                performNextStep()
+                return
+            }
+            if partner.currentHealthPoints == 0 {
+                var nextCharacter = actualState.character.next()
+                while nextCharacter == .partner { nextCharacter = nextCharacter.next() }
+                
+                actualState = ActualState(step: AttackPhase.startPhase(), character: nextCharacter, target: nil)
+                let configurator = DialogueConfigurator(name: partner.name, message: "Lo siento, ya no puedo más...", imageUrl: partner.imageUrl)
+                showDialog(with: configurator)
+            } else {
+                actualState = ActualState(step: AttackPhase.startPhase(), character: actualState.character.next(), target: nil)
+                performNextStep()
+            }
+        case .enemy:
+            if enemy.currentHealthPoints == 0 {
+                actualState = ActualState(step: .battleEnd, character: .enemy, target: nil)
+            } else {
+                var nextCharacter = actualState.character.next()
+                if partner == nil {
+                    while nextCharacter == .partner { nextCharacter = nextCharacter.next() }
+                }
+                
+                actualState = ActualState(step: AttackPhase.startPhase(), character: nextCharacter, target: nil)
+            }
+            performNextStep()
+        }
+    }
+    
+    private func attackPhase() {
+        let character = getCharacter(from: actualState.character)
+        let message = "\(character.name) va a atacar."
+        actualState = ActualState(step: actualState.step.getNext(), character: actualState.character, target: nil)
+        let configurator = BattleConfigurator(message: message)
+        showDialog(with: configurator)
+    }
+    
+    private func attackResult() {
+        let chosenCharacter = actualState.character
+        let chosenCharacterStatus = getCharacter(from: chosenCharacter)
+        
+        let possibleTargets = getPossibleTargets(from: chosenCharacter)
+        let target = possibleTargets.shuffled()[0]
+        var targetStatus = getCharacter(from: target)
+        
+        var attackMessage: String
+        
+        let actualWeapon = actualWeapons[chosenCharacterStatus.weapon ?? ""]
+        
         // CALCULATE MULTIPLE ATTACKS CHANCE
-        var agilityRatio = chosenCharacter.agility/targetCharacter.agility
+        var agilityRatio = chosenCharacterStatus.agility/targetStatus.agility
         agilityRatio = agilityRatio <= 1 ? 1: agilityRatio
         
-        while i < agilityRatio, targetCharacter.currentHealthPoints > 0 {
-            // MULTIPLE ATTACKS BASED ON AGILITY
-            if i > 0 {
-                print("¡Ataca otra vez!")
-            }
-            
-            // WILL THE ATTACK HIT?
-            guard Double.random(in: 0..<1) < Double(actualWeapons[chosenCharacter.weapon ?? ""]?.hitRate ?? 100) / 100 else {
-                print("Pero falló el ataque...")
-                i += 1
-                continue
-            }
-            
-            // DAMAGE CALCULATION PHASE
-            // If the chosen has any weapon, the max extra damage is the weapon's power. Else its one.
-            let maxExtraDamageOutput = actualWeapons[chosenCharacter.weapon ?? ""]?.extraDamage ?? Constants.extraDamageWithoutWeapon
-            let attackDamage = chosenCharacter.attack + Int.random(in: 0..<maxExtraDamageOutput)
-            let calculatedDamage = attackDamage - targetCharacter.defense
-            
-            // IF ITS NEGATIVE, INSTEAD DO CERO DAMAGE
-            guard calculatedDamage > 0 else {
-                print("Target absorbió al ataque.")
-                i += 1
-                continue
-            }
-            
-            // APPLY DAMAGE
-            targetCharacter.currentHealthPoints -= calculatedDamage
-            targetCharacter.currentHealthPoints = targetCharacter.currentHealthPoints < 0 ? 0: targetCharacter.currentHealthPoints
-            
-            // CALCULATE IF THE CHOSEN CHARACTER CAN INDUCE AN AILMENT
-            if calculateAilment(actualWeapons[chosenCharacter.weapon ?? ""]?.inducedAilment, to: targetCharacter) {
-                print(getAilmentMessage(from: actualWeapons[chosenCharacter.weapon ?? ""]?.inducedAilment?.ailment, for: targetCharacter))
-                targetCharacter.currentStatusAilment = actualWeapons[chosenCharacter.weapon ?? ""]?.inducedAilment?.ailment
-            }
-            setCharacter(to: target, using: targetCharacter)
-            i += 1
+        var effectiveAttacks: Int = 0
+        
+        // WILL THE ATTACK HIT?
+        for _ in 0..<agilityRatio where Double.random(in: 0..<1) < Double(actualWeapon?.hitRate ?? 100) / 100 {
+            effectiveAttacks += 1
         }
-        // TRIGGER BATTLE ENDING FUNC IF SPECIAL CONDITION MET
-        _ = evaluateCurrentHealth(for: target)
-    }
-    
-    private func calculateAilment(_ ailment: InduceAilment?, to character: CharacterStatus) -> Bool {
-        guard character.currentStatusAilment == nil, let ailment = ailment else { return false }
-        return Double.random(in: 0..<1) < Double(ailment.induceRate) / 100.0
-    }
-    
-    private func getCharacter(from chosen: CharacterChosen) -> CharacterStatus? {
-        switch chosen {
-        case .protagonist:
-            return protagonist
-        case .partner:
-            return partner
-        case .enemy:
-            return enemy
+        guard effectiveAttacks > 0 else {
+            attackMessage = "Pero falló el ataque..."
+            actualState = ActualState(step: actualState.step.getNext(), character: chosenCharacter, target: target)
+            let configurator = BattleConfigurator(message: attackMessage)
+            showDialog(with: configurator)
+            return
         }
-    }
-    
-    private func setCharacter(to chosen: CharacterChosen, using status: CharacterStatus) {
-        var model: StatusViewModel
-        switch chosen {
-        case .protagonist:
-            protagonist = status
-            guard let newModel = models[.protagonist] else { return }
-            model = newModel
-        case .partner:
-            partner = status
-            guard let newModel = models[.partner] else { return }
-            model = newModel
-        case .enemy:
-            enemy = status
-            guard let newModel = models[.enemy] else { return }
-            model = newModel
+        
+        // DAMAGE CALCULATION PHASE
+        // If the attacking character has any weapon, the max extra damage is the weapon's power. Else the maximum is the constant value.
+        let maxExtraDamageOutput = actualWeapon?.extraDamage ?? Constants.extraDamageWithoutWeapon
+        let attackDamage = chosenCharacterStatus.attack + Int.random(in: 0..<maxExtraDamageOutput)
+        let calculatedDamage = (attackDamage * effectiveAttacks) - targetStatus.defense
+        
+        // IF THE CALCULATED DAMAGE IS NEGATIVE, INSTEAD DO CERO DAMAGE.
+        if calculatedDamage < 0 {
+            attackMessage = "Pero \(targetStatus.name) absorbe al ataque."
+            
+        } else {
+            let timesMessage = effectiveAttacks == 1 ? "1 vez": "\(effectiveAttacks) veces"
+            attackMessage = "\(chosenCharacterStatus.name) golpea \(timesMessage) a \(targetStatus.name)."
         }
-        model.ailment = status.currentStatusAilment
-        model.actualHealth = status.currentHealthPoints
-        viewController?.updateView(model)
-    }
-    
-    private func getAilment(from character: CharacterChosen) -> StatusAilment? {
-        switch character {
-        case .enemy:
-            return enemy.currentStatusAilment
-        case .partner:
-            return partner?.currentStatusAilment
-        case .protagonist:
-            return protagonist.currentStatusAilment
+        
+        // APPLY DAMAGE
+        targetStatus.currentHealthPoints -= calculatedDamage
+        targetStatus.currentHealthPoints = targetStatus.currentHealthPoints < 0 ? 0: targetStatus.currentHealthPoints
+        
+        // CALCULATE IF THE CHOSEN CHARACTER CAN INDUCE AN AILMENT
+        if calculateAilment(actualWeapon?.inducedAilment, to: targetStatus) {
+            attackMessage += "\n" + getAilmentMessage(from: actualWeapon?.inducedAilment?.ailment, for: targetStatus)
+            targetStatus.currentStatusAilment = actualWeapon?.inducedAilment?.ailment
         }
+        
+        setCharacter(to: target, using: targetStatus)
+        
+        actualState = ActualState(step: .evaluateHealthAfterAttack, character: chosenCharacter, target: target)
+        let configurator = BattleConfigurator(message: attackMessage)
+        showDialog(with: configurator)
     }
     
-    private func getAilmentMessage(from ailment: StatusAilment?, for character: CharacterStatus) -> String {
-        guard let ailment = ailment else { return "" }
-        var start = "Ahora \(character.name) está "
-        switch ailment {
-        case .blind:
-            start += "cegado."
-        case .poisoned:
-            start += "envenenado."
-        case .paralyzed:
-            start += "paralizado."
+    private func battleEnd() {
+        if protagonist.currentHealthPoints <= 0 {
+            finishedBattleReason = .defeated(.protagonist)
+            let configurator = BattleConfigurator(message: "Empiezas a perder la consciencia.")
+            showDialog(with: configurator)
+            return
         }
-        return start
-    }
-    
-    private func calculatePoisonDamage(for character: CharacterChosen) {
-        let randomDamage = 40 + Int.random(in: 0..<15)
-        switch character {
-        case .enemy:
-            enemy.currentHealthPoints -= randomDamage
-        case .partner:
-            partner?.currentHealthPoints -= randomDamage
-        case .protagonist:
-            protagonist.currentHealthPoints -= randomDamage
+        finishedBattleReason = .defeated(.enemy)
+        if let partner = partner {
+            let configurator = DialogueConfigurator(name: partner.name, message: "¡Sí, lo hemos conseguido!", imageUrl: partner.imageUrl)
+            showDialog(with: configurator)
+            
+        } else {
+            let configurator = BattleConfigurator(message: "Has conseguido derrotar al malo.")
+            showDialog(with: configurator)
         }
     }
 }
@@ -366,5 +340,45 @@ extension BattleScenePresenter {
         let model = StatusViewModel(chosenCharacter: .enemy, name: enemy.name, ailment: enemy.currentStatusAilment, actualHealth: enemy.currentHealthPoints, maxHealth: enemy.maxHealthPoints, imageUrl: enemy.portraitUrl, isEnemy: true, didTouchView: nil)
         models[.enemy] = model
         viewController?.setEnemyInfo(imageUrl: enemy.imageUrl, model: model)
+    }
+}
+
+extension BattleScenePresenter: NextDialogHandler {
+    func continueFlow() {
+        performNextStep()
+    }
+    
+    func elementSelected(id: Int) {}
+    
+    private func performNextStep() {
+        if let reason = finishedBattleReason {
+            delegate?.onBattleFinished(reason: reason)
+            return
+        }
+        switch actualState.step {
+        case .shouldContinueAilment:
+            shouldContinueAilment()
+        case .evaluateAilment:
+            evaluateAilment()
+        case .evaluateHealthAfterAilment:
+            evaluateHealth()
+        case .attackPhase:
+            attackPhase()
+        case .attackResult:
+            attackResult()
+        case .evaluateHealthAfterAttack:
+            evaluateHealth(for: actualState.target)
+        case .battleEnd:
+            battleEnd()
+        case .userInput:
+            router?.dismiss(animated: true)
+        }
+    }
+}
+
+extension BattleScenePresenter: BattleSceneInfoGetters {}
+extension BattleScenePresenter: DialogLauncher {
+    func present(_ dialog: DialogDisplayLogic) {
+        router?.present(dialog, animated: true)
     }
 }

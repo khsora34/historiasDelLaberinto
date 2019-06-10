@@ -11,7 +11,6 @@
 		6D082A03229AB4A900B13A56 /* ItemFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D082A02229AB4A900B13A56 /* ItemFetcher.swift */; };
 		6D09612A22A69C0D001BC15E /* UIStackViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D09612922A69C0D001BC15E /* UIStackViewExtension.swift */; };
 		6D285CE022AAC5B9008C9A1D /* BattleScenePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D285CDA22AAC5B9008C9A1D /* BattleScenePresenter.swift */; };
-		6D285CE122AAC5B9008C9A1D /* BattleSceneWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D285CDB22AAC5B9008C9A1D /* BattleSceneWorker.swift */; };
 		6D285CE222AAC5B9008C9A1D /* BattleSceneRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D285CDC22AAC5B9008C9A1D /* BattleSceneRouter.swift */; };
 		6D285CE322AAC5B9008C9A1D /* BattleSceneModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D285CDD22AAC5B9008C9A1D /* BattleSceneModels.swift */; };
 		6D285CE422AAC5B9008C9A1D /* BattleSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D285CDE22AAC5B9008C9A1D /* BattleSceneViewController.swift */; };
@@ -54,6 +53,8 @@
 		6D5DB0D922A1B1DB00C8745E /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DB0D822A1B1DB00C8745E /* UITextFieldExtension.swift */; };
 		6D5DB0DB22A1B38200C8745E /* UITextViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DB0DA22A1B38200C8745E /* UITextViewExtension.swift */; };
 		6D5DB0DD22A1DED700C8745E /* ConditionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DB0DC22A1DED700C8745E /* ConditionEvaluator.swift */; };
+		6D61636722AEBB770065E2B7 /* BattleSceneInfoGetters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D61636622AEBB770065E2B7 /* BattleSceneInfoGetters.swift */; };
+		6D61636B22AEBCDB0065E2B7 /* DialogLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D61636A22AEBCDB0065E2B7 /* DialogLauncher.swift */; };
 		6D62D34822A8141500C2CB60 /* MovementFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D62D34722A8141500C2CB60 /* MovementFetcher.swift */; };
 		6D62D34A22A856B300C2CB60 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D62D34922A856B300C2CB60 /* ImageLoader.swift */; };
 		6D62D34D22A85DB900C2CB60 /* FilesSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D62D34C22A85DB900C2CB60 /* FilesSaver.swift */; };
@@ -91,6 +92,8 @@
 		6D9A45AB22874C51004F4D0C /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A45A922874C51004F4D0C /* TestViewController.swift */; };
 		6D9A45AE22874D04004F4D0C /* LoadedGame.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A45AC22874D04004F4D0C /* LoadedGame.xcdatamodeld */; };
 		6D9A45B022875045004F4D0C /* ConditionEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A45AF22875045004F4D0C /* ConditionEvent.swift */; };
+		6DA290E122ABE248002BFC6A /* BattleConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA290E022ABE248002BFC6A /* BattleConfigurator.swift */; };
+		6DA290E322ABE3AA002BFC6A /* NextDialogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA290E222ABE3AA002BFC6A /* NextDialogHandler.swift */; };
 		6DA2D2502267430800D1B8DF /* ItemsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2D24F2267430800D1B8DF /* ItemsFile.swift */; };
 		6DA2D25222674A0100D1B8DF /* EventParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2D25122674A0100D1B8DF /* EventParser.swift */; };
 		6DA2D25522674A5700D1B8DF /* EventsFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA2D25422674A5700D1B8DF /* EventsFile.swift */; };
@@ -153,7 +156,6 @@
 		6D082A02229AB4A900B13A56 /* ItemFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemFetcher.swift; sourceTree = "<group>"; };
 		6D09612922A69C0D001BC15E /* UIStackViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackViewExtension.swift; sourceTree = "<group>"; };
 		6D285CDA22AAC5B9008C9A1D /* BattleScenePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleScenePresenter.swift; sourceTree = "<group>"; };
-		6D285CDB22AAC5B9008C9A1D /* BattleSceneWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSceneWorker.swift; sourceTree = "<group>"; };
 		6D285CDC22AAC5B9008C9A1D /* BattleSceneRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSceneRouter.swift; sourceTree = "<group>"; };
 		6D285CDD22AAC5B9008C9A1D /* BattleSceneModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSceneModels.swift; sourceTree = "<group>"; };
 		6D285CDE22AAC5B9008C9A1D /* BattleSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSceneViewController.swift; sourceTree = "<group>"; };
@@ -196,6 +198,8 @@
 		6D5DB0D822A1B1DB00C8745E /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		6D5DB0DA22A1B38200C8745E /* UITextViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextViewExtension.swift; sourceTree = "<group>"; };
 		6D5DB0DC22A1DED700C8745E /* ConditionEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionEvaluator.swift; sourceTree = "<group>"; };
+		6D61636622AEBB770065E2B7 /* BattleSceneInfoGetters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSceneInfoGetters.swift; sourceTree = "<group>"; };
+		6D61636A22AEBCDB0065E2B7 /* DialogLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogLauncher.swift; sourceTree = "<group>"; };
 		6D62D34722A8141500C2CB60 /* MovementFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementFetcher.swift; sourceTree = "<group>"; };
 		6D62D34922A856B300C2CB60 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		6D62D34C22A85DB900C2CB60 /* FilesSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FilesSaver.swift; path = /Users/setoncios/repos/historiasDelLaberinto/HistoriasDelLaberinto/HistoriasDelLaberinto/iOS/common/initialScene/FilesSaver.swift; sourceTree = "<absolute>"; };
@@ -235,6 +239,8 @@
 		6D9A45A922874C51004F4D0C /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		6D9A45AD22874D04004F4D0C /* Event.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Event.xcdatamodel; sourceTree = "<group>"; };
 		6D9A45AF22875045004F4D0C /* ConditionEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConditionEvent.swift; sourceTree = "<group>"; };
+		6DA290E022ABE248002BFC6A /* BattleConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleConfigurator.swift; sourceTree = "<group>"; };
+		6DA290E222ABE3AA002BFC6A /* NextDialogHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextDialogHandler.swift; sourceTree = "<group>"; };
 		6DA2D24F2267430800D1B8DF /* ItemsFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsFile.swift; sourceTree = "<group>"; };
 		6DA2D25122674A0100D1B8DF /* EventParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventParser.swift; sourceTree = "<group>"; };
 		6DA2D25422674A5700D1B8DF /* EventsFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsFile.swift; sourceTree = "<group>"; };
@@ -331,8 +337,8 @@
 		6D285CD922AAC5A6008C9A1D /* battleScene */ = {
 			isa = PBXGroup;
 			children = (
+				6D61636822AEBBD10065E2B7 /* Helpers */,
 				6D285CDA22AAC5B9008C9A1D /* BattleScenePresenter.swift */,
-				6D285CDB22AAC5B9008C9A1D /* BattleSceneWorker.swift */,
 				6D285CDC22AAC5B9008C9A1D /* BattleSceneRouter.swift */,
 				6D285CDD22AAC5B9008C9A1D /* BattleSceneModels.swift */,
 				6D285CDE22AAC5B9008C9A1D /* BattleSceneViewController.swift */,
@@ -360,6 +366,7 @@
 				6DBC4D6A22A28CEA00F93FA8 /* configurator */,
 				6D2DA750229EE49200BC5C0D /* DialogViewController.swift */,
 				6D2DA751229EE49200BC5C0D /* DialogView.xib */,
+				6DA290E222ABE3AA002BFC6A /* NextDialogHandler.swift */,
 			);
 			path = dialog;
 			sourceTree = "<group>";
@@ -477,6 +484,7 @@
 				6DEF066022688C4C00A5C454 /* MainViewController.swift */,
 				6D5DB0DC22A1DED700C8745E /* ConditionEvaluator.swift */,
 				6DD893A322A98B5A0065C0E8 /* ShowLoadingCapable.swift */,
+				6D61636A22AEBCDB0065E2B7 /* DialogLauncher.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -490,6 +498,14 @@
 				6D09612922A69C0D001BC15E /* UIStackViewExtension.swift */,
 			);
 			path = extensions;
+			sourceTree = "<group>";
+		};
+		6D61636822AEBBD10065E2B7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				6D61636622AEBB770065E2B7 /* BattleSceneInfoGetters.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		6D62D34B22A85D9D00C2CB60 /* initialScene */ = {
@@ -599,6 +615,7 @@
 				6DBC4D6B22A28CF600F93FA8 /* RewardConfigurator.swift */,
 				6DBC4D6D22A28DAD00F93FA8 /* DialogueConfigurator.swift */,
 				6D398A1C22A2D39D00D19FF8 /* ChoiceConfigurator.swift */,
+				6DA290E022ABE248002BFC6A /* BattleConfigurator.swift */,
 			);
 			path = configurator;
 			sourceTree = "<group>";
@@ -930,16 +947,19 @@
 				6D4C43FC229F1EF700D5A9E5 /* DialogConfigurator.swift in Sources */,
 				6DA2D25522674A5700D1B8DF /* EventsFile.swift in Sources */,
 				6D285CE422AAC5B9008C9A1D /* BattleSceneViewController.swift in Sources */,
-				6D285CE122AAC5B9008C9A1D /* BattleSceneWorker.swift in Sources */,
 				6D997A5022A3049D0025DC8D /* RoomSceneWorker.swift in Sources */,
 				6DEF065D2268898100A5C454 /* Dependencies.swift in Sources */,
 				6DBC4D6E22A28DAD00F93FA8 /* DialogueConfigurator.swift in Sources */,
+				6D61636B22AEBCDB0065E2B7 /* DialogLauncher.swift in Sources */,
+				6D61636722AEBB770065E2B7 /* BattleSceneInfoGetters.swift in Sources */,
 				6D4B57DE224A9528001779DC /* Action.swift in Sources */,
 				6D09612A22A69C0D001BC15E /* UIStackViewExtension.swift in Sources */,
 				6DBC4D6C22A28CF600F93FA8 /* RewardConfigurator.swift in Sources */,
 				6D45B01B226A28A900906FBB /* ExampleSceneRouter.swift in Sources */,
 				6DC67569224BC81E00B795B6 /* NotPlayableCharacter.swift in Sources */,
 				6DFE3FBE22A0537A000C3C2F /* IsEventAvailableCheckable.swift in Sources */,
+				6DA290E122ABE248002BFC6A /* BattleConfigurator.swift in Sources */,
+				6DA290E322ABE3AA002BFC6A /* NextDialogHandler.swift in Sources */,
 				6D997A5822A309460025DC8D /* RoomSceneModule.swift in Sources */,
 				6D823B222267694400522756 /* EventBuilder.swift in Sources */,
 				6D398A2122A2E69400D19FF8 /* UIColorExtension.swift in Sources */,
