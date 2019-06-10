@@ -9,7 +9,7 @@ class BattleSceneModule: Module {
     init(enemy: PlayableCharacter, routerProvider: RouterProvider, databaseProvider: DatabaseFetcherProvider) {
         viewController = ViewCreator.createFrom(storyboardName: storyboardName, forController: controllerName)
         presenter = BattleScenePresenter(enemy: enemy)
-        router = routerProvider.voidRouter
+        router = routerProvider.battleSceneRouter
         interactor = BattleSceneInteractor(databaseProvider: databaseProvider)
         viewController._presenter = presenter
         presenter._interactor = interactor
