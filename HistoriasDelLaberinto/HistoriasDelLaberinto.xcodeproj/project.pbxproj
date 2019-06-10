@@ -55,6 +55,7 @@
 		6D5DB0DD22A1DED700C8745E /* ConditionEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DB0DC22A1DED700C8745E /* ConditionEvaluator.swift */; };
 		6D61636722AEBB770065E2B7 /* BattleSceneInfoGetters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D61636622AEBB770065E2B7 /* BattleSceneInfoGetters.swift */; };
 		6D61636B22AEBCDB0065E2B7 /* DialogLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D61636A22AEBCDB0065E2B7 /* DialogLauncher.swift */; };
+		6D61636D22AEC4820065E2B7 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D61636C22AEC4820065E2B7 /* UIViewExtension.swift */; };
 		6D62D34822A8141500C2CB60 /* MovementFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D62D34722A8141500C2CB60 /* MovementFetcher.swift */; };
 		6D62D34A22A856B300C2CB60 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D62D34922A856B300C2CB60 /* ImageLoader.swift */; };
 		6D62D34D22A85DB900C2CB60 /* FilesSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D62D34C22A85DB900C2CB60 /* FilesSaver.swift */; };
@@ -200,6 +201,7 @@
 		6D5DB0DC22A1DED700C8745E /* ConditionEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionEvaluator.swift; sourceTree = "<group>"; };
 		6D61636622AEBB770065E2B7 /* BattleSceneInfoGetters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSceneInfoGetters.swift; sourceTree = "<group>"; };
 		6D61636A22AEBCDB0065E2B7 /* DialogLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogLauncher.swift; sourceTree = "<group>"; };
+		6D61636C22AEC4820065E2B7 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		6D62D34722A8141500C2CB60 /* MovementFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementFetcher.swift; sourceTree = "<group>"; };
 		6D62D34922A856B300C2CB60 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		6D62D34C22A85DB900C2CB60 /* FilesSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FilesSaver.swift; path = /Users/setoncios/repos/historiasDelLaberinto/HistoriasDelLaberinto/HistoriasDelLaberinto/iOS/common/initialScene/FilesSaver.swift; sourceTree = "<absolute>"; };
@@ -496,6 +498,7 @@
 				6D5DB0DA22A1B38200C8745E /* UITextViewExtension.swift */,
 				6D398A2022A2E69400D19FF8 /* UIColorExtension.swift */,
 				6D09612922A69C0D001BC15E /* UIStackViewExtension.swift */,
+				6D61636C22AEC4820065E2B7 /* UIViewExtension.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -956,6 +959,7 @@
 				6D09612A22A69C0D001BC15E /* UIStackViewExtension.swift in Sources */,
 				6DBC4D6C22A28CF600F93FA8 /* RewardConfigurator.swift in Sources */,
 				6D45B01B226A28A900906FBB /* ExampleSceneRouter.swift in Sources */,
+				6D61636D22AEC4820065E2B7 /* UIViewExtension.swift in Sources */,
 				6DC67569224BC81E00B795B6 /* NotPlayableCharacter.swift in Sources */,
 				6DFE3FBE22A0537A000C3C2F /* IsEventAvailableCheckable.swift in Sources */,
 				6DA290E122ABE248002BFC6A /* BattleConfigurator.swift in Sources */,

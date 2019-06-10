@@ -6,6 +6,7 @@ protocol BattleSceneDisplayLogic: ViewControllerDisplay {
     func setBackground(with imageUrl: String?)
     func setEnemyInfo(imageUrl: String, model: StatusViewModel)
     func updateView(_ model: StatusViewModel)
+    func performDamage(on model: StatusViewModel)
 }
 
 class BattleSceneViewController: BaseViewController {
@@ -74,6 +75,14 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
             model.configure(view: enemyStatus)
         } else if let view = charactersStackView.arrangedSubviews.filter({ ($0 as? StatusViewController)?.characterChosen == model.chosenCharacter }).first as? StatusViewController {
             model.configure(view: view)
+        }
+    }
+    
+    func performDamage(on model: StatusViewModel) {
+        if model.isEnemy {
+            enemyStatus.shake()
+        } else if let view = charactersStackView.arrangedSubviews.filter({ ($0 as? StatusViewController)?.characterChosen == model.chosenCharacter }).first {
+            view.shake()
         }
     }
 }

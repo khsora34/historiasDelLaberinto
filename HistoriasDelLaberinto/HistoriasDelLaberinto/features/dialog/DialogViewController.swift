@@ -40,8 +40,36 @@ class DialogViewController: UIViewController {
     private let dialogViewDefaultAlpha: CGFloat = 0.95
     private let transitionAlpha: CGFloat = 0.3
     
+    lazy var topConstraint: NSLayoutConstraint = {
+        return dialogView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10.0)
+    }()
     private var configurator: DialogConfigurator
     private var timer: Timer?
+    private var alignment: DialogAlignment = .bottom {
+        didSet {
+            guard oldValue != alignment else { return }
+            switch alignment {
+            case .bottom:
+                topConstraint.isActive = false
+                dialogHeightConstraint.isActive = false
+                let heightConstraint = NSLayoutConstraint(item: dialogView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.25, constant: 0)
+                heightConstraint.isActive = true
+                dialogHeightConstraint = heightConstraint
+                dialogTopConstraint.isActive = true
+                dialogToScrollInequalityConstraint.isActive = true
+                dialogBottomConstraint.isActive = true
+            case .top:
+                topConstraint.isActive = true
+                dialogHeightConstraint.isActive = false
+                let heightConstraint = NSLayoutConstraint(item: dialogView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.15, constant: 0)
+                heightConstraint.isActive = true
+                dialogHeightConstraint = heightConstraint
+                dialogTopConstraint.isActive = false
+                dialogToScrollInequalityConstraint.isActive = false
+                dialogBottomConstraint.isActive = false
+            }
+        }
+    }
     
     @IBOutlet weak var dialogView: UIView!
     @IBOutlet weak var characterLabel: UILabel!
@@ -49,6 +77,11 @@ class DialogViewController: UIViewController {
     @IBOutlet weak var characterImageView: UIImageView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet var tapWindowGesture: UITapGestureRecognizer!
+    
+    @IBOutlet weak var dialogHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var dialogTopConstraint: NSLayoutConstraint!
+    @IBOutlet var dialogToScrollInequalityConstraint: NSLayoutConstraint!
+    @IBOutlet var dialogBottomConstraint: NSLayoutConstraint!
     
     weak var delegate: NextDialogHandler?
     
@@ -191,6 +224,7 @@ extension DialogViewController {
         textView.alpha = 1.0
         characterImageView.isHidden = true
         stackView.isHidden = true
+        alignment = battle.alignment
     }
     
     @objc func buttonSelected(sender: UIButton) {
