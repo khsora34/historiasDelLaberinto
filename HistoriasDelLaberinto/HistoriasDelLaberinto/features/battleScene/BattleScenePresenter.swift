@@ -248,15 +248,21 @@ extension BattleScenePresenter {
             return
         }
         
+        // EXTRA AGILITY ATTACK BONUS
+        if Double.random(in: 0..<1) < 0.15 {
+            effectiveAttacks += 1
+        }
+        
         // DAMAGE CALCULATION PHASE
         // If the attacking character has any weapon, the max extra damage is the weapon's power. Else the maximum is the constant value.
         let maxExtraDamageOutput = actualWeapon?.extraDamage ?? Constants.extraDamageWithoutWeapon
         let attackDamage = chosenCharacterStatus.attack + Int.random(in: 0..<maxExtraDamageOutput)
-        let calculatedDamage = (attackDamage * effectiveAttacks) - targetStatus.defense
+        var calculatedDamage = (attackDamage * effectiveAttacks) - targetStatus.defense
         
         // IF THE CALCULATED DAMAGE IS NEGATIVE, INSTEAD DO CERO DAMAGE.
-        if calculatedDamage < 0 {
+        if calculatedDamage <= 0 {
             attackMessage = "Pero \(targetStatus.name) absorbe al ataque."
+            calculatedDamage = 0
             
         } else {
             let timesMessage = effectiveAttacks == 1 ? "1 vez": "\(effectiveAttacks) veces"
@@ -278,7 +284,7 @@ extension BattleScenePresenter {
         actualState = ActualState(step: .evaluateHealthAfterAttack, character: chosenCharacter, target: target)
         let configurator = BattleConfigurator(message: attackMessage, alignment: chosenCharacter == .enemy ? .top: .bottom)
         showDialog(with: configurator)
-        guard let model = models[target] else { return }
+        guard let model = models[target], calculatedDamage > 0 else { return }
         viewController?.performDamage(on: model)
     }
     
