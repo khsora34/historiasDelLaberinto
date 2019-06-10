@@ -4,6 +4,7 @@ protocol BattleScenePresentationLogic: Presenter {
 
 enum CharacterChosen {
     case protagonist, partner, enemy
+    func showStartDialogue()
 }
 
 extension BattleScenePresenter {
@@ -132,6 +133,10 @@ class BattleScenePresenter: BasePresenter {
 }
 
 extension BattleScenePresenter: BattleScenePresentationLogic {
+    func showStartDialogue() {
+        showDialog(with: BattleConfigurator(message: "Un \(enemy.name) salvaje apareció."))
+    }
+    
     func protaWillAttack() {
         calculateAttack(from: .protagonist, to: .enemy)
         if let reason = getReasonForFinishingTurn() {
