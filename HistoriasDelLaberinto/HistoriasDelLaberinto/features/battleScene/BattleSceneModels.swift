@@ -20,6 +20,13 @@ enum BattleScene {
             let weapon: Weapon?
         }
     }
+    
+    enum CharacterUpdater {
+        struct Request {
+            let protagonist: CharacterStatus
+            let partner: CharacterStatus?
+        }
+    }
 }
 
 enum AttackPhase: Int {

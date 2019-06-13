@@ -32,4 +32,14 @@ class BattleSceneInteractor: BaseInteractor, BattleSceneBusinessLogic {
         return BattleScene.WeaponGetter.Response(weapon: weapon)
     }
     
+    func updateCharacters(request: BattleScene.CharacterUpdater.Request) {
+        guard let protagonist = request.protagonist as? Protagonist else { return }
+        
+        _ = protagonistFetcher.saveProtagonist(for: protagonist)
+        if let partner = request.partner, let partnerId = protagonist.partner {
+            _ = characterFetcher.saveCharacter(for: partner, with: partnerId)
+        }
+        
+    }
+    
 }
