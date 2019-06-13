@@ -55,6 +55,17 @@ playable:
 
     imageUrl: "http://www.lalaland.com/badMonster_image"
 
+  "eternalGod":
+    name: "Malvado"
+
+    currentHealthPoints: 200
+    maxHealthPoints: 200
+    attack: 35
+    defense: 5
+    agility: 30
+
+    imageUrl: "https://i.imgur.com/U6RBjYo.png"
+
   "grima_monster":
     name: "Grima"
 

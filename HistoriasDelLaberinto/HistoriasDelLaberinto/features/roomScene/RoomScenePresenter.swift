@@ -22,6 +22,7 @@ class RoomScenePresenter: BasePresenter {
     
     var roomId: String
     var shouldSetVisitedWhenFinished: Bool = false
+    var shouldEndGameWhenFinished: Bool = false
     var isDialogPresented: Bool = false
     var dialog: DialogDisplayLogic?
     var actualEvent: Event?
