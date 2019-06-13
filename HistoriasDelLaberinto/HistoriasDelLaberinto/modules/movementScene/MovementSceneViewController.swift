@@ -2,8 +2,8 @@ import UIKit
 
 protocol MovementSceneDisplayLogic: ViewControllerDisplay {
     func set(roomName: String)
-    func showConfirmationDialog()
-    func showCantMoveDialog()
+    func updateDirectionHidden(_ direction: CompassDirection, isHidden: Bool)
+    func showAllDirections()
 }
 
 class MovementSceneViewController: BaseViewController {
@@ -13,12 +13,12 @@ class MovementSceneViewController: BaseViewController {
     }
     
     @IBOutlet weak var roomNameLabel: UILabel!
+    @IBOutlet weak var upButton: UIButton!
+    @IBOutlet weak var rightButton: UIButton!
+    @IBOutlet weak var downButton: UIButton!
+    @IBOutlet weak var leftButton: UIButton!
     
     // MARK: View lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
     
     @IBAction func didTouchView(_ sender: Any) {
         presenter?.dismiss()
@@ -35,22 +35,23 @@ extension MovementSceneViewController: MovementSceneDisplayLogic {
         roomNameLabel.isHidden = false
     }
     
-    func showConfirmationDialog() {
-        let alert = UIAlertController(title: nil, message: "¿Quieres moverte en esta dirección?", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: { _ in
-            self.presenter?.continueToNewRoom()
-        }))
-        alert.addAction(UIAlertAction(title: "Cancelar", style: .cancel, handler: nil))
-        
-        self.present(alert, animated: true)
+    func updateDirectionHidden(_ direction: CompassDirection, isHidden: Bool) {
+        switch direction {
+        case .north:
+            upButton.isHidden = isHidden
+        case .east:
+            rightButton.isHidden = isHidden
+        case .south:
+            downButton.isHidden = isHidden
+        case .west:
+            leftButton.isHidden = isHidden
+        }
     }
     
-    func showCantMoveDialog() {
-        let alert = UIAlertController(title: nil, message: "No te puedes mover en esa dirección", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: nil))
-        
-        self.present(alert, animated: true)
+    func showAllDirections() {
+        upButton.isHidden = false
+        rightButton.isHidden = false
+        downButton.isHidden = false
+        leftButton.isHidden = false
     }
 }
