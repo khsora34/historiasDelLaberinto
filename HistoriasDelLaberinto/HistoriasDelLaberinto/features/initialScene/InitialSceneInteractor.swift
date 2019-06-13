@@ -52,6 +52,7 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
         
         imageUrls.append(contentsOf: charactersFile.notPlayable.values.map({$0.imageUrl}))
         imageUrls.append(contentsOf: charactersFile.playable.values.map({$0.imageUrl}))
+        imageUrls.append(contentsOf: charactersFile.playable.values.compactMap({$0.portraitUrl}))
         
         imageUrls.append(contentsOf: roomsFile.rooms.values.map({$0.imageUrl}))
         

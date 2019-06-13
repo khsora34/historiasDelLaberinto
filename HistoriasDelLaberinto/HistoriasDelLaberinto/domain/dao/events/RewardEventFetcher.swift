@@ -34,7 +34,7 @@ extension RewardEventFetcher {
             }
         }
         
-        return RewardEvent(message: message, rewards: rewards, shouldSetVisited: rewardEvent.shouldSetVisited, nextStep: rewardEvent.nextStep)
+        return RewardEvent(message: message, rewards: rewards, shouldSetVisited: rewardEvent.shouldSetVisited, shouldEndGame: event?.shouldEndGame, nextStep: rewardEvent.nextStep)
     }
     
     func saveReward(_ reward: RewardEvent, with id: String) -> Bool {
@@ -50,6 +50,7 @@ extension RewardEventFetcher {
         loadingEvent.setValue(id, forKey: "id")
         loadingEvent.setValue(reward.message, forKey: "message")
         loadingEvent.setValue(reward.shouldSetVisited, forKey: "shouldSetVisited")
+        loadingEvent.setValue(reward.shouldEndGame, forKey: "shouldEndGame")
         loadingEvent.setValue(reward.nextStep, forKey: "nextStep")
         
         var managedRewards: [NSManagedObject] = []

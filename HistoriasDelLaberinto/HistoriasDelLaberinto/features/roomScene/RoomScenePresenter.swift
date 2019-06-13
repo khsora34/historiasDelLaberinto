@@ -22,6 +22,8 @@ class RoomScenePresenter: BasePresenter {
     
     var roomId: String
     var shouldSetVisitedWhenFinished: Bool = false
+    var shouldEndGameWhenFinished: Bool = false
+    var isDialogPresented: Bool = false
     var dialog: DialogDisplayLogic?
     var actualEvent: Event?
     
@@ -84,7 +86,10 @@ extension RoomScenePresenter: RoomScenePresentationLogic {
     }
 }
 
-extension RoomScenePresenter: EventHandler {
+extension RoomScenePresenter: EventHandler {    
+    var imageUrl: String {
+        return room.imageUrl
+    }
     
     func onFinish() {
         loadActions()

@@ -1,12 +1,13 @@
-protocol EventHandler: class, ConditionEvaluator {
+protocol EventHandler: ConditionEvaluator, NextDialogHandler, BattleBuilderDelegate {
     var eventHandlerRouter: EventHandlerRoutingLogic? { get }
     var eventHandlerInteractor: EventHandlerInteractor? { get }
     var roomId: String { get }
     var dialog: DialogDisplayLogic? { get set }
     var actualEvent: Event? { get set }
     var shouldSetVisitedWhenFinished: Bool { get set }
+    var shouldEndGameWhenFinished: Bool { get set }
+    var isDialogPresented: Bool { get set }
     func startEvent(with id: String)
-    func continueFlow()
     func onFinish()
     func showError(_ error: EventsHandlerError)
 }
@@ -20,9 +21,7 @@ extension EventHandler {
             return
         }
         
-        if !shouldSetVisitedWhenFinished, event.shouldSetVisited == true {
-            shouldSetVisitedWhenFinished = true
-        }
+        updateNextStepStatus(event: event)
         
         if let condition = event as? ConditionEvent {
             startEvent(with: condition.nextStep(evaluator: self))
@@ -34,6 +33,16 @@ extension EventHandler {
         determineAction(type: eventType)
     }
     
+    private func updateNextStepStatus(event: Event) {
+        if !shouldSetVisitedWhenFinished, event.shouldSetVisited == true {
+            shouldSetVisitedWhenFinished = true
+        }
+        
+        if !shouldEndGameWhenFinished, event.shouldEndGame == true {
+            shouldEndGameWhenFinished = true
+        }
+    }
+    
     func continueFlow() {
         if actualEvent is ChoiceEvent { return }
         
@@ -41,11 +50,18 @@ extension EventHandler {
             finishFlow()
             return
         }
+        
         startEvent(with: nextStep)
     }
     
     private func finishFlow() {
         finishDialog()
+        
+        guard !shouldEndGameWhenFinished else {
+            shouldEndGame()
+            return
+        }
+        
         if shouldSetVisitedWhenFinished {
             let request = EventsHandlerModels.SetVisited.Request(roomId: roomId)
             eventHandlerInteractor?.setIsVisited(request: request)
@@ -58,7 +74,11 @@ extension EventHandler {
         dialog = nil
     }
     
-    func performChoice(tag: Int) {
+    func elementSelected(id: Int) {
+        performChoice(tag: id)
+    }
+    
+    private func performChoice(tag: Int) {
         guard let event = actualEvent as? ChoiceEvent else {
             showError(.invalidChoiceExecution)
             return
@@ -84,8 +104,8 @@ extension EventHandler {
             showChoice(actualEvent as! ChoiceEvent)
         case .condition:
             showError(.determinedCondition)
-        default:
-            fatalError()
+        case .battle:
+            showBattle(actualEvent as! BattleEvent)
         }
     }
     
@@ -94,12 +114,8 @@ extension EventHandler {
             showError(.characterNotFound)
             return
         }
-        if dialog == nil {
-            dialog = Dialog.createDialogue(configurator, delegate: self)
-            eventHandlerRouter?.present(dialog!, animated: true)
-        } else {
-            dialog?.setNextConfigurator(configurator)
-        }
+        
+        showDialog(configurator: configurator)
     }
     
     private func showReward(_ event: RewardEvent) {
@@ -107,12 +123,8 @@ extension EventHandler {
             showError(.itemsNotFound)
             return
         }
-        if dialog == nil {
-            dialog = Dialog.createReward(configurator, delegate: self)
-            eventHandlerRouter?.present(dialog!, animated: true)
-        } else {
-            dialog?.setNextConfigurator(configurator)
-        }
+        
+        showDialog(configurator: configurator)
     }
     
     private func showChoice(_ event: ChoiceEvent) {
@@ -120,12 +132,16 @@ extension EventHandler {
             showError(.characterNotFound)
             return
         }
-        if dialog == nil {
-            dialog = Dialog.createChoice(configurator, delegate: self)
-            eventHandlerRouter?.present(dialog!, animated: true)
-        } else {
-            dialog?.setNextConfigurator(configurator)
+        showDialog(configurator: configurator)
+    }
+    
+    private func showBattle(_ event: BattleEvent) {
+        guard let enemy = getBattle(event) else {
+            showError(.characterNotFound)
+            return
         }
+        hideDialog()
+        eventHandlerRouter?.goToBattle(with: enemy, with: self)
     }
 }
 
@@ -165,8 +181,17 @@ extension EventHandler {
         let request = EventsHandlerModels.BuildChoice.Request(event: choice)
         let response = interactor.buildChoice(request: request)
         guard let actions = response.configurator?.actions, !actions.isEmpty else { return nil }
-        actualEvent = ChoiceEvent(options: actions, shouldSetVisited: choice.shouldSetVisited)
+        actualEvent = ChoiceEvent(options: actions, shouldSetVisited: choice.shouldSetVisited, shouldEndGame: choice.shouldEndGame)
         return response.configurator
+    }
+    
+    private func getBattle(_ battle: BattleEvent) -> PlayableCharacter? {
+        guard let interactor = eventHandlerInteractor else { return nil }
+        let request = EventsHandlerModels.BuildBattle.Request(event: battle)
+        let response = interactor.buildBattle(request: request)
+        guard let enemy = response.enemy as? PlayableCharacter else { return nil }
+        actualEvent = battle
+        return enemy
     }
 }
 
@@ -177,22 +202,25 @@ extension EventHandler {
         actualEvent = nil
         switch error {
         case .eventNotFound:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "This event doesn't seem to be available. Sorry for the inconveniences!", shouldSetVisited: false, nextStep: nil)
+            let errorEvent = DialogueEvent(characterId: "Cisco", message: "This event doesn't seem to be available. Sorry for the inconveniences!", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .characterNotFound:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "It seems we encountered a problem showing the character. So sorry for that.", shouldSetVisited: false, nextStep: nil)
+            let errorEvent = DialogueEvent(characterId: "Cisco", message: "It seems we encountered a problem showing the character. So sorry for that.", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .defaultError:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "An error ocurred, sorry about that...", shouldSetVisited: false, nextStep: nil)
+            let errorEvent = DialogueEvent(characterId: "Cisco", message: "An error ocurred, sorry about that...", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .determinedCondition:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "It seems the condition went way too far.", shouldSetVisited: false, nextStep: nil)
+            let errorEvent = DialogueEvent(characterId: "Cisco", message: "It seems the condition went way too far.", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .itemsNotFound:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "There was a problem finding the items rewarded. Sorry for that...", shouldSetVisited: false, nextStep: nil)
+            let errorEvent = DialogueEvent(characterId: "Cisco", message: "There was a problem finding the items rewarded. Sorry for that...", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .invalidChoiceExecution:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "The function for a choice was executed without asking for it.", shouldSetVisited: false, nextStep: nil)
+            let errorEvent = DialogueEvent(characterId: "Cisco", message: "The function for a choice was executed without asking for it.", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
+            showErrorDialogue(errorEvent)
+        case .reasonIsPartnerDefeated:
+            let errorEvent = DialogueEvent(characterId: "Cisco", message: "It seems you finished a battle because your partner was defeated.", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .custom:
             fatalError()
@@ -207,6 +235,9 @@ extension EventHandler {
             dialog = Dialog.createDialogue(configurator, delegate: self)
             eventHandlerRouter?.present(dialog!, animated: true)
         } else {
+            if !isDialogPresented {
+                eventHandlerRouter?.present(dialog!, animated: true)
+            }
             dialog?.setNextConfigurator(configurator)
         }
     }
@@ -215,5 +246,53 @@ extension EventHandler {
 extension EventHandler {
     func evaluate(_ condition: Condition) -> Bool {
         return compare(with: condition)
+    }
+}
+
+extension EventHandler {
+    func onBattleFinished(reason: FinishedBattleReason) {
+        switch reason {
+        case .defeated(.protagonist):
+            guard let nextStep = (actualEvent as? BattleEvent)?.loseStep, !nextStep.isEmpty else {
+                finishFlow()
+                return
+            }
+            startEvent(with: nextStep)
+        case .defeated(.enemy):
+            guard let nextStep = (actualEvent as? BattleEvent)?.winStep, !nextStep.isEmpty else {
+                finishFlow()
+                return
+            }
+            startEvent(with: nextStep)
+        case .defeated(.partner):
+            showError(.reasonIsPartnerDefeated)
+        }
+    }
+    
+    private func shouldEndGame() {
+        eventHandlerInteractor?.endGame()
+        eventHandlerRouter?.endGame()
+    }
+}
+
+// MARK: - Show dialog
+
+extension EventHandler {
+    func showDialog(configurator: DialogConfigurator) {
+        if dialog == nil {
+            dialog = Dialog.createDialog(configurator, delegate: self)
+            eventHandlerRouter?.present(dialog!, animated: true)
+        } else {
+            if !isDialogPresented {
+                eventHandlerRouter?.present(dialog!, animated: true)
+            }
+            dialog?.setNextConfigurator(configurator)
+        }
+        isDialogPresented = true
+    }
+    
+    func hideDialog() {
+        isDialogPresented = false
+        eventHandlerRouter?.dismiss(animated: true)
     }
 }

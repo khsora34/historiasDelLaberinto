@@ -10,4 +10,5 @@ protocol CharacterStatus: GameCharacter {
     var agility: Int { get }
     var currentStatusAilment: StatusAilment? { get set }
     var weapon: String? { get set }
+    var portraitUrl: String? { get }
 }

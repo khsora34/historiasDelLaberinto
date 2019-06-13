@@ -26,7 +26,7 @@ class CharacterFetcherImpl: CharacterFetcher {
         guard let imageUrl = character?.imageUrl, let name = character?.name else { return nil }
         
         if let status = character?.status {
-            return PlayableCharacter(name: name, currentHealthPoints: Int(status.currentHealthPoints), maxHealthPoints: Int(status.maxHealthPoints), attack: Int(status.attack), defense: Int(status.defense), agility: Int(status.agility), currentStatusAilment: nil, weapon: status.weapon, imageUrl: imageUrl)
+            return PlayableCharacter(name: name, imageUrl: imageUrl, portraitUrl: character?.portraitUrl, currentHealthPoints: Int(status.currentHealthPoints), maxHealthPoints: Int(status.maxHealthPoints), attack: Int(status.attack), defense: Int(status.defense), agility: Int(status.agility), currentStatusAilment: nil, weapon: status.weapon)
         } else {
             return NotPlayableCharacter(name: name, imageUrl: imageUrl)
         }
@@ -45,6 +45,7 @@ class CharacterFetcherImpl: CharacterFetcher {
         loadingCharacter.setValue(character.imageUrl, forKey: "imageUrl")
         
         if let character = character as? PlayableCharacter {
+            loadingCharacter.setValue(character.portraitUrl, forKey: "portraitUrl")
             let loadingStatus = NSManagedObject(entity: statusEntity, insertInto: managedContext)
             loadingStatus.setValue(character.currentHealthPoints, forKey: "currentHealthPoints")
             loadingStatus.setValue(character.maxHealthPoints, forKey: "maxHealthPoints")

@@ -8,7 +8,8 @@ playable:
     defense: 22
     agility: 19
 
-    imageUrl: "https://i.imgur.com/Ru432PA.png"
+    imageUrl: "https://imgur.com/zNGi05P.png"
+    portraitUrl: "https://i.imgur.com/g3WIUf4.png"
 
   "speedSora":
     name: "Blizzard claws Sora"
@@ -53,6 +54,17 @@ playable:
     agility: 6
 
     imageUrl: "http://www.lalaland.com/badMonster_image"
+
+  "eternalGod":
+    name: "Malvado"
+
+    currentHealthPoints: 200
+    maxHealthPoints: 200
+    attack: 35
+    defense: 5
+    agility: 30
+
+    imageUrl: "https://i.imgur.com/U6RBjYo.png"
 
   "grima_monster":
     name: "Grima"
