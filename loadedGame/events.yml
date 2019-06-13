@@ -31,8 +31,9 @@
 
 "room17StartBattle":
   mode: "battle"
-  enemyId: "badMonster"
-  nextStep: "room17BattleReward"
+  enemyId: "eternalGod"
+  winStep: "room17BattleReward"
+  loseStep: "exampleEnding"
 
 "room17BattleReward":
   mode: "reward"
@@ -152,3 +153,10 @@
     required: "exampleRoom"
   nextStepIfTrue: "exampleDialogue1"
   nextStepIfFalse: "exampleDialogue3"
+
+"exampleEnding":
+  mode: "dialogue"
+  message: "Lo siento mucho, pero no puedo seguir adelante."
+  characterId: "gerar"
+  shouldEndGame: true
+  nextStep: ""
