@@ -26,4 +26,8 @@ class RouterProvider {
     var movementSceneRouter: MovementSceneRoutingLogic {
         return MovementSceneRouter(moduleProvider: moduleProvider, drawer: drawer)
     }
+    
+    var battleSceneRouter: BattleSceneRoutingLogic {
+        return BattleSceneRouter(moduleProvider: moduleProvider, drawer: drawer)
+    }
 }
