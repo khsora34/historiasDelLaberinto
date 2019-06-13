@@ -8,19 +8,7 @@ class RoomSceneInteractor: BaseInteractor, RoomSceneBusinessLogic {
 }
 
 extension RoomSceneInteractor: EventHandlerInteractor {
-    var eventFetcher: EventFetcherManager {
-        return databaseFetcherProvider.eventsFetcherManager
-    }
-    
-    var characterFetcher: CharacterFetcher {
-        return databaseFetcherProvider.charactersFetcher
-    }
-    
-    var protagonistFetcher: ProtagonistFetcher {
-        return databaseFetcherProvider.protagonistFetcher
-    }
-    
-    var itemFetcher: ItemFetcher {
-        return databaseFetcherProvider.itemsFetcher
+    var fetcherProvider: DatabaseFetcherProvider {
+        return databaseFetcherProvider
     }
 }

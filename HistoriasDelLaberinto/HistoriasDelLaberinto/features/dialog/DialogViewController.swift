@@ -144,16 +144,20 @@ extension DialogViewController: DialogDisplayLogic {
         if newConfigurator is ChoiceConfigurator && configurator is DialogueConfigurator {
             configurator = newConfigurator
             setupConfiguration()
-            timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
+            internSetTypingText()
         } else if !newConfigurator.sharesStruct(with: configurator) {
             changeForDifferent(configurator: newConfigurator)
             
         } else {
             configurator = newConfigurator
             setupConfiguration()
-            if self.presentingViewController != nil {
-                timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
-            }
+            internSetTypingText()
+        }
+    }
+    
+    private func internSetTypingText() {
+        if self.presentingViewController != nil {
+            timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
         }
     }
     
@@ -170,7 +174,7 @@ extension DialogViewController: DialogDisplayLogic {
                 self.characterImageView.alpha = 1.0
                 self.dialogView.alpha = self.dialogViewDefaultAlpha
             }, completion: { _ in
-                self.timer = self.textView.setTypingText(message: self.configurator.message, timeInterval: self.typingTimeInterval)
+                self.internSetTypingText()
             })
         })
     }
