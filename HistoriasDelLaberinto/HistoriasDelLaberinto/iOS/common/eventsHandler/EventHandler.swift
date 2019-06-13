@@ -243,10 +243,17 @@ extension EventHandler {
     func onBattleFinished(reason: FinishedBattleReason) {
         switch reason {
         case .defeated(.protagonist):
-            actualEvent = DialogueEvent(characterId: "", message: "", shouldSetVisited: nil, nextStep: "badEnding")
-            continueFlow()
+            guard let nextStep = (actualEvent as? BattleEvent)?.loseStep, !nextStep.isEmpty else {
+                finishFlow()
+                return
+            }
+            startEvent(with: nextStep)
         case .defeated(.enemy):
-            continueFlow()
+            guard let nextStep = (actualEvent as? BattleEvent)?.winStep, !nextStep.isEmpty else {
+                finishFlow()
+                return
+            }
+            startEvent(with: nextStep)
         case .defeated(.partner):
             showError(.reasonIsPartnerDefeated)
         }
