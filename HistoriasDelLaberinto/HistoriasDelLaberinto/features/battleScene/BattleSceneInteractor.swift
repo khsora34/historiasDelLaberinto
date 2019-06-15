@@ -1,5 +1,8 @@
 protocol BattleSceneBusinessLogic: BusinessLogic {
     func getProtagonist() -> BattleScene.ProtagonistGetter.Response
+    func getPartner(request: BattleScene.CharacterGetter.Request) -> BattleScene.CharacterGetter.Response
+    func getWeapon(request: BattleScene.WeaponGetter.Request) -> BattleScene.WeaponGetter.Response
+    func updateCharacters(request: BattleScene.CharacterUpdater.Request)
 }
 
 class BattleSceneInteractor: BaseInteractor, BattleSceneBusinessLogic {
