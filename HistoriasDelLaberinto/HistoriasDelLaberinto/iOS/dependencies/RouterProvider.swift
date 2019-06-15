@@ -27,6 +27,10 @@ class RouterProvider {
         return MovementSceneRouter(moduleProvider: moduleProvider, drawer: drawer)
     }
     
+    var pauseMenuSceneRouter: PauseMenuSceneRoutingLogic {
+        return PauseMenuSceneRouter(moduleProvider: moduleProvider, drawer: drawer)
+    }
+    
     var battleSceneRouter: BattleSceneRoutingLogic {
         return BattleSceneRouter(moduleProvider: moduleProvider, drawer: drawer)
     }

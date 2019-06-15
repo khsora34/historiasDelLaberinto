@@ -1,6 +1,7 @@
 protocol PauseMenuScenePresentationLogic: Presenter {
     func performOption(tag: Int)
     func saveGame()
+    func exitGame()
 }
 
 class PauseMenuScenePresenter: BasePresenter {
@@ -12,8 +13,8 @@ class PauseMenuScenePresenter: BasePresenter {
         return _interactor as? PauseMenuSceneInteractor
     }
     
-    var router: PauseMenuSceneRouter? {
-        return _router as? PauseMenuSceneRouter
+    var router: PauseMenuSceneRoutingLogic? {
+        return _router as? PauseMenuSceneRoutingLogic
     }
     
     var models: [CharacterChosen: StatusViewModel] = [:]
@@ -82,6 +83,8 @@ extension PauseMenuScenePresenter: PauseMenuScenePresentationLogic {
         case .save?:
             saveGame()
             viewController?.showMessage("Juego guardado con éxito.")
+        case .exit?:
+            viewController?.showExitMessage()
         default:
             return
         }
@@ -93,5 +96,9 @@ extension PauseMenuScenePresenter: PauseMenuScenePresentationLogic {
         let partnerRequest = PauseMenuScene.CharacterUpdater.Request(partnerId: protagonist.partner, partner: partner)
         interactor?.updateCharacter(request: partnerRequest)
         interactor?.saveContext()
+    }
+    
+    func exitGame() {
+        router?.endGame()
     }
 }

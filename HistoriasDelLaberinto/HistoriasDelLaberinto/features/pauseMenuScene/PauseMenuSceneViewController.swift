@@ -5,6 +5,7 @@ protocol PauseMenuSceneDisplayLogic: ViewControllerDisplay {
     func addCharactersStatus(_ models: [StatusViewModel])
     func createOptions(with optionsAvailable: [(String, Int)])
     func showMessage(_ message: String)
+    func showExitMessage()
 }
 
 class PauseMenuSceneViewController: BaseViewController {
@@ -49,6 +50,15 @@ extension PauseMenuSceneViewController: PauseMenuSceneDisplayLogic {
     func showMessage(_ message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func showExitMessage() {
+        let alert = UIAlertController(title: nil, message: "¿Estás seguro de que quieres salir? Se borrará tu progreso si sales sin guardar.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Me arriesgaré", style: .default, handler: { [weak self] _ in
+            self?.presenter?.exitGame()
+        }))
+        alert.addAction(UIAlertAction(title: "Déjame pensarlo", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
     }
     
