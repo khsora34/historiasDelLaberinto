@@ -44,6 +44,12 @@ extension RoomSceneRouter {
         navigation.pushViewController(module.viewController, animated: true)
     }
     
+    func goToMenu() {
+        guard let navigation = drawer?.currentRootViewController as? UINavigationController else { return }
+        let module = moduleProvider.pauseMenuSceneModuleModule()
+        navigation.pushViewController(module.viewController, animated: true)
+    }
+    
     func endGame() {
         guard let navigation = drawer?.currentRootViewController as? UINavigationController else { return }
         let module = moduleProvider.initialSceneModule()
