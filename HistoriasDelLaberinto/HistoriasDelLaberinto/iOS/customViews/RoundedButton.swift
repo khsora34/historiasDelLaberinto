@@ -10,18 +10,23 @@ class RoundedButton: UIButton {
         }
     }
     
+    init(color: UIColor, frame: CGRect) {
+        super.init(frame: frame)
+        setStyle(with: color)
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setStyle()
+        setStyle(with: UIColor.coolBlue.withAlphaComponent(0.9))
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setStyle()
+        setStyle(with: UIColor.coolBlue.withAlphaComponent(0.9))
     }
     
-    private func setStyle() {
-        backgroundColor = UIColor.coolBlue.withAlphaComponent(0.9)
+    private func setStyle(with color: UIColor) {
+        backgroundColor = color
         layer.cornerRadius = 4.0
         setTitleColor(.white, for: .normal)
         titleLabel?.font = UIFont(name: "Helvetica Neue", size: 18.0)

@@ -8,8 +8,8 @@ class InitialScenePresenter: BasePresenter {
         return _viewController as? InitialSceneDisplayLogic
     }
     
-    var interactor: InitialSceneInteractor? {
-        return _interactor as? InitialSceneInteractor
+    var interactor: InitialSceneBusinessLogic? {
+        return _interactor as? InitialSceneBusinessLogic
     }
     
     var router: InitialSceneRoutingLogic? {
@@ -60,6 +60,7 @@ extension InitialScenePresenter {
             viewController?.showUnableToStartGame()
             return
         }
+        interactor?.createMovement()
         router?.goToRoomView(roomId: id, room: room)
     }
 }

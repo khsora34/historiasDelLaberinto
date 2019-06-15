@@ -20,6 +20,10 @@ class ModuleProvider {
         return MovementSceneModule(room: room, routerProvider: routerProvider, databaseProvider: databaseFetcherProvider)
     }
     
+    func pauseMenuSceneModuleModule() -> Module {
+        return PauseMenuSceneModule(routerProvider: routerProvider, databaseProvider: databaseFetcherProvider)
+    }
+    
     func battleSceneModule(enemy: PlayableCharacter, delegate: BattleBuilderDelegate) -> Module {
         return BattleSceneModule(enemy: enemy, delegate: delegate, routerProvider: routerProvider, databaseProvider: databaseFetcherProvider)
     }

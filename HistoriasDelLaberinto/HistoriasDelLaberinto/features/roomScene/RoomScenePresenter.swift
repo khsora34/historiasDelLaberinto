@@ -82,7 +82,7 @@ extension RoomScenePresenter: RoomScenePresentationLogic {
     }
     
     func showMenu() {
-        
+        router?.goToMenu()
     }
 }
 
