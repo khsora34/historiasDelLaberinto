@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         nav.isNavigationBarHidden = true
         
         setNavigationBarProperties()
-        configureCache()
+        configureImageCache()
         
         drawer.setRoot(viewController: nav)
         
@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = .white
     }
     
-    private func configureCache() {
+    private func configureImageCache() {
         let cache = ImageCache.default
         cache.memoryStorage.config.expiration = .seconds(600)
         cache.diskStorage.config.expiration = .days(7)
@@ -89,8 +89,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             do {
                 try context.save()
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }

@@ -9,4 +9,5 @@ target 'HistoriasDelLaberinto' do
   pod 'Yams'
   pod 'SwiftLint'
   pod 'Kingfisher', '5.5.0'
+  pod "Pastel"
 end
