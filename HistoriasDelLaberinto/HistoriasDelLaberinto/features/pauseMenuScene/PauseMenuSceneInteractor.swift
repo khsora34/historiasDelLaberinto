@@ -1,9 +1,12 @@
+import UIKit.UIApplication
+
 protocol PauseMenuSceneBusinessLogic: BusinessLogic {
     func getProtagonist() -> PauseMenuScene.ProtagonistGetter.Response
     func getPartner(request: PauseMenuScene.CharacterGetter.Request) -> PauseMenuScene.CharacterGetter.Response
     func getWeapon(request: PauseMenuScene.WeaponGetter.Request) -> PauseMenuScene.WeaponGetter.Response
     func updateProtagonist(request: PauseMenuScene.ProtagonistUpdater.Request)
     func updateCharacter(request: PauseMenuScene.CharacterUpdater.Request)
+    func saveContext()
 }
 
 class PauseMenuSceneInteractor: BaseInteractor, PauseMenuSceneBusinessLogic {
@@ -46,5 +49,10 @@ class PauseMenuSceneInteractor: BaseInteractor, PauseMenuSceneBusinessLogic {
             return
         }
         _ = characterFetcher.saveCharacter(for: partner, with: partnerId)
+    }
+    
+    func saveContext() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        appDelegate.saveContext()
     }
 }
