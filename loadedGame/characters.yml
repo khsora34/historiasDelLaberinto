@@ -2,11 +2,11 @@ playable:
   "gerar":
     name: "Gerardo"
 
-    currentHealthPoints: 456
-    maxHealthPoints: 500
-    attack: 38
-    defense: 22
-    agility: 19
+    currentHealthPoints: 300
+    maxHealthPoints: 300
+    attack: 5
+    defense: 0
+    agility: 0
 
     imageUrl: "https://imgur.com/zNGi05P.png"
     portraitUrl: "https://i.imgur.com/g3WIUf4.png"
@@ -58,11 +58,11 @@ playable:
   "eternalGod":
     name: "Malvado"
 
-    currentHealthPoints: 200
-    maxHealthPoints: 200
-    attack: 35
-    defense: 5
-    agility: 30
+    currentHealthPoints: 20000
+    maxHealthPoints: 20000
+    attack: 80
+    defense: 0
+    agility: 60
 
     imageUrl: "https://i.imgur.com/U6RBjYo.png"
 

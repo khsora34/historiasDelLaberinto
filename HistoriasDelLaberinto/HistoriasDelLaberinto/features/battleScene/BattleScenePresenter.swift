@@ -231,7 +231,8 @@ extension BattleScenePresenter {
         let actualWeapon = actualWeapons[chosenCharacterStatus.weapon ?? ""]
         
         // CALCULATE MULTIPLE ATTACKS CHANCE
-        var agilityRatio = chosenCharacterStatus.agility/targetStatus.agility
+        let targetAgility = targetStatus.agility < 1 ? 1: targetStatus.agility
+        var agilityRatio =  chosenCharacterStatus.agility/targetAgility
         agilityRatio = agilityRatio <= 1 ? 1: agilityRatio
         
         var effectiveAttacks: Int = 0
