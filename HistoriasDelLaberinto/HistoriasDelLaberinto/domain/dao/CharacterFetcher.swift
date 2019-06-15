@@ -4,6 +4,7 @@ import CoreData
 protocol CharacterFetcher {
     func getCharacter(with id: String) -> GameCharacter?
     func saveCharacter(for character: GameCharacter, with id: String) -> Bool
+    func deleteOneCharacter(with id: String)
     func deleteAllCharacters()
 }
 
@@ -38,6 +39,9 @@ class CharacterFetcherImpl: CharacterFetcher {
         
         guard let characterEntity = NSEntityDescription.entity(forEntityName: "CharacterDAO", in: managedContext),
             let statusEntity = NSEntityDescription.entity(forEntityName: "StatusDAO", in: managedContext) else { return false }
+        
+        deleteOneCharacter(with: id)
+        
         let loadingCharacter = NSManagedObject(entity: characterEntity, insertInto: managedContext)
         
         loadingCharacter.setValue(id, forKey: "id")
@@ -65,6 +69,30 @@ class CharacterFetcherImpl: CharacterFetcher {
         }
     }
     
+    func deleteOneCharacter(with id: String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let characterFetchRequest: NSFetchRequest<CharacterDAO> = CharacterDAO.fetchRequest()
+        characterFetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        
+        do {
+            let results = try managedContext.fetch(characterFetchRequest)
+            for result in results {
+                if let status = result.status {
+                    managedContext.delete(status)
+                }
+                managedContext.delete(result)
+            }
+            
+            if managedContext.hasChanges {
+                try managedContext.save()
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
     func deleteAllCharacters() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -83,7 +111,6 @@ class CharacterFetcherImpl: CharacterFetcher {
             if managedContext.hasChanges {
                 try managedContext.save()
             }
-            
         } catch {
             print(error)
         }
