@@ -5,6 +5,7 @@ protocol InitialSceneBusinessLogic: BusinessLogic {
     func deleteAllFiles()
     func getRoom(request: InitialScene.RoomBuilder.Request) -> InitialScene.RoomBuilder.Response
     func getMovement() -> InitialScene.MovementGetter.Response
+    func createMovement()
 }
 
 class InitialSceneInteractor: InitialSceneBusinessLogic {
@@ -91,6 +92,10 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
     func getRoom(request: InitialScene.RoomBuilder.Request) -> InitialScene.RoomBuilder.Response {
         let room = databaseFetcherProvider.roomsFetcher.getRoom(with: request.roomId)
         return InitialScene.RoomBuilder.Response(room: room)
+    }
+    
+    func createMovement() {
+        databaseFetcherProvider.movementFetcher.createMovement()
     }
 }
 
