@@ -1,4 +1,5 @@
 protocol PauseMenuScenePresentationLogic: Presenter {
+    func performOption(tag: Int)
 }
 
 class PauseMenuScenePresenter: BasePresenter {
@@ -56,15 +57,7 @@ extension PauseMenuScenePresenter {
 }
 
 extension PauseMenuScenePresenter {
-    private func createOptions() {
-        let availableOptions: [MenuOptions] = [.items, .save, .exit]
-        let transformed = availableOptions.map { return ($0.getOptionName(), $0.rawValue) }
-        viewController?.createOptions(with: transformed)
-    }
-}
-
-extension PauseMenuScenePresenter: PauseMenuScenePresentationLogic {
-    func buildCharacters() {
+    private func buildCharacters() {
         let protagonistModel = StatusViewModel(chosenCharacter: .protagonist, name: protagonist.name, ailment: protagonist.currentStatusAilment, actualHealth: protagonist.currentHealthPoints, maxHealth: protagonist.maxHealthPoints, imageUrl: protagonist.portraitUrl, isEnemy: false, didTouchView: nil)
         var charactersForStatus: [StatusViewModel] = [protagonistModel]
         if let partner = partner {
@@ -73,5 +66,31 @@ extension PauseMenuScenePresenter: PauseMenuScenePresentationLogic {
             models[.partner] = partnerModel
         }
         viewController?.addCharactersStatus(charactersForStatus)
+    }
+    
+    private func createOptions() {
+        let availableOptions: [MenuOption] = [.items, .save, .exit]
+        let transformed = availableOptions.map { return ($0.getOptionName(), $0.rawValue) }
+        viewController?.createOptions(with: transformed)
+    }
+}
+
+extension PauseMenuScenePresenter: PauseMenuScenePresentationLogic {
+    func performOption(tag: Int) {
+        switch MenuOption(rawValue: tag) {
+        case .save?:
+            saveGame()
+        default:
+            return
+        }
+    }
+    
+    private func saveGame() {
+        let protaRequest = PauseMenuScene.ProtagonistUpdater.Request(protagonist: protagonist)
+        interactor?.updateProtagonist(request: protaRequest)
+        let partnerRequest = PauseMenuScene.CharacterUpdater.Request(partnerId: protagonist.partner, partner: partner)
+        interactor?.updateCharacter(request: partnerRequest)
+        interactor?.saveContext()
+        viewController?.showMessage("Juego guardado con éxito.")
     }
 }

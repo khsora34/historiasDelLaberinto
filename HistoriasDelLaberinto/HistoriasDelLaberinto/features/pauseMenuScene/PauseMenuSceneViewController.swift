@@ -4,6 +4,7 @@ import Pastel
 protocol PauseMenuSceneDisplayLogic: ViewControllerDisplay {
     func addCharactersStatus(_ models: [StatusViewModel])
     func createOptions(with optionsAvailable: [(String, Int)])
+    func showMessage(_ message: String)
 }
 
 class PauseMenuSceneViewController: BaseViewController {
@@ -30,6 +31,7 @@ class PauseMenuSceneViewController: BaseViewController {
     
     @objc func buttonSelected(sender: UIButton) {
         let tag = sender.tag
+        presenter?.performOption(tag: tag)
     }
 }
 
@@ -38,6 +40,12 @@ extension PauseMenuSceneViewController {
 }
 
 extension PauseMenuSceneViewController: PauseMenuSceneDisplayLogic {
+    func showMessage(_ message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
     func addCharactersStatus(_ models: [StatusViewModel]) {
         for model in models {
             // Auto Layout will do the job.

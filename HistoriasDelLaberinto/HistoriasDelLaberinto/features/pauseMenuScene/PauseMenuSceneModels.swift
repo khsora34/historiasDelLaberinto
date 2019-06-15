@@ -33,7 +33,7 @@ enum PauseMenuScene {
     }
 }
 
-enum MenuOptions: Int {
+enum MenuOption: Int {
     case items, save, exit
     
     func getOptionName() -> String {
