@@ -1,6 +1,7 @@
 protocol Event: Codable {
     var nextStep: String? { get }
     var shouldSetVisited: Bool? { get }
+    var shouldEndGame: Bool? { get }
 }
 
 enum EventType: String {

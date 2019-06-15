@@ -4,6 +4,7 @@ import CoreData
 protocol CharacterFetcher {
     func getCharacter(with id: String) -> GameCharacter?
     func saveCharacter(for character: GameCharacter, with id: String) -> Bool
+    func deleteOneCharacter(with id: String)
     func deleteAllCharacters()
 }
 
@@ -26,7 +27,7 @@ class CharacterFetcherImpl: CharacterFetcher {
         guard let imageUrl = character?.imageUrl, let name = character?.name else { return nil }
         
         if let status = character?.status {
-            return PlayableCharacter(name: name, currentHealthPoints: Int(status.currentHealthPoints), maxHealthPoints: Int(status.maxHealthPoints), attack: Int(status.attack), defense: Int(status.defense), agility: Int(status.agility), currentStatusAilment: nil, weapon: status.weapon, imageUrl: imageUrl)
+            return PlayableCharacter(name: name, imageUrl: imageUrl, portraitUrl: character?.portraitUrl, currentHealthPoints: Int(status.currentHealthPoints), maxHealthPoints: Int(status.maxHealthPoints), attack: Int(status.attack), defense: Int(status.defense), agility: Int(status.agility), currentStatusAilment: nil, weapon: status.weapon)
         } else {
             return NotPlayableCharacter(name: name, imageUrl: imageUrl)
         }
@@ -38,6 +39,9 @@ class CharacterFetcherImpl: CharacterFetcher {
         
         guard let characterEntity = NSEntityDescription.entity(forEntityName: "CharacterDAO", in: managedContext),
             let statusEntity = NSEntityDescription.entity(forEntityName: "StatusDAO", in: managedContext) else { return false }
+        
+        deleteOneCharacter(with: id)
+        
         let loadingCharacter = NSManagedObject(entity: characterEntity, insertInto: managedContext)
         
         loadingCharacter.setValue(id, forKey: "id")
@@ -45,6 +49,7 @@ class CharacterFetcherImpl: CharacterFetcher {
         loadingCharacter.setValue(character.imageUrl, forKey: "imageUrl")
         
         if let character = character as? PlayableCharacter {
+            loadingCharacter.setValue(character.portraitUrl, forKey: "portraitUrl")
             let loadingStatus = NSManagedObject(entity: statusEntity, insertInto: managedContext)
             loadingStatus.setValue(character.currentHealthPoints, forKey: "currentHealthPoints")
             loadingStatus.setValue(character.maxHealthPoints, forKey: "maxHealthPoints")
@@ -61,6 +66,30 @@ class CharacterFetcherImpl: CharacterFetcher {
         } catch let error as NSError {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
             return false
+        }
+    }
+    
+    func deleteOneCharacter(with id: String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let characterFetchRequest: NSFetchRequest<CharacterDAO> = CharacterDAO.fetchRequest()
+        characterFetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        
+        do {
+            let results = try managedContext.fetch(characterFetchRequest)
+            for result in results {
+                if let status = result.status {
+                    managedContext.delete(status)
+                }
+                managedContext.delete(result)
+            }
+            
+            if managedContext.hasChanges {
+                try managedContext.save()
+            }
+        } catch {
+            print(error)
         }
     }
     
@@ -82,7 +111,6 @@ class CharacterFetcherImpl: CharacterFetcher {
             if managedContext.hasChanges {
                 try managedContext.save()
             }
-            
         } catch {
             print(error)
         }

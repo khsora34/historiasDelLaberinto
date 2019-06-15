@@ -39,4 +39,13 @@ class ExampleSceneRouter: BaseRouter, ExampleSceneRoutingLogic {
     func dismiss(animated: Bool) {
         drawer?.dismiss(animated: animated, completion: nil)
     }
+    
+    func goToBattle(with enemy: PlayableCharacter, with delegate: BattleBuilderDelegate) {
+        dismiss(animated: true)
+        guard let navigation = drawer?.currentRootViewController as? UINavigationController else { return }
+        let module = moduleProvider.battleSceneModule(enemy: enemy, delegate: delegate)
+        navigation.pushViewController(module.viewController, animated: true)
+    }
+    
+    func endGame() {}
 }

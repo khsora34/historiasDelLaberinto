@@ -2,22 +2,29 @@ import UIKit
 import Kingfisher
 
 class Dialog {
-    static func createDialogue(_ dialogue: DialogueConfigurator, delegate: EventHandler) -> DialogDisplayLogic {
+    static func createDialogue(_ dialogue: DialogueConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
         let dialog = DialogViewController(dialogue)
         dialog.delegate = delegate
         dialog.initView()
         return dialog
     }
     
-    static func createReward(_ reward: RewardConfigurator, delegate: EventHandler) -> DialogDisplayLogic {
+    static func createReward(_ reward: RewardConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
         let dialog = DialogViewController(reward)
         dialog.delegate = delegate
         dialog.initView()
         return dialog
     }
     
-    static func createChoice(_ choice: ChoiceConfigurator, delegate: EventHandler) -> DialogDisplayLogic {
+    static func createChoice(_ choice: ChoiceConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
         let dialog = DialogViewController(choice)
+        dialog.delegate = delegate
+        dialog.initView()
+        return dialog
+    }
+    
+    static func createDialog(_ dialog: DialogConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
+        let dialog = DialogViewController(dialog)
         dialog.delegate = delegate
         dialog.initView()
         return dialog
@@ -33,8 +40,36 @@ class DialogViewController: UIViewController {
     private let dialogViewDefaultAlpha: CGFloat = 0.95
     private let transitionAlpha: CGFloat = 0.3
     
+    lazy var topConstraint: NSLayoutConstraint = {
+        return dialogView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10.0)
+    }()
     private var configurator: DialogConfigurator
     private var timer: Timer?
+    private var alignment: DialogAlignment = .bottom {
+        didSet {
+            guard oldValue != alignment else { return }
+            switch alignment {
+            case .bottom:
+                topConstraint.isActive = false
+                dialogHeightConstraint.isActive = false
+                let heightConstraint = NSLayoutConstraint(item: dialogView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.25, constant: 0)
+                heightConstraint.isActive = true
+                dialogHeightConstraint = heightConstraint
+                dialogTopConstraint.isActive = true
+                dialogToScrollInequalityConstraint.isActive = true
+                dialogBottomConstraint.isActive = true
+            case .top:
+                topConstraint.isActive = true
+                dialogHeightConstraint.isActive = false
+                let heightConstraint = NSLayoutConstraint(item: dialogView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.15, constant: 0)
+                heightConstraint.isActive = true
+                dialogHeightConstraint = heightConstraint
+                dialogTopConstraint.isActive = false
+                dialogToScrollInequalityConstraint.isActive = false
+                dialogBottomConstraint.isActive = false
+            }
+        }
+    }
     
     @IBOutlet weak var dialogView: UIView!
     @IBOutlet weak var characterLabel: UILabel!
@@ -43,7 +78,12 @@ class DialogViewController: UIViewController {
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet var tapWindowGesture: UITapGestureRecognizer!
     
-    weak var delegate: EventHandler?
+    @IBOutlet weak var dialogHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var dialogTopConstraint: NSLayoutConstraint!
+    @IBOutlet var dialogToScrollInequalityConstraint: NSLayoutConstraint!
+    @IBOutlet var dialogBottomConstraint: NSLayoutConstraint!
+    
+    weak var delegate: NextDialogHandler?
     
     fileprivate init(_ configurator: DialogConfigurator) {
         self.configurator = configurator
@@ -58,6 +98,8 @@ class DialogViewController: UIViewController {
     
     func initView() {
         view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.75)
+        textView.backgroundColor = UIColor.coolBlue.withAlphaComponent(0.95)
+        textView.alpha = 0.95
         dialogView.layer.cornerRadius = 6.0
         dialogView.alpha = dialogViewDefaultAlpha
         stackView.isHidden = true
@@ -70,6 +112,7 @@ class DialogViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupConfiguration()
+        
         timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
     }
     
@@ -83,6 +126,8 @@ class DialogViewController: UIViewController {
             setup(reward: reward)
         } else if let choice = configurator as? ChoiceConfigurator {
             setup(choice: choice)
+        } else if let battle = configurator as? BattleConfigurator {
+            setup(battle: battle)
         } else {
             setup(dialogue: DialogueConfigurator(name: "Cisco", message: "Error looking for configurator.", imageUrl: ""))
         }
@@ -99,13 +144,19 @@ extension DialogViewController: DialogDisplayLogic {
         if newConfigurator is ChoiceConfigurator && configurator is DialogueConfigurator {
             configurator = newConfigurator
             setupConfiguration()
-            timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
+            internSetTypingText()
         } else if !newConfigurator.sharesStruct(with: configurator) {
             changeForDifferent(configurator: newConfigurator)
             
         } else {
             configurator = newConfigurator
             setupConfiguration()
+            internSetTypingText()
+        }
+    }
+    
+    private func internSetTypingText() {
+        if self.presentingViewController != nil {
             timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
         }
     }
@@ -123,7 +174,7 @@ extension DialogViewController: DialogDisplayLogic {
                 self.characterImageView.alpha = 1.0
                 self.dialogView.alpha = self.dialogViewDefaultAlpha
             }, completion: { _ in
-                self.timer = self.textView.setTypingText(message: self.configurator.message, timeInterval: self.typingTimeInterval)
+                self.internSetTypingText()
             })
         })
     }
@@ -141,6 +192,7 @@ extension DialogViewController {
                 self?.characterImageView.isHidden = true
             }
         }
+        alignment = .bottom
     }
     
     private func setup(reward: RewardConfigurator) {
@@ -158,6 +210,7 @@ extension DialogViewController {
             self.stackView.addArrangedSubview(newView)
         }
         (stackView.arrangedSubviews.last as? RewardView)?.isLast = true
+        alignment = .bottom
     }
     
     private func setup(choice: ChoiceConfigurator) {
@@ -169,9 +222,19 @@ extension DialogViewController {
         let actions = choice.actions
         
         stackView.setButtonsInColumns(names: actions.map({$0.name}), action: #selector(buttonSelected(sender:)), for: self, numberOfColumns: 2, fixedHeight: true)
+        alignment = .bottom
+    }
+    
+    private func setup(battle: BattleConfigurator) {
+        view.backgroundColor = .clear
+        textView.backgroundColor = .coolBlue
+        textView.alpha = 1.0
+        characterImageView.isHidden = true
+        stackView.isHidden = true
+        alignment = battle.alignment
     }
     
     @objc func buttonSelected(sender: UIButton) {
-        delegate?.performChoice(tag: sender.tag)
+        delegate?.elementSelected(id: sender.tag)
     }
 }

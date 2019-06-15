@@ -14,6 +14,10 @@
             <connections>
                 <outlet property="characterImageView" destination="G35-6G-vZJ" id="NED-NZ-bqd"/>
                 <outlet property="characterLabel" destination="zEC-cM-yDA" id="zRQ-XJ-42T"/>
+                <outlet property="dialogBottomConstraint" destination="MX5-DA-S42" id="v7D-zy-v8a"/>
+                <outlet property="dialogHeightConstraint" destination="FtJ-Yw-VNe" id="gHb-zS-1eu"/>
+                <outlet property="dialogToScrollInequalityConstraint" destination="Zy1-GO-xFq" id="N90-yI-BmU"/>
+                <outlet property="dialogTopConstraint" destination="mhh-Qz-YIl" id="vS4-ak-0Y7"/>
                 <outlet property="dialogView" destination="wBb-sU-uyb" id="VmJ-qY-TuY"/>
                 <outlet property="stackView" destination="y6w-nP-0GT" id="PP2-Lh-i1f"/>
                 <outlet property="tapWindowGesture" destination="FUk-3c-fs7" id="RB3-fH-pf4"/>
@@ -29,7 +33,7 @@
                 <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G35-6G-vZJ" userLabel="Character Image View">
                     <rect key="frame" x="0.0" y="30" width="375" height="637"/>
                 </imageView>
-                <view alpha="0.94999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wBb-sU-uyb" userLabel="Dialog view">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wBb-sU-uyb" userLabel="Dialog view">
                     <rect key="frame" x="10" y="490.5" width="355" height="166.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="780" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zEC-cM-yDA" userLabel="Character name label">
@@ -42,7 +46,7 @@
                             <rect key="frame" x="10" y="41.5" width="335" height="115"/>
                             <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="19"/>
+                            <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="22"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                     </subviews>

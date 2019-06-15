@@ -11,17 +11,19 @@ class InitialSceneViewController: BaseViewController {
     }
     
     @IBOutlet weak var loadGameButton: UIButton!
-    // MARK: Setup
-    
-    private func setup() {}
     
     // MARK: View lifecycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setup()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
     }
-
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.isHidden = false
+    }
+    
     @IBAction func didTapNewGame(_ sender: Any) {
         presenter?.startNewGame()
     }

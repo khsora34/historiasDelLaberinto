@@ -23,4 +23,8 @@ class ModuleProvider {
     func pauseMenuSceneModuleModule() -> Module {
         return PauseMenuSceneModule(routerProvider: routerProvider)
     }
+    
+    func battleSceneModule(enemy: PlayableCharacter, delegate: BattleBuilderDelegate) -> Module {
+        return BattleSceneModule(enemy: enemy, delegate: delegate, routerProvider: routerProvider, databaseProvider: databaseFetcherProvider)
+    }
 }
