@@ -9,7 +9,7 @@ class PauseMenuSceneModule: Module {
     init(routerProvider: RouterProvider, databaseProvider: DatabaseFetcherProvider) {
         viewController = ViewCreator.createFrom(storyboardName: storyboardName, forController: controllerName)
         presenter = PauseMenuScenePresenter()
-        router = routerProvider.voidRouter
+        router = routerProvider.pauseMenuSceneRouter
         interactor = PauseMenuSceneInteractor(databaseProvider: databaseProvider)
         viewController._presenter = presenter
         presenter._interactor = interactor
