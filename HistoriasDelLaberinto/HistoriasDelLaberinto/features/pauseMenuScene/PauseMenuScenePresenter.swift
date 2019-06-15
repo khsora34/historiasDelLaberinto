@@ -1,5 +1,6 @@
 protocol PauseMenuScenePresentationLogic: Presenter {
     func performOption(tag: Int)
+    func saveGame()
 }
 
 class PauseMenuScenePresenter: BasePresenter {
@@ -80,17 +81,17 @@ extension PauseMenuScenePresenter: PauseMenuScenePresentationLogic {
         switch MenuOption(rawValue: tag) {
         case .save?:
             saveGame()
+            viewController?.showMessage("Juego guardado con éxito.")
         default:
             return
         }
     }
     
-    private func saveGame() {
+    func saveGame() {
         let protaRequest = PauseMenuScene.ProtagonistUpdater.Request(protagonist: protagonist)
         interactor?.updateProtagonist(request: protaRequest)
         let partnerRequest = PauseMenuScene.CharacterUpdater.Request(partnerId: protagonist.partner, partner: partner)
         interactor?.updateCharacter(request: partnerRequest)
         interactor?.saveContext()
-        viewController?.showMessage("Juego guardado con éxito.")
     }
 }

@@ -26,7 +26,13 @@ class PauseMenuSceneViewController: BaseViewController {
         backgroundView.setColors([UIColor.blue, UIColor.cyan, UIColor.blue, UIColor.green])
         backgroundView.startAnimation()
         conditionView.backgroundColor = UIColor(white: 0.9, alpha: 0.3)
-        
+    }
+    
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        if parent == nil {
+            presenter?.saveGame()
+        }
     }
     
     @objc func buttonSelected(sender: UIButton) {
