@@ -4,7 +4,13 @@ struct Protagonist: CharacterStatus, Codable {
     let portraitUrl: String?
     var partner: String?
 
-    var currentHealthPoints: Int
+    var currentHealthPoints: Int {
+        didSet {
+            if currentHealthPoints > maxHealthPoints {
+                currentHealthPoints = maxHealthPoints
+            }
+        }
+    }
     let maxHealthPoints: Int
     let attack: Int
     let defense: Int
