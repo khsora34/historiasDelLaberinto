@@ -18,7 +18,15 @@ class ItemsSceneViewController: BaseViewController {
     @IBOutlet weak var conditionView: UIView!
     @IBOutlet weak var itemsStackView: UIStackView!
     @IBOutlet weak var statusStackView: UIStackView!
+    
     // MARK: View lifecycle
+    
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        if parent == nil {
+            presenter?.saveGame()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +80,7 @@ extension ItemsSceneViewController: ItemsSceneDisplayLogic {
         let anim = CABasicAnimation(keyPath: "opacity")
         anim.fromValue = 0
         anim.toValue = 0.7
-        anim.duration = 0.3
+        anim.duration = 0.2
         anim.timingFunction = CAMediaTimingFunction(name: .linear)
         anim.autoreverses = true
         anim.repeatCount = 1
