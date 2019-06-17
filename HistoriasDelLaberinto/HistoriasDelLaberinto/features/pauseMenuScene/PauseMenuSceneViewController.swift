@@ -24,6 +24,8 @@ class PauseMenuSceneViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "Menú"
+        
         backgroundView.setColors([UIColor.blue, UIColor.cyan, UIColor.blue, UIColor.green])
         backgroundView.startAnimation()
         conditionView.backgroundColor = UIColor(white: 0.9, alpha: 0.3)
