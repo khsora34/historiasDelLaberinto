@@ -38,7 +38,7 @@ class ItemBackView: UIView {
         contentView.layer.cornerRadius = 5
         contentView.layer.masksToBounds = true
         contentView.backgroundColor = UIColor.black.withAlphaComponent(0.2)
-        descriptionLabel.font = UIFont.systemFont(ofSize: 15.0)
+        descriptionLabel.font = UIFont.systemFont(ofSize: 20.0)
         descriptionLabel.textColor = .white
     }
     
