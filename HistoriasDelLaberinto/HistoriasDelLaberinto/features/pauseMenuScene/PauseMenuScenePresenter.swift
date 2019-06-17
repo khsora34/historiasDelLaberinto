@@ -17,7 +17,7 @@ class PauseMenuScenePresenter: BasePresenter {
         return _router as? PauseMenuSceneRoutingLogic
     }
     
-    var models: [CharacterChosen: StatusViewModel] = [:]
+    var characterModels: [CharacterChosen: StatusViewModel] = [:]
     
     private var actualWeapons: [String: Weapon] = [:]
     private var protagonist: Protagonist!
@@ -65,9 +65,14 @@ extension PauseMenuScenePresenter {
         if let partner = partner {
             let partnerModel = StatusViewModel(chosenCharacter: .partner, name: partner.name, ailment: partner.currentStatusAilment, actualHealth: partner.currentHealthPoints, maxHealth: partner.maxHealthPoints, imageUrl: partner.portraitUrl, isEnemy: false, delegate: nil)
             charactersForStatus.append(partnerModel)
-            models[.partner] = partnerModel
+            characterModels[.partner] = partnerModel
         }
         viewController?.addCharactersStatus(charactersForStatus)
+    }
+    
+    private func updateCharacterModel(chosen: CharacterChosen, model: StatusViewModel) {
+        viewController?.updateStatusView(model)
+        characterModels[chosen] = model
     }
     
     private func createOptions() {
@@ -98,5 +103,18 @@ extension PauseMenuScenePresenter: PauseMenuScenePresentationLogic {
     
     func exitGame() {
         router?.endGame()
+    }
+}
+
+extension PauseMenuScenePresenter: CharactersUpdateDelegate {
+    func update(with protagonist: Protagonist, and partner: PlayableCharacter?) {
+        self.protagonist = protagonist
+        self.partner = partner
+        let protagonistModel = StatusViewModel(chosenCharacter: .protagonist, name: protagonist.name, ailment: protagonist.currentStatusAilment, actualHealth: protagonist.currentHealthPoints, maxHealth: protagonist.maxHealthPoints, imageUrl: protagonist.portraitUrl, isEnemy: false, delegate: nil)
+        updateCharacterModel(chosen: .protagonist, model: protagonistModel)
+        if let partner = partner {
+            let partnerModel = StatusViewModel(chosenCharacter: .partner, name: partner.name, ailment: partner.currentStatusAilment, actualHealth: partner.currentHealthPoints, maxHealth: partner.maxHealthPoints, imageUrl: partner.portraitUrl, isEnemy: false, delegate: nil)
+            updateCharacterModel(chosen: .partner, model: partnerModel)
+        }
     }
 }

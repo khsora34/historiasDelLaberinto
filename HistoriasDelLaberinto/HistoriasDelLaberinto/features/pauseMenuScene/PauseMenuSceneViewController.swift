@@ -6,6 +6,7 @@ protocol PauseMenuSceneDisplayLogic: ViewControllerDisplay {
     func createOptions(with optionsAvailable: [(String, Int)])
     func showMessage(_ message: String)
     func showExitMessage()
+    func updateStatusView(_ model: StatusViewModel)
 }
 
 class PauseMenuSceneViewController: BaseViewController {
@@ -59,6 +60,12 @@ extension PauseMenuSceneViewController: PauseMenuSceneDisplayLogic {
             let statusView = StatusViewController(frame: CGRect.zero)
             model.configure(view: statusView)
             statusStackView.addArrangedSubview(statusView)
+        }
+    }
+    
+    func updateStatusView(_ model: StatusViewModel) {
+        if let view = statusStackView.arrangedSubviews.filter({ ($0 as? StatusViewController)?.characterChosen == model.chosenCharacter }).first as? StatusViewController {
+            model.configure(view: view)
         }
     }
     
