@@ -1,6 +1,5 @@
 import Foundation
 protocol GameFilesLoader {
-    var stringUrlImages: [String] { get set }
     func getProtagonist() -> Protagonist
     func getCharacters() -> CharactersFile
     func getItems() -> ItemsFile
