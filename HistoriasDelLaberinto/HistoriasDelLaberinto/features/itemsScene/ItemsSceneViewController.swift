@@ -56,6 +56,14 @@ extension ItemsSceneViewController: ItemsSceneDisplayLogic {
     
     func updateItemView(_ model: ItemViewModel) {
         guard let view = itemsStackView.arrangedSubviews.filter({ $0.tag == model.tag }).first as? ItemView else { return }
+        guard model.quantity > 0 else {
+            UIView.animate(withDuration: 0.1) {
+                view.isHidden = true
+            }
+            itemsStackView.removeArrangedSubview(view)
+            view.removeFromSuperview()
+            return
+        }
         model.configure(view: view)
     }
 }
