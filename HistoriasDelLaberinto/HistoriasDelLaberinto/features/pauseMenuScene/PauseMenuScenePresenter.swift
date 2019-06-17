@@ -91,7 +91,7 @@ extension PauseMenuScenePresenter: PauseMenuScenePresentationLogic {
         case .exit?:
             viewController?.showExitMessage()
         case .items?:
-            router?.goToItemsView(protagonist: protagonist, partner: partner)
+            router?.goToItemsView(protagonist: protagonist, partner: partner, delegate: self)
         default:
             return
         }
