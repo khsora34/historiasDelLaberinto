@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Items Scene View Controller-->
+        <scene sceneID="bfh-cv-flk">
+            <objects>
+                <viewController storyboardIdentifier="ItemsSceneViewController" id="1sL-Cb-7QH" customClass="ItemsSceneViewController" customModule="HistoriasDelLaberinto" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="OCJ-jn-ZAd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gAh-Lh-Lre" userLabel="Background View" customClass="PastelView" customModule="Pastel">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Y5I-AH-Efc" userLabel="Items Stack View">
+                                <rect key="frame" x="10" y="54" width="394" height="80"/>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mG2-6G-rRP" userLabel="Condition View">
+                                <rect key="frame" x="0.0" y="582.5" width="414" height="313.5"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="iJp-m5-MmD">
+                                        <rect key="frame" x="20" y="20" width="374" height="239.5"/>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.91159054439999998" green="0.91159054439999998" blue="0.91159054439999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="iJp-m5-MmD" firstAttribute="leading" secondItem="mG2-6G-rRP" secondAttribute="leading" constant="20" id="ARl-n8-l0c"/>
+                                    <constraint firstItem="iJp-m5-MmD" firstAttribute="top" secondItem="mG2-6G-rRP" secondAttribute="top" constant="20" id="MmJ-Oa-3xI"/>
+                                    <constraint firstAttribute="trailing" secondItem="iJp-m5-MmD" secondAttribute="trailing" constant="20" id="cZ4-HB-esA"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Ju9-NO-bJF" firstAttribute="trailing" secondItem="gAh-Lh-Lre" secondAttribute="trailing" id="2cY-DQ-txm"/>
+                            <constraint firstAttribute="bottom" secondItem="gAh-Lh-Lre" secondAttribute="bottom" id="CkL-Sw-FfB"/>
+                            <constraint firstAttribute="bottom" secondItem="mG2-6G-rRP" secondAttribute="bottom" id="Faz-gN-p9e"/>
+                            <constraint firstItem="Ju9-NO-bJF" firstAttribute="bottom" secondItem="iJp-m5-MmD" secondAttribute="bottom" constant="20" id="Ftm-xn-YFX"/>
+                            <constraint firstItem="mG2-6G-rRP" firstAttribute="leading" secondItem="Ju9-NO-bJF" secondAttribute="leading" id="Rse-Jf-Lgb"/>
+                            <constraint firstItem="mG2-6G-rRP" firstAttribute="trailing" secondItem="Ju9-NO-bJF" secondAttribute="trailing" id="SlV-6b-VNT"/>
+                            <constraint firstAttribute="trailing" secondItem="Y5I-AH-Efc" secondAttribute="trailing" constant="10" id="dW5-bu-hzH"/>
+                            <constraint firstItem="mG2-6G-rRP" firstAttribute="height" secondItem="OCJ-jn-ZAd" secondAttribute="height" multiplier="0.35" id="eR6-mg-nUm"/>
+                            <constraint firstItem="Y5I-AH-Efc" firstAttribute="top" secondItem="Ju9-NO-bJF" secondAttribute="top" constant="10" id="i5F-Kf-PmS"/>
+                            <constraint firstItem="Y5I-AH-Efc" firstAttribute="leading" secondItem="Ju9-NO-bJF" secondAttribute="leading" constant="10" id="q3t-3O-bCi"/>
+                            <constraint firstItem="gAh-Lh-Lre" firstAttribute="leading" secondItem="Ju9-NO-bJF" secondAttribute="leading" id="rq3-Ft-bHE"/>
+                            <constraint firstItem="gAh-Lh-Lre" firstAttribute="top" secondItem="OCJ-jn-ZAd" secondAttribute="top" id="xpF-Np-GWt"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Ju9-NO-bJF"/>
+                    </view>
+                    <connections>
+                        <outlet property="backgroundView" destination="gAh-Lh-Lre" id="yby-vR-0n9"/>
+                        <outlet property="conditionView" destination="mG2-6G-rRP" id="7tL-AI-Psk"/>
+                        <outlet property="itemsStackView" destination="Y5I-AH-Efc" id="fCn-Vo-Jn5"/>
+                        <outlet property="statusStackView" destination="iJp-m5-MmD" id="yeb-eK-C4i"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dgT-0N-cus" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-995" y="2"/>
+        </scene>
+    </scenes>
+</document>
