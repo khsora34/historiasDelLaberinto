@@ -3,7 +3,13 @@ struct PlayableCharacter: CharacterStatus {
     let imageUrl: String
     let portraitUrl: String?
     
-    var currentHealthPoints: Int
+    var currentHealthPoints: Int {
+        didSet {
+            if currentHealthPoints > maxHealthPoints {
+                currentHealthPoints = maxHealthPoints
+            }
+        }
+    }
     let maxHealthPoints: Int
     let attack: Int
     let defense: Int
