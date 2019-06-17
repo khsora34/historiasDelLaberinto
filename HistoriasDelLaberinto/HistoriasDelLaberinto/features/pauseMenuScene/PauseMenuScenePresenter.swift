@@ -60,10 +60,10 @@ extension PauseMenuScenePresenter {
 
 extension PauseMenuScenePresenter {
     private func buildCharacters() {
-        let protagonistModel = StatusViewModel(chosenCharacter: .protagonist, name: protagonist.name, ailment: protagonist.currentStatusAilment, actualHealth: protagonist.currentHealthPoints, maxHealth: protagonist.maxHealthPoints, imageUrl: protagonist.portraitUrl, isEnemy: false, didTouchView: nil)
+        let protagonistModel = StatusViewModel(chosenCharacter: .protagonist, name: protagonist.name, ailment: protagonist.currentStatusAilment, actualHealth: protagonist.currentHealthPoints, maxHealth: protagonist.maxHealthPoints, imageUrl: protagonist.portraitUrl, isEnemy: false, delegate: nil)
         var charactersForStatus: [StatusViewModel] = [protagonistModel]
         if let partner = partner {
-            let partnerModel = StatusViewModel(chosenCharacter: .partner, name: partner.name, ailment: partner.currentStatusAilment, actualHealth: partner.currentHealthPoints, maxHealth: partner.maxHealthPoints, imageUrl: partner.portraitUrl, isEnemy: false, didTouchView: nil)
+            let partnerModel = StatusViewModel(chosenCharacter: .partner, name: partner.name, ailment: partner.currentStatusAilment, actualHealth: partner.currentHealthPoints, maxHealth: partner.maxHealthPoints, imageUrl: partner.portraitUrl, isEnemy: false, delegate: nil)
             charactersForStatus.append(partnerModel)
             models[.partner] = partnerModel
         }
@@ -85,6 +85,8 @@ extension PauseMenuScenePresenter: PauseMenuScenePresentationLogic {
             viewController?.showMessage("Juego guardado con éxito.")
         case .exit?:
             viewController?.showExitMessage()
+        case .items?:
+            router?.goToItemsView(protagonist: protagonist, partner: partner)
         default:
             return
         }
