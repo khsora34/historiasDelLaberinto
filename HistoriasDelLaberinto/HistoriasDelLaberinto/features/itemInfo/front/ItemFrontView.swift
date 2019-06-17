@@ -13,6 +13,7 @@ class ItemFrontView: UIView {
     
     var isSelected: Bool = false {
         didSet {
+            selectModel?(isSelected)
             if isSelected {
                 layer.borderWidth = 5
                 layer.borderColor = UIColor.white.cgColor
@@ -48,6 +49,7 @@ class ItemFrontView: UIView {
     
     weak var delegate: ItemSelectedDelegate?
     var flipView: (() -> Void)?
+    var selectModel: ((Bool) -> ())?
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var imageView: UIImageView!
