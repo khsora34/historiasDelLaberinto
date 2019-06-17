@@ -1,7 +1,7 @@
 import UIKit
 
 class ItemView: UIView {
-    private let defaultItemModel = ItemViewModel(id: "-1", name: "Objeto raro", description: "¿Esto es un objeto? ¿Quién sabe?", itemType: "NO-OBJETO", quantity: -1, imageUrl: nil, tag: -1, delegate: nil)
+    private let defaultItemModel = ItemViewModel(id: "-1", name: "Objeto raro", description: "¿Esto es un objeto? ¿Quién sabe?", itemType: nil, quantity: -1, imageUrl: nil, tag: -1, delegate: nil)
     private var showingBack = false
     
     @IBOutlet var contentView: UIView!

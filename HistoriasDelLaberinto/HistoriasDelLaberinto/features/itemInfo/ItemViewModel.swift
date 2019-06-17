@@ -2,14 +2,14 @@ class ItemViewModel {
     let id: String
     let name: String
     let description: String
-    let itemType: String
+    let itemType: ItemType?
     var quantity: Int
     let imageUrl: String?
     let tag: Int
     var isSelected = false
     let delegate: ItemSelectedDelegate?
     
-    init(id: String, name: String, description: String, itemType: String, quantity: Int, imageUrl: String?, tag: Int, delegate: ItemSelectedDelegate?) {
+    init(id: String, name: String, description: String, itemType: ItemType?, quantity: Int, imageUrl: String?, tag: Int, delegate: ItemSelectedDelegate?) {
         self.id = id
         self.name = name
         self.description = description

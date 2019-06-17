@@ -25,12 +25,9 @@ class ItemFrontView: UIView {
         }
     }
     
-    var itemType: String? {
-        get {
-            return itemTypeLabel.text
-        }
-        set {
-            itemTypeLabel.text = newValue
+    var itemType: ItemType? {
+        didSet {
+            itemTypeLabel.text = itemType?.localizedDescription()
         }
     }
     
@@ -88,6 +85,7 @@ class ItemFrontView: UIView {
     }
     
     @IBAction func didTapView(_ sender: Any) {
+        guard case .consumable? = itemType else { return }
         isSelected = !isSelected
         delegate?.didSelectItem(isSelected: isSelected, tag: self.tag)
     }
