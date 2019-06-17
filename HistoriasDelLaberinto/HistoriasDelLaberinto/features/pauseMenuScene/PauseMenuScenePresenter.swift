@@ -93,10 +93,6 @@ extension PauseMenuScenePresenter: PauseMenuScenePresentationLogic {
     }
     
     func saveGame() {
-        let protaRequest = PauseMenuScene.ProtagonistUpdater.Request(protagonist: protagonist)
-        interactor?.updateProtagonist(request: protaRequest)
-        let partnerRequest = PauseMenuScene.CharacterUpdater.Request(partnerId: protagonist.partner, partner: partner)
-        interactor?.updateCharacter(request: partnerRequest)
         interactor?.saveContext()
     }
     

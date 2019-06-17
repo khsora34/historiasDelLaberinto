@@ -31,21 +31,10 @@ class PauseMenuSceneViewController: BaseViewController {
         conditionView.backgroundColor = UIColor(white: 0.9, alpha: 0.3)
     }
     
-    override func willMove(toParent parent: UIViewController?) {
-        super.willMove(toParent: parent)
-        if parent == nil {
-            presenter?.saveGame()
-        }
-    }
-    
     @objc func buttonSelected(sender: UIButton) {
         let tag = sender.tag
         presenter?.performOption(tag: tag)
     }
-}
-
-extension PauseMenuSceneViewController {
-    
 }
 
 extension PauseMenuSceneViewController: PauseMenuSceneDisplayLogic {
