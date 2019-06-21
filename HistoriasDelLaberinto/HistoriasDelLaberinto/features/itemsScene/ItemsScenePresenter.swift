@@ -131,6 +131,5 @@ extension ItemsScenePresenter: DidTouchStatusDelegate {
         viewController?.updateItemView(model)
         itemModels[tag] = model
         protagonist.items[model.id] = model.quantity > 0 ? model.quantity: nil
-        
     }
 }
