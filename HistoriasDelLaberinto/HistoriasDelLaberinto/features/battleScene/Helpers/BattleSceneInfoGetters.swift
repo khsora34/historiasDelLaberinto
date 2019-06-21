@@ -1,12 +1,10 @@
-protocol BattleSceneInfoGetters: class {
-    var protagonist: CharacterStatus! { get set }
-    var partner: CharacterStatus? { get set }
-    var enemy: CharacterStatus { get set }
-    var models: [CharacterChosen: StatusViewModel] { get set }
-    var viewController: BattleSceneDisplayLogic? { get }
+extension BattleScenePresenter {
+    struct Constants {
+        static let extraDamageWithoutWeapon: Int = 5
+    }
 }
 
-extension BattleSceneInfoGetters {
+extension BattleScenePresenter {
     func buildCharacters() {
         let protagonistModel = StatusViewModel(chosenCharacter: .protagonist, name: protagonist.name, ailment: protagonist.currentStatusAilment, actualHealth: protagonist.currentHealthPoints, maxHealth: protagonist.maxHealthPoints, imageUrl: protagonist.portraitUrl, isEnemy: false, delegate: nil)
         models[.protagonist] = protagonistModel
@@ -40,7 +38,7 @@ extension BattleSceneInfoGetters {
         var model: StatusViewModel
         switch chosen {
         case .protagonist:
-            protagonist = status
+            protagonist = status as? Protagonist
             guard let newModel = models[.protagonist] else { return }
             model = newModel
         case .partner:
@@ -122,6 +120,20 @@ extension BattleSceneInfoGetters {
             partner?.currentHealthPoints -= randomDamage
         case .protagonist:
             protagonist.currentHealthPoints -= randomDamage
+        }
+    }
+    
+    private func updateCharacterModel(chosen: CharacterChosen, model: StatusViewModel) {
+        viewController?.updateView(model)
+        models[chosen] = model
+    }
+    
+    func updateStatusModels() {
+        let protagonistModel = StatusViewModel(chosenCharacter: .protagonist, name: protagonist.name, ailment: protagonist.currentStatusAilment, actualHealth: protagonist.currentHealthPoints, maxHealth: protagonist.maxHealthPoints, imageUrl: protagonist.portraitUrl, isEnemy: false, delegate: nil)
+        updateCharacterModel(chosen: .protagonist, model: protagonistModel)
+        if let partner = partner {
+            let partnerModel = StatusViewModel(chosenCharacter: .partner, name: partner.name, ailment: partner.currentStatusAilment, actualHealth: partner.currentHealthPoints, maxHealth: partner.maxHealthPoints, imageUrl: partner.portraitUrl, isEnemy: false, delegate: nil)
+            updateCharacterModel(chosen: .partner, model: partnerModel)
         }
     }
 }
