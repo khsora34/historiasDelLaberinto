@@ -72,6 +72,7 @@ class StatusViewController: UIView {
     @IBOutlet private weak var actualhealthLabel: UILabel!
     @IBOutlet private weak var maxTitleLabel: UILabel!
     @IBOutlet private weak var maxHealthLabel: UILabel!
+    @IBOutlet weak var flashView: UIView!
     
     func setImage(with imageUrl: String?) {
         if let imageUrl = imageUrl {

@@ -108,17 +108,6 @@ extension BattleSceneInfoGetters {
         return start
     }
     
-    func getPossibleTargets(from chosen: CharacterChosen) -> [CharacterChosen] {
-        switch chosen {
-        case .protagonist:
-            return [.enemy]
-        case .partner:
-            return [.enemy]
-        case .enemy:
-            return [.protagonist, .partner]
-        }
-    }
-    
     func calculateAilment(_ ailment: InduceAilment?, to character: CharacterStatus) -> Bool {
         guard character.currentStatusAilment == nil, let ailment = ailment else { return false }
         return Double.random(in: 0..<1) < Double(ailment.induceRate) / 100.0

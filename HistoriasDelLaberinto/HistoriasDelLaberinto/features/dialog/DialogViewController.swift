@@ -45,6 +45,7 @@ class DialogViewController: UIViewController {
     }()
     private var configurator: DialogConfigurator
     private var timer: Timer?
+    private var shouldShowDialogueWhenAppear: Bool = true
     private var alignment: DialogAlignment = .bottom {
         didSet {
             guard oldValue != alignment else { return }
@@ -111,12 +112,12 @@ class DialogViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupConfiguration()
         
-        timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
+        guard shouldShowDialogueWhenAppear else { return }
+        showDialogInfo()
     }
     
-    private func setupConfiguration(newConfigurator: DialogConfigurator? = nil) {
+    private func setupConfiguration() {
         initView()
         characterLabel.text = configurator.name
         textView.text = ""
@@ -135,6 +136,8 @@ class DialogViewController: UIViewController {
     
     @IBAction func didTouchView(_ sender: Any) {
         timer?.invalidate()
+        timer = nil
+        shouldShowDialogueWhenAppear = true
         delegate?.continueFlow()
     }
 }
@@ -143,19 +146,24 @@ extension DialogViewController: DialogDisplayLogic {
     func setNextConfigurator(_ newConfigurator: DialogConfigurator) {
         if newConfigurator is ChoiceConfigurator && configurator is DialogueConfigurator {
             configurator = newConfigurator
-            setupConfiguration()
-            internSetTypingText()
+            showDialogInfo()
+            
         } else if !newConfigurator.sharesStruct(with: configurator) {
             changeForDifferent(configurator: newConfigurator)
+            shouldShowDialogueWhenAppear = false
             
         } else {
             configurator = newConfigurator
-            setupConfiguration()
-            internSetTypingText()
+            showDialogInfo()
         }
     }
     
-    private func internSetTypingText() {
+    private func showDialogInfo() {
+        setupConfiguration()
+        internalSetTypingText()
+    }
+    
+    private func internalSetTypingText() {
         if self.presentingViewController != nil {
             timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
         }
@@ -174,7 +182,7 @@ extension DialogViewController: DialogDisplayLogic {
                 self.characterImageView.alpha = 1.0
                 self.dialogView.alpha = self.dialogViewDefaultAlpha
             }, completion: { _ in
-                self.internSetTypingText()
+                self.internalSetTypingText()
             })
         })
     }

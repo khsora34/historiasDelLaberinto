@@ -18,7 +18,15 @@ class ItemsSceneViewController: BaseViewController {
     @IBOutlet weak var conditionView: UIView!
     @IBOutlet weak var itemsStackView: UIStackView!
     @IBOutlet weak var statusStackView: UIStackView!
+    
     // MARK: View lifecycle
+    
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        if parent == nil {
+            presenter?.saveGame()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +59,7 @@ extension ItemsSceneViewController: ItemsSceneDisplayLogic {
     func updateStatusView(_ model: StatusViewModel) {
         if let view = statusStackView.arrangedSubviews.filter({ ($0 as? StatusViewController)?.characterChosen == model.chosenCharacter }).first as? StatusViewController {
             model.configure(view: view)
+            addBlinkAnimation(to: view.flashView, withAutoreverse: true)
         }
     }
     
@@ -65,5 +74,16 @@ extension ItemsSceneViewController: ItemsSceneDisplayLogic {
             return
         }
         model.configure(view: view)
+    }
+    
+    private func addBlinkAnimation(to view: UIView, withAutoreverse: Bool) {
+        let anim = CABasicAnimation(keyPath: "opacity")
+        anim.fromValue = 0
+        anim.toValue = 0.7
+        anim.duration = 0.2
+        anim.timingFunction = CAMediaTimingFunction(name: .linear)
+        anim.autoreverses = true
+        anim.repeatCount = 1
+        view.layer.add(anim, forKey: "opacity")
     }
 }

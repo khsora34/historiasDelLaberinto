@@ -1,4 +1,5 @@
 protocol ItemsScenePresentationLogic: Presenter {
+    func saveGame()
 }
 
 class ItemsScenePresenter: BasePresenter {
@@ -13,6 +14,9 @@ class ItemsScenePresenter: BasePresenter {
     var router: ItemsSceneRoutingLogic? {
         return _router as? ItemsSceneRoutingLogic
     }
+    
+    private var needsUpdate: Bool = false
+    weak var updateDelegate: CharactersUpdateDelegate?
     
     private var charactersModels: [CharacterChosen: StatusViewModel] = [:]
     private var items: [String: Item] = [:]
@@ -74,7 +78,7 @@ extension ItemsScenePresenter: ItemSelectedDelegate {
     }
     
     private func deselectAllItems() {
-        for var (_, model) in itemModels where model.tag != selectedItemTag {
+        for (_, model) in itemModels where model.tag != selectedItemTag {
             model.isSelected = false
             viewController?.updateItemView(model)
         }
@@ -83,7 +87,7 @@ extension ItemsScenePresenter: ItemSelectedDelegate {
 
 extension ItemsScenePresenter: DidTouchStatusDelegate {
     func didTouchStatus(_ characterChosen: CharacterChosen) {
-        guard let tag = selectedItemTag, var selectedItemModel = itemModels[tag], let selectedItem = items[selectedItemModel.id], let consumable = selectedItem as? ConsumableItem else {
+        guard let tag = selectedItemTag, let selectedItemModel = itemModels[tag], let selectedItem = items[selectedItemModel.id], let consumable = selectedItem as? ConsumableItem else {
             selectedItemTag = nil
             deselectAllItems()
             return
@@ -106,6 +110,16 @@ extension ItemsScenePresenter: DidTouchStatusDelegate {
             updateItemModel(tag: tag, model: selectedItemModel)
             updateCharacterModel(chosen: .partner, model: characterModel)
         }
+        needsUpdate = true
+    }
+    
+    func saveGame() {
+        guard needsUpdate else { return }
+        let protaRequest = PauseMenuScene.ProtagonistUpdater.Request(protagonist: protagonist)
+        interactor?.updateProtagonist(request: protaRequest)
+        let partnerRequest = PauseMenuScene.CharacterUpdater.Request(partnerId: protagonist.partner, partner: partner)
+        interactor?.updateCharacter(request: partnerRequest)
+        updateDelegate?.update(with: protagonist, and: partner)
     }
     
     private func updateCharacterModel(chosen: CharacterChosen, model: StatusViewModel) {
@@ -116,6 +130,6 @@ extension ItemsScenePresenter: DidTouchStatusDelegate {
     private func updateItemModel(tag: Int, model: ItemViewModel) {
         viewController?.updateItemView(model)
         itemModels[tag] = model
-        protagonist.items[model.id] = model.quantity
+        protagonist.items[model.id] = model.quantity > 0 ? model.quantity: nil
     }
 }
