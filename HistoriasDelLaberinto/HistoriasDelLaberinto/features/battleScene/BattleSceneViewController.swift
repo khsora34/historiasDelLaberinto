@@ -42,7 +42,7 @@ class BattleSceneViewController: BaseViewController {
     }
     
     @IBAction func didTapItemsButton(_ sender: Any) {
-        
+        presenter?.protaWillUseItems()
     }
 }
 
