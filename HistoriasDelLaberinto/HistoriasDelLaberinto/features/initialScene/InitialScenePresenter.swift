@@ -28,6 +28,7 @@ class InitialScenePresenter: BasePresenter {
 
 extension InitialScenePresenter: InitialScenePresentationLogic {
     func startNewGame() {
+        viewController?.setLoadButton(isHidden: true)
         viewController?.showLoading()
         interactor?.deleteAllFiles()
         let request = InitialScene.FileLoader.Request(imageDelegate: self)
@@ -51,7 +52,6 @@ extension InitialScenePresenter: InitialScenePresentationLogic {
 }
 
 extension InitialScenePresenter {
-    
     private func goToRoom(id: String) {
         let request = InitialScene.RoomBuilder.Request(roomId: id)
         let response = interactor?.getRoom(request: request)
@@ -66,8 +66,15 @@ extension InitialScenePresenter {
 }
 
 extension InitialScenePresenter: ImageLoaderDelegate {
-    func finishedLoadingImages() {
-        viewController?.dismissLoading()
-        goToRoom(id: "startRoom")
+    func finishedLoadingImages(numberOfImagesLoaded: Int) {
+        guard numberOfImagesLoaded > 0 else {
+            viewController?.dismissLoading { [weak self] in
+                self?.viewController?.showUnableToStartGame()
+            }
+            return
+        }
+        viewController?.dismissLoading { [weak self] in
+            self?.goToRoom(id: "startRoom")
+        }
     }
 }

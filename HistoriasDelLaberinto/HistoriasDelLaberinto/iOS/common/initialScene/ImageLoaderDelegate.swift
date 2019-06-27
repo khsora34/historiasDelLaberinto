@@ -1,3 +1,3 @@
 protocol ImageLoaderDelegate: class {
-    func finishedLoadingImages()
+    func finishedLoadingImages(numberOfImagesLoaded: Int)
 }

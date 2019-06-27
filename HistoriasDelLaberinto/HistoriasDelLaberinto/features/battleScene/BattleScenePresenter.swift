@@ -1,12 +1,7 @@
 protocol BattleScenePresentationLogic: Presenter {
     func protaWillAttack()
     func showStartDialogue()
-}
-
-extension BattleScenePresenter {
-    fileprivate struct Constants {
-        static let extraDamageWithoutWeapon: Int = 5
-    }
+    func protaWillUseItems()
 }
 
 class BattleScenePresenter: BasePresenter {
@@ -31,7 +26,7 @@ class BattleScenePresenter: BasePresenter {
     var models: [CharacterChosen: StatusViewModel] = [:]
     var dialog: DialogDisplayLogic?
     
-    var protagonist: CharacterStatus!
+    var protagonist: Protagonist!
     var partner: CharacterStatus?
     var enemy: CharacterStatus
     
@@ -40,6 +35,8 @@ class BattleScenePresenter: BasePresenter {
     
     private var actualState = ActualState(step: .userInput, character: .protagonist, target: nil)
     private var finishedBattleReason: FinishedBattleReason?
+    private var isPartnerDead = false
+    private var didBattleStart = false
     
     weak var delegate: BattleBuilderDelegate?
     
@@ -60,12 +57,18 @@ class BattleScenePresenter: BasePresenter {
 
 extension BattleScenePresenter: BattleScenePresentationLogic {
     func showStartDialogue() {
+        guard !didBattleStart else { return }
+        didBattleStart = true
         showDialog(with: BattleConfigurator(message: "Un \(enemy.name) salvaje apareció.", alignment: .bottom))
     }
     
     func protaWillAttack() {
         actualState = ActualState(step: .attackPhase, character: .protagonist, target: nil)
         performNextStep()
+    }
+    
+    func protaWillUseItems() {
+        router?.goToItemsView(protagonist: protagonist, partner: partner as? PlayableCharacter, delegate: self)
     }
 }
 
@@ -146,7 +149,14 @@ extension BattleScenePresenter {
             }
             if partner.currentHealthPoints == 0 {
                 actualState = ActualState(step: .shouldContinueAilment, character: .protagonist, target: nil)
+                
+                guard !isPartnerDead else {
+                    performNextStep()
+                    return
+                }
+                
                 let configurator = DialogueConfigurator(name: partner.name, message: "Lo siento, ya no puedo más...", imageUrl: partner.imageUrl)
+                isPartnerDead = true
                 showDialog(with: configurator)
                 return
             } else {
@@ -188,7 +198,13 @@ extension BattleScenePresenter {
                 while nextCharacter == .partner { nextCharacter = nextCharacter.next() }
                 
                 actualState = ActualState(step: AttackPhase.startPhase(), character: nextCharacter, target: nil)
+                guard !isPartnerDead else {
+                    performNextStep()
+                    return
+                }
+                
                 let configurator = DialogueConfigurator(name: partner.name, message: "Lo siento, ya no puedo más...", imageUrl: partner.imageUrl)
+                isPartnerDead = true
                 showDialog(with: configurator)
             } else {
                 actualState = ActualState(step: AttackPhase.startPhase(), character: actualState.character.next(), target: nil)
@@ -219,11 +235,25 @@ extension BattleScenePresenter {
     }
     
     private func attackResult() {
+        func getPossibleTargets(from chosen: CharacterChosen) -> [CharacterChosen] {
+            switch chosen {
+            case .protagonist:
+                return [.enemy]
+            case .partner:
+                return [.enemy]
+            case .enemy:
+                var possibleTargets: [CharacterChosen] = [.protagonist]
+                if !isPartnerDead {
+                    possibleTargets.append(.partner)
+                }
+                return possibleTargets
+            }
+        }
         let chosenCharacter = actualState.character
         let chosenCharacterStatus = getCharacter(from: chosenCharacter)
         
         let possibleTargets = getPossibleTargets(from: chosenCharacter)
-        let target = possibleTargets.shuffled()[0]
+        let target = possibleTargets.randomElement() ?? possibleTargets[0]
         var targetStatus = getCharacter(from: target)
         
         var attackMessage: String
@@ -241,6 +271,7 @@ extension BattleScenePresenter {
         for _ in 0..<agilityRatio where Double.random(in: 0..<1) < Double(actualWeapon?.hitRate ?? 100) / 100 {
             effectiveAttacks += 1
         }
+        
         guard effectiveAttacks > 0 else {
             attackMessage = "Pero falló el ataque..."
             actualState = ActualState(step: actualState.step.getNext(), character: chosenCharacter, target: target)
@@ -378,9 +409,23 @@ extension BattleScenePresenter: NextDialogHandler {
     }
 }
 
-extension BattleScenePresenter: BattleSceneInfoGetters {}
 extension BattleScenePresenter: DialogLauncher {
     func present(_ dialog: DialogDisplayLogic) {
         router?.present(dialog, animated: true)
+    }
+}
+
+extension BattleScenePresenter: CharactersUpdateDelegate {
+    func update(with protagonist: Protagonist, and partner: PlayableCharacter?) {
+        self.protagonist = protagonist
+        if let partner = partner {
+            self.partner = partner
+            if partner.currentHealthPoints > 0 {
+                isPartnerDead = false
+            }
+        }
+        updateStatusModels()
+        actualState = ActualState(step: actualState.step.getNext(), character: actualState.character.next(), target: nil)
+        performNextStep()
     }
 }

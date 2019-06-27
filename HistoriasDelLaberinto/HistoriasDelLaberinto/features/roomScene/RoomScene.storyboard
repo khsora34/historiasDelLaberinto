@@ -23,17 +23,30 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UJo-ZN-znG">
-                                <rect key="frame" x="0.0" y="627.33333333333337" width="414" height="268.66666666666663"/>
+                                <rect key="frame" x="0.0" y="672" width="414" height="224"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="RKV-kT-YfV">
-                                        <rect key="frame" x="10" y="0.0" width="394" height="234.66666666666666"/>
-                                    </stackView>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mfW-7k-SAI">
+                                        <rect key="frame" x="10" y="0.0" width="394" height="224"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="RKV-kT-YfV">
+                                                <rect key="frame" x="0.0" y="0.0" width="394" height="34"/>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="RKV-kT-YfV" firstAttribute="leading" secondItem="mfW-7k-SAI" secondAttribute="leading" id="1uq-Tw-TmH"/>
+                                            <constraint firstAttribute="bottom" secondItem="RKV-kT-YfV" secondAttribute="bottom" id="S8r-DX-dfc"/>
+                                            <constraint firstItem="RKV-kT-YfV" firstAttribute="width" secondItem="mfW-7k-SAI" secondAttribute="width" id="Tmx-5n-smk"/>
+                                            <constraint firstItem="RKV-kT-YfV" firstAttribute="top" secondItem="mfW-7k-SAI" secondAttribute="top" id="Ull-9h-1Hm"/>
+                                            <constraint firstAttribute="trailing" secondItem="RKV-kT-YfV" secondAttribute="trailing" id="de8-CS-IVP"/>
+                                        </constraints>
+                                    </scrollView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="RKV-kT-YfV" firstAttribute="top" secondItem="UJo-ZN-znG" secondAttribute="top" id="0rM-hy-RFm"/>
-                                    <constraint firstItem="RKV-kT-YfV" firstAttribute="leading" secondItem="UJo-ZN-znG" secondAttribute="leading" constant="10" id="2fv-vs-XtS"/>
-                                    <constraint firstAttribute="trailing" secondItem="RKV-kT-YfV" secondAttribute="trailing" constant="10" id="f4B-3W-7vR"/>
+                                    <constraint firstItem="mfW-7k-SAI" firstAttribute="top" secondItem="UJo-ZN-znG" secondAttribute="top" id="5mq-lS-47D"/>
+                                    <constraint firstAttribute="trailing" secondItem="mfW-7k-SAI" secondAttribute="trailing" constant="10" id="Cer-BQ-pp0"/>
+                                    <constraint firstAttribute="bottom" secondItem="mfW-7k-SAI" secondAttribute="bottom" id="X76-dp-aEY"/>
+                                    <constraint firstItem="mfW-7k-SAI" firstAttribute="leading" secondItem="UJo-ZN-znG" secondAttribute="leading" constant="10" id="iIq-EJ-DMd"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -41,14 +54,13 @@
                         <constraints>
                             <constraint firstItem="bIG-Lf-dW3" firstAttribute="leading" secondItem="qEU-MJ-lfA" secondAttribute="leading" id="4ai-cI-ocg"/>
                             <constraint firstItem="qEU-MJ-lfA" firstAttribute="trailing" secondItem="bIG-Lf-dW3" secondAttribute="trailing" id="DKr-tt-Q2s"/>
-                            <constraint firstItem="RKV-kT-YfV" firstAttribute="bottom" secondItem="qEU-MJ-lfA" secondAttribute="bottom" id="L35-7z-Xfo"/>
                             <constraint firstAttribute="bottom" secondItem="UJo-ZN-znG" secondAttribute="bottom" id="LYX-8j-Td7">
                                 <variation key="heightClass=regular" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="bIG-Lf-dW3" firstAttribute="top" secondItem="9al-ld-Icc" secondAttribute="top" id="VWO-3n-p0z"/>
                             <constraint firstAttribute="bottom" secondItem="bIG-Lf-dW3" secondAttribute="bottom" id="YM4-wF-tr6"/>
                             <constraint firstItem="qEU-MJ-lfA" firstAttribute="trailing" secondItem="UJo-ZN-znG" secondAttribute="trailing" id="aAQ-F2-j9E"/>
-                            <constraint firstItem="UJo-ZN-znG" firstAttribute="height" secondItem="9al-ld-Icc" secondAttribute="height" multiplier="0.3" id="rCu-d0-718"/>
+                            <constraint firstItem="UJo-ZN-znG" firstAttribute="height" secondItem="9al-ld-Icc" secondAttribute="height" multiplier="0.25" id="rCu-d0-718"/>
                             <constraint firstItem="UJo-ZN-znG" firstAttribute="leading" secondItem="qEU-MJ-lfA" secondAttribute="leading" id="z3J-2t-DLP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qEU-MJ-lfA"/>

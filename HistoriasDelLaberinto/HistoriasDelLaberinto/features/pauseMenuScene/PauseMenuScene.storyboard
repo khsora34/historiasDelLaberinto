@@ -41,21 +41,33 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cwR-T3-3ml" userLabel="Condition View">
                                 <rect key="frame" x="0.0" y="582.5" width="414" height="313.5"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5cV-Q9-1ai">
-                                        <rect key="frame" x="20" y="20" width="374" height="239.5"/>
-                                    </stackView>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Idw-6U-C2t">
+                                        <rect key="frame" x="20" y="20" width="374" height="293.5"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5cV-Q9-1ai">
+                                                <rect key="frame" x="0.0" y="323" width="374" height="239.5"/>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="5cV-Q9-1ai" firstAttribute="width" secondItem="Idw-6U-C2t" secondAttribute="width" id="1Gl-re-nXQ"/>
+                                            <constraint firstItem="5cV-Q9-1ai" firstAttribute="top" secondItem="Idw-6U-C2t" secondAttribute="top" id="3jt-22-VIv"/>
+                                            <constraint firstAttribute="bottom" secondItem="5cV-Q9-1ai" secondAttribute="bottom" id="cbQ-H9-a0Z"/>
+                                            <constraint firstItem="5cV-Q9-1ai" firstAttribute="leading" secondItem="Idw-6U-C2t" secondAttribute="leading" id="jaf-IY-wry"/>
+                                            <constraint firstAttribute="trailing" secondItem="5cV-Q9-1ai" secondAttribute="trailing" id="uXN-Um-LVE"/>
+                                        </constraints>
+                                    </scrollView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.91159054440290188" green="0.91159054440290188" blue="0.91159054440290188" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="5cV-Q9-1ai" firstAttribute="leading" secondItem="cwR-T3-3ml" secondAttribute="leading" constant="20" id="0kd-Ty-D3k"/>
-                                    <constraint firstAttribute="trailing" secondItem="5cV-Q9-1ai" secondAttribute="trailing" constant="20" id="loD-xH-2Gu"/>
-                                    <constraint firstItem="5cV-Q9-1ai" firstAttribute="top" secondItem="cwR-T3-3ml" secondAttribute="top" constant="20" id="zwV-uh-FTw"/>
+                                    <constraint firstItem="Idw-6U-C2t" firstAttribute="leading" secondItem="cwR-T3-3ml" secondAttribute="leading" constant="20" id="Bfq-sq-yEJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="Idw-6U-C2t" secondAttribute="bottom" id="HIt-h5-Mb8"/>
+                                    <constraint firstItem="Idw-6U-C2t" firstAttribute="top" secondItem="cwR-T3-3ml" secondAttribute="top" constant="20" id="HnC-zj-x1i"/>
+                                    <constraint firstAttribute="trailing" secondItem="Idw-6U-C2t" secondAttribute="trailing" constant="20" id="LSt-23-xvW"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="gUF-Pa-htm" firstAttribute="bottom" secondItem="5cV-Q9-1ai" secondAttribute="bottom" constant="20" id="BUp-5w-EaC"/>
                             <constraint firstItem="YPI-G0-Ey1" firstAttribute="top" secondItem="jxp-tI-gZa" secondAttribute="top" id="Eeg-CZ-4hH"/>
                             <constraint firstAttribute="bottom" secondItem="cwR-T3-3ml" secondAttribute="bottom" id="GEN-kO-dDQ"/>
                             <constraint firstItem="cwR-T3-3ml" firstAttribute="top" relation="greaterThanOrEqual" secondItem="w7y-wm-QAX" secondAttribute="bottom" constant="20" id="H5C-Sy-wWO"/>

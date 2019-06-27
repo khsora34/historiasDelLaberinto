@@ -35,7 +35,7 @@ class InitialSceneViewController: BaseViewController {
 
 extension InitialSceneViewController: InitialSceneDisplayLogic {
     func showUnableToStartGame() {
-        let alert = UIAlertController(title: nil, message: "Ha habido un error intentando comenzar una nueva partida.", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "Ha habido un error intentando comenzar una nueva partida. Vuelve a intentarlo en otro momento.", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Qué bien", style: .default, handler: nil))
         

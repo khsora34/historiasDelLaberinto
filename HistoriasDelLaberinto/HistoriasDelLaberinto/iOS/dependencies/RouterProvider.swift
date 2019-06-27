@@ -34,4 +34,8 @@ class RouterProvider {
     var battleSceneRouter: BattleSceneRoutingLogic {
         return BattleSceneRouter(moduleProvider: moduleProvider, drawer: drawer)
     }
+    
+    var itemsSceneRouter: ItemsSceneRoutingLogic {
+        return ItemsSceneRouter(moduleProvider: moduleProvider, drawer: drawer)
+    }
 }

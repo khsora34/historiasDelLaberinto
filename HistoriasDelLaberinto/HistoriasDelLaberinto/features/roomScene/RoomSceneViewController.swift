@@ -12,7 +12,6 @@ class RoomSceneViewController: BaseViewController {
         return _presenter as? RoomScenePresentationLogic
     }
     
-    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var backgroundButtonView: UIView!
     @IBOutlet weak var buttonStackView: UIStackView!
@@ -33,13 +32,13 @@ class RoomSceneViewController: BaseViewController {
         let image = UIImage(named: "menuIcon")
         let button = UIButton(type: .custom)
         button.setImage(image, for: .normal)
-        button.addTarget(self, action: #selector(didTappedMenuButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapMenuButton), for: .touchUpInside)
         button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         let barButton = UIBarButtonItem(customView: button)
         self.navigationItem.rightBarButtonItem = barButton
         
         let infoButton = UIButton(type: .infoLight)
-        infoButton.addTarget(self, action: #selector(didTappedInfoButton), for: .touchUpInside)
+        infoButton.addTarget(self, action: #selector(didTapInfoButton), for: .touchUpInside)
         let infoBarButtonItem = UIBarButtonItem(customView: infoButton)
         navigationItem.leftBarButtonItem = infoBarButtonItem
     }
@@ -66,6 +65,13 @@ extension RoomSceneViewController: RoomSceneDisplayLogic {
             stack.removeFromSuperview()
         }
         buttonStackView.setButtonsInColumns(names: actions, action: #selector(didTapOption), for: self, numberOfColumns: 2, fixedHeight: false)
+        
+        if #available(iOS 11, *) {
+            let iphoneXView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: view.safeAreaInsets.bottom)))
+            iphoneXView.backgroundColor = .clear
+            buttonStackView.addArrangedSubview(iphoneXView)
+        }
+
     }
 }
 
@@ -74,7 +80,7 @@ extension RoomSceneViewController {
         presenter?.start(for: sender.tag)
     }
     
-    @objc func didTappedInfoButton() {
+    @objc func didTapInfoButton() {
         let alert = UIAlertController(title: title, message: presenter?.getInfoMessage(), preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: nil))
@@ -82,7 +88,7 @@ extension RoomSceneViewController {
         self.present(alert, animated: true)
     }
     
-    @objc func didTappedMenuButton() {
+    @objc func didTapMenuButton() {
         presenter?.showMenu()
     }
 }
