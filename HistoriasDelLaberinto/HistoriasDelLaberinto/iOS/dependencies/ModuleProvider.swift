@@ -27,4 +27,8 @@ class ModuleProvider {
     func battleSceneModule(enemy: PlayableCharacter, delegate: BattleBuilderDelegate) -> Module {
         return BattleSceneModule(enemy: enemy, delegate: delegate, routerProvider: routerProvider, databaseProvider: databaseFetcherProvider)
     }
+    
+    func itemsSceneModule(protagonist: Protagonist, partner: PlayableCharacter?, delegate: CharactersUpdateDelegate?) -> Module {
+        return ItemsSceneModule(protagonist: protagonist, partner: partner, delegate: delegate, fetcherProvider: databaseFetcherProvider, routerProvider: routerProvider)
+    }
 }

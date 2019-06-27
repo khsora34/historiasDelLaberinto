@@ -15,12 +15,12 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
         didSet {
             if operations.values.count == 0 {
                 print("😂 Finished loading images")
-                delegate?.finishedLoadingImages()
+                delegate?.finishedLoadingImages(numberOfImagesLoaded: successfulOperations)
             }
         }
     }
     
-    var stringUrlImages: [String] = []
+    var successfulOperations: Int = 0
     weak var delegate: ImageLoaderDelegate?
     
     init(databaseFetcherProvider: DatabaseFetcherProvider) {
@@ -95,7 +95,7 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
     }
     
     func createMovement() {
-        databaseFetcherProvider.movementFetcher.createMovement()
+        _ = databaseFetcherProvider.movementFetcher.createMovement()
     }
 }
 

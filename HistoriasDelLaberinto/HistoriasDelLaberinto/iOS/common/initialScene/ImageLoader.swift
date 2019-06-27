@@ -2,6 +2,7 @@ import Kingfisher
 
 protocol ImageLoader: OnFinishedLoadingImageDelegate, ImageRemover {
     var operations: [Int: ImageLoadingOperation] { get set }
+    var successfulOperations: Int { get set }
     func loadImages(from imageUrls: [String])
     func removeImageCache()
 }
@@ -21,8 +22,11 @@ extension ImageLoader {
         }
     }
     
-    func onFinished(id: Int) {
+    func onFinished(id: Int, success: Bool) {
         operations[id] = nil
+        if success {
+            successfulOperations += 1
+        }
     }
 }
 
@@ -58,15 +62,19 @@ class ImageLoadingOperation {
                 print("💔 Image didn't load correctly: \(failure.errorDescription ?? "")")
             }
             guard let self = self else { return }
-            self.delegate?.onFinished(id: self.identifier)
+            var didLoad = false
+            if case .success = result {
+                didLoad = true
+            }
+            self.delegate?.onFinished(id: self.identifier, success: didLoad)
         }
         
         if KingfisherManager.shared.retrieveImage(with: url, completionHandler: imageCompletion) == nil {
-            delegate?.onFinished(id: identifier)
+            delegate?.onFinished(id: identifier, success: true)
         }
     }
 }
 
 protocol OnFinishedLoadingImageDelegate: class {
-    func onFinished(id: Int)
+    func onFinished(id: Int, success: Bool)
 }

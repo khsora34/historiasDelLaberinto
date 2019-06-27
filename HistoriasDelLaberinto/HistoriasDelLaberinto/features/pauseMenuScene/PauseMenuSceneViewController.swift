@@ -6,6 +6,7 @@ protocol PauseMenuSceneDisplayLogic: ViewControllerDisplay {
     func createOptions(with optionsAvailable: [(String, Int)])
     func showMessage(_ message: String)
     func showExitMessage()
+    func updateStatusView(_ model: StatusViewModel)
 }
 
 class PauseMenuSceneViewController: BaseViewController {
@@ -24,26 +25,17 @@ class PauseMenuSceneViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "Menú"
+        
         backgroundView.setColors([UIColor.blue, UIColor.cyan, UIColor.blue, UIColor.green])
         backgroundView.startAnimation()
         conditionView.backgroundColor = UIColor(white: 0.9, alpha: 0.3)
-    }
-    
-    override func willMove(toParent parent: UIViewController?) {
-        super.willMove(toParent: parent)
-        if parent == nil {
-            presenter?.saveGame()
-        }
     }
     
     @objc func buttonSelected(sender: UIButton) {
         let tag = sender.tag
         presenter?.performOption(tag: tag)
     }
-}
-
-extension PauseMenuSceneViewController {
-    
 }
 
 extension PauseMenuSceneViewController: PauseMenuSceneDisplayLogic {
@@ -68,6 +60,18 @@ extension PauseMenuSceneViewController: PauseMenuSceneDisplayLogic {
             let statusView = StatusViewController(frame: CGRect.zero)
             model.configure(view: statusView)
             statusStackView.addArrangedSubview(statusView)
+        }
+        
+        if #available(iOS 11, *) {
+            let iphoneXView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: view.safeAreaInsets.bottom)))
+            iphoneXView.backgroundColor = .clear
+            statusStackView.addArrangedSubview(iphoneXView)
+        }
+    }
+    
+    func updateStatusView(_ model: StatusViewModel) {
+        if let view = statusStackView.arrangedSubviews.filter({ ($0 as? StatusViewController)?.characterChosen == model.chosenCharacter }).first as? StatusViewController {
+            model.configure(view: view)
         }
     }
     

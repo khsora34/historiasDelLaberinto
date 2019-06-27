@@ -62,7 +62,7 @@ class StatusViewController: UIView {
     }
     
     var characterChosen: CharacterChosen?
-    var didTouchView: (() -> Void)?
+    var touchDelegate: DidTouchStatusDelegate?
     
     @IBOutlet var contentView: StatusViewController!
     @IBOutlet weak var portraitImageView: UIImageView!
@@ -72,6 +72,7 @@ class StatusViewController: UIView {
     @IBOutlet private weak var actualhealthLabel: UILabel!
     @IBOutlet private weak var maxTitleLabel: UILabel!
     @IBOutlet private weak var maxHealthLabel: UILabel!
+    @IBOutlet weak var flashView: UIView!
     
     func setImage(with imageUrl: String?) {
         if let imageUrl = imageUrl {
@@ -106,7 +107,8 @@ class StatusViewController: UIView {
     }
     
     @IBAction func didTouchView(_ sender: Any) {
-        didTouchView?()
+        guard let character = characterChosen else { return }
+        touchDelegate?.didTouchStatus(character)
     }
 }
 

@@ -1,5 +1,3 @@
-import Kingfisher
-
 struct StatusViewModel {
     let chosenCharacter: CharacterChosen
     let name: String
@@ -8,7 +6,7 @@ struct StatusViewModel {
     let maxHealth: Int
     let imageUrl: String?
     let isEnemy: Bool
-    var didTouchView: (() -> Void)?
+    var delegate: DidTouchStatusDelegate?
     
     func configure(view: StatusViewController) {
         view.characterChosen = chosenCharacter
@@ -17,6 +15,6 @@ struct StatusViewModel {
         view.ailment = ailment
         view.setImage(with: imageUrl)
         view.setBackground(shouldDisplayForEnemy: isEnemy)
-        view.didTouchView = didTouchView
+        view.touchDelegate = delegate
     }
 }
