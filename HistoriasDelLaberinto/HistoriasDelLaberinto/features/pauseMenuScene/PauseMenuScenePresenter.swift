@@ -67,6 +67,7 @@ extension PauseMenuScenePresenter {
             charactersForStatus.append(partnerModel)
             characterModels[.partner] = partnerModel
         }
+        
         viewController?.addCharactersStatus(charactersForStatus)
     }
     
