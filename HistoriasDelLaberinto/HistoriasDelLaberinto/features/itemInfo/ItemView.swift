@@ -7,6 +7,10 @@ class ItemView: UIView {
     @IBOutlet var contentView: UIView!
     @IBOutlet var containerView: UIView!
     
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 0, height: 70)
+    }
+    
     var frontItemView: ItemFrontView!
     var backItemView: ItemBackView!
     

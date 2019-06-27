@@ -42,16 +42,22 @@ class ItemsSceneViewController: BaseViewController {
 extension ItemsSceneViewController: ItemsSceneDisplayLogic {
     func addCharactersStatus(_ models: [StatusViewModel]) {
         for model in models {
-            let statusView = StatusViewController(frame: CGRect.zero)
+            let statusView = StatusViewController(frame: .zero)
             model.configure(view: statusView)
             statusView.isUserInteractionEnabled = true
             statusStackView.addArrangedSubview(statusView)
+        }
+        
+        if #available(iOS 11, *) {
+            let iphoneXView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: view.safeAreaInsets.bottom)))
+            iphoneXView.backgroundColor = .clear
+            statusStackView.addArrangedSubview(iphoneXView)
         }
     }
     
     func buildItems(with models: [ItemViewModel]) {
         for model in models {
-            let view = ItemView(model: model, frame: CGRect(origin: .zero, size: CGSize(width: 0, height: 70)))
+            let view = ItemView(model: model, frame: .zero)
             itemsStackView.addArrangedSubview(view)
         }
     }

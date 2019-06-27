@@ -61,6 +61,12 @@ extension PauseMenuSceneViewController: PauseMenuSceneDisplayLogic {
             model.configure(view: statusView)
             statusStackView.addArrangedSubview(statusView)
         }
+        
+        if #available(iOS 11, *) {
+            let iphoneXView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: view.safeAreaInsets.bottom)))
+            iphoneXView.backgroundColor = .clear
+            statusStackView.addArrangedSubview(iphoneXView)
+        }
     }
     
     func updateStatusView(_ model: StatusViewModel) {
