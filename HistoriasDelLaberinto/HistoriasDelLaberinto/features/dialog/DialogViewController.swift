@@ -215,6 +215,8 @@ extension DialogViewController {
     }
     
     @objc func buttonSelected(sender: UIButton) {
+        timer?.invalidate()
+        timer = nil
         delegate?.elementSelected(id: sender.tag)
     }
 }
