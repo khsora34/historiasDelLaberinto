@@ -381,7 +381,7 @@ extension BattleScenePresenter: NextDialogHandler {
     
     private func performNextStep() {
         if let reason = finishedBattleReason {
-            router?.dismiss(animated: true)
+            hideDialog()
             router?.goBackToRoom()
             delegate?.onBattleFinished(reason: reason)
             return
@@ -402,12 +402,16 @@ extension BattleScenePresenter: NextDialogHandler {
         case .battleEnd:
             battleEnd()
         case .userInput:
-            router?.dismiss(animated: true)
+            hideDialog()
         }
     }
 }
 
 extension BattleScenePresenter: DialogLauncher {
+    var dialogRouter: DialogRouter? {
+        return router
+    }
+    
     func present(_ dialog: DialogDisplayLogic) {
         router?.present(dialog, animated: true)
     }
