@@ -98,7 +98,6 @@ class DialogViewController: UIViewController {
     }
     
     func initView() {
-        view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.75)
         textView.backgroundColor = UIColor.coolBlue.withAlphaComponent(0.95)
         textView.alpha = 0.95
         dialogView.layer.cornerRadius = 6.0
