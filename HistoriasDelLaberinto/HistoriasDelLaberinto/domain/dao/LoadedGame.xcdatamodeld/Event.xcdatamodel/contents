@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18G87" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ActionDAO" representedClassName="ActionDAO" syncable="YES" codeGenerationType="class">
         <attribute name="conditionType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="conditionValue" optional="YES" attributeType="String" syncable="YES"/>
@@ -123,23 +123,23 @@
         <attribute name="induceRate" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="100" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="ActionDAO" positionX="-315.48828125" positionY="-173.1796875" width="128" height="105"/>
-        <element name="BattleEventDAO" positionX="-21.6875" positionY="113.86328125" width="128" height="135"/>
-        <element name="CharacterDAO" positionX="-108" positionY="-36" width="128" height="120"/>
-        <element name="ChoiceEventDAO" positionX="110.76953125" positionY="-157.91796875" width="128" height="105"/>
-        <element name="ConditionEventDAO" positionX="-167" positionY="31.16015625" width="128" height="150"/>
-        <element name="DialogueEventDAO" positionX="12.6171875" positionY="-54.9140625" width="128" height="135"/>
-        <element name="EventDAO" positionX="-75.8203125" positionY="-198.2578125" width="128" height="75"/>
-        <element name="ItemDAO" positionX="-90" positionY="-27" width="128" height="150"/>
-        <element name="Movement" positionX="-209.3671875" positionY="218.03125" width="128" height="120"/>
-        <element name="ObtainedItemsDAO" positionX="-90" positionY="-27" width="128" height="90"/>
-        <element name="ProtagonistDAO" positionX="-108" positionY="-45" width="128" height="150"/>
-        <element name="RewardDAO" positionX="-307.515625" positionY="62.94921875" width="128" height="90"/>
-        <element name="RewardEventDAO" positionX="240.0546875" positionY="35.94921875" width="128" height="135"/>
-        <element name="RoomDAO" positionX="-54" positionY="9" width="128" height="150"/>
-        <element name="RoomPosition" positionX="53.50390625" positionY="267.18359375" width="128" height="90"/>
-        <element name="StatusDAO" positionX="-99" positionY="-27" width="128" height="165"/>
-        <element name="VisitedRoomDAO" positionX="-99" positionY="-36" width="128" height="105"/>
-        <element name="WeaponDAO" positionX="-81" positionY="-18" width="128" height="120"/>
+        <element name="ActionDAO" positionX="-552.46875" positionY="-164.203125" width="128" height="105"/>
+        <element name="BattleEventDAO" positionX="-64.7421875" positionY="-39.09375" width="128" height="135"/>
+        <element name="CharacterDAO" positionX="-394.703125" positionY="182.46484375" width="128" height="120"/>
+        <element name="ChoiceEventDAO" positionX="-379.828125" positionY="-212.3984375" width="128" height="105"/>
+        <element name="ConditionEventDAO" positionX="-66.6171875" positionY="-209.6328125" width="128" height="150"/>
+        <element name="DialogueEventDAO" positionX="-220.78515625" positionY="-99.4921875" width="128" height="135"/>
+        <element name="EventDAO" positionX="-220.2578125" positionY="-210.05859375" width="128" height="75"/>
+        <element name="ItemDAO" positionX="113.8984375" positionY="-210.9765625" width="128" height="150"/>
+        <element name="Movement" positionX="-64.171875" positionY="112.69921875" width="128" height="120"/>
+        <element name="ObtainedItemsDAO" positionX="-239.6015625" positionY="184.640625" width="128" height="90"/>
+        <element name="ProtagonistDAO" positionX="-394.8828125" positionY="314.58984375" width="128" height="150"/>
+        <element name="RewardDAO" positionX="-391.11328125" positionY="79.12109375" width="128" height="90"/>
+        <element name="RewardEventDAO" positionX="-380.99609375" positionY="-91.8359375" width="128" height="135"/>
+        <element name="RoomDAO" positionX="-557.7890625" positionY="-15.046875" width="128" height="150"/>
+        <element name="RoomPosition" positionX="114.40625" positionY="115.58984375" width="128" height="90"/>
+        <element name="StatusDAO" positionX="-560.4375" positionY="168.98046875" width="128" height="165"/>
+        <element name="VisitedRoomDAO" positionX="-70.91796875" positionY="317.640625" width="128" height="105"/>
+        <element name="WeaponDAO" positionX="112.90625" positionY="-29.83203125" width="128" height="120"/>
     </elements>
 </model>
