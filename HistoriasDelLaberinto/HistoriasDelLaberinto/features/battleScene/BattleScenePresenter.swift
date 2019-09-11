@@ -36,7 +36,6 @@ class BattleScenePresenter: BasePresenter {
     private var actualState = ActualState(step: .userInput, character: .protagonist, target: nil)
     private var finishedBattleReason: FinishedBattleReason?
     private var isPartnerDead = false
-    private var didBattleStart = false
     
     weak var delegate: BattleBuilderDelegate?
     
@@ -52,13 +51,12 @@ class BattleScenePresenter: BasePresenter {
         getWeapons()
         buildCharacters()
         buildEnemy()
+        showStartDialogue()
     }
 }
 
 extension BattleScenePresenter: BattleScenePresentationLogic {
     func showStartDialogue() {
-        guard !didBattleStart else { return }
-        didBattleStart = true
         showDialog(with: BattleConfigurator(message: "Un \(enemy.name) salvaje apareció.", alignment: .bottom))
     }
     
