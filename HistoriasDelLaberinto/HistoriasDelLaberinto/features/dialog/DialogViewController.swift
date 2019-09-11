@@ -21,7 +21,7 @@ class DialogViewController: UIViewController {
     lazy var topConstraint: NSLayoutConstraint = {
         return dialogView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10.0)
     }()
-    private var configurator: DialogConfigurator
+    private var configurator: DialogConfigurator?
     private var timer: Timer?
     private var alignment: DialogAlignment = .bottom {
         didSet {
@@ -93,7 +93,7 @@ class DialogViewController: UIViewController {
     
     private func setupConfiguration() {
         initView()
-        characterLabel.text = configurator.name
+        characterLabel.text = configurator?.name
         textView.text = ""
         if let dialogue = configurator as? DialogueConfigurator {
             setup(dialogue: dialogue)
@@ -109,6 +109,7 @@ class DialogViewController: UIViewController {
     }
     
     @IBAction func didTouchView(_ sender: Any) {
+        guard !(configurator is ChoiceConfigurator) else { return }
         timer?.invalidate()
         timer = nil
         delegate?.continueFlow()
@@ -121,7 +122,7 @@ extension DialogViewController: DialogDisplayLogic {
             configurator = newConfigurator
             showDialogInfo()
             
-        } else if !newConfigurator.sharesStruct(with: configurator) {
+        } else if let configurator = configurator, !newConfigurator.sharesStruct(with: configurator) {
             changeForDifferent(configurator: newConfigurator)
             
         } else {
@@ -136,9 +137,8 @@ extension DialogViewController: DialogDisplayLogic {
     }
     
     private func internalSetTypingText() {
-        if self.presentingViewController != nil {
-            timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
-        }
+        guard let message = configurator?.message else { return }
+        timer = textView.setTypingText(message: message, timeInterval: typingTimeInterval)
     }
     
     private func changeForDifferent(configurator newConfigurator: DialogConfigurator) {
