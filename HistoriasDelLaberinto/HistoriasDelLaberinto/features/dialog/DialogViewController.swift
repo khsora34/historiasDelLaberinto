@@ -23,7 +23,6 @@ class DialogViewController: UIViewController {
     }()
     private var configurator: DialogConfigurator
     private var timer: Timer?
-    private var shouldShowDialogueWhenAppear: Bool = true
     private var alignment: DialogAlignment = .bottom {
         didSet {
             guard oldValue != alignment else { return }
@@ -89,8 +88,6 @@ class DialogViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        guard shouldShowDialogueWhenAppear else { return }
         showDialogInfo()
     }
     
@@ -114,7 +111,6 @@ class DialogViewController: UIViewController {
     @IBAction func didTouchView(_ sender: Any) {
         timer?.invalidate()
         timer = nil
-        shouldShowDialogueWhenAppear = true
         delegate?.continueFlow()
     }
 }
@@ -127,7 +123,6 @@ extension DialogViewController: DialogDisplayLogic {
             
         } else if !newConfigurator.sharesStruct(with: configurator) {
             changeForDifferent(configurator: newConfigurator)
-            shouldShowDialogueWhenAppear = false
             
         } else {
             configurator = newConfigurator
