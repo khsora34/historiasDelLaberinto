@@ -1,20 +1,27 @@
+import UIKit
+
 protocol DialogLauncher: NextDialogHandler {
     var dialog: DialogDisplayLogic? { get set }
-    var viewController: BattleSceneDisplayLogic? { get }
-    func present(_ dialog: DialogDisplayLogic)
+    var dialogRouter: DialogRouter? { get }
 }
 
 extension DialogLauncher {
     func showDialog(with configurator: DialogConfigurator) {
-        guard dialog == nil else {
+        if dialog == nil {
+            dialog = Dialog.createDialog(configurator, delegate: self)
+            dialogRouter?.present(dialog!, animated: true)
+        } else {
             dialog?.setNextConfigurator(configurator)
-            
-            if viewController?.presentedViewController == nil {
-                present(dialog!)
-            }
-            return
         }
-        dialog = Dialog.createDialog(configurator, delegate: self)
-        present(dialog!)
     }
+    
+    func hideDialog() {
+        dialog = nil
+        dialogRouter?.dismiss(animated: true)
+    }
+}
+
+protocol DialogRouter {
+    func present(_ controller: UIViewController, animated: Bool)
+    func dismiss(animated: Bool)
 }
