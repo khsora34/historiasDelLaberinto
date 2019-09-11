@@ -2,31 +2,9 @@ import UIKit
 import Kingfisher
 
 class Dialog {
-    static func createDialogue(_ dialogue: DialogueConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
-        let dialog = DialogViewController(dialogue)
-        dialog.delegate = delegate
-        dialog.initView()
-        return dialog
-    }
-    
-    static func createReward(_ reward: RewardConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
-        let dialog = DialogViewController(reward)
-        dialog.delegate = delegate
-        dialog.initView()
-        return dialog
-    }
-    
-    static func createChoice(_ choice: ChoiceConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
-        let dialog = DialogViewController(choice)
-        dialog.delegate = delegate
-        dialog.initView()
-        return dialog
-    }
-    
     static func createDialog(_ dialog: DialogConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
         let dialog = DialogViewController(dialog)
         dialog.delegate = delegate
-        dialog.initView()
         return dialog
     }
 }
