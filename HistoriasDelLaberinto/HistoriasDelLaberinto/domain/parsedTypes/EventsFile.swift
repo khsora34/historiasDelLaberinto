@@ -1,3 +1,3 @@
 struct EventsFile {
-    let events: [String: Event]
+    let events: [Event]
 }
