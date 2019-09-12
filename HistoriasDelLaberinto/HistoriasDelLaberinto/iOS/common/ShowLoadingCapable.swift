@@ -18,7 +18,7 @@ extension ShowLoadingCapable {
         present(alert, animated: true, completion: nil)
     }
     
-    func dismissLoading(completion: (() -> Void)? = nil)  {
+    func dismissLoading(completion: (() -> Void)? = nil) {
         dismiss(animated: false, completion: completion)
     }
 }

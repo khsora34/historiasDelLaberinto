@@ -45,4 +45,3 @@ extension ExampleSceneInteractor: EventHandlerInteractor {
 }
 
 extension ExampleSceneInteractor: ImageRemover {}
-
