@@ -3,7 +3,7 @@ import CoreData
 
 protocol ConditionEventFetcher {
     func getCondition(with id: String) -> ConditionEvent?
-    func saveCondition(_ condition: ConditionEvent, with id: String) -> Bool
+    func saveCondition(_ condition: ConditionEvent) -> Bool
     func deleteAllConditions()
 }
 
@@ -45,14 +45,14 @@ extension ConditionEventFetcher {
         return ConditionEvent(id: id, condition: safeCondition, shouldSetVisited: conditionEvent.shouldSetVisited, shouldEndGame: event?.shouldEndGame, nextStepIfTrue: nextTrueStep, nextStepIfFalse: nextFalseStep)
     }
     
-    func saveCondition(_ condition: ConditionEvent, with id: String) -> Bool {
+    func saveCondition(_ condition: ConditionEvent) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
         guard let entity = NSEntityDescription.entity(forEntityName: "ConditionEventDAO", in: managedContext) else { return false }
         let loadingEvent = NSManagedObject(entity: entity, insertInto: managedContext)
         
-        loadingEvent.setValue(id, forKey: "id")
+        loadingEvent.setValue(condition.id, forKey: "id")
         loadingEvent.setValue(condition.shouldSetVisited, forKey: "shouldSetVisited")
         loadingEvent.setValue(condition.shouldEndGame, forKey: "shouldEndGame")
         loadingEvent.setValue(condition.nextStepIfTrue, forKey: "nextStepIfTrue")
