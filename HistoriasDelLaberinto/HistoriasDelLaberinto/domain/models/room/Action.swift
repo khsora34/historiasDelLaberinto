@@ -1,4 +1,4 @@
-struct Action: Codable {
+struct Action: Decodable {
     let name: String
     let nextStep: String?
     let condition: Condition?

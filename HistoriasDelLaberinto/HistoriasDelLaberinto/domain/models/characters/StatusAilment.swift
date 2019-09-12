@@ -4,9 +4,9 @@ enum StatusAilment: String {
     case blind
 }
 
-extension StatusAilment: Codable {}
+extension StatusAilment: Decodable {}
 
-struct InduceAilment: Codable, Hashable {
+struct InduceAilment: Decodable, Hashable {
     let ailment: StatusAilment
     let induceRate: Int
 }

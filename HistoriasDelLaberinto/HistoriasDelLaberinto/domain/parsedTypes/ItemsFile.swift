@@ -1,4 +1,4 @@
-struct ItemsFile: Codable {
+struct ItemsFile: Decodable {
     let weapons: [String: Weapon]
     let keyItems: [String: KeyItem]
     let consumableItems: [String: ConsumableItem]

@@ -1,4 +1,4 @@
-struct Room: Codable, ImageRepresentable {
+struct Room: Decodable, ImageRepresentable {
     let id: String
     let name: String
     let description: String

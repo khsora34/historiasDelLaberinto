@@ -1,4 +1,4 @@
-struct ChoiceEvent: Event, Codable {
+struct ChoiceEvent: Event, Decodable {
     var options: [Action]
     let shouldSetVisited: Bool?
     let shouldEndGame: Bool?
