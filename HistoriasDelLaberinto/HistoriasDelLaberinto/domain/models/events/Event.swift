@@ -6,9 +6,9 @@ protocol Event: Decodable {
 }
 
 enum EventType: String {
-    case dialogue, condition, choice, battle, reward
+    case dialogue, condition, choice, battle, reward, unknown
     
-    init?(event: Event?) {
+    init(event: Event?) {
         if event is DialogueEvent {
             self = .dialogue
         } else if event is ConditionEvent {
@@ -20,7 +20,7 @@ enum EventType: String {
         } else if event is RewardEvent {
             self = .reward
         } else {
-            return nil
+            self = .unknown
         }
     }
 }

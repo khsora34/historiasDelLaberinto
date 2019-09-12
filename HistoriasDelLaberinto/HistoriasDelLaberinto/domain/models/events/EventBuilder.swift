@@ -18,6 +18,9 @@ struct EventBuilder {
             event = DialogueEventParser().serialize(stringNode)
         case .reward:
             event = RewardEventParser().serialize(stringNode)
+        case .unknown:
+            print("Unable to serialize unknown type event.")
+            event = nil
         }
         return event
     }

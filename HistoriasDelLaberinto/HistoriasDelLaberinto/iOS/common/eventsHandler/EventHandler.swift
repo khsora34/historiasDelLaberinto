@@ -15,7 +15,7 @@ protocol EventHandler: ConditionEvaluator, NextDialogHandler, BattleBuilderDeleg
 
 extension EventHandler {
     func startEvent(with id: String) {
-        guard let event = getEventInfo(with: id), let eventType = EventType(event: event) else {
+        guard let event = getEventInfo(with: id) else {
             showError(.eventNotFound)
             return
         }
@@ -29,7 +29,7 @@ extension EventHandler {
         
         actualEvent = event
         
-        determineAction(type: eventType)
+        determineAction(type: EventType(event: event))
     }
     
     private func updateNextStepStatus(event: Event) {
@@ -105,6 +105,8 @@ extension EventHandler {
             showError(.determinedCondition)
         case .battle:
             showBattle(actualEvent as! BattleEvent)
+        case .unknown:
+            print("Unable to determine action for unknown type.")
         }
     }
     

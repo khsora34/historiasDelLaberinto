@@ -21,14 +21,15 @@ class EventFetcherManagerImpl: EventFetcherManager {
             loadedEvent = getBattle(with: id)
         case .condition:
             loadedEvent = getCondition(with: id)
+        case .unknown:
+            return nil
         }
         
         return loadedEvent
     }
     
-    func saveEvent(_ event: Event, with id: String) -> Bool {
-        guard saveEventType(for: event, with: id), let type = EventType(event: event) else { return false }
-        switch type {
+    func saveEvent(_ event: Event) -> Bool {
+        switch EventType(event: event) {
         case .dialogue:
             guard let event = event as? DialogueEvent else { return false }
             return saveDialogue(event, with: id)
@@ -44,6 +45,9 @@ class EventFetcherManagerImpl: EventFetcherManager {
         case .condition:
             guard let event = event as? ConditionEvent else { return false }
             return saveCondition(event, with: id)
+        case .unknown:
+            print("Unable to find the type of the event \(event.id)")
+            return false
         }
     }
     
