@@ -1,4 +1,5 @@
 struct ConditionEvent: Event, Codable {
+    let id: String
     let condition: Condition
     let shouldSetVisited: Bool?
     let shouldEndGame: Bool?
