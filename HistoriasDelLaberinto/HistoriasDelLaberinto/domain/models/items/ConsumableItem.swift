@@ -1,4 +1,4 @@
-struct ConsumableItem: Item, Codable, Hashable {
+struct ConsumableItem: Item, Decodable, Hashable {
     let name: String
     let description: String
     let imageUrl: String

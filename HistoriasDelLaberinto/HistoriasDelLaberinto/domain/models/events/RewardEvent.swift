@@ -1,4 +1,4 @@
-struct RewardEvent: Event, Codable {
+struct RewardEvent: Event, Decodable {
     let message: String
     let rewards: [String: Int]
     let shouldSetVisited: Bool?

@@ -9,7 +9,7 @@ enum Condition {
     }
 }
 
-extension Condition: Codable {
+extension Condition: Decodable {
     enum CodingKeys: String, CodingKey {
         case rawValue = "kind"
         case associatedValue = "required"

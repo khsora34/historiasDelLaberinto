@@ -14,8 +14,4 @@ class EventParser: Parser {
         }
         return EventsFile(events: events)
     }
-    
-    func deserialize(_ parseable: Parseable) -> String? {
-        return nil
-    }
 }

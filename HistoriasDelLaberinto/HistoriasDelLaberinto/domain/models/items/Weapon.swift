@@ -1,4 +1,4 @@
-struct Weapon: Item, Codable, Hashable {
+struct Weapon: Item, Decodable, Hashable {
     let name: String
     let description: String
     let imageUrl: String
