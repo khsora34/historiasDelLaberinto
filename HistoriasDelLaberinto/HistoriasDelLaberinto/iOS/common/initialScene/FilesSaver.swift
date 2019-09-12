@@ -56,8 +56,8 @@ extension FilesSaver {
     func saveEvents(_ file: EventsFile, fetcher: EventFetcherManager) -> Bool {
         var bool = true
         
-        for (id, event) in file.events {
-            bool = bool && fetcher.saveEvent(event, with: id)
+        for event in file.events {
+            bool = bool && fetcher.saveEvent(event, with: event.id)
         }
         
         return bool
