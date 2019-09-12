@@ -1,4 +1,4 @@
-struct DialogueEvent: Event, Codable {
+struct DialogueEvent: Event, Decodable {
     let id: String
     let characterId: String
     let message: String

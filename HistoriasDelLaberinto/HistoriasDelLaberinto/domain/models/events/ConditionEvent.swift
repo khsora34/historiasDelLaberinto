@@ -1,4 +1,4 @@
-struct ConditionEvent: Event, Codable {
+struct ConditionEvent: Event, Decodable {
     let id: String
     let condition: Condition
     let shouldSetVisited: Bool?

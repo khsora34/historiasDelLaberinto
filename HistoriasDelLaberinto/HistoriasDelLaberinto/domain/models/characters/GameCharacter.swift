@@ -1,4 +1,4 @@
-protocol GameCharacter: Codable, ImageRepresentable {
+protocol GameCharacter: Decodable, ImageRepresentable {
     var name: String { get }
 }
 

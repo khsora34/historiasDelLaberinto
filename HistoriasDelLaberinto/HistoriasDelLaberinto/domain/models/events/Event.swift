@@ -1,4 +1,4 @@
-protocol Event: Codable {
+protocol Event: Decodable {
     var id: String { get }
     var nextStep: String? { get }
     var shouldSetVisited: Bool? { get }

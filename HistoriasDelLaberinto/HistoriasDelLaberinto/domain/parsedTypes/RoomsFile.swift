@@ -1,4 +1,4 @@
-struct RoomsFile: Codable {
+struct RoomsFile: Decodable {
     let rooms: [String: Room]
 }
 

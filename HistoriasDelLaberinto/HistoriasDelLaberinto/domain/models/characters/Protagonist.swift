@@ -1,4 +1,4 @@
-struct Protagonist: CharacterStatus, Codable {
+struct Protagonist: CharacterStatus, Decodable {
     let name: String
     let imageUrl: String
     let portraitUrl: String?
@@ -22,7 +22,7 @@ struct Protagonist: CharacterStatus, Codable {
     var visitedRooms: [String: VisitedRoom]
 }
 
-struct VisitedRoom: Codable {
+struct VisitedRoom: Decodable {
     var isVisited: Bool
     var isVisitedWithPartner: Bool
 }

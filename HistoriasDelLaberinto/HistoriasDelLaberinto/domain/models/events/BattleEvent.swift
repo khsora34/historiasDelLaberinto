@@ -1,4 +1,4 @@
-struct BattleEvent: Event, Codable {
+struct BattleEvent: Event, Decodable {
     let id: String
     let enemyId: String
     let shouldSetVisited: Bool?
