@@ -1,4 +1,5 @@
 struct DialogueEvent: Event, Decodable {
+    let id: String
     let characterId: String
     let message: String
     let shouldSetVisited: Bool?

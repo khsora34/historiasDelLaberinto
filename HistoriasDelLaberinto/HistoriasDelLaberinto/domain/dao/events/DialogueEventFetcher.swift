@@ -27,7 +27,7 @@ extension DialogueEventFetcher {
         
         guard let characterId = event?.characterId, let message = event?.message else { return nil }
         
-        return DialogueEvent(characterId: characterId, message: message, shouldSetVisited: event?.shouldSetVisited, shouldEndGame: event?.shouldEndGame, nextStep: event?.nextStep)
+        return DialogueEvent(id: id, characterId: characterId, message: message, shouldSetVisited: event?.shouldSetVisited, shouldEndGame: event?.shouldEndGame, nextStep: event?.nextStep)
     }
     
     func saveDialogue(_ dialogue: DialogueEvent, with id: String) -> Bool {

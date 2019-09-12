@@ -25,18 +25,4 @@ struct EventBuilder {
     private func nodeToString() -> String? {
         return try? Yams.serialize(node: node)
     }
-    
-    private func choiceEvent() -> ChoiceEvent? {
-        guard let options = node["options"]?.array() else { return nil }
-        var actions: [Action] = []
-
-        for option in options {
-            if let serializedOption = try? Yams.serialize(node: option), let action = ActionParser().serialize(serializedOption) {
-                actions.append(action)
-            }
-        }
-
-        return ChoiceEvent(options: actions, shouldSetVisited: node["shouldSetVisited"]?.bool, shouldEndGame: node["shouldEndGame"]?.bool)
-        
-    }
 }

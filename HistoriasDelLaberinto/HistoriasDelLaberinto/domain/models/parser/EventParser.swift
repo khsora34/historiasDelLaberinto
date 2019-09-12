@@ -4,12 +4,14 @@ class EventParser: Parser {
     typealias Parseable = EventsFile
     
     func serialize(_ responseString: String) -> Parseable? {
-        var events: [String: Event] = [:]
-        guard let yamlMapping = try? Yams.compose(yaml: responseString)?.mapping else { return nil }
-        for (eventId, event) in yamlMapping.makeIterator() {
-            if let eventIdString = eventId.scalar?.string, let eventValues = event.mapping, let mode = eventValues["mode"]?.scalar?.string, let eventType = EventType(rawValue: mode) {
+        var events: [Event] = []
+        guard let yamlMapping = try? Yams.compose(yaml: responseString)?.sequence else { return nil }
+        for event in yamlMapping.makeIterator() {
+            if let eventValues = event.mapping, let mode = eventValues["mode"]?.scalar?.string, let eventType = EventType(rawValue: mode) {
                 let builder = EventBuilder(node: event, type: eventType)
-                events[eventIdString] = builder.getEvent()
+                if let newEvent = builder.getEvent() {
+                    events.append(newEvent)
+                }
             }
         }
         return EventsFile(events: events)

@@ -180,7 +180,7 @@ extension EventHandler {
         let request = EventsHandlerModels.BuildChoice.Request(event: choice)
         let response = interactor.buildChoice(request: request)
         guard let actions = response.configurator?.actions, !actions.isEmpty else { return nil }
-        actualEvent = ChoiceEvent(options: actions, shouldSetVisited: choice.shouldSetVisited, shouldEndGame: choice.shouldEndGame)
+        actualEvent = ChoiceEvent(id: choice.id, options: actions, shouldSetVisited: choice.shouldSetVisited, shouldEndGame: choice.shouldEndGame)
         return response.configurator
     }
     
@@ -201,25 +201,25 @@ extension EventHandler {
         actualEvent = nil
         switch error {
         case .eventNotFound:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "This event doesn't seem to be available. Sorry for the inconveniences!", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
+            let errorEvent = DialogueEvent(id: "-1", characterId: "Cisco", message: "This event doesn't seem to be available. Sorry for the inconveniences!", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .characterNotFound:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "It seems we encountered a problem showing the character. So sorry for that.", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
+            let errorEvent = DialogueEvent(id: "-1", characterId: "Cisco", message: "It seems we encountered a problem showing the character. So sorry for that.", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .defaultError:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "An error ocurred, sorry about that...", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
+            let errorEvent = DialogueEvent(id: "-1", characterId: "Cisco", message: "An error ocurred, sorry about that...", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .determinedCondition:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "It seems the condition went way too far.", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
+            let errorEvent = DialogueEvent(id: "-1", characterId: "Cisco", message: "It seems the condition went way too far.", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .itemsNotFound:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "There was a problem finding the items rewarded. Sorry for that...", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
+            let errorEvent = DialogueEvent(id: "-1", characterId: "Cisco", message: "There was a problem finding the items rewarded. Sorry for that...", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .invalidChoiceExecution:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "The function for a choice was executed without asking for it.", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
+            let errorEvent = DialogueEvent(id: "-1", characterId: "Cisco", message: "The function for a choice was executed without asking for it.", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .reasonIsPartnerDefeated:
-            let errorEvent = DialogueEvent(characterId: "Cisco", message: "It seems you finished a battle because your partner was defeated.", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
+            let errorEvent = DialogueEvent(id: "-1", characterId: "Cisco", message: "It seems you finished a battle because your partner was defeated.", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .custom:
             fatalError()

@@ -1,4 +1,5 @@
 struct BattleEvent: Event, Decodable {
+    let id: String
     let enemyId: String
     let shouldSetVisited: Bool?
     let shouldEndGame: Bool?

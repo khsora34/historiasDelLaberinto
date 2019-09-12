@@ -46,7 +46,7 @@ class ItemFrontView: UIView {
     
     weak var delegate: ItemSelectedDelegate?
     var flipView: (() -> Void)?
-    var selectModel: ((Bool) -> ())?
+    var selectModel: ((Bool) -> Void)?
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var imageView: UIImageView!

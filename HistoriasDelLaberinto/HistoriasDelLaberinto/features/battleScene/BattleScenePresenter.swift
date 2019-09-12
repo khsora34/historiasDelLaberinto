@@ -349,7 +349,7 @@ extension BattleScenePresenter {
     }
     
     private func getPartner() {
-        guard let partnerId = (protagonist as? Protagonist)?.partner  else { return }
+        guard let partnerId = protagonist?.partner  else { return }
         let request = BattleScene.CharacterGetter.Request(id: partnerId)
         let response = interactor?.getPartner(request: request)
         partner = response?.character
