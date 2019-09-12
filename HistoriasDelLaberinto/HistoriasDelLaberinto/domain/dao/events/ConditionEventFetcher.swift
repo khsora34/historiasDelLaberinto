@@ -24,7 +24,7 @@ extension ConditionEventFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        guard let conditionEvent = event, let nextTrueStep = conditionEvent.nextStepIfTrue, let nextFalseStep = conditionEvent.nextStepIfFalse, let type = conditionEvent.type, let value = conditionEvent.value else { return nil }
+        guard let conditionEvent = event, let nextTrueStep = conditionEvent.nextStepIfTrue, let nextFalseStep = conditionEvent.nextStepIfFalse, let type = conditionEvent.conditionType, let value = conditionEvent.conditionValue else { return nil }
         
         var condition: Condition?
         switch type {
@@ -61,14 +61,14 @@ extension ConditionEventFetcher {
         
             switch condition.condition {
             case .item(let value):
-                loadingEvent.setValue("item", forKey: "type")
-                loadingEvent.setValue(value, forKey: "value")
+                loadingEvent.setValue("item", forKey: "conditionType")
+                loadingEvent.setValue(value, forKey: "conditionValue")
             case .partner(let value):
-                loadingEvent.setValue("partner", forKey: "type")
-                loadingEvent.setValue(value, forKey: "value")
+                loadingEvent.setValue("partner", forKey: "conditionType")
+                loadingEvent.setValue(value, forKey: "conditionValue")
             case .roomVisited(let value):
-                loadingEvent.setValue("roomVisited", forKey: "type")
-                loadingEvent.setValue(value, forKey: "value")
+                loadingEvent.setValue("roomVisited", forKey: "conditionType")
+                loadingEvent.setValue(value, forKey: "conditionValue")
             case .roomNotVisited(let value):
                 loadingEvent.setValue("roomNotVisited", forKey: "conditionType")
                 loadingEvent.setValue(value, forKey: "conditionValue")
