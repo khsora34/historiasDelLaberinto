@@ -34,7 +34,7 @@ extension RewardEventFetcher {
             }
         }
         
-        return RewardEvent(message: message, rewards: rewards, shouldSetVisited: rewardEvent.shouldSetVisited, shouldEndGame: event?.shouldEndGame, nextStep: rewardEvent.nextStep)
+        return RewardEvent(id: id, message: message, rewards: rewards, shouldSetVisited: rewardEvent.shouldSetVisited, shouldEndGame: event?.shouldEndGame, nextStep: rewardEvent.nextStep)
     }
     
     func saveReward(_ reward: RewardEvent, with id: String) -> Bool {

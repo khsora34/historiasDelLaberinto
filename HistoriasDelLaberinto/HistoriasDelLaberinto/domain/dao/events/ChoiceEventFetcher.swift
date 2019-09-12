@@ -51,7 +51,7 @@ extension ChoiceEventFetcher {
             }
         }
         
-        return ChoiceEvent(options: actions, shouldSetVisited: event?.shouldSetVisited, shouldEndGame: event?.shouldEndGame)
+        return ChoiceEvent(id: id, options: actions, shouldSetVisited: event?.shouldSetVisited, shouldEndGame: event?.shouldEndGame)
     }
     
     func saveChoice(_ choice: ChoiceEvent, with id: String) -> Bool {
