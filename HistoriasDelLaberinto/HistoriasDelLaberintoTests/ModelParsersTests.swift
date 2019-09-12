@@ -46,7 +46,7 @@ class ModelParsersTests: XCTestCase {
         }
         
         let parser = CharactersFileParser()
-        guard let characters = parser.serialize(fileContent) else {
+        guard let characters = parser.serialize(fileContent), !characters.playable.isEmpty, !characters.notPlayable.isEmpty else {
             XCTFail("Failed to parse characters body.")
             return
         }
@@ -65,7 +65,7 @@ class ModelParsersTests: XCTestCase {
         }
         
         let parser = ItemsFileParser()
-        guard let items = parser.serialize(fileContent) else {
+        guard let items = parser.serialize(fileContent), !items.consumableItems.isEmpty, !items.keyItems.isEmpty, !items.weapons.isEmpty else {
             XCTFail("Failed parsing items file.")
             return
         }
@@ -84,7 +84,7 @@ class ModelParsersTests: XCTestCase {
         }
         
         let parser = EventParser()
-        guard let events = parser.serialize(fileContent) else {
+        guard let events = parser.serialize(fileContent), !events.events.isEmpty else {
             XCTFail("Unable to serialize the events file.")
             return
         }
@@ -103,7 +103,7 @@ class ModelParsersTests: XCTestCase {
         }
         
         let parser = RoomsFileParser()
-        guard let rooms = parser.serialize(fileContent) else {
+        guard let rooms = parser.serialize(fileContent), !rooms.rooms.isEmpty else {
             XCTFail("Failed to parse characters body.")
             return
         }
