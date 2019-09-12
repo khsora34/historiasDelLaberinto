@@ -1,0 +1,232 @@
+\documentclass[12pt]{article}
+\usepackage[left=3cm,right=3cm,top=3.5cm,width=15cm,height=22.5cm]{geometry}
+\usepackage{color}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage{wrapfig}
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
+
+\begin{document}
+\title{Historias del Laberinto}
+\author{Francisco del Real Escudero}
+
+\maketitle
+\thispagestyle{empty}
+
+\newpage
+
+\tableofcontents % indice de contenidos
+\thispagestyle{empty}
+
+\newpage
+
+\clearpage
+\pagestyle{plain}
+\pagenumbering{arabic}
+
+\section{Resumen}
+\onehalfspace
+
+El proyecto se desarrolla en el \'ambito del departamento de Lenguajes y Sistemas Inform\'aticos e Ingenier\'ia del Software de la Escuela T\'ecnica Superior de Ingenieros Inform\'aticos de la Universidad Polit\'ecnica de Madrid.
+
+Este trabajo de fin de grado intenta resumir en un pequeño documento el desarrollo de un proyecto que empez\'o como una pr\'actica de la primera signatura de programaci\'on.
+Para ello, se estructura el documento en tres partes:
+
+Primero se presenta una pequeña bit\'acora de desarrollo del proyecto antes del trabajo de fin de grado. En este cap\'itulo se describe la idea original del proyecto, que era desarrollar un videojuego estilo "elige tu propia aventura", y su evoluci\'on a lo largo de los años.
+
+En la siguiente secci\'on se habla de las motivaciones para realizar este trabajo, incluyendo el estado de aplicaciones del mismo estilo, implementaciones diferentes y cu\'ales son las tendencias de videojuegos en dispositivos m\'oviles.
+
+Despu\'es el documento se centra en el proyecto actual, un int\'erprete de videojuegos con una estructura de "elige tu propia aventura". Entre los puntos que se describen est\'an cómo funciona el motor por dentro, la metodolog\'ia de trabajo que se ha seguido, las tecnolog\'ias que se han usado para su desarrollo, un diario de las tareas que se han realizando.
+
+Por \'ultimo se añade una serie de conclusiones del proyecto y puntos a seguir para mejorar el mismo.
+
+Espero que podáis disfrutar de este trabajo tanto como lo he hecho yo.
+
+\newpage
+
+\section{Abstract}
+\onehalfspace
+
+This project is developed with the help of the department of "Lenguajes y Sistemas Inform\'aticos e Ingenier\'ia del Software" from the "Escuela T\'ecnica Superior de Ingenieros Inform\'aticos" of the university "Universidad Politécnica de Madrid".
+
+This end-grade work is presented as a small try on showing the development of a project that started on my first programming, subject "Progrmación I", and its advances through time.
+From now on, this document will be structured in three distinct parts:
+
+The first one will cover the first steps of the application, as it grew before doing this project. It will be discussed the application origins, why choosing a "choose your own adventure" videogame architecture and it's evolution through the ages. 
+
+On the next section, it will be narrated the motivations that made possible this idea. Also, it is included some research about similar applications, their implementations, and the actual trends on mobile games.
+
+The next chapter will talk about the core of the project as a "choose your own adventure" videogame interpreter and how it works. It is also included here the methodology used during the work, a little research of the technologies used in the development and a development tasks journal.
+
+For the last part, some conclusions of the project are attached, including some possible improvements.
+
+I hope to get your expectations as high as possible.
+
+\newpage
+\section{Introducción}
+\onehalfspace
+
+Esta idea surgió a raíz de una práctica de programación impartida por la universidad.
+
+En Programación I, asignatura que se cursa en el primer año del grado, se propuso como ejercicio de final de la asignatura un proyecto en lenguaje Java de tema libre en equipos de dos personas. Nos unimos una compañera de clase, Andrea del Nido, y yo. 
+
+Al principio no contábamos con tanta experiencia y no fue fácil encontrar un tema interesante. Sin embargo, ante el movimiento general de toda la clase por hacer un videojuego (hundir la flota, adivina el número), decidimos seguir el camino de crear un programa de un juego, pero tampoco se nos ocurría una alternativa a los proyectos de nuestros compañeros.
+
+Entonces una compañera de clase nos propuso la idea de un juego de pistas, es decir, un juego de buscar objetos para luego poder usarlos en otro lugar, añadiéndole una historia bien definida y atractiva.
+
+\begin{figure}[h]
+	\caption{Ejemplo de una ejecución del juego}
+	\centering
+	\includegraphics[width=0.75\textwidth]{primerJuegoCaptura.png}
+\end{figure}
+
+Así nos pusimos manos a la obra a desarrollar esa idea y la historia que conllevaba. Como era un proyecto complejo para nuestro nivel de aprendizaje en el momento y además muy alejado de las prácticas de programación, llevamos a cabo una lluvia de ideas de todas las cosas que podría incluir el proyecto, intentando ser muy ambiciosos para luego poder descartar opciones.
+Personalmente me involucré mucho en el desarrollo ya que me encantan los videojuegos y además siempre había querido trabajar en un proyecto de este tipo.
+
+Tras muchas horas extra de programación, conseguimos una primera versión funcional sin muchos errores para la presentación del proyecto. Se hablará de cómo funcionaba el juego en el próximo apartado.
+
+A partir de ahí, tras pedir permiso a mi compañera para continuar con el desarrollo por mi cuenta, proseguí arreglando errores del proyecto para tener una versión aceptable para jugar.
+Así pasaron los dos años siguientes del grado, dando en cada semestre una nueva asignatura de programación que aunque no estuvieran centrados en continuar este proyecto, me permitieron ir mejorando ciertas implementaciones del juego así como añadir ciertas funcionalidades que no estaban presentes desde un principio.
+
+Poco a poco, sin embargo fui dejando el proyecto en el olvido debido a una mezcla de falta de tiempo por estudios y prácticas y también por falta de nuevas ideas, ya que la ártifice de las grandes ideas del proyecto era mi compañera.
+
+En el último año del grado, tras enterarme de que se podría presentar un proyecto con un tema personalizado pensé inmediatamente en continuar con el desarrollo de Historias del Laberinto.
+Con la ayuda de Andrea del Nido y Andrea de las Heras, llegamos a la conclusión de que no podía presentar lo que llevaba hecho hasta el momento, porque todas las actualizaciones y mejoras que fui programando provocaron que el código fuera muy difícil de modificar.
+Además el juego era muy difícil de mostrar, ya que necesitaba de una máquina virtual Java para reproducirse y mucha gente cercana me preguntó si este juego se podía jugar en el móvil.
+
+Por lo tanto, el tema se centraría en el desarrollo de un nuevo videojuego que permitiría al usuario jugarlo en un dispositivo móvil, que contara con un sistema genérico de desarrollo de eventos, así como las características del juego original.
+
+Inicié la búsqueda del tutor que pudiera llevar el trabajo, y por suerte encontré a mi actual tutor, Ángel Herranz, al que le doy las gracias por permitirme desarrollar este proyecto.
+Él se interesó desde el principio en la idea del proyecto, y me sugirió varias pautas para llevar el trabajo con él.
+
+\newpage
+\subsection{Qué era antes Historias del Laberinto}
+\onehalfspace
+
+Esta sección se centrará en la explicación de lo que fue Historias del Laberinto durante su desarrollo como proyecto de Programación I y sus mejoras posteriores.
+Primero se hablará de los aspectos relacionados con el primer proyecto.
+
+El proyecto original era una aplicación capaz de reproducir una historia única sobre dos personajes, Gerar y el jugador, al que se le podía poner un nombre.
+
+La trama del juego sigue un argumento parecido a muchos juegos de escape: los dos personajes debían escapar del Laberinto, un misterioso lugar lleno de trampas del que no saben cómo llegaron ni cómo pueden salir. Por ello, el jugador y su compañero debían avanzar por las salas del laberinto hasta llegar a la sala final, donde un malvado dragón les separaba de su esperada salida. Durante el camino encontrarán carismáticos personajes como el Fantasma, salas del tesoro, encuentros con monstruos o salas con truco.
+
+Respecto a la funcionalidad, tras la lluvia de ideas sobre lo que el juego debía de ser capaz de hacer, se desarrollaron los siguientes subsistemas principales: menú de juego, movimiento, inventario, combate y pantalla de carga. Aparte se incluían otras funcionalidades extra.
+A continuación se describirá un poco qué hacía cada uno de ellos.
+
+\begin{figure}[h]
+	\caption{Gerardo, el compañero del videojuego}
+	\centering
+	\includegraphics[width=0.25\textwidth]{GerardoPres.png}
+\end{figure}
+
+\begin{itemize}
+	\item \textbf{Menú de juego}:
+	
+	El juego se pensó desde un principio como un sistema simple que incluía lo que en otros cursos llamaríamos estados  y un bucle de ejecución que evaluaba estos estados y generaba los eventos necesarios.
+	
+	Este sistema consistía en un bucle que siempre mostraba las mismas opciones: hablar, interactuar, inventario y moverse. Estas acciones cambiaban según una serie de parámetros que definían el estado de ejecución del programa: un número que indicaba una sala, un valor booleano que decía si el compañero estaba jugando y un mapa de lugares ya visitados.
+	
+	\item \textbf{Siguiente paso}:
+	
+	En el desarrollo inicial del juego, toda la salida de la interfaz y los diálogos era por consola, por lo que todos los diálogos que ocurrían en la historia se imprimían por consola.
+	
+	Debido a la rapidez de la ejecución de las instrucciones, las líneas de código que se encargaban del diálogo eran directamente impresas en consola y se ejecutaban muy rápidamente, provocando que al pulsar una acción o una respuesta, todo el texto siguiente apareciera rápidamente en consola  y muchas veces fuera ilegible.
+	
+	Por ello se pensó en una funcionalidad que esperaba ante una respuesta del usuario cualquiera, normalmente un pulsado de la tecla "\textit{intro}", para mostrar el siguiente diálogo y hacer posible que la ejecución del juego fuera más legible.
+	
+	\item \textbf{Pantalla de carga}:
+	
+	El funcionamiento del juego en la aplicación era muy rápido, aunque la calidad del código no fuera óptima. Los conceptos adquiridos en la asignatura nos introdujeron en ámbitos básicos del lenguaje de programación Java, por lo que las operaciones que se llevaban a cabo siempre eran muy rápidas. Además, ninguna operación dependía de otra, no contaba con concurrencia, no hacía conexiones con Internet ni se encargaba de parsear  información antes de ejecutar el núcleo del juego.
+	
+	Debido a que no había ningún recurso que cargar ni inicializar, el juego se iniciaba instantáneamente.
+	Aunque esto puede ser positivo para un programa, nosotros creímos en su momento indispensable separar ciertas funcionalidades del juego como el inicio, una batalla, un evento del resto para intentar emular una característica que aparece en todos los juegos actuales: la pantalla de carga.
+	
+	Esta funcionalidad simplemente paraba el hilo de ejecución cada cierto tiempo y mientras tanto iba imprimiendo por consola un mensaje que indicaba que la aplicación estaba cargando.
+		
+	\item \textbf{Movimiento}:
+	
+	La función de movimiento permitía a un jugador moverse entre las salas del laberinto. Para ello, se pensó en un mapa de posiciones, de manera que cada posición representara una habitación.
+	Cada sala estaba representada como un número del 1 al 20, y cada uno de estos números se ubicaron en un mapa, representado como una matriz de 5 columnas y 4 filas que recogía la información de la sala que se ubicaba en cada casilla. Todas las salas eran diferentes entre sí.
+	
+	De esta manera se deducía que la posición actual de un jugador y las posiciones de cada sala estaban dadas por unas coordenadas que representaban los índices legales para la matriz, es decir, índices para que no surja un error al intentar acceder a la información de la matriz del mapa. Las coordenadas que se usaban eran una para la primera matriz, que representaba como el eje de la x, y otra para las submatrices de la primera matriz, que representaba como el eje de la y.
+		
+	Un jugador tiene cuatro opciones para moverse: ir hacia delante, hacia atrás, a la derecha o a la izquierda. Al seleccionar una dirección, el sistema calculaba si ese movimiento era posible y lo ejecutaba.
+	Todo esto incluía como un extra un sistema de direcciones mediante el uso de una brújula. Esto significa que al moverse a cualquier dirección que no fuera adelante se cambiaba la dirección hacia la que estaba mirando el grupo. De esta manera el jugador estaba siempre mirando a alguno de los puntos cardinales, y calculaba el movimiento teniendo en cuenta la dirección escogida.
+	
+	Este sistema era capaz de evitar que al moverse el jugador pudiera irse fuera de los límites de la matriz y también de evitar el movimiento hacia ciertas salas desde ciertos lados.
+		
+	\item \textbf{Inventario}:
+	
+	La función del inventario está pensada como un sistema de uso de objetos. Incluye un gestor de objetos y un menú de uso de los objetos.
+	
+	En el proyecto original, la idea principal para manejar los objetos contaba con que solo el protagonista podía tener un inventario, es decir, una referencia a los objetos conseguidos y guardados. De esta manera, solo el protagonista podía conseguir objetos y usarlos, aunque posteriormente se añadió funcionalidad para que el compañero pueda usarlos también.
+	
+	Existían dos tipos de objetos genéricos: consumibles y objetos clave. 
+	Los consumibles son objetos que se pueden consumir por el protagonista o el compañero y que modifican el valor de los puntos de vida actuales de los personajes. Un ejemplo de un objeto consumible es una poción, que recuperaba una cantidad de puntos de vida actuales.
+	Los objetos clave son objetos que solo pueden usarse fuera de las batallas en ciertas salas del laberinto y que suelen activar eventos. Son objetos que además no se pueden usar dentro de una batalla, y por lo tanto al usarlos mostraban un diálogo con una descripción del objeto.
+	
+	Los dos tipos de objetos son limitados, es decir, hay una cantidad reducida de los mismos por partida y además al usarse se gastan, por lo que podría llegar un momento en el juego en que no quedaran objetos.
+		
+	\item \textbf{Combate}:
+	
+	El combate se presentó como un sistema genérico de combate que incluía tres posibles actores: el protagonista, el compañero y un enemigo. El protagonista y el compañero formaban un equipo y se enfrentaban al enemigo, que podía ser un personaje genérico cualquiera.
+	
+	El combate siempre giraba alrededor de los puntos de vida actuales del enemigo y del protagonista, por lo que si alguno de estos llegaba al cero entonces el combate se terminaba.
+	
+	El sistema de combate es un combate por turnos del estilo de juegos de rol (RPG) como los descritos en la introducción, es decir, un sistema de combate por turnos, siguiendo un orden fijo preestablecido:
+	\begin{enumerate}
+		\item Protagonista
+		\item Enemigo
+		\item Compañero
+	\end{enumerate} 
+
+Siempre siguiendo este orden de actuación en los turnos, cada turno tenía una serie de fases bien fijadas:
+\begin{enumerate}
+	\item Cálculo de daño inicial: permitía calcular si el siguiente turno debía ejecutarse o no, según si el actor que fuera a actuar tuviera más de cero puntos de vida actuales.
+	\item Selección de acción y objetivo: siempre aparecían tres opciones que cualquier personaje de una batalla podía usar, que son Atacar, Estado e Inventario.
+	En el turno del protagonista se pueden elegir cualquiera de las tres opciones. En el turno del enemigo siempre se usa el comando Atacar y se elige el objetivo del ataque. En el turno del compañero se elegía automáticamente Inventario o Atacar según ciertos parámetros aleatorios.
+	\item Resolución de daño: tras haber atacado a un objetivo, se calculan los puntos de vida restantes del objetivo del ataque y se calcula si la batalla ha de terminar o si debe seguir con un objetivo menos.
+\end{enumerate} 
+
+En desarrollos posteriores a la entrega del primer trabajo, se incluyó la posibilidad de que un personaje del combate pudiera tener un estado alterado de una lista fija: envenenado, paralizado y ciego.
+Esto permitía hacer más diverso el combate, ya que los daños que se calculaban eran fijos y permitía que un jugador no pudiera actuar o que fallara siempre los ataques.
+\end{itemize}
+
+\subsection{Por qué un intérprete de videojuegos}
+
+Desde siempre el juego ha conseguido tener una dimensión muy escalable de sí mismo: siempre se ha querido que la historia fuera lo más emocionante posible para enganchar al jugador en el mundo.
+Además, el nombre de Historias del Laberinto al principio tuvo una inspiración en la historia original del juego, con Gerardo como compañero. Sin embargo, este concepto de historia es muy genérico, ya que al final se puede resumir como una serie de compañeros intenta escapar de un laberinto, la historia extra que rellena desde el comienzo hasta el final del juego ya no importa tanto.
+
+Siguiendo esta línea de pensamiento, se elaboraron una serie de ficheros de texto que contenían información sobre los diálogos de la historia original y que permitían aliviar el contenido de impresiones por consola de la aplicación, en la clase de desarrollo del juego principal había más de mil lineas.
+Sacando la historia a los ficheros conseguiríamos quitarnos de encima todo el relleno de texto del videojuego y quedarnos solo con la lógica que permitiera realizar las acciones. Así podría intentar eliminar toda la historia de relleno que ocupaba casi el 60\% de la longitud del fichero de desarrollo.
+
+Y así se empezó a evaluar cómo podíamos hacer un videojuego genérico con ficheros extra que permitieran realizar todo el trabajo sucio de imprimir la historia. Sin embargo, este acercamiento no tuvo mucho éxito debido a que aunque el relleno pudieras cambiarlo, la lógica que existiera en las habitaciones debía seguir estando en el código: en la sala 17 estaba el comienzo del juego, en la sala 5 había un cofre del tesoro...
+
+Aunque se podría haber seguido por este camino, esta forma de pensar al final limita mucho las capacidades del juego: básicamente el juego es siempre el mismo solo que con distintos rellenos de historia, capacidad que no hace muy especial al proyecto ya que en el fondo siempre va a ser el mismo juego.
+
+Así que empecé a plantearme que la funcionalidad tendría que ser más genérica para que el juego tuviera un verdadero interés más allá de ser un videojuego muy simple. Respecto a esta idea, tengo que agradecerle al profesor Francisco Rosales que me orientó por este camino.
+
+Para que la funcionalidad fuera más genérica, tendríamos que poder modelizar estas funcionalidades de alguna manera. De esta manera, los diálogos se transformaron en eventos, y ya no solo tenían frases de personajes sino también ciertas funciones traducibles al sistema.
+
+\newpage
+\section{Nos ponemos manos a la obra}
+
+\subsection{Cómo funciona el intérprete}
+
+El intérprete 
+
+\subsection{Una manera de llevarlo a cabo}
+
+\subsection{Desarrollando en dispositivos móviles}
+
+\subsection{Diario del desarrollador}
+
+\newpage
+\section{Cuál es el futuro del intérprete}
+
+\newpage
+\section{Referencias}
+
+
+\end{document}
