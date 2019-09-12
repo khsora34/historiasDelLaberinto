@@ -65,6 +65,7 @@ extension ChoiceEventFetcher {
         
         let loadingEvent = NSManagedObject(entity: choiceEntity, insertInto: managedContext)
         loadingEvent.setValue(choice.id, forKey: "id")
+        loadingEvent.setValue("choice", forKey: "type")
         loadingEvent.setValue(choice.shouldSetVisited, forKey: "shouldSetVisited")
         loadingEvent.setValue(choice.shouldEndGame, forKey: "shouldEndGame")
         

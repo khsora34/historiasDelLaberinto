@@ -38,6 +38,7 @@ extension DialogueEventFetcher {
         let loadingEvent = NSManagedObject(entity: entity, insertInto: managedContext)
         
         loadingEvent.setValue(dialogue.id, forKey: "id")
+        loadingEvent.setValue("dialogue", forKey: "type")
         loadingEvent.setValue(dialogue.characterId, forKey: "characterId")
         loadingEvent.setValue(dialogue.message, forKey: "message")
         loadingEvent.setValue(dialogue.nextStep, forKey: "nextStep")

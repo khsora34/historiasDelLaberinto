@@ -48,6 +48,7 @@ extension RewardEventFetcher {
         
         let loadingEvent = NSManagedObject(entity: eventEntity, insertInto: managedContext)
         loadingEvent.setValue(reward.id, forKey: "id")
+        loadingEvent.setValue("reward", forKey: "type")
         loadingEvent.setValue(reward.message, forKey: "message")
         loadingEvent.setValue(reward.shouldSetVisited, forKey: "shouldSetVisited")
         loadingEvent.setValue(reward.shouldEndGame, forKey: "shouldEndGame")

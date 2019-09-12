@@ -53,6 +53,7 @@ extension ConditionEventFetcher {
         let loadingEvent = NSManagedObject(entity: entity, insertInto: managedContext)
         
         loadingEvent.setValue(condition.id, forKey: "id")
+        loadingEvent.setValue("condition", forKey: "type")
         loadingEvent.setValue(condition.shouldSetVisited, forKey: "shouldSetVisited")
         loadingEvent.setValue(condition.shouldEndGame, forKey: "shouldEndGame")
         loadingEvent.setValue(condition.nextStepIfTrue, forKey: "nextStepIfTrue")

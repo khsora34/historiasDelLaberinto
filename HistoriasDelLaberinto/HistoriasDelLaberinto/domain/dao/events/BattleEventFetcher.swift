@@ -37,6 +37,7 @@ extension BattleEventFetcher {
         let loadingEvent = NSManagedObject(entity: entity, insertInto: managedContext)
         
         loadingEvent.setValue(battle.id, forKey: "id")
+        loadingEvent.setValue("battle", forKey: "type")
         loadingEvent.setValue(battle.enemyId, forKey: "enemyId")
         loadingEvent.setValue(battle.shouldSetVisited, forKey: "shouldSetVisited")
         loadingEvent.setValue(battle.shouldEndGame, forKey: "shouldEndGame")
