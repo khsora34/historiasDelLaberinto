@@ -28,3 +28,5 @@ class BattleSceneRouter: BaseRouter, BattleSceneRoutingLogic {
         navigation.popViewController(animated: true)
     }
 }
+
+extension BattleSceneRouter: DialogRouter {}

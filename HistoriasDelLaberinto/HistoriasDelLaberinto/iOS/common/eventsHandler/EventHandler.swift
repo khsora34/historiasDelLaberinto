@@ -6,7 +6,6 @@ protocol EventHandler: ConditionEvaluator, NextDialogHandler, BattleBuilderDeleg
     var actualEvent: Event? { get set }
     var shouldSetVisitedWhenFinished: Bool { get set }
     var shouldEndGameWhenFinished: Bool { get set }
-    var isDialogPresented: Bool { get set }
     func startEvent(with id: String)
     func onFinish()
     func showError(_ error: EventsHandlerError)
@@ -115,7 +114,7 @@ extension EventHandler {
             return
         }
         
-        showDialog(configurator: configurator)
+        showDialog(with: configurator)
     }
     
     private func showReward(_ event: RewardEvent) {
@@ -124,7 +123,7 @@ extension EventHandler {
             return
         }
         
-        showDialog(configurator: configurator)
+        showDialog(with: configurator)
     }
     
     private func showChoice(_ event: ChoiceEvent) {
@@ -132,7 +131,7 @@ extension EventHandler {
             showError(.characterNotFound)
             return
         }
-        showDialog(configurator: configurator)
+        showDialog(with: configurator)
     }
     
     private func showBattle(_ event: BattleEvent) {
@@ -232,12 +231,9 @@ extension EventHandler {
         let configurator = DialogueConfigurator(name: event.characterId, message: event.message, imageUrl: "cisco")
         
         if dialog == nil {
-            dialog = Dialog.createDialogue(configurator, delegate: self)
+            dialog = Dialog.createDialog(configurator, delegate: self)
             eventHandlerRouter?.present(dialog!, animated: true)
         } else {
-            if !isDialogPresented {
-                eventHandlerRouter?.present(dialog!, animated: true)
-            }
             dialog?.setNextConfigurator(configurator)
         }
     }
@@ -278,21 +274,17 @@ extension EventHandler {
 // MARK: - Show dialog
 
 extension EventHandler {
-    func showDialog(configurator: DialogConfigurator) {
+    func showDialog(with configurator: DialogConfigurator) {
         if dialog == nil {
             dialog = Dialog.createDialog(configurator, delegate: self)
             eventHandlerRouter?.present(dialog!, animated: true)
         } else {
-            if !isDialogPresented {
-                eventHandlerRouter?.present(dialog!, animated: true)
-            }
             dialog?.setNextConfigurator(configurator)
         }
-        isDialogPresented = true
     }
     
     func hideDialog() {
-        isDialogPresented = false
+        dialog = nil
         eventHandlerRouter?.dismiss(animated: true)
     }
 }

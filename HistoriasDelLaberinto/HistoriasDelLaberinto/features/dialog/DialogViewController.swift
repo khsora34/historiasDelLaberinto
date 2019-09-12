@@ -2,31 +2,9 @@ import UIKit
 import Kingfisher
 
 class Dialog {
-    static func createDialogue(_ dialogue: DialogueConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
-        let dialog = DialogViewController(dialogue)
-        dialog.delegate = delegate
-        dialog.initView()
-        return dialog
-    }
-    
-    static func createReward(_ reward: RewardConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
-        let dialog = DialogViewController(reward)
-        dialog.delegate = delegate
-        dialog.initView()
-        return dialog
-    }
-    
-    static func createChoice(_ choice: ChoiceConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
-        let dialog = DialogViewController(choice)
-        dialog.delegate = delegate
-        dialog.initView()
-        return dialog
-    }
-    
     static func createDialog(_ dialog: DialogConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
         let dialog = DialogViewController(dialog)
         dialog.delegate = delegate
-        dialog.initView()
         return dialog
     }
 }
@@ -43,9 +21,8 @@ class DialogViewController: UIViewController {
     lazy var topConstraint: NSLayoutConstraint = {
         return dialogView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10.0)
     }()
-    private var configurator: DialogConfigurator
+    private var configurator: DialogConfigurator?
     private var timer: Timer?
-    private var shouldShowDialogueWhenAppear: Bool = true
     private var alignment: DialogAlignment = .bottom {
         didSet {
             guard oldValue != alignment else { return }
@@ -98,7 +75,6 @@ class DialogViewController: UIViewController {
     }
     
     func initView() {
-        view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.75)
         textView.backgroundColor = UIColor.coolBlue.withAlphaComponent(0.95)
         textView.alpha = 0.95
         dialogView.layer.cornerRadius = 6.0
@@ -112,14 +88,12 @@ class DialogViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        guard shouldShowDialogueWhenAppear else { return }
         showDialogInfo()
     }
     
     private func setupConfiguration() {
         initView()
-        characterLabel.text = configurator.name
+        characterLabel.text = configurator?.name
         textView.text = ""
         if let dialogue = configurator as? DialogueConfigurator {
             setup(dialogue: dialogue)
@@ -135,9 +109,9 @@ class DialogViewController: UIViewController {
     }
     
     @IBAction func didTouchView(_ sender: Any) {
+        guard !(configurator is ChoiceConfigurator) else { return }
         timer?.invalidate()
         timer = nil
-        shouldShowDialogueWhenAppear = true
         delegate?.continueFlow()
     }
 }
@@ -148,9 +122,8 @@ extension DialogViewController: DialogDisplayLogic {
             configurator = newConfigurator
             showDialogInfo()
             
-        } else if !newConfigurator.sharesStruct(with: configurator) {
+        } else if let configurator = configurator, !newConfigurator.sharesStruct(with: configurator) {
             changeForDifferent(configurator: newConfigurator)
-            shouldShowDialogueWhenAppear = false
             
         } else {
             configurator = newConfigurator
@@ -164,9 +137,8 @@ extension DialogViewController: DialogDisplayLogic {
     }
     
     private func internalSetTypingText() {
-        if self.presentingViewController != nil {
-            timer = textView.setTypingText(message: configurator.message, timeInterval: typingTimeInterval)
-        }
+        guard let message = configurator?.message else { return }
+        timer = textView.setTypingText(message: message, timeInterval: typingTimeInterval)
     }
     
     private func changeForDifferent(configurator newConfigurator: DialogConfigurator) {
@@ -243,6 +215,8 @@ extension DialogViewController {
     }
     
     @objc func buttonSelected(sender: UIButton) {
+        timer?.invalidate()
+        timer = nil
         delegate?.elementSelected(id: sender.tag)
     }
 }

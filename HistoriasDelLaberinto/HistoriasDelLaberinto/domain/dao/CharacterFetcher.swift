@@ -4,7 +4,7 @@ import CoreData
 protocol CharacterFetcher {
     func getCharacter(with id: String) -> GameCharacter?
     func saveCharacter(for character: GameCharacter, with id: String) -> Bool
-    func deleteOneCharacter(with id: String)
+    func deleteCharacter(with id: String)
     func deleteAllCharacters()
 }
 
@@ -40,7 +40,7 @@ class CharacterFetcherImpl: CharacterFetcher {
         guard let characterEntity = NSEntityDescription.entity(forEntityName: "CharacterDAO", in: managedContext),
             let statusEntity = NSEntityDescription.entity(forEntityName: "StatusDAO", in: managedContext) else { return false }
         
-        deleteOneCharacter(with: id)
+        deleteCharacter(with: id)
         
         let loadingCharacter = NSManagedObject(entity: characterEntity, insertInto: managedContext)
         
@@ -69,7 +69,7 @@ class CharacterFetcherImpl: CharacterFetcher {
         }
     }
     
-    func deleteOneCharacter(with id: String) {
+    func deleteCharacter(with id: String) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         
