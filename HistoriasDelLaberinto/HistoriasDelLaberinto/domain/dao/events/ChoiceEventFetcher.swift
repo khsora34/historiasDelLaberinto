@@ -3,7 +3,7 @@ import CoreData
 
 protocol ChoiceEventFetcher {
     func getChoice(with id: String) -> ChoiceEvent?
-    func saveChoice(_ choice: ChoiceEvent, with id: String) -> Bool
+    func saveChoice(_ choice: ChoiceEvent) -> Bool
     func deleteAllChoices()
 }
 
@@ -54,7 +54,7 @@ extension ChoiceEventFetcher {
         return ChoiceEvent(id: id, options: actions, shouldSetVisited: event?.shouldSetVisited, shouldEndGame: event?.shouldEndGame)
     }
     
-    func saveChoice(_ choice: ChoiceEvent, with id: String) -> Bool {
+    func saveChoice(_ choice: ChoiceEvent) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
@@ -64,7 +64,8 @@ extension ChoiceEventFetcher {
             let actionEntity = NSEntityDescription.entity(forEntityName: "ActionDAO", in: managedContext) else { return false }
         
         let loadingEvent = NSManagedObject(entity: choiceEntity, insertInto: managedContext)
-        loadingEvent.setValue(id, forKey: "id")
+        loadingEvent.setValue(choice.id, forKey: "id")
+        loadingEvent.setValue("choice", forKey: "type")
         loadingEvent.setValue(choice.shouldSetVisited, forKey: "shouldSetVisited")
         loadingEvent.setValue(choice.shouldEndGame, forKey: "shouldEndGame")
         

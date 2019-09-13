@@ -3,7 +3,7 @@ import CoreData
 
 protocol DialogueEventFetcher {
     func getDialogue(with id: String) -> DialogueEvent?
-    func saveDialogue(_ dialogue: DialogueEvent, with id: String) -> Bool
+    func saveDialogue(_ dialogue: DialogueEvent) -> Bool
     func deleteAllDialogues()
 }
 
@@ -30,14 +30,15 @@ extension DialogueEventFetcher {
         return DialogueEvent(id: id, characterId: characterId, message: message, shouldSetVisited: event?.shouldSetVisited, shouldEndGame: event?.shouldEndGame, nextStep: event?.nextStep)
     }
     
-    func saveDialogue(_ dialogue: DialogueEvent, with id: String) -> Bool {
+    func saveDialogue(_ dialogue: DialogueEvent) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false  }
         let managedContext = appDelegate.persistentContainer.viewContext
         
         guard let entity = NSEntityDescription.entity(forEntityName: "DialogueEventDAO", in: managedContext) else { return false }
         let loadingEvent = NSManagedObject(entity: entity, insertInto: managedContext)
         
-        loadingEvent.setValue(id, forKey: "id")
+        loadingEvent.setValue(dialogue.id, forKey: "id")
+        loadingEvent.setValue("dialogue", forKey: "type")
         loadingEvent.setValue(dialogue.characterId, forKey: "characterId")
         loadingEvent.setValue(dialogue.message, forKey: "message")
         loadingEvent.setValue(dialogue.nextStep, forKey: "nextStep")

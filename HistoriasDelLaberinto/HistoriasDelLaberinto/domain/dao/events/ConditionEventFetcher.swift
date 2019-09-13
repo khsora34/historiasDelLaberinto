@@ -3,7 +3,7 @@ import CoreData
 
 protocol ConditionEventFetcher {
     func getCondition(with id: String) -> ConditionEvent?
-    func saveCondition(_ condition: ConditionEvent, with id: String) -> Bool
+    func saveCondition(_ condition: ConditionEvent) -> Bool
     func deleteAllConditions()
 }
 
@@ -24,7 +24,7 @@ extension ConditionEventFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        guard let conditionEvent = event, let nextTrueStep = conditionEvent.nextStepIfTrue, let nextFalseStep = conditionEvent.nextStepIfFalse, let type = conditionEvent.type, let value = conditionEvent.value else { return nil }
+        guard let conditionEvent = event, let nextTrueStep = conditionEvent.nextStepIfTrue, let nextFalseStep = conditionEvent.nextStepIfFalse, let type = conditionEvent.conditionType, let value = conditionEvent.conditionValue else { return nil }
         
         var condition: Condition?
         switch type {
@@ -45,14 +45,15 @@ extension ConditionEventFetcher {
         return ConditionEvent(id: id, condition: safeCondition, shouldSetVisited: conditionEvent.shouldSetVisited, shouldEndGame: event?.shouldEndGame, nextStepIfTrue: nextTrueStep, nextStepIfFalse: nextFalseStep)
     }
     
-    func saveCondition(_ condition: ConditionEvent, with id: String) -> Bool {
+    func saveCondition(_ condition: ConditionEvent) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
         guard let entity = NSEntityDescription.entity(forEntityName: "ConditionEventDAO", in: managedContext) else { return false }
         let loadingEvent = NSManagedObject(entity: entity, insertInto: managedContext)
         
-        loadingEvent.setValue(id, forKey: "id")
+        loadingEvent.setValue(condition.id, forKey: "id")
+        loadingEvent.setValue("condition", forKey: "type")
         loadingEvent.setValue(condition.shouldSetVisited, forKey: "shouldSetVisited")
         loadingEvent.setValue(condition.shouldEndGame, forKey: "shouldEndGame")
         loadingEvent.setValue(condition.nextStepIfTrue, forKey: "nextStepIfTrue")
@@ -60,14 +61,14 @@ extension ConditionEventFetcher {
         
             switch condition.condition {
             case .item(let value):
-                loadingEvent.setValue("item", forKey: "type")
-                loadingEvent.setValue(value, forKey: "value")
+                loadingEvent.setValue("item", forKey: "conditionType")
+                loadingEvent.setValue(value, forKey: "conditionValue")
             case .partner(let value):
-                loadingEvent.setValue("partner", forKey: "type")
-                loadingEvent.setValue(value, forKey: "value")
+                loadingEvent.setValue("partner", forKey: "conditionType")
+                loadingEvent.setValue(value, forKey: "conditionValue")
             case .roomVisited(let value):
-                loadingEvent.setValue("roomVisited", forKey: "type")
-                loadingEvent.setValue(value, forKey: "value")
+                loadingEvent.setValue("roomVisited", forKey: "conditionType")
+                loadingEvent.setValue(value, forKey: "conditionValue")
             case .roomNotVisited(let value):
                 loadingEvent.setValue("roomNotVisited", forKey: "conditionType")
                 loadingEvent.setValue(value, forKey: "conditionValue")

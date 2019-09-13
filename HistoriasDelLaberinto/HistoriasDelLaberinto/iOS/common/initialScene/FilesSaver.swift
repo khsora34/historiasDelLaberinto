@@ -57,7 +57,7 @@ extension FilesSaver {
         var bool = true
         
         for event in file.events {
-            bool = bool && fetcher.saveEvent(event, with: event.id)
+            bool = bool && fetcher.saveEvent(event)
         }
         
         return bool

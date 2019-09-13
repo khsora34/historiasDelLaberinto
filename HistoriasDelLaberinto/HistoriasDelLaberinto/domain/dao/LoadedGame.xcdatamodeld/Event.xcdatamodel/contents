@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18G87" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ActionDAO" representedClassName="ActionDAO" syncable="YES" codeGenerationType="class">
         <attribute name="conditionType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="conditionValue" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="nextStep" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="BattleEventDAO" representedClassName="BattleEventDAO" syncable="YES" codeGenerationType="class">
+    <entity name="BattleEventDAO" representedClassName="BattleEventDAO" parentEntity="EventDAO" syncable="YES" codeGenerationType="class">
         <attribute name="enemyId" attributeType="String" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="loseStep" attributeType="String" syncable="YES"/>
         <attribute name="shouldEndGame" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="shouldSetVisited" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -21,30 +20,27 @@
         <attribute name="portraitUrl" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="status" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StatusDAO" syncable="YES"/>
     </entity>
-    <entity name="ChoiceEventDAO" representedClassName="ChoiceEventDAO" syncable="YES" codeGenerationType="class">
-        <attribute name="id" attributeType="String" syncable="YES"/>
+    <entity name="ChoiceEventDAO" representedClassName="ChoiceEventDAO" parentEntity="EventDAO" syncable="YES" codeGenerationType="class">
         <attribute name="shouldEndGame" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="shouldSetVisited" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="actionsAssociated" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ActionDAO" syncable="YES"/>
     </entity>
-    <entity name="ConditionEventDAO" representedClassName="ConditionEventDAO" syncable="YES" codeGenerationType="class">
-        <attribute name="id" attributeType="String" syncable="YES"/>
+    <entity name="ConditionEventDAO" representedClassName="ConditionEventDAO" parentEntity="EventDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="conditionType" attributeType="String" syncable="YES"/>
+        <attribute name="conditionValue" attributeType="String" syncable="YES"/>
         <attribute name="nextStepIfFalse" attributeType="String" syncable="YES"/>
         <attribute name="nextStepIfTrue" attributeType="String" syncable="YES"/>
         <attribute name="shouldEndGame" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="shouldSetVisited" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="type" attributeType="String" syncable="YES"/>
-        <attribute name="value" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="DialogueEventDAO" representedClassName="DialogueEventDAO" syncable="YES" codeGenerationType="class">
+    <entity name="DialogueEventDAO" representedClassName="DialogueEventDAO" parentEntity="EventDAO" syncable="YES" codeGenerationType="class">
         <attribute name="characterId" attributeType="String" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="message" attributeType="String" syncable="YES"/>
         <attribute name="nextStep" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shouldEndGame" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="shouldSetVisited" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
     </entity>
-    <entity name="EventDAO" representedClassName="EventDAO" syncable="YES" codeGenerationType="class">
+    <entity name="EventDAO" representedClassName="EventDAO" isAbstract="YES" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="type" attributeType="String" syncable="YES"/>
     </entity>
@@ -81,8 +77,7 @@
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="quantity" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
-    <entity name="RewardEventDAO" representedClassName="RewardEventDAO" syncable="YES" codeGenerationType="class">
-        <attribute name="id" attributeType="String" syncable="YES"/>
+    <entity name="RewardEventDAO" representedClassName="RewardEventDAO" parentEntity="EventDAO" syncable="YES" codeGenerationType="class">
         <attribute name="message" attributeType="String" syncable="YES"/>
         <attribute name="nextStep" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shouldEndGame" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -124,18 +119,18 @@
     </entity>
     <elements>
         <element name="ActionDAO" positionX="-552.46875" positionY="-164.203125" width="128" height="105"/>
-        <element name="BattleEventDAO" positionX="-64.7421875" positionY="-39.09375" width="128" height="135"/>
+        <element name="BattleEventDAO" positionX="-64.7421875" positionY="-39.09375" width="128" height="120"/>
         <element name="CharacterDAO" positionX="-394.703125" positionY="182.46484375" width="128" height="120"/>
-        <element name="ChoiceEventDAO" positionX="-379.828125" positionY="-212.3984375" width="128" height="105"/>
-        <element name="ConditionEventDAO" positionX="-66.6171875" positionY="-209.6328125" width="128" height="150"/>
-        <element name="DialogueEventDAO" positionX="-220.78515625" positionY="-99.4921875" width="128" height="135"/>
+        <element name="ChoiceEventDAO" positionX="-379.828125" positionY="-212.3984375" width="128" height="90"/>
+        <element name="ConditionEventDAO" positionX="-66.6171875" positionY="-209.6328125" width="128" height="135"/>
+        <element name="DialogueEventDAO" positionX="-220.78515625" positionY="-99.4921875" width="128" height="120"/>
         <element name="EventDAO" positionX="-220.2578125" positionY="-210.05859375" width="128" height="75"/>
         <element name="ItemDAO" positionX="113.8984375" positionY="-210.9765625" width="128" height="150"/>
         <element name="Movement" positionX="-64.171875" positionY="112.69921875" width="128" height="120"/>
         <element name="ObtainedItemsDAO" positionX="-239.6015625" positionY="184.640625" width="128" height="90"/>
         <element name="ProtagonistDAO" positionX="-394.8828125" positionY="314.58984375" width="128" height="150"/>
         <element name="RewardDAO" positionX="-391.11328125" positionY="79.12109375" width="128" height="90"/>
-        <element name="RewardEventDAO" positionX="-380.99609375" positionY="-91.8359375" width="128" height="135"/>
+        <element name="RewardEventDAO" positionX="-380.99609375" positionY="-91.8359375" width="128" height="120"/>
         <element name="RoomDAO" positionX="-557.7890625" positionY="-15.046875" width="128" height="150"/>
         <element name="RoomPosition" positionX="114.40625" positionY="115.58984375" width="128" height="90"/>
         <element name="StatusDAO" positionX="-560.4375" positionY="168.98046875" width="128" height="165"/>

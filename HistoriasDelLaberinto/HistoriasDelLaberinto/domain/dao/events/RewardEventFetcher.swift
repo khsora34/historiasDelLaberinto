@@ -3,7 +3,7 @@ import CoreData
 
 protocol RewardEventFetcher {
     func getReward(with id: String) -> RewardEvent?
-    func saveReward(_ reward: RewardEvent, with id: String) -> Bool
+    func saveReward(_ reward: RewardEvent) -> Bool
     func deleteAllRewards()
 }
 
@@ -37,7 +37,7 @@ extension RewardEventFetcher {
         return RewardEvent(id: id, message: message, rewards: rewards, shouldSetVisited: rewardEvent.shouldSetVisited, shouldEndGame: event?.shouldEndGame, nextStep: rewardEvent.nextStep)
     }
     
-    func saveReward(_ reward: RewardEvent, with id: String) -> Bool {
+    func saveReward(_ reward: RewardEvent) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
@@ -47,7 +47,8 @@ extension RewardEventFetcher {
             let rewardEntity = NSEntityDescription.entity(forEntityName: "RewardDAO", in: managedContext) else { return false }
         
         let loadingEvent = NSManagedObject(entity: eventEntity, insertInto: managedContext)
-        loadingEvent.setValue(id, forKey: "id")
+        loadingEvent.setValue(reward.id, forKey: "id")
+        loadingEvent.setValue("reward", forKey: "type")
         loadingEvent.setValue(reward.message, forKey: "message")
         loadingEvent.setValue(reward.shouldSetVisited, forKey: "shouldSetVisited")
         loadingEvent.setValue(reward.shouldEndGame, forKey: "shouldEndGame")

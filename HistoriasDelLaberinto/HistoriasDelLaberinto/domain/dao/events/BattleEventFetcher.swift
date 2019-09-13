@@ -3,7 +3,7 @@ import CoreData
 
 protocol BattleEventFetcher {
     func getBattle(with id: String) -> BattleEvent?
-    func saveBattle(_ battle: BattleEvent, with id: String) -> Bool
+    func saveBattle(_ battle: BattleEvent) -> Bool
     func deleteAllBattles()
 }
 
@@ -29,14 +29,15 @@ extension BattleEventFetcher {
         return BattleEvent(id: id, enemyId: enemyId, shouldSetVisited: event?.shouldSetVisited, shouldEndGame: event?.shouldEndGame, winStep: winStep, loseStep: loseStep)
     }
     
-    func saveBattle(_ battle: BattleEvent, with id: String) -> Bool {
+    func saveBattle(_ battle: BattleEvent) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
         guard let entity = NSEntityDescription.entity(forEntityName: "BattleEventDAO", in: managedContext) else { return false }
         let loadingEvent = NSManagedObject(entity: entity, insertInto: managedContext)
         
-        loadingEvent.setValue(id, forKey: "id")
+        loadingEvent.setValue(battle.id, forKey: "id")
+        loadingEvent.setValue("battle", forKey: "type")
         loadingEvent.setValue(battle.enemyId, forKey: "enemyId")
         loadingEvent.setValue(battle.shouldSetVisited, forKey: "shouldSetVisited")
         loadingEvent.setValue(battle.shouldEndGame, forKey: "shouldEndGame")
