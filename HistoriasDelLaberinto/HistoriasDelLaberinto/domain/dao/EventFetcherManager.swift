@@ -56,7 +56,7 @@ class EventFetcherManagerImpl: EventFetcherManager {
         deleteAllChoices()
         deleteAllRewards()
         deleteAllConditions()
-        deleteAllEventTypes()
+        deleteAllEvents()
     }
 }
 
