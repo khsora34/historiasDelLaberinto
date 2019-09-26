@@ -24,6 +24,6 @@ class Dependencies {
     }
     
     private func createDatabaseFetcherProvider() -> DatabaseFetcherProvider {
-        return DatabaseFetcherProvider(eventsFetcherManager: EventFetcherManagerImpl(), itemsFetcher: ItemFetcherImpl(), charactersFetcher: CharacterFetcherImpl(), roomsFetcher: RoomFetcherImpl(), protagonistFetcher: ProtagonistFetcherImpl(), movementFetcher: MovementFetcherImpl())
+        return DatabaseFetcherProvider(eventsFetcherManager: EventFetcherManagerImpl(), itemsFetcher: ItemFetcherImpl(), charactersFetcher: CharacterFetcherImpl(), roomsFetcher: RoomFetcherImpl(), movementFetcher: MovementFetcherImpl())
     }
 }

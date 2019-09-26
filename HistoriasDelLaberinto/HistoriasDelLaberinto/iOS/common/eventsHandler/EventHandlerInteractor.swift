@@ -18,7 +18,7 @@ extension EventHandlerInteractor {
     
     func compareCondition(request: EventsHandlerModels.CompareCondition.Request) -> EventsHandlerModels.CompareCondition.Response {
         let condition = request.condition
-        guard let prota = fetcherProvider.protagonistFetcher.getProtagonist() else {
+        guard let prota = fetcherProvider.charactersFetcher.getCharacter(with: "protagonist") else {
             return EventsHandlerModels.CompareCondition.Response(result: false)
         }
         
@@ -50,7 +50,7 @@ extension EventHandlerInteractor {
     }
     
     func setIsVisited(request: EventsHandlerModels.SetVisited.Request) {
-        guard var prota = fetcherProvider.protagonistFetcher.getProtagonist() else { return }
+        guard var prota = fetcherProvider.charactersFetcher.getCharacter(with: "protagonist") as? Protagonist else { return }
         if prota.visitedRooms[request.roomId] == nil {
             prota.visitedRooms[request.roomId] = VisitedRoom(isVisited: false, isVisitedWithPartner: false)
         }
@@ -76,7 +76,7 @@ extension EventHandlerInteractor {
     }
     
     func buildReward(request: EventsHandlerModels.BuildItems.Request) -> EventsHandlerModels.BuildItems.Response {
-        var protagonist = fetcherProvider.protagonistFetcher.getProtagonist()
+        var protagonist = fetcherProvider.charactersFetcher.getCharacter(with: "protagonist") as? Protagonist
         let event = request.event
         
         var items: [(Item, Int)] = []
@@ -91,7 +91,7 @@ extension EventHandlerInteractor {
             }
         }
         if let protagonist = protagonist {
-            _ = fetcherProvider.protagonistFetcher.saveProtagonist(for: protagonist)
+            _ = fetcherProvider.charactersFetcher.saveCharacter(for: protagonist, with: "protagonist")
         }
         
         let configurator = RewardConfigurator(name: "", message: event.message, items: items)
@@ -100,7 +100,7 @@ extension EventHandlerInteractor {
     
     func buildChoice(request: EventsHandlerModels.BuildChoice.Request) -> EventsHandlerModels.BuildChoice.Response {
         let event = request.event
-        guard let prota = fetcherProvider.protagonistFetcher.getProtagonist() else {
+        guard let prota = fetcherProvider.charactersFetcher.getCharacter(with: "protagonist") as? Protagonist else {
             return EventsHandlerModels.BuildChoice.Response(configurator: nil)
         }
         let filtered = event.options.filter {
@@ -122,7 +122,6 @@ extension EventHandlerInteractor {
         fetcherProvider.eventsFetcherManager.deleteAll()
         fetcherProvider.charactersFetcher.deleteAllCharacters()
         fetcherProvider.itemsFetcher.deleteAllItems()
-        fetcherProvider.protagonistFetcher.deleteProtagonist()
         fetcherProvider.roomsFetcher.deleteAllRooms()
         fetcherProvider.movementFetcher.removeMovement()
         removeImageCache()
