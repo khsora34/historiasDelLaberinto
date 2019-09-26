@@ -19,12 +19,6 @@ struct Protagonist: CharacterStatus, Decodable {
     var weapon: String?
     
     var items: [String: Int]
-    var visitedRooms: [String: VisitedRoom]
-}
-
-struct VisitedRoom: Decodable {
-    var isVisited: Bool
-    var isVisitedWithPartner: Bool
 }
 
 typealias ProtagonistParser = YamlParser<Protagonist>

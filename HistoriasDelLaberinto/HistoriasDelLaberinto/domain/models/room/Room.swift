@@ -5,6 +5,8 @@ struct Room: Decodable, ImageRepresentable {
     let imageUrl: String
     let reloadWithPartner: Bool
     var isGenericRoom: Bool?
+    var isVisited: Bool = false
+    var isVisitedWithPartner: Bool = false
     var actions: [Action]
     
     private enum CodingKeys: String, CodingKey {
