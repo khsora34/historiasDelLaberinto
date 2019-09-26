@@ -24,13 +24,46 @@ class CharacterFetcherImpl: CharacterFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        guard let imageUrl = character?.imageUrl, let name = character?.name else { return nil }
+        guard let name = character?.name, let imageUrl = character?.imageUrl else { return nil }
         
-        if let status = character?.status {
-            return PlayableCharacter(name: name, imageUrl: imageUrl, portraitUrl: character?.portraitUrl, currentHealthPoints: Int(status.currentHealthPoints), maxHealthPoints: Int(status.maxHealthPoints), attack: Int(status.attack), defense: Int(status.defense), agility: Int(status.agility), currentStatusAilment: nil, weapon: status.weapon)
+        if let protagonist = character as? ProtagonistDAO {
+            return Protagonist(
+                name: name, imageUrl: imageUrl, portraitUrl: protagonist.portraitUrl, partner: protagonist.partner,
+                currentHealthPoints: Int(protagonist.currentHealthPoints),
+                maxHealthPoints: Int(protagonist.maxHealthPoints),
+                attack: Int(protagonist.attack),
+                defense: Int(protagonist.defense),
+                agility: Int(protagonist.agility),
+                currentStatusAilment: nil,
+                weapon: protagonist.weaponId,
+                items: getInventory(from: protagonist))
+        } else if let playableCharacter = character as? PlayableCharacterDAO {
+            return PlayableCharacter(
+                name: name, imageUrl: imageUrl, portraitUrl: playableCharacter.portraitUrl,
+                currentHealthPoints: Int(playableCharacter.currentHealthPoints),
+                maxHealthPoints: Int(playableCharacter.maxHealthPoints),
+                attack: Int(playableCharacter.attack),
+                defense: Int(playableCharacter.defense),
+                agility: Int(playableCharacter.agility),
+                currentStatusAilment: nil,
+                weapon: playableCharacter.weaponId)
         } else {
             return NotPlayableCharacter(name: name, imageUrl: imageUrl)
         }
+    }
+    
+    private func getInventory(from prota: ProtagonistDAO?) -> [String: Int] {
+        var dict: [String: Int] = [:]
+        
+        guard let inventory = prota?.inventory else { return dict }
+        
+        for item in inventory {
+            if let item = item as? ObtainedItemsDAO, let id = item.id {
+                dict[id] = Int(item.quantity)
+            }
+        }
+        
+        return dict
     }
     
     func saveCharacter(for character: GameCharacter, with id: String) -> Bool {
@@ -38,26 +71,39 @@ class CharacterFetcherImpl: CharacterFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         guard let characterEntity = NSEntityDescription.entity(forEntityName: "CharacterDAO", in: managedContext),
-            let statusEntity = NSEntityDescription.entity(forEntityName: "StatusDAO", in: managedContext) else { return false }
+            let itemsEntity = NSEntityDescription.entity(forEntityName: "ObtainedItemsDAO", in: managedContext) else { return false }
         
         deleteCharacter(with: id)
         
         let loadingCharacter = NSManagedObject(entity: characterEntity, insertInto: managedContext)
-        
         loadingCharacter.setValue(id, forKey: "id")
         loadingCharacter.setValue(character.name, forKey: "name")
         loadingCharacter.setValue(character.imageUrl, forKey: "imageUrl")
         
         if let character = character as? PlayableCharacter {
             loadingCharacter.setValue(character.portraitUrl, forKey: "portraitUrl")
-            let loadingStatus = NSManagedObject(entity: statusEntity, insertInto: managedContext)
-            loadingStatus.setValue(character.currentHealthPoints, forKey: "currentHealthPoints")
-            loadingStatus.setValue(character.maxHealthPoints, forKey: "maxHealthPoints")
-            loadingStatus.setValue(character.attack, forKey: "attack")
-            loadingStatus.setValue(character.defense, forKey: "defense")
-            loadingStatus.setValue(character.agility, forKey: "agility")
-            loadingStatus.setValue(character.weapon, forKey: "weapon")
-            loadingCharacter.setValue(loadingStatus, forKey: "status")
+            loadingCharacter.setValue(character.currentHealthPoints, forKey: "currentHealthPoints")
+            loadingCharacter.setValue(character.maxHealthPoints, forKey: "maxHealthPoints")
+            loadingCharacter.setValue(character.attack, forKey: "attack")
+            loadingCharacter.setValue(character.defense, forKey: "defense")
+            loadingCharacter.setValue(character.agility, forKey: "agility")
+            loadingCharacter.setValue(character.weapon, forKey: "weapon")
+            
+        }
+        
+        if let protagonist = character as? Protagonist {
+            loadingCharacter.setValue(protagonist.partner, forKey: "partner")
+            
+            var managedItems: [NSManagedObject] = []
+            
+            for (key, value) in protagonist.items {
+                let loadingItem = NSManagedObject(entity: itemsEntity, insertInto: managedContext)
+                loadingItem.setValue(key, forKey: "id")
+                loadingItem.setValue(value, forKey: "quantity")
+                managedItems.append(loadingItem)
+            }
+            
+            loadingCharacter.setValue(NSSet(array: managedItems), forKey: "inventory")
         }
         
         do {
@@ -79,9 +125,6 @@ class CharacterFetcherImpl: CharacterFetcher {
         do {
             let results = try managedContext.fetch(characterFetchRequest)
             for result in results {
-                if let status = result.status {
-                    managedContext.delete(status)
-                }
                 managedContext.delete(result)
             }
             
@@ -102,9 +145,6 @@ class CharacterFetcherImpl: CharacterFetcher {
         do {
             let results = try managedContext.fetch(characterFetchRequest)
             for result in results {
-                if let status = result.status {
-                    managedContext.delete(status)
-                }
                 managedContext.delete(result)
             }
             
