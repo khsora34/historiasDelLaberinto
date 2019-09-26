@@ -15,7 +15,7 @@ struct Protagonist: CharacterStatus, Decodable {
     let attack: Int
     let defense: Int
     let agility: Int
-    var currentStatusAilment: StatusAilment?
+    var currentStatusAilment: StatusAilment? = nil
     var weapon: String?
     
     var items: [String: Int]

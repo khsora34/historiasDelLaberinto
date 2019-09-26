@@ -14,6 +14,6 @@ struct PlayableCharacter: CharacterStatus {
     let attack: Int
     let defense: Int
     let agility: Int
-    var currentStatusAilment: StatusAilment?
+    var currentStatusAilment: StatusAilment? = nil
     var weapon: String?
 }
