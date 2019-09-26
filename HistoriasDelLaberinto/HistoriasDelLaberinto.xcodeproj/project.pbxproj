@@ -81,7 +81,6 @@
 		6D6349E822B8488B009788D5 /* CharactersUpdateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6349E722B8488B009788D5 /* CharactersUpdateDelegate.swift */; };
 		6D6DE4B9221DB40600C92B94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */; };
 		6D6DE4C3221DB40700C92B94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DE4C1221DB40700C92B94 /* LaunchScreen.storyboard */; };
-		6D71681C229DAE1900791A42 /* ProtagonistFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D71681B229DAE1900791A42 /* ProtagonistFetcher.swift */; };
 		6D74A09222B5AED500B37D1D /* DidTouchStatusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D74A09122B5AED500B37D1D /* DidTouchStatusDelegate.swift */; };
 		6D75802522899D57009A48D7 /* EventFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D75802422899D57009A48D7 /* EventFetcher.swift */; };
 		6D7900D622B58F0B00CA74BF /* ItemBackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D7900D522B58F0B00CA74BF /* ItemBackView.xib */; };
@@ -255,7 +254,6 @@
 		6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D6DE4C2221DB40700C92B94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6D6DE4C4221DB40700C92B94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6D71681B229DAE1900791A42 /* ProtagonistFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtagonistFetcher.swift; sourceTree = "<group>"; };
 		6D74A09122B5AED500B37D1D /* DidTouchStatusDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DidTouchStatusDelegate.swift; sourceTree = "<group>"; };
 		6D75802422899D57009A48D7 /* EventFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFetcher.swift; sourceTree = "<group>"; };
 		6D7900D122B58AA200CA74BF /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/TestView.strings; sourceTree = "<group>"; };
@@ -681,7 +679,6 @@
 				6D082A02229AB4A900B13A56 /* ItemFetcher.swift */,
 				6D43D903229D61A0008C7ED0 /* CharacterFetcher.swift */,
 				6D43D905229DAA61008C7ED0 /* RoomFetcher.swift */,
-				6D71681B229DAE1900791A42 /* ProtagonistFetcher.swift */,
 				6D62D34722A8141500C2CB60 /* MovementFetcher.swift */,
 			);
 			path = dao;
@@ -1110,7 +1107,6 @@
 				6DDA434522A701F2003C7993 /* MovementScenePresenter.swift in Sources */,
 				6D5D8FFC226862E500D11390 /* BasePresenter.swift in Sources */,
 				6D5D8FF6226861FC00D11390 /* BaseViewController.swift in Sources */,
-				6D71681C229DAE1900791A42 /* ProtagonistFetcher.swift in Sources */,
 				6D450B7322A9C582003D8405 /* PauseMenuSceneModule.swift in Sources */,
 				6D8CBC16229EE9D0005336DA /* ExampleSceneViewController.swift in Sources */,
 				6DEF06592268866E00A5C454 /* ModuleProvider.swift in Sources */,
