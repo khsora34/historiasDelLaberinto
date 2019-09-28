@@ -1,7 +1,7 @@
 protocol EventHandler: ConditionEvaluator, NextDialogHandler, BattleBuilderDelegate {
     var eventHandlerRouter: EventHandlerRoutingLogic? { get }
     var eventHandlerInteractor: EventHandlerInteractor? { get }
-    var roomId: String { get }
+    var room: Room { get set }
     var dialog: DialogDisplayLogic? { get set }
     var actualEvent: Event? { get set }
     var shouldSetVisitedWhenFinished: Bool { get set }
@@ -61,9 +61,10 @@ extension EventHandler {
             return
         }
         
-        if shouldSetVisitedWhenFinished {
-            let request = EventsHandlerModels.SetVisited.Request(roomId: roomId)
-            eventHandlerInteractor?.setIsVisited(request: request)
+        if shouldSetVisitedWhenFinished, let interactor = eventHandlerInteractor {
+            let request = EventsHandlerModels.SetVisited.Request(room: room)
+            let response = interactor.setIsVisited(request: request)
+            self.room = response.room
         }
         onFinish()
     }
@@ -163,13 +164,6 @@ extension EventHandler {
         return response.configurator
     }
     
-    private func compare(with condition: Condition) -> Bool {
-        guard let interactor = eventHandlerInteractor else { return false }
-        let request = EventsHandlerModels.CompareCondition.Request(condition: condition)
-        let response = interactor.compareCondition(request: request)
-        return response.result
-    }
-    
     private func getRewardConfigurator(reward: RewardEvent) -> RewardConfigurator? {
         guard let interactor = eventHandlerInteractor else { return nil }
         let request = EventsHandlerModels.BuildItems.Request(event: reward)
@@ -243,7 +237,10 @@ extension EventHandler {
 
 extension EventHandler {
     func evaluate(_ condition: Condition) -> Bool {
-        return compare(with: condition)
+        guard let interactor = eventHandlerInteractor else { return false }
+        let request = EventsHandlerModels.CompareCondition.Request(condition: condition)
+        let response = interactor.compareCondition(request: request)
+        return response.result
     }
 }
 

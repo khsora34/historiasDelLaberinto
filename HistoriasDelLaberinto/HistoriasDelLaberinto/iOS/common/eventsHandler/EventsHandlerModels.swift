@@ -19,7 +19,10 @@ enum EventsHandlerModels {
     
     enum SetVisited {
         struct Request {
-            let roomId: String
+            let room: Room
+        }
+        struct Response {
+            let room: Room
         }
     }
     

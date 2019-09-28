@@ -22,7 +22,7 @@ class ExampleScenePresenter: BasePresenter {
     
     // MARK: Event handler
     
-    var roomId: String = ""
+    var room: Room = Room(id: "", name: "", description: "", imageUrl: "", reloadWithPartner: true, actions: [])
     var shouldSetVisitedWhenFinished: Bool = false
     var shouldEndGameWhenFinished: Bool = false
     var dialog: DialogDisplayLogic?
