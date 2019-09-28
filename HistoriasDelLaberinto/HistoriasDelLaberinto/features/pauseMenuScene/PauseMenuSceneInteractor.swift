@@ -17,7 +17,7 @@ class PauseMenuSceneInteractor: BaseInteractor, PauseMenuSceneBusinessLogic {
     }
     
     func getProtagonist() -> PauseMenuScene.ProtagonistGetter.Response {
-        let protagonist = characterFetcher.getCharacter(with: "protagonist")
+        let protagonist = characterFetcher.getCharacter(with: "protagonist") as? Protagonist
         return PauseMenuScene.ProtagonistGetter.Response(protagonist: protagonist)
     }
     
