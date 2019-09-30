@@ -24,7 +24,7 @@ class RoomFetcherImpl: RoomFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        guard let roomId = room?.id, let imageUrl = room?.imageUrl, let name = room?.name, let description = room?.descriptionString, let reloadWithPartner = room?.reloadWithPartner, let isGeneric = room?.isGenericRoom, let actionsSet = room?.actions else { return nil }
+        guard let roomId = room?.id, let imageUrl = room?.imageUrl, let name = room?.name, let description = room?.descriptionString, let isGeneric = room?.isGenericRoom, let actionsSet = room?.actions else { return nil }
         
         var actions: [Action] = []
         
@@ -112,7 +112,6 @@ class RoomFetcherImpl: RoomFetcher {
         loadingRoom.setValue(room.description, forKey: "descriptionString")
         loadingRoom.setValue(room.imageUrl, forKey: "imageUrl")
         loadingRoom.setValue(room.isGenericRoom ?? false, forKey: "isGenericRoom")
-        loadingRoom.setValue(room.reloadWithPartner, forKey: "reloadWithPartner")
         
         var managedActions: [NSManagedObject] = []
         
