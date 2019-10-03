@@ -13,7 +13,7 @@ extension ChoiceEventFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest<ChoiceEventDAO> = ChoiceEventDAO.fetchRequest()
-        let predicate = NSPredicate(format: "\(DaoConstants.Event.id) == %@", id)
+        let predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", id)
         fetchRequest.predicate = predicate
         
         var event: ChoiceEventDAO?

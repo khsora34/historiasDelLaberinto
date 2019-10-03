@@ -13,7 +13,7 @@ class ItemFetcherImpl: ItemFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest<ItemDAO> = ItemDAO.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "\(DaoConstants.Item.id) == %@", id)
+        fetchRequest.predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", id)
         
         var item: ItemDAO?
         do {

@@ -13,7 +13,7 @@ extension ConditionEventFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest<ConditionEventDAO> = ConditionEventDAO.fetchRequest()
-        let predicate = NSPredicate(format: "\(DaoConstants.Event.id) == %@", NSString(string: id))
+        let predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", NSString(string: id))
         fetchRequest.predicate = predicate
         
         var event: ConditionEventDAO?

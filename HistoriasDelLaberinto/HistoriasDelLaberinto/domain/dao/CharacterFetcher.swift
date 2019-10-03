@@ -14,7 +14,7 @@ class CharacterFetcherImpl: CharacterFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest<CharacterDAO> = CharacterDAO.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "\(DaoConstants.Character.id) == %@", id)
+        fetchRequest.predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", id)
         
         var character: CharacterDAO?
         do {
@@ -92,9 +92,7 @@ class CharacterFetcherImpl: CharacterFetcher {
                     loadingItem.quantity = Int16(value)
                     managedItems.append(loadingItem)
                 }
-                
-                loadingProtagonist.setValue(NSSet(array: managedItems), forKey: DaoConstants.Character.inventory.rawValue)
-                
+                loadingProtagonist.inventory = NSSet(array: managedItems)
                 loadingPlayableCharacter = loadingProtagonist
             } else {
                 loadingPlayableCharacter = PlayableCharacterDAO(entity: playableEntity, insertInto: managedContext)
@@ -132,7 +130,7 @@ class CharacterFetcherImpl: CharacterFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let characterFetchRequest: NSFetchRequest<CharacterDAO> = CharacterDAO.fetchRequest()
-        characterFetchRequest.predicate = NSPredicate(format: "\(DaoConstants.Character.id) == %@", id)
+        characterFetchRequest.predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", id)
         
         do {
             let results = try managedContext.fetch(characterFetchRequest)

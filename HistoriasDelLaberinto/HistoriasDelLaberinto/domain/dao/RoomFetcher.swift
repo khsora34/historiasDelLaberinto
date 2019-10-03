@@ -14,7 +14,7 @@ class RoomFetcherImpl: RoomFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest<RoomDAO> = RoomDAO.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "\(DaoConstants.Room.id) == %@", id)
+        fetchRequest.predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", id)
         
         var room: RoomDAO?
         do {
