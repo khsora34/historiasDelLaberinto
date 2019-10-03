@@ -21,7 +21,7 @@ class CharacterFetcherImpl: CharacterFetcher {
             let results = try managedContext.fetch(fetchRequest)
             character = results.first
         } catch let error as NSError {
-            print("No ha sido posible guardar \(error), \(error.userInfo)")
+            print("💔 No ha sido posible conseguir al personaje con id \(id).\n \(error), \(error.userInfo)")
         }
         
         guard let name = character?.name, let imageUrl = character?.imageUrl else { return nil }
@@ -79,7 +79,7 @@ class CharacterFetcherImpl: CharacterFetcher {
         let loadingCharacter: CharacterDAO
         
         if let playableCharacter = character as? CharacterStatus {
-            var loadingPlayableCharacter: PlayableCharacterDAO = PlayableCharacterDAO(entity: playableEntity, insertInto: managedContext)
+            let loadingPlayableCharacter: PlayableCharacterDAO
             
             if let protagonist = character as? Protagonist {
                 let loadingProtagonist = ProtagonistDAO(entity: protagonistEntity, insertInto: managedContext)
@@ -96,6 +96,8 @@ class CharacterFetcherImpl: CharacterFetcher {
                 loadingProtagonist.setValue(NSSet(array: managedItems), forKey: DaoConstants.Character.inventory.rawValue)
                 
                 loadingPlayableCharacter = loadingProtagonist
+            } else {
+                loadingPlayableCharacter = PlayableCharacterDAO(entity: playableEntity, insertInto: managedContext)
             }
             
             loadingPlayableCharacter.portraitUrl = playableCharacter.portraitUrl
@@ -120,7 +122,7 @@ class CharacterFetcherImpl: CharacterFetcher {
             try managedContext.save()
             return true
         } catch let error as NSError {
-            print("No ha sido posible guardar \(error), \(error.userInfo)")
+            print("💔 No ha sido posible guardar al personaje con id \(id).\n \(error), \(error.userInfo)")
             return false
         }
     }

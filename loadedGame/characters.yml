@@ -81,7 +81,6 @@ playable:
 notPlayable:
   "grandma_npc":
     name: "Abuela"
-
     imageUrl: "http://www.lalaland.com/grandma_npc_image"
 
   "narrator":
