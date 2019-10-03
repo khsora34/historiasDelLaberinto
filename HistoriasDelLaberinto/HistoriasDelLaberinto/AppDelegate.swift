@@ -36,6 +36,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    private func logFilesDirectory() {
+        let documentDirectoryURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        print("😁😁😁😁 \(documentDirectoryURL)")
+    }
+    
     private func setNavigationBarProperties() {
         UINavigationBar.appearance().barStyle = .black
         UINavigationBar.appearance().isTranslucent = true
