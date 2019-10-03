@@ -14,7 +14,7 @@ class CharacterFetcherImpl: CharacterFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest<CharacterDAO> = CharacterDAO.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        fetchRequest.predicate = NSPredicate(format: "\(DaoConstants.Character.id) == %@", id)
         
         var character: CharacterDAO?
         do {
@@ -53,58 +53,67 @@ class CharacterFetcherImpl: CharacterFetcher {
     }
     
     private func getInventory(from prota: ProtagonistDAO?) -> [String: Int] {
-        var dict: [String: Int] = [:]
+        guard let inventory = prota?.inventory else { return [:] }
+        var items: [String: Int] = [:]
         
-        guard let inventory = prota?.inventory else { return dict }
-        
-        for item in inventory {
-            if let item = item as? ObtainedItemsDAO, let id = item.id {
-                dict[id] = Int(item.quantity)
-            }
+        inventory.filter({ $0 is ItemsQuantity && ($0 as! ItemsQuantity).itemId != nil }).forEach {
+            let pair = $0 as! ItemsQuantity
+            items[pair.itemId!] = Int(pair.quantity)
         }
         
-        return dict
+        return items
     }
     
     func saveCharacter(for character: GameCharacter, with id: String) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        guard let characterEntity = NSEntityDescription.entity(forEntityName: "CharacterDAO", in: managedContext),
-            let itemsEntity = NSEntityDescription.entity(forEntityName: "ObtainedItemsDAO", in: managedContext) else { return false }
+        guard let characterEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.CharacterDAO.rawValue, in: managedContext),
+            let playableEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.PlayableCharacterDAO.rawValue, in: managedContext),
+            let protagonistEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ProtagonistDAO.rawValue, in: managedContext),
+            let itemsEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ItemsQuantity.rawValue, in: managedContext) else { return false }
         
         deleteCharacter(with: id)
         
-        let loadingCharacter = NSManagedObject(entity: characterEntity, insertInto: managedContext)
-        loadingCharacter.setValue(id, forKey: "id")
-        loadingCharacter.setValue(character.name, forKey: "name")
-        loadingCharacter.setValue(character.imageUrl, forKey: "imageUrl")
+        let loadingCharacter: CharacterDAO
         
-        if let character = character as? PlayableCharacter {
-            loadingCharacter.setValue(character.portraitUrl, forKey: "portraitUrl")
-            loadingCharacter.setValue(character.currentHealthPoints, forKey: "currentHealthPoints")
-            loadingCharacter.setValue(character.maxHealthPoints, forKey: "maxHealthPoints")
-            loadingCharacter.setValue(character.attack, forKey: "attack")
-            loadingCharacter.setValue(character.defense, forKey: "defense")
-            loadingCharacter.setValue(character.agility, forKey: "agility")
-            loadingCharacter.setValue(character.weapon, forKey: "weapon")
+        if let playableCharacter = character as? PlayableCharacter {
+            var loadingPlayableCharacter: PlayableCharacterDAO = PlayableCharacterDAO(entity: playableEntity, insertInto: managedContext)
             
-        }
-        
-        if let protagonist = character as? Protagonist {
-            loadingCharacter.setValue(protagonist.partner, forKey: "partner")
-            
-            var managedItems: [NSManagedObject] = []
-            
-            for (key, value) in protagonist.items {
-                let loadingItem = NSManagedObject(entity: itemsEntity, insertInto: managedContext)
-                loadingItem.setValue(key, forKey: "id")
-                loadingItem.setValue(value, forKey: "quantity")
-                managedItems.append(loadingItem)
+            if let protagonist = character as? Protagonist {
+                let loadingProtagonist = ProtagonistDAO(entity: protagonistEntity, insertInto: managedContext)
+                loadingProtagonist.partner = protagonist.partner
+                
+                var managedItems: [NSManagedObject] = []
+                for (key, value) in protagonist.items {
+                    let loadingItem = ItemsQuantity(entity: itemsEntity, insertInto: managedContext)
+                    loadingItem.itemId = key
+                    loadingItem.quantity = Int16(value)
+                    managedItems.append(loadingItem)
+                }
+                
+                loadingProtagonist.setValue(NSSet(array: managedItems), forKey: DaoConstants.Character.inventory.rawValue)
+                
+                loadingPlayableCharacter = loadingProtagonist
             }
             
-            loadingCharacter.setValue(NSSet(array: managedItems), forKey: "inventory")
+            loadingPlayableCharacter.portraitUrl = playableCharacter.portraitUrl
+            loadingPlayableCharacter.currentHealthPoints = Int16(playableCharacter.currentHealthPoints)
+            loadingPlayableCharacter.maxHealthPoints = Int16(playableCharacter.maxHealthPoints)
+            loadingPlayableCharacter.attack = Int16(playableCharacter.attack)
+            loadingPlayableCharacter.defense = Int16(playableCharacter.defense)
+            loadingPlayableCharacter.agility = Int16(playableCharacter.agility)
+            loadingPlayableCharacter.weaponId = playableCharacter.weapon
+
+            loadingCharacter = loadingPlayableCharacter
+            
+        } else {
+            loadingCharacter = CharacterDAO(entity: characterEntity, insertInto: managedContext)
         }
+        
+        loadingCharacter.id = id
+        loadingCharacter.name = character.name
+        loadingCharacter.imageUrl = character.imageUrl
         
         do {
             try managedContext.save()
@@ -120,7 +129,7 @@ class CharacterFetcherImpl: CharacterFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let characterFetchRequest: NSFetchRequest<CharacterDAO> = CharacterDAO.fetchRequest()
-        characterFetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        characterFetchRequest.predicate = NSPredicate(format: "\(DaoConstants.Character.id) == %@", id)
         
         do {
             let results = try managedContext.fetch(characterFetchRequest)

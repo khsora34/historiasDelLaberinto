@@ -13,7 +13,7 @@ class ItemFetcherImpl: ItemFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest<ItemDAO> = ItemDAO.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        fetchRequest.predicate = NSPredicate(format: "\(DaoConstants.Item.id) == %@", id)
         
         var item: ItemDAO?
         do {
@@ -23,15 +23,15 @@ class ItemFetcherImpl: ItemFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        guard let type = item?.type else { return nil }
+        guard let tempType = item?.type, let type = ItemType(rawValue: tempType) else { return nil }
         
-        if type == "consumable" {
+        if type == .consumable {
             guard let item = item as? ConsumableItemDAO else { return nil }
             return getConsumableInfo(for: item)
-        } else if type == "weapon" {
+        } else if type == .weapon {
             guard let item = item as? WeaponDAO else { return nil }
             return getWeaponInfo(for: item)
-        } else if type == "key" {
+        } else if type == .key {
             guard let name = item?.name, let description = item?.descriptionString, let imageUrl = item?.imageUrl else { return nil }
             return KeyItem(name: name, description: description, imageUrl: imageUrl)
         }
@@ -43,38 +43,39 @@ class ItemFetcherImpl: ItemFetcher {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        guard let itemEntity = NSEntityDescription.entity(forEntityName: "ItemDAO", in: managedContext),
-            let consumableEntity = NSEntityDescription.entity(forEntityName: "ConsumableItemDAO", in: managedContext),
-            let weaponEntity = NSEntityDescription.entity(forEntityName: "WeaponDAO", in: managedContext) else { return false }
+        guard let itemEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ItemDAO)", in: managedContext),
+            let consumableEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ConsumableItemDAO)", in: managedContext),
+            let weaponEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.WeaponDAO)", in: managedContext) else { return false }
         
-        let loadingItem: NSManagedObject
+        let loadingItem: ItemDAO
         
         if let item = item as? ConsumableItem {
-            loadingItem = NSManagedObject(entity: consumableEntity, insertInto: managedContext)
-            loadingItem.setValue("consumable", forKey: "type")
-            
-            loadingItem.setValue(item.healthRecovered, forKey: "healthRecovered")
+            let loadingConsumable = ConsumableItemDAO(entity: consumableEntity, insertInto: managedContext)
+            loadingConsumable.type = "\(ItemType.consumable)"
+            loadingConsumable.healthRecovered = Int64(item.healthRecovered)
+            loadingItem = loadingConsumable
             
         } else if let item = item as? Weapon {
-            loadingItem = NSManagedObject(entity: weaponEntity, insertInto: managedContext)
-            loadingItem.setValue("weapon", forKey: "type")
+            let loadingWeapon = WeaponDAO(entity: weaponEntity, insertInto: managedContext)
+            loadingWeapon.type = "\(ItemType.weapon)"
             
-            loadingItem.setValue(item.extraDamage, forKey: "extraDamage")
-            loadingItem.setValue(item.hitRate, forKey: "hitRate")
+            loadingWeapon.extraDamage = Int16(item.extraDamage)
+            loadingWeapon.hitRate = Int16(item.hitRate)
             if let inducedAilment = item.inducedAilment {
-                loadingItem.setValue(inducedAilment.ailment.rawValue, forKey: "ailment")
-                loadingItem.setValue(inducedAilment.induceRate, forKey: "induceRate")
+                loadingWeapon.ailment = inducedAilment.ailment.rawValue
+                loadingWeapon.induceRate = Int16(inducedAilment.induceRate)
             }
+            loadingItem = loadingWeapon
             
         } else {
-            loadingItem = NSManagedObject(entity: itemEntity, insertInto: managedContext)
-            loadingItem.setValue("key", forKey: "type")
+            loadingItem = ItemDAO(entity: itemEntity, insertInto: managedContext)
+            loadingItem.type = "\(ItemType.key)"
         }
         
-        loadingItem.setValue(id, forKey: "id")
-        loadingItem.setValue(item.name, forKey: "name")
-        loadingItem.setValue(item.description, forKey: "descriptionString")
-        loadingItem.setValue(item.imageUrl, forKey: "imageUrl")
+        loadingItem.id = id
+        loadingItem.name = item.name
+        loadingItem.descriptionString = item.description
+        loadingItem.imageUrl = item.imageUrl
         
         do {
             try managedContext.save()
@@ -113,17 +114,10 @@ class ItemFetcherImpl: ItemFetcher {
     
     private func getWeaponInfo(for item: WeaponDAO) -> Item? {
         guard let name = item.name, let description = item.descriptionString, let imageUrl = item.imageUrl else { return nil }
-        let inducedAilment: InduceAilment?
+        var inducedAilment: InduceAilment?
         
-        switch item.ailment {
-        case "poisoned":
-            inducedAilment = InduceAilment(ailment: .poisoned, induceRate: Int(item.induceRate))
-        case "paralyzed":
-            inducedAilment = InduceAilment(ailment: .paralyzed, induceRate: Int(item.induceRate))
-        case "blind":
-            inducedAilment = InduceAilment(ailment: .blind, induceRate: Int(item.induceRate))
-        default:
-            inducedAilment = nil
+        if let ailment = StatusAilment(rawValue: item.ailment ?? "") {
+            inducedAilment = InduceAilment(ailment: ailment, induceRate: Int(item.induceRate))
         }
         
         return Weapon(name: name, description: description, imageUrl: imageUrl, extraDamage: Int(item.extraDamage), hitRate: Int(item.hitRate), inducedAilment: inducedAilment)

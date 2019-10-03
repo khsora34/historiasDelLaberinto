@@ -13,7 +13,7 @@ extension BattleEventFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest<BattleEventDAO> = BattleEventDAO.fetchRequest()
-        let predicate = NSPredicate(format: "id == %@", NSString(string: id))
+        let predicate = NSPredicate(format: "\(DaoConstants.Event.id) == %@", NSString(string: id))
         fetchRequest.predicate = predicate
         
         var event: BattleEventDAO?
@@ -33,16 +33,16 @@ extension BattleEventFetcher {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        guard let entity = NSEntityDescription.entity(forEntityName: "BattleEventDAO", in: managedContext) else { return false }
-        let loadingEvent = NSManagedObject(entity: entity, insertInto: managedContext)
+        guard let entity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.BattleEventDAO)", in: managedContext) else { return false }
         
-        loadingEvent.setValue(battle.id, forKey: "id")
-        loadingEvent.setValue("battle", forKey: "type")
-        loadingEvent.setValue(battle.enemyId, forKey: "enemyId")
-        loadingEvent.setValue(battle.shouldSetVisited, forKey: "shouldSetVisited")
-        loadingEvent.setValue(battle.shouldEndGame, forKey: "shouldEndGame")
-        loadingEvent.setValue(battle.winStep, forKey: "winStep")
-        loadingEvent.setValue(battle.loseStep, forKey: "loseStep")
+        let loadingEvent = BattleEventDAO(entity: entity, insertInto: managedContext)
+        loadingEvent.id = battle.id
+        loadingEvent.type = "\(DaoConstants.Event.battle)"
+        loadingEvent.enemyId = battle.enemyId
+        loadingEvent.shouldSetVisited = battle.shouldSetVisited ?? false
+        loadingEvent.shouldEndGame = battle.shouldEndGame ?? false
+        loadingEvent.winStep = battle.winStep
+        loadingEvent.loseStep = battle.loseStep
         
         do {
             try managedContext.save()

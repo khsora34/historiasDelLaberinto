@@ -19,16 +19,16 @@ extension DialogueDaoParser {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false  }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        guard let entity = NSEntityDescription.entity(forEntityName: "DialogueEventDAO", in: managedContext) else { return false }
-        let loadingEvent = NSManagedObject(entity: entity, insertInto: managedContext)
+        guard let entity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.DialogueEventDAO)", in: managedContext) else { return false }
+        let loadingEvent = DialogueEventDAO(entity: entity, insertInto: managedContext)
         
-        loadingEvent.setValue(dialogue.id, forKey: "id")
-        loadingEvent.setValue("dialogue", forKey: "type")
-        loadingEvent.setValue(dialogue.characterId, forKey: "characterId")
-        loadingEvent.setValue(dialogue.message, forKey: "message")
-        loadingEvent.setValue(dialogue.nextStep, forKey: "nextStep")
-        loadingEvent.setValue(dialogue.shouldSetVisited, forKey: "shouldSetVisited")
-        loadingEvent.setValue(dialogue.shouldEndGame, forKey: "shouldEndGame")
+        loadingEvent.id = dialogue.id
+        loadingEvent.type = "\(DaoConstants.Event.dialogue)"
+        loadingEvent.characterId = dialogue.characterId
+        loadingEvent.message = dialogue.message
+        loadingEvent.nextStep = dialogue.nextStep
+        loadingEvent.shouldSetVisited = dialogue.shouldSetVisited ?? false
+        loadingEvent.shouldEndGame = dialogue.shouldEndGame ?? false
         
         do {
             try managedContext.save()
