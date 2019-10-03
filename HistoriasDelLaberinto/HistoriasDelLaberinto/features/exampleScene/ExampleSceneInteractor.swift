@@ -1,6 +1,8 @@
 protocol ExampleSceneBusinessLogic: BusinessLogic {
     func doSomething(request: ExampleSceneModels.Something.Request) -> ExampleSceneModels.Something.Response
     func dialogIsAvailable(request: ExampleSceneModels.DialogAvailable.Request) -> ExampleSceneModels.DialogAvailable.Response
+    func deletedDb()
+    func loadDb()
 }
 
 class ExampleSceneInteractor: ExampleSceneBusinessLogic {
@@ -21,6 +23,31 @@ class ExampleSceneInteractor: ExampleSceneBusinessLogic {
     
     func saveDb(request: ExampleSceneModels.DatabaseSaving.Request) {
         _ = databaseFetcherProvider.eventsFetcherManager.saveEvent(request.event)
+    }
+    
+    func deletedDb() {
+        databaseFetcherProvider.charactersFetcher.deleteAllCharacters()
+        databaseFetcherProvider.eventsFetcherManager.deleteAll()
+        databaseFetcherProvider.itemsFetcher.deleteAllItems()
+        databaseFetcherProvider.movementFetcher.removeMovement()
+        databaseFetcherProvider.roomsFetcher.deleteAllRooms()
+    }
+    
+    func loadDb() {
+        let protagonist = getProtagonist()
+        let charactersFile = getCharacters()
+        let roomsFile = getRooms()
+        let itemsFile = getItems()
+        let eventsFile = getEvents()
+        
+        save(protagonist, charactersFile, roomsFile, itemsFile, eventsFile)
+    }
+    
+    private func save(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile, _ eventsFile: EventsFile) {
+        print("Characters are saved: \(saveCharacters(in: charactersFile, protagonist: protagonist, fetcher: databaseFetcherProvider.charactersFetcher))")
+        print("Items are saved: \(saveItems(itemsFile, fetcher: databaseFetcherProvider.itemsFetcher))")
+        print("Rooms are saved: \(saveRooms(roomsFile, fetcher: databaseFetcherProvider.roomsFetcher))")
+        print("Events are saved: \(saveEvents(eventsFile, fetcher: databaseFetcherProvider.eventsFetcherManager))")
     }
     
     func getDb(request: ExampleSceneModels.DatabaseGetting.Request) -> ExampleSceneModels.DatabaseGetting.Response {
@@ -45,3 +72,5 @@ extension ExampleSceneInteractor: EventHandlerInteractor {
 }
 
 extension ExampleSceneInteractor: ImageRemover {}
+extension ExampleSceneInteractor: GameFilesLoader {}
+extension ExampleSceneInteractor: FilesSaver {}
