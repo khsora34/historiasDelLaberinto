@@ -39,24 +39,6 @@ extension Condition: Decodable {
             throw CodingError.unknownValue
         }
     }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        switch self {
-        case .partner(let partnerId):
-            try container.encode("partner", forKey: .rawValue)
-            try container.encode(partnerId, forKey: .associatedValue)
-        case .item(let itemId):
-            try container.encode("item", forKey: .rawValue)
-            try container.encode(itemId, forKey: .associatedValue)
-        case .roomVisited(let roomId):
-            try container.encode("roomVisited", forKey: .rawValue)
-            try container.encode(roomId, forKey: .associatedValue)
-        case .roomNotVisited(let roomId):
-            try container.encode("roomNotVisited", forKey: .rawValue)
-            try container.encode(roomId, forKey: .associatedValue)
-        }
-    }
 }
 
 typealias ConditionParser = YamlParser<Condition>
