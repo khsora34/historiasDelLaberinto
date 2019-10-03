@@ -28,7 +28,7 @@ enum DaoConstants {
     }
     
     enum Event: String {
-        case id, shouldEndGame, shouldSetVisited, type
+        case id, shouldEndGame, shouldSetVisited, type, battle, reward, dialogue, choice, condition
     }
     
     enum Item: String {
