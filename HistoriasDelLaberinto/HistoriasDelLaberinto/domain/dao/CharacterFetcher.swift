@@ -28,7 +28,7 @@ class CharacterFetcherImpl: CharacterFetcher {
         
         if let protagonist = character as? ProtagonistDAO {
             return Protagonist(
-                name: name, imageUrl: imageUrl, portraitUrl: protagonist.portraitUrl, partner: protagonist.partner,
+                name: name, imageUrl: imageUrl, portraitUrl: protagonist.portraitUrl,
                 currentHealthPoints: Int(protagonist.currentHealthPoints),
                 maxHealthPoints: Int(protagonist.maxHealthPoints),
                 attack: Int(protagonist.attack),
@@ -36,6 +36,7 @@ class CharacterFetcherImpl: CharacterFetcher {
                 agility: Int(protagonist.agility),
                 currentStatusAilment: nil,
                 weapon: protagonist.weaponId,
+                partner: protagonist.partner,
                 items: getInventory(from: protagonist))
         } else if let playableCharacter = character as? PlayableCharacterDAO {
             return PlayableCharacter(
@@ -77,7 +78,7 @@ class CharacterFetcherImpl: CharacterFetcher {
         
         let loadingCharacter: CharacterDAO
         
-        if let playableCharacter = character as? PlayableCharacter {
+        if let playableCharacter = character as? CharacterStatus {
             var loadingPlayableCharacter: PlayableCharacterDAO = PlayableCharacterDAO(entity: playableEntity, insertInto: managedContext)
             
             if let protagonist = character as? Protagonist {

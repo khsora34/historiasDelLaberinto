@@ -2,8 +2,6 @@ struct Protagonist: CharacterStatus, Decodable {
     let name: String
     let imageUrl: String
     let portraitUrl: String?
-    var partner: String?
-
     var currentHealthPoints: Int {
         didSet {
             if currentHealthPoints > maxHealthPoints {
@@ -18,6 +16,7 @@ struct Protagonist: CharacterStatus, Decodable {
     var currentStatusAilment: StatusAilment?
     var weapon: String?
     
+    var partner: String?
     var items: [String: Int]
 }
 
