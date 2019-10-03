@@ -13,7 +13,7 @@ extension ChoiceEventFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest<ChoiceEventDAO> = ChoiceEventDAO.fetchRequest()
-        let predicate = NSPredicate(format: "id == %@", id)
+        let predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", id)
         fetchRequest.predicate = predicate
         
         var event: ChoiceEventDAO?
@@ -33,14 +33,14 @@ extension ChoiceEventFetcher {
                 var condition: Condition?
                 
                 if let type = actionManaged.conditionType, let value = actionManaged.conditionValue {
-                    switch type {
-                    case "item":
+                    switch ConditionString(rawValue: type) {
+                    case .item:
                         condition = .item(id: value)
-                    case "partner":
+                    case .partner:
                         condition = .partner(id: value)
-                    case "roomVisited":
+                    case .roomVisited:
                         condition = .roomVisited(id: value)
-                    case "roomNotVisited":
+                    case .roomNotVisited:
                         condition = .roomNotVisited(id: value)
                     default:
                         condition = nil
@@ -58,43 +58,41 @@ extension ChoiceEventFetcher {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        guard
-            let choiceEntity =
-            NSEntityDescription.entity(forEntityName: "ChoiceEventDAO", in: managedContext),
-            let actionEntity = NSEntityDescription.entity(forEntityName: "ActionDAO", in: managedContext) else { return false }
+        guard let choiceEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ChoiceEventDAO)", in: managedContext),
+            let actionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ActionDAO)", in: managedContext) else { return false }
         
-        let loadingEvent = NSManagedObject(entity: choiceEntity, insertInto: managedContext)
-        loadingEvent.setValue(choice.id, forKey: "id")
-        loadingEvent.setValue("choice", forKey: "type")
-        loadingEvent.setValue(choice.shouldSetVisited, forKey: "shouldSetVisited")
-        loadingEvent.setValue(choice.shouldEndGame, forKey: "shouldEndGame")
+        let loadingEvent = ChoiceEventDAO(entity: choiceEntity, insertInto: managedContext)
+        loadingEvent.id = choice.id
+        loadingEvent.type = "\(DaoConstants.Event.choice)"
+        loadingEvent.shouldSetVisited = choice.shouldSetVisited ?? false
+        loadingEvent.shouldEndGame = choice.shouldEndGame ?? false
         
         var managedActions: [NSManagedObject] = []
         
         for action in choice.options {
-            let loadingAction = NSManagedObject(entity: actionEntity, insertInto: managedContext)
-            loadingAction.setValue(action.name, forKey: "name")
-            loadingAction.setValue(action.nextStep, forKey: "nextStep")
+            let loadingAction = ActionDAO(entity: actionEntity, insertInto: managedContext)
+            loadingAction.name = action.name
+            loadingAction.nextStep = action.nextStep
             if let condition = action.condition {
                 switch condition {
-                case .item(let next):
-                    loadingAction.setValue("item", forKey: "conditionType")
-                    loadingAction.setValue(next, forKey: "conditionValue")
-                case .partner(let next):
-                    loadingAction.setValue("partner", forKey: "conditionType")
-                    loadingAction.setValue(next, forKey: "conditionValue")
+                case .item(let value):
+                    loadingAction.conditionType = "\(ConditionString.item)"
+                    loadingAction.conditionValue = value
+                case .partner(let value):
+                    loadingAction.conditionType = "\(ConditionString.partner)"
+                    loadingAction.conditionValue = value
                 case .roomVisited(let value):
-                    loadingAction.setValue("roomVisited", forKey: "conditionType")
-                    loadingAction.setValue(value, forKey: "conditionValue")
+                    loadingAction.conditionType = "\(ConditionString.roomVisited)"
+                    loadingAction.conditionValue = value
                 case .roomNotVisited(let value):
-                    loadingAction.setValue("roomNotVisited", forKey: "conditionType")
-                    loadingAction.setValue(value, forKey: "conditionValue")
+                    loadingAction.conditionType = "\(ConditionString.roomNotVisited)"
+                    loadingAction.conditionValue = value
                 }
             }
             managedActions.append(loadingAction)
         }
         
-        loadingEvent.setValue(NSOrderedSet(array: managedActions), forKey: "actionsAssociated")
+        loadingEvent.actionsAssociated = NSOrderedSet(array: managedActions)
         
         do {
             try managedContext.save()

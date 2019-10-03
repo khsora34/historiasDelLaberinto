@@ -22,41 +22,28 @@ extension Condition: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let rawValue = try container.decode(String.self, forKey: .rawValue)
-        switch rawValue {
-        case "partner":
+        let parsedValue = ConditionString(rawValue: rawValue)
+        switch parsedValue {
+        case .partner:
             let partnerId = try container.decode(String.self, forKey: .associatedValue)
             self = .partner(id: partnerId)
-        case "item":
+        case .item:
             let itemId = try container.decode(String.self, forKey: .associatedValue)
             self = .item(id: itemId)
-        case "roomVisited":
+        case .roomVisited:
             let roomId = try container.decode(String.self, forKey: .associatedValue)
             self = .roomVisited(id: roomId)
-        case "roomNotVisited":
+        case .roomNotVisited:
             let roomId = try container.decode(String.self, forKey: .associatedValue)
             self = .roomNotVisited(id: roomId)
         default:
             throw CodingError.unknownValue
         }
     }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        switch self {
-        case .partner(let partnerId):
-            try container.encode("partner", forKey: .rawValue)
-            try container.encode(partnerId, forKey: .associatedValue)
-        case .item(let itemId):
-            try container.encode("item", forKey: .rawValue)
-            try container.encode(itemId, forKey: .associatedValue)
-        case .roomVisited(let roomId):
-            try container.encode("roomVisited", forKey: .rawValue)
-            try container.encode(roomId, forKey: .associatedValue)
-        case .roomNotVisited(let roomId):
-            try container.encode("roomNotVisited", forKey: .rawValue)
-            try container.encode(roomId, forKey: .associatedValue)
-        }
-    }
+}
+
+enum ConditionString: String {
+    case partner, item, roomVisited, roomNotVisited
 }
 
 typealias ConditionParser = YamlParser<Condition>

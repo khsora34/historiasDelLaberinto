@@ -1,13 +1,13 @@
 import UIKit.UIApplication
 import CoreData
 
-protocol EventTypeFetcher {
-    func getEventType(with id: String) -> EventDAO?
-    func deleteAllEventTypes()
+protocol EventFetcher {
+    func getEvent(_ id: String) -> EventDAO?
+    func deleteAllEvents()
 }
 
-extension EventTypeFetcher {
-    func getEventType(with id: String) -> EventDAO? {
+extension EventFetcher {
+    func getEvent(_ id: String) -> EventDAO? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext
         
@@ -18,7 +18,7 @@ extension EventTypeFetcher {
         return results?.first
     }
     
-    func deleteAllEventTypes() {
+    func deleteAllEvents() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         

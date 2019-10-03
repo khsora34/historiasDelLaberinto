@@ -29,7 +29,8 @@ class MovementFetcherImpl: MovementFetcher {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { fatalError() }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        guard let movementEntity = NSEntityDescription.entity(forEntityName: "Movement", in: managedContext), let positionEntity = NSEntityDescription.entity(forEntityName: "RoomPosition", in: managedContext) else { fatalError() }
+        guard let movementEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.Movement)", in: managedContext),
+            let positionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.RoomPosition)", in: managedContext) else { fatalError() }
         
         let newMovement = Movement(entity: movementEntity, insertInto: managedContext)
         
@@ -52,7 +53,7 @@ class MovementFetcherImpl: MovementFetcher {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        guard let positionEntity = NSEntityDescription.entity(forEntityName: "RoomPosition", in: managedContext) else { return }
+        guard let positionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.RoomPosition)", in: managedContext) else { return }
         
         let position = RoomPosition(entity: positionEntity, insertInto: managedContext)
         position.x = Int16(location.x)

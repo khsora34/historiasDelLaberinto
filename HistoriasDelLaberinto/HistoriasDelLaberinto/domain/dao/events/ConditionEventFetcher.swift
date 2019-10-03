@@ -13,7 +13,7 @@ extension ConditionEventFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest<ConditionEventDAO> = ConditionEventDAO.fetchRequest()
-        let predicate = NSPredicate(format: "id == %@", NSString(string: id))
+        let predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", NSString(string: id))
         fetchRequest.predicate = predicate
         
         var event: ConditionEventDAO?
@@ -24,25 +24,21 @@ extension ConditionEventFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        guard let conditionEvent = event, let nextTrueStep = conditionEvent.nextStepIfTrue, let nextFalseStep = conditionEvent.nextStepIfFalse, let type = conditionEvent.conditionType, let value = conditionEvent.conditionValue else { return nil }
+        guard let conditionEvent = event, let nextTrueStep = conditionEvent.nextStepIfTrue, let nextFalseStep = conditionEvent.nextStepIfFalse, let type = conditionEvent.conditionType, let value = conditionEvent.conditionValue, let conditionString = ConditionString(rawValue: type) else { return nil }
         
-        var condition: Condition?
-        switch type {
-        case "item":
+        var condition: Condition
+        switch conditionString {
+        case .item:
             condition = .item(id: value)
-        case "partner":
+        case .partner:
             condition = .partner(id: value)
-        case "roomVisited":
+        case .roomVisited:
             condition = .roomVisited(id: value)
-        case "roomNotVisited":
+        case .roomNotVisited:
             condition = .roomNotVisited(id: value)
-        default:
-            condition = nil
         }
         
-        guard let safeCondition = condition else { return nil }
-        
-        return ConditionEvent(id: id, condition: safeCondition, shouldSetVisited: conditionEvent.shouldSetVisited, shouldEndGame: event?.shouldEndGame, nextStepIfTrue: nextTrueStep, nextStepIfFalse: nextFalseStep)
+        return ConditionEvent(id: id, condition: condition, shouldSetVisited: conditionEvent.shouldSetVisited, shouldEndGame: event?.shouldEndGame, nextStepIfTrue: nextTrueStep, nextStepIfFalse: nextFalseStep)
     }
     
     func saveCondition(_ condition: ConditionEvent) -> Bool {
@@ -50,29 +46,29 @@ extension ConditionEventFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         guard let entity = NSEntityDescription.entity(forEntityName: "ConditionEventDAO", in: managedContext) else { return false }
-        let loadingEvent = NSManagedObject(entity: entity, insertInto: managedContext)
+        let loadingEvent = ConditionEventDAO(entity: entity, insertInto: managedContext)
         
-        loadingEvent.setValue(condition.id, forKey: "id")
-        loadingEvent.setValue("condition", forKey: "type")
-        loadingEvent.setValue(condition.shouldSetVisited, forKey: "shouldSetVisited")
-        loadingEvent.setValue(condition.shouldEndGame, forKey: "shouldEndGame")
-        loadingEvent.setValue(condition.nextStepIfTrue, forKey: "nextStepIfTrue")
-        loadingEvent.setValue(condition.nextStepIfFalse, forKey: "nextStepIfFalse")
+        loadingEvent.id = condition.id
+        loadingEvent.type = "\(DaoConstants.Event.condition)"
+        loadingEvent.shouldSetVisited = condition.shouldSetVisited ?? false
+        loadingEvent.shouldEndGame = condition.shouldEndGame ?? false
+        loadingEvent.nextStepIfTrue = condition.nextStepIfTrue
+        loadingEvent.nextStepIfFalse = condition.nextStepIfFalse
         
-            switch condition.condition {
-            case .item(let value):
-                loadingEvent.setValue("item", forKey: "conditionType")
-                loadingEvent.setValue(value, forKey: "conditionValue")
-            case .partner(let value):
-                loadingEvent.setValue("partner", forKey: "conditionType")
-                loadingEvent.setValue(value, forKey: "conditionValue")
-            case .roomVisited(let value):
-                loadingEvent.setValue("roomVisited", forKey: "conditionType")
-                loadingEvent.setValue(value, forKey: "conditionValue")
-            case .roomNotVisited(let value):
-                loadingEvent.setValue("roomNotVisited", forKey: "conditionType")
-                loadingEvent.setValue(value, forKey: "conditionValue")
-            }
+        switch condition.condition {
+        case .item(let value):
+            loadingEvent.conditionType = "\(ConditionString.item)"
+            loadingEvent.conditionValue = value
+        case .partner(let value):
+            loadingEvent.conditionType = "\(ConditionString.partner)"
+            loadingEvent.conditionValue = value
+        case .roomVisited(let value):
+            loadingEvent.conditionType = "\(ConditionString.roomVisited)"
+            loadingEvent.conditionValue = value
+        case .roomNotVisited(let value):
+            loadingEvent.conditionType = "\(ConditionString.roomNotVisited)"
+            loadingEvent.conditionValue = value
+        }
         
         do {
             try managedContext.save()

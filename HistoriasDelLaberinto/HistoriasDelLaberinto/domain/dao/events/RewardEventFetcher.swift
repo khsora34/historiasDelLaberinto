@@ -13,7 +13,7 @@ extension RewardEventFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest<RewardEventDAO> = RewardEventDAO.fetchRequest()
-        let predicate = NSPredicate(format: "id == %@", id)
+        let predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", id)
         fetchRequest.predicate = predicate
         
         var event: RewardEventDAO?
@@ -28,10 +28,9 @@ extension RewardEventFetcher {
         
         var rewards: [String: Int] = [:]
         
-        for element in rewardsSet {
-            if let rewardManaged = element as? RewardDAO, let name = rewardManaged.name {
-                rewards[name] = Int(rewardManaged.quantity)
-            }
+        rewardsSet.filter({ $0 is ItemsQuantity && ($0 as! ItemsQuantity).itemId != nil }).forEach {
+            let pair = $0 as! ItemsQuantity
+            rewards[pair.itemId!] = Int(pair.quantity)
         }
         
         return RewardEvent(id: id, message: message, rewards: rewards, shouldSetVisited: rewardEvent.shouldSetVisited, shouldEndGame: event?.shouldEndGame, nextStep: rewardEvent.nextStep)
@@ -41,30 +40,28 @@ extension RewardEventFetcher {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        guard
-            let eventEntity =
-            NSEntityDescription.entity(forEntityName: "RewardEventDAO", in: managedContext),
-            let rewardEntity = NSEntityDescription.entity(forEntityName: "RewardDAO", in: managedContext) else { return false }
+        guard let eventEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.RewardEventDAO)", in: managedContext),
+            let rewardEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ItemsQuantity)", in: managedContext) else { return false }
         
-        let loadingEvent = NSManagedObject(entity: eventEntity, insertInto: managedContext)
-        loadingEvent.setValue(reward.id, forKey: "id")
-        loadingEvent.setValue("reward", forKey: "type")
-        loadingEvent.setValue(reward.message, forKey: "message")
-        loadingEvent.setValue(reward.shouldSetVisited, forKey: "shouldSetVisited")
-        loadingEvent.setValue(reward.shouldEndGame, forKey: "shouldEndGame")
-        loadingEvent.setValue(reward.nextStep, forKey: "nextStep")
+        let loadingEvent = RewardEventDAO(entity: eventEntity, insertInto: managedContext)
+        loadingEvent.id = reward.id
+        loadingEvent.type = "\(DaoConstants.Event.reward)"
+        loadingEvent.message = reward.message
+        loadingEvent.shouldSetVisited = reward.shouldSetVisited ?? false
+        loadingEvent.shouldEndGame = reward.shouldEndGame ?? false
+        loadingEvent.nextStep = reward.nextStep
         
         var managedRewards: [NSManagedObject] = []
         
         for rewardKey in reward.rewards.keys {
-            let loadingReward = NSManagedObject(entity: rewardEntity, insertInto: managedContext)
-            loadingReward.setValue(rewardKey, forKey: "name")
-            loadingReward.setValue(reward.rewards[rewardKey], forKey: "quantity")
+            let loadingReward = ItemsQuantity(entity: rewardEntity, insertInto: managedContext)
+            loadingReward.itemId = rewardKey
+            loadingReward.quantity = Int16(reward.rewards[rewardKey] ?? 0)
             
             managedRewards.append(loadingReward)
         }
         
-        loadingEvent.setValue(NSOrderedSet(array: managedRewards), forKey: "rewardsAssociated")
+        loadingEvent.rewardsAssociated = NSOrderedSet(array: managedRewards)
         
         do {
             try managedContext.save()

@@ -13,7 +13,7 @@ class ItemFetcherImpl: ItemFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest<ItemDAO> = ItemDAO.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        fetchRequest.predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", id)
         
         var item: ItemDAO?
         do {
@@ -23,61 +23,59 @@ class ItemFetcherImpl: ItemFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        guard let imageUrl = item?.imageUrl, let name = item?.name, let description = item?.descriptionString, let type = item?.type else { return nil }
+        guard let tempType = item?.type, let type = ItemType(rawValue: tempType) else { return nil }
         
-        if type == "consumable", let healthRecovered = item?.healthRecovered {
-            return ConsumableItem(name: name, description: description, imageUrl: imageUrl, healthRecovered: Int(healthRecovered))
-        } else if type == "weapon", let weaponInfo = item?.weaponInfo {
-            let inducedAilment: InduceAilment?
-            
-            switch weaponInfo.ailment {
-            case "poisoned":
-                inducedAilment = InduceAilment(ailment: .poisoned, induceRate: Int(weaponInfo.induceRate))
-            case "paralyzed":
-                inducedAilment = InduceAilment(ailment: .paralyzed, induceRate: Int(weaponInfo.induceRate))
-            case "blind":
-                inducedAilment = InduceAilment(ailment: .blind, induceRate: Int(weaponInfo.induceRate))
-            default:
-                inducedAilment = nil
-            }
-            
-            return Weapon(name: name, description: description, imageUrl: imageUrl, extraDamage: Int(weaponInfo.extraDamage), hitRate: Int(weaponInfo.hitRate), inducedAilment: inducedAilment)
-        } else {
+        if type == .consumable {
+            guard let item = item as? ConsumableItemDAO else { return nil }
+            return getConsumableInfo(for: item)
+        } else if type == .weapon {
+            guard let item = item as? WeaponDAO else { return nil }
+            return getWeaponInfo(for: item)
+        } else if type == .key {
+            guard let name = item?.name, let description = item?.descriptionString, let imageUrl = item?.imageUrl else { return nil }
             return KeyItem(name: name, description: description, imageUrl: imageUrl)
         }
+        
+        return nil
     }
     
     func saveItem(for item: Item, with id: String) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        guard let itemEntity = NSEntityDescription.entity(forEntityName: "ItemDAO", in: managedContext),
-            let weaponInfoEntity = NSEntityDescription.entity(forEntityName: "WeaponDAO", in: managedContext) else { return false }
-        let loadingItem = NSManagedObject(entity: itemEntity, insertInto: managedContext)
+        guard let itemEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ItemDAO)", in: managedContext),
+            let consumableEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ConsumableItemDAO)", in: managedContext),
+            let weaponEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.WeaponDAO)", in: managedContext) else { return false }
         
-        loadingItem.setValue(id, forKey: "id")
-        loadingItem.setValue(item.name, forKey: "name")
-        loadingItem.setValue(item.description, forKey: "descriptionString")
-        loadingItem.setValue(item.imageUrl, forKey: "imageUrl")
+        let loadingItem: ItemDAO
         
         if let item = item as? ConsumableItem {
-            loadingItem.setValue(item.healthRecovered, forKey: "healthRecovered")
-            loadingItem.setValue("consumable", forKey: "type")
+            let loadingConsumable = ConsumableItemDAO(entity: consumableEntity, insertInto: managedContext)
+            loadingConsumable.type = "\(ItemType.consumable)"
+            loadingConsumable.healthRecovered = Int64(item.healthRecovered)
+            loadingItem = loadingConsumable
             
         } else if let item = item as? Weapon {
-            let loadingInfo = NSManagedObject(entity: weaponInfoEntity, insertInto: managedContext)
-            loadingInfo.setValue(item.extraDamage, forKey: "extraDamage")
-            loadingInfo.setValue(item.hitRate, forKey: "hitRate")
-            loadingItem.setValue("weapon", forKey: "type")
+            let loadingWeapon = WeaponDAO(entity: weaponEntity, insertInto: managedContext)
+            loadingWeapon.type = "\(ItemType.weapon)"
             
+            loadingWeapon.extraDamage = Int16(item.extraDamage)
+            loadingWeapon.hitRate = Int16(item.hitRate)
             if let inducedAilment = item.inducedAilment {
-                loadingInfo.setValue(inducedAilment.ailment.rawValue, forKey: "ailment")
-                loadingInfo.setValue(inducedAilment.induceRate, forKey: "induceRate")
+                loadingWeapon.ailment = inducedAilment.ailment.rawValue
+                loadingWeapon.induceRate = Int16(inducedAilment.induceRate)
             }
-            loadingItem.setValue(loadingInfo, forKey: "weaponInfo")
+            loadingItem = loadingWeapon
+            
         } else {
-            loadingItem.setValue("key", forKey: "type")
+            loadingItem = ItemDAO(entity: itemEntity, insertInto: managedContext)
+            loadingItem.type = "\(ItemType.key)"
         }
+        
+        loadingItem.id = id
+        loadingItem.name = item.name
+        loadingItem.descriptionString = item.description
+        loadingItem.imageUrl = item.imageUrl
         
         do {
             try managedContext.save()
@@ -97,9 +95,6 @@ class ItemFetcherImpl: ItemFetcher {
         do {
             let results = try managedContext.fetch(itemFetchRequest)
             for result in results {
-                if let weapon = result.weaponInfo {
-                    managedContext.delete(weapon)
-                }
                 managedContext.delete(result)
             }
             
@@ -110,5 +105,21 @@ class ItemFetcherImpl: ItemFetcher {
         } catch {
             print(error)
         }
+    }
+    
+    private func getConsumableInfo(for item: ConsumableItemDAO) -> Item? {
+        guard let name = item.name, let description = item.descriptionString, let imageUrl = item.imageUrl else { return nil }
+        return ConsumableItem(name: name, description: description, imageUrl: imageUrl, healthRecovered: Int(item.healthRecovered))
+    }
+    
+    private func getWeaponInfo(for item: WeaponDAO) -> Item? {
+        guard let name = item.name, let description = item.descriptionString, let imageUrl = item.imageUrl else { return nil }
+        var inducedAilment: InduceAilment?
+        
+        if let ailment = StatusAilment(rawValue: item.ailment ?? "") {
+            inducedAilment = InduceAilment(ailment: ailment, induceRate: Int(item.induceRate))
+        }
+        
+        return Weapon(name: name, description: description, imageUrl: imageUrl, extraDamage: Int(item.extraDamage), hitRate: Int(item.hitRate), inducedAilment: inducedAilment)
     }
 }

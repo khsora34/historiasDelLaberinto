@@ -7,12 +7,12 @@ protocol EventFetcherManager {
 class EventFetcherManagerImpl: EventFetcherManager {
     
     func getEvent(with id: String) -> Event? {
-        guard let eventType = EventType(rawValue: getEventType(with: id)?.type ?? "") else { return nil }
+        guard let newEvent = getEvent(id), let type = newEvent.type, let eventType = EventType(rawValue: type) else { return nil }
         
         var loadedEvent: Event?
         switch eventType {
         case .dialogue:
-            loadedEvent = getDialogue(with: id)
+            loadedEvent = getDialogue(from: newEvent)
         case .choice:
             loadedEvent = getChoice(with: id)
         case .reward:
@@ -55,14 +55,13 @@ class EventFetcherManagerImpl: EventFetcherManager {
         deleteAllBattles()
         deleteAllChoices()
         deleteAllRewards()
-        deleteAllDialogues()
         deleteAllConditions()
-        deleteAllEventTypes()
+        deleteAllEvents()
     }
 }
 
-extension EventFetcherManagerImpl: EventTypeFetcher {}
-extension EventFetcherManagerImpl: DialogueEventFetcher {}
+extension EventFetcherManagerImpl: EventFetcher {}
+extension EventFetcherManagerImpl: DialogueDaoParser {}
 extension EventFetcherManagerImpl: ChoiceEventFetcher {}
 extension EventFetcherManagerImpl: RewardEventFetcher {}
 extension EventFetcherManagerImpl: ConditionEventFetcher {}

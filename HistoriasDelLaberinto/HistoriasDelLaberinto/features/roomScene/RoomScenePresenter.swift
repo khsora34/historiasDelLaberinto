@@ -17,17 +17,15 @@ class RoomScenePresenter: BasePresenter {
         return _router as? RoomSceneRouter
     }
     
-    private var room: Room
     private var filteredActions: [Action] = []
     
-    var roomId: String
+    var room: Room
     var shouldSetVisitedWhenFinished: Bool = false
     var shouldEndGameWhenFinished: Bool = false
     var dialog: DialogDisplayLogic?
     var actualEvent: Event?
     
     init(roomId: String, room: Room) {
-        self.roomId = roomId
         self.room = room
     }
     

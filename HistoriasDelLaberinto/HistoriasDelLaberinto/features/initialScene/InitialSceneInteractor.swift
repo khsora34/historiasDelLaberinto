@@ -64,8 +64,7 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
     }
     
     private func save(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile, _ eventsFile: EventsFile) {
-        print("Protagonist is saved: \(saveProtagonist(protagonist, fetcher: databaseFetcherProvider.protagonistFetcher))")
-        print("Characters are saved: \(saveCharacters(charactersFile, fetcher: databaseFetcherProvider.charactersFetcher))")
+        print("Characters are saved: \(saveCharacters(in: charactersFile, protagonist: protagonist, fetcher: databaseFetcherProvider.charactersFetcher))")
         print("Items are saved: \(saveItems(itemsFile, fetcher: databaseFetcherProvider.itemsFetcher))")
         print("Rooms are saved: \(saveRooms(roomsFile, fetcher: databaseFetcherProvider.roomsFetcher))")
         print("Events are saved: \(saveEvents(eventsFile, fetcher: databaseFetcherProvider.eventsFetcherManager))")
@@ -77,7 +76,6 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
         databaseFetcherProvider.eventsFetcherManager.deleteAll()
         databaseFetcherProvider.charactersFetcher.deleteAllCharacters()
         databaseFetcherProvider.itemsFetcher.deleteAllItems()
-        databaseFetcherProvider.protagonistFetcher.deleteProtagonist()
         databaseFetcherProvider.roomsFetcher.deleteAllRooms()
         databaseFetcherProvider.movementFetcher.removeMovement()
         removeImageCache()

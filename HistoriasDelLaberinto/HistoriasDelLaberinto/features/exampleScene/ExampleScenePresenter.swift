@@ -22,7 +22,7 @@ class ExampleScenePresenter: BasePresenter {
     
     // MARK: Event handler
     
-    var roomId: String = ""
+    var room: Room = Room(id: "", name: "", description: "", imageUrl: "", actions: [])
     var shouldSetVisitedWhenFinished: Bool = false
     var shouldEndGameWhenFinished: Bool = false
     var dialog: DialogDisplayLogic?
@@ -34,7 +34,7 @@ class ExampleScenePresenter: BasePresenter {
 
 extension ExampleScenePresenter: ExampleScenePresentationLogic {
     func navigateToNewPlace() {
-        router?.goToNewView(room: Room(id: "23", name: "Hola", description: "Si", imageUrl: "", reloadWithPartner: true, isGenericRoom: true, actions: []))
+        router?.goToNewView(room: Room(id: "23", name: "Hola", description: "Si", imageUrl: "", isGenericRoom: true, actions: []))
     }
     
     func navigateToPlace() {

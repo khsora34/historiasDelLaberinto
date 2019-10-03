@@ -14,7 +14,7 @@ class RoomFetcherImpl: RoomFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest<RoomDAO> = RoomDAO.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        fetchRequest.predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", id)
         
         var room: RoomDAO?
         do {
@@ -24,33 +24,31 @@ class RoomFetcherImpl: RoomFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        guard let roomId = room?.id, let imageUrl = room?.imageUrl, let name = room?.name, let description = room?.descriptionString, let reloadWithPartner = room?.reloadWithPartner, let isGeneric = room?.isGenericRoom, let actionsSet = room?.actions else { return nil }
+        guard let roomId = room?.id, let imageUrl = room?.imageUrl, let name = room?.name, let description = room?.descriptionString, let isGeneric = room?.isGenericRoom, let actionsSet = room?.actions else { return nil }
         
         var actions: [Action] = []
         
-        for action in actionsSet {
-            if let actionManaged = action as? ActionDAO, let name = actionManaged.name {
-                var condition: Condition?
-                
-                if let type = actionManaged.conditionType, let value = actionManaged.conditionValue {
-                    switch type {
-                    case "item":
-                        condition = .item(id: value)
-                    case "partner":
-                        condition = .partner(id: value)
-                    case "roomVisited":
-                        condition = .roomVisited(id: value)
-                    case "roomNotVisited":
-                        condition = .roomNotVisited(id: value)
-                    default:
-                        condition = nil
-                    }
+        for action in actionsSet.compactMap({$0 as? ActionDAO}) where action.name != nil {
+            var condition: Condition?
+            
+            if let type = action.conditionType, let value = action.conditionValue {
+                switch ConditionString(rawValue: type) {
+                case .item:
+                    condition = .item(id: value)
+                case .partner:
+                    condition = .partner(id: value)
+                case .roomVisited:
+                    condition = .roomVisited(id: value)
+                case .roomNotVisited:
+                    condition = .roomNotVisited(id: value)
+                case nil:
+                    condition = nil
                 }
-                actions.append(Action(name: name, nextStep: actionManaged.nextStep, condition: condition))
             }
+            actions.append(Action(name: action.name!, nextStep: action.nextStep, condition: condition))
         }
         
-        return Room(id: roomId, name: name, description: description, imageUrl: imageUrl, reloadWithPartner: reloadWithPartner, isGenericRoom: isGeneric, actions: actions)
+        return Room(id: roomId, name: name, description: description, imageUrl: imageUrl, isGenericRoom: isGeneric, actions: actions)
     }
     
     func getAllRooms() -> [Room] {
@@ -73,27 +71,27 @@ class RoomFetcherImpl: RoomFetcher {
             
             var actions: [Action] = []
             
-            for action in actionsSet {
-                if let actionManaged = action as? ActionDAO, let name = actionManaged.name {
-                    var condition: Condition?
-                    
-                    if let type = actionManaged.conditionType, let value = actionManaged.conditionValue {
-                        switch type {
-                        case "item":
-                            condition = .item(id: value)
-                        case "partner":
-                            condition = .partner(id: value)
-                        case "roomVisited":
-                            condition = .roomVisited(id: value)
-                        default:
-                            condition = nil
-                        }
+            for action in actionsSet.compactMap({$0 as? ActionDAO}) where action.name != nil {
+                var condition: Condition?
+                
+                if let type = action.conditionType, let value = action.conditionValue {
+                    switch ConditionString(rawValue: type) {
+                    case .item:
+                        condition = .item(id: value)
+                    case .partner:
+                        condition = .partner(id: value)
+                    case .roomVisited:
+                        condition = .roomVisited(id: value)
+                    case .roomNotVisited:
+                        condition = .roomNotVisited(id: value)
+                    case nil:
+                        condition = nil
                     }
-                    actions.append(Action(name: name, nextStep: actionManaged.nextStep, condition: condition))
                 }
+                actions.append(Action(name: action.name!, nextStep: action.nextStep, condition: condition))
             }
             
-            let modeledRoom = Room(id: roomId, name: name, description: description, imageUrl: imageUrl, reloadWithPartner: room.reloadWithPartner, isGenericRoom: room.isGenericRoom, actions: actions)
+            let modeledRoom = Room(id: roomId, name: name, description: description, imageUrl: imageUrl, isGenericRoom: room.isGenericRoom, actions: actions)
             modeledRooms.append(modeledRoom)
         }
         return modeledRooms
@@ -103,43 +101,42 @@ class RoomFetcherImpl: RoomFetcher {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        guard let roomEntity = NSEntityDescription.entity(forEntityName: "RoomDAO", in: managedContext),
-            let actionEntity = NSEntityDescription.entity(forEntityName: "ActionDAO", in: managedContext) else { return false }
-        let loadingRoom = NSManagedObject(entity: roomEntity, insertInto: managedContext)
+        guard let roomEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.RoomDAO)", in: managedContext),
+            let actionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ActionDAO)", in: managedContext) else { return false }
+        let loadingRoom = RoomDAO(entity: roomEntity, insertInto: managedContext)
         
-        loadingRoom.setValue(id, forKey: "id")
-        loadingRoom.setValue(room.name, forKey: "name")
-        loadingRoom.setValue(room.description, forKey: "descriptionString")
-        loadingRoom.setValue(room.imageUrl, forKey: "imageUrl")
-        loadingRoom.setValue(room.isGenericRoom ?? false, forKey: "isGenericRoom")
-        loadingRoom.setValue(room.reloadWithPartner, forKey: "reloadWithPartner")
+        loadingRoom.id = id
+        loadingRoom.name = room.name
+        loadingRoom.descriptionString = room.description
+        loadingRoom.imageUrl = room.imageUrl
+        loadingRoom.isGenericRoom = room.isGenericRoom ?? false
         
         var managedActions: [NSManagedObject] = []
         
         for action in room.actions {
-            let loadingAction = NSManagedObject(entity: actionEntity, insertInto: managedContext)
-            loadingAction.setValue(action.name, forKey: "name")
-            loadingAction.setValue(action.nextStep, forKey: "nextStep")
+            let loadingAction = ActionDAO(entity: actionEntity, insertInto: managedContext)
+            loadingAction.name = action.name
+            loadingAction.nextStep = action.nextStep
             if let condition = action.condition {
                 switch condition {
-                case .item(id: let next):
-                    loadingAction.setValue("item", forKey: "conditionType")
-                    loadingAction.setValue(next, forKey: "conditionValue")
-                case .partner(id: let next):
-                    loadingAction.setValue("partner", forKey: "conditionType")
-                    loadingAction.setValue(next, forKey: "conditionValue")
+                case .item(let value):
+                    loadingAction.conditionType = ConditionString.item.rawValue
+                    loadingAction.conditionValue = value
+                case .partner(let value):
+                    loadingAction.conditionType = ConditionString.partner.rawValue
+                    loadingAction.conditionValue = value
                 case .roomVisited(let value):
-                    loadingAction.setValue("roomVisited", forKey: "conditionType")
-                    loadingAction.setValue(value, forKey: "conditionValue")
+                    loadingAction.conditionType = ConditionString.roomVisited.rawValue
+                    loadingAction.conditionValue = value
                 case .roomNotVisited(let value):
-                    loadingAction.setValue("roomNotVisited", forKey: "conditionType")
-                    loadingAction.setValue(value, forKey: "conditionValue")
+                    loadingAction.conditionType = ConditionString.roomNotVisited.rawValue
+                    loadingAction.conditionValue = value
                 }
             }
             managedActions.append(loadingAction)
         }
         
-        loadingRoom.setValue(NSSet(array: managedActions), forKey: "actions")
+        loadingRoom.actions = NSOrderedSet(array: managedActions)
         
         do {
             try managedContext.save()

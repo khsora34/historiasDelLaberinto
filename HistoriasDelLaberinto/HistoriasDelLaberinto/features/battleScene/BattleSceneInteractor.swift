@@ -6,19 +6,17 @@ protocol BattleSceneBusinessLogic: BusinessLogic {
 }
 
 class BattleSceneInteractor: BaseInteractor, BattleSceneBusinessLogic {
-    private let protagonistFetcher: ProtagonistFetcher
     private let characterFetcher: CharacterFetcher
     private let itemFetcher: ItemFetcher
     
     init(databaseProvider: DatabaseFetcherProvider) {
-        self.protagonistFetcher = databaseProvider.protagonistFetcher
         self.characterFetcher = databaseProvider.charactersFetcher
         self.itemFetcher = databaseProvider.itemsFetcher
     }
     
     func getProtagonist() -> BattleScene.ProtagonistGetter.Response {
-        let protagonist = protagonistFetcher.getProtagonist()
-        return BattleScene.ProtagonistGetter.Response(protagonist: protagonist)
+        let protagonist = characterFetcher.getCharacter(with: "protagonist")
+        return BattleScene.ProtagonistGetter.Response(protagonist: protagonist as? Protagonist)
     }
     
     func getPartner(request: BattleScene.CharacterGetter.Request) -> BattleScene.CharacterGetter.Response {
@@ -38,7 +36,7 @@ class BattleSceneInteractor: BaseInteractor, BattleSceneBusinessLogic {
     func updateCharacters(request: BattleScene.CharacterUpdater.Request) {
         guard let protagonist = request.protagonist as? Protagonist else { return }
         
-        _ = protagonistFetcher.saveProtagonist(for: protagonist)
+        _ = characterFetcher.saveCharacter(for: protagonist, with: "protagonist")
         if let partner = request.partner, let partnerId = protagonist.partner {
             _ = characterFetcher.saveCharacter(for: partner, with: partnerId)
         }

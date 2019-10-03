@@ -3,7 +3,7 @@ protocol Item: ImageRepresentable {
     var description: String { get }
 }
 
-enum ItemType {
+enum ItemType: String {
     case key, weapon, consumable
     
     init?(item: Item) {

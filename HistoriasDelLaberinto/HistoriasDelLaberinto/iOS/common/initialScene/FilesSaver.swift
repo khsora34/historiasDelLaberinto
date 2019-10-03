@@ -1,17 +1,12 @@
 protocol FilesSaver {
-    func saveProtagonist(_ protagonist: Protagonist, fetcher: ProtagonistFetcher) -> Bool
-    func saveCharacters(_ file: CharactersFile, fetcher: CharacterFetcher) -> Bool
+    func saveCharacters(in file: CharactersFile, protagonist: Protagonist, fetcher: CharacterFetcher) -> Bool
     func saveItems(_ file: ItemsFile, fetcher: ItemFetcher) -> Bool
     func saveRooms(_ file: RoomsFile, fetcher: RoomFetcher) -> Bool
     func saveEvents(_ file: EventsFile, fetcher: EventFetcherManager) -> Bool
 }
 
 extension FilesSaver {
-    func saveProtagonist(_ protagonist: Protagonist, fetcher: ProtagonistFetcher) -> Bool {
-        return fetcher.saveProtagonist(for: protagonist)
-    }
-    
-    func saveCharacters(_ file: CharactersFile, fetcher: CharacterFetcher) -> Bool {
+    func saveCharacters(in file: CharactersFile, protagonist: Protagonist, fetcher: CharacterFetcher) -> Bool {
         var bool = true
         
         for (id, character) in file.notPlayable {
@@ -21,6 +16,8 @@ extension FilesSaver {
         for (id, character) in file.playable {
             bool = bool && fetcher.saveCharacter(for: character, with: id)
         }
+        
+        bool = bool && fetcher.saveCharacter(for: protagonist, with: "protagonist")
         
         return bool
     }

@@ -8,18 +8,16 @@ protocol PauseMenuSceneBusinessLogic: BusinessLogic {
 }
 
 class PauseMenuSceneInteractor: BaseInteractor, PauseMenuSceneBusinessLogic {
-    private let protagonistFetcher: ProtagonistFetcher
     private let characterFetcher: CharacterFetcher
     private let itemFetcher: ItemFetcher
     
     init(databaseProvider: DatabaseFetcherProvider) {
-        self.protagonistFetcher = databaseProvider.protagonistFetcher
         self.characterFetcher = databaseProvider.charactersFetcher
         self.itemFetcher = databaseProvider.itemsFetcher
     }
     
     func getProtagonist() -> PauseMenuScene.ProtagonistGetter.Response {
-        let protagonist = protagonistFetcher.getProtagonist()
+        let protagonist = characterFetcher.getCharacter(with: "protagonist") as? Protagonist
         return PauseMenuScene.ProtagonistGetter.Response(protagonist: protagonist)
     }
     
