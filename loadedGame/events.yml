@@ -3,12 +3,20 @@
   message: "Miras a tu alrededor"
   characterId: "narrator" #idCharacter
   nextStep: ""
-  
+
 - id: "exampleRoomStartEvent"
   mode: "dialogue"
   message: "Te encuentras en un lujoso edificio de concepto abierto."
   characterId: "narrator"
   nextStep: ""
+
+- id: "exampleRoomStartEvent2"
+  mode: "condition"
+  condition:
+    kind: "item" #For items, the keyword is "item".
+    required: "poisoned_bow" #Item's or partner's id.
+  nextStepIfTrue: "exampleRoomStartEvent"
+  nextStepIfFalse: ""
 
 - id: "room17Conversation"
   mode: "condition"
