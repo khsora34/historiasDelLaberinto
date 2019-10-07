@@ -49,7 +49,7 @@ class RoomFetcherImpl: RoomFetcher {
     }
     
     private func getRoom(fromDao dao: RoomDAO?) -> Room? {
-        guard let roomId = dao?.id, let imageUrl = dao?.imageUrl, let name = dao?.name, let description = dao?.descriptionString, let isGeneric = dao?.isGenericRoom, let actionsSet = dao?.actions else { return nil }
+        guard let roomId = dao?.id, let imageUrl = dao?.imageUrl, let name = dao?.name, let description = dao?.descriptionString, let actionsSet = dao?.actions else { return nil }
         
         var actions: [Action] = []
         
@@ -72,7 +72,7 @@ class RoomFetcherImpl: RoomFetcher {
             }
             actions.append(Action(name: action.name!, nextStep: action.nextStep, condition: condition))
         }
-        return Room(id: roomId, name: name, description: description, imageUrl: imageUrl, isGenericRoom: dao.isGenericRoom, startEvent: dao?.startEvent, actions: actions)
+        return Room(id: roomId, name: name, description: description, imageUrl: imageUrl, isGenericRoom: dao?.isGenericRoom, startEvent: dao?.startEvent, actions: actions)
     }
     
     func saveRoom(for room: Room, with id: String) -> Bool {
