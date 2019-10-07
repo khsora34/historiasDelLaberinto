@@ -22,10 +22,6 @@ extension EventHandler {
         
         updateNextStepStatus(event: event)
         
-        if let condition = event as? ConditionEvent {
-            startEvent(with: condition.nextStep(evaluator: self))
-            return
-        }
         
         actualEvent = event
         
@@ -103,7 +99,7 @@ extension EventHandler {
         case .choice:
             showChoice(actualEvent as! ChoiceEvent)
         case .condition:
-            showError(.determinedCondition)
+            evaluateCondition(actualEvent as! ConditionEvent)
         case .battle:
             showBattle(actualEvent as! BattleEvent)
         case .unknown:
@@ -127,6 +123,14 @@ extension EventHandler {
         }
         
         showDialog(with: configurator)
+    }
+    
+    private func evaluateCondition(_ event: ConditionEvent) {
+        let nextStep = event.nextStep(evaluator: self)
+        if !nextStep.isEmpty {
+            startEvent(with: nextStep)
+        }
+        finishFlow()
     }
     
     private func showChoice(_ event: ChoiceEvent) {
@@ -204,9 +208,6 @@ extension EventHandler {
             showErrorDialogue(errorEvent)
         case .defaultError:
             let errorEvent = DialogueEvent(id: "-1", characterId: "Cisco", message: "An error ocurred, sorry about that...", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
-            showErrorDialogue(errorEvent)
-        case .determinedCondition:
-            let errorEvent = DialogueEvent(id: "-1", characterId: "Cisco", message: "It seems the condition went way too far.", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
             showErrorDialogue(errorEvent)
         case .itemsNotFound:
             let errorEvent = DialogueEvent(id: "-1", characterId: "Cisco", message: "There was a problem finding the items rewarded. Sorry for that...", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
