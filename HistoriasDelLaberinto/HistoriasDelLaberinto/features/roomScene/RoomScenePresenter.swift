@@ -22,8 +22,16 @@ class RoomScenePresenter: BasePresenter {
     var room: Room
     var shouldSetVisitedWhenFinished: Bool = false
     var shouldEndGameWhenFinished: Bool = false
-    var dialog: DialogDisplayLogic?
     var actualEvent: Event?
+    
+    var dialog: DialogDisplayLogic? {
+        get {
+            return viewController?.dialog
+        }
+        set {
+            viewController?.dialog = newValue
+        }
+    }
     
     init(roomId: String, room: Room) {
         self.room = room

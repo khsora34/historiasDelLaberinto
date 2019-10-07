@@ -2,6 +2,7 @@ import UIKit
 import Kingfisher
 
 protocol RoomSceneDisplayLogic: ViewControllerDisplay {
+    var dialog: DialogDisplayLogic? { get set }
     func set(title: String)
     func setImage(with literal: String)
     func set(actions: [String])
@@ -11,6 +12,8 @@ class RoomSceneViewController: BaseViewController {
     private var presenter: RoomScenePresentationLogic? {
         return _presenter as? RoomScenePresentationLogic
     }
+    
+    var dialog: DialogDisplayLogic?
     
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var backgroundButtonView: UIView!
