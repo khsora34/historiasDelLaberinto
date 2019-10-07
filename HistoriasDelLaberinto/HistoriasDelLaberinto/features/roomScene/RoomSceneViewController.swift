@@ -31,6 +31,11 @@ class RoomSceneViewController: BaseViewController {
         addNavigationBarButtons()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        presenter?.startWithStartEvent()
+    }
+    
     private func addNavigationBarButtons() {
         let image = UIImage(named: "menuIcon")
         let button = UIButton(type: .custom)

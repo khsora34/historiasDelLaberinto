@@ -2,6 +2,7 @@ protocol RoomScenePresentationLogic: Presenter {
     func selectedAction(_ tag: Int)
     func getInfoMessage() -> String
     func showMenu()
+    func startWithStartEvent()
 }
 
 class RoomScenePresenter: BasePresenter {
@@ -20,6 +21,7 @@ class RoomScenePresenter: BasePresenter {
     private var filteredActions: [Action] = []
     
     var room: Room
+    var shouldLaunchStartEvent: Bool
     var shouldSetVisitedWhenFinished: Bool = false
     var shouldEndGameWhenFinished: Bool = false
     var actualEvent: Event?
@@ -35,6 +37,7 @@ class RoomScenePresenter: BasePresenter {
     
     init(roomId: String, room: Room) {
         self.room = room
+        shouldLaunchStartEvent = room.startEvent != nil
     }
     
     override func viewDidLoad() {
@@ -72,6 +75,13 @@ class RoomScenePresenter: BasePresenter {
 }
 
 extension RoomScenePresenter: RoomScenePresentationLogic {
+    func startWithStartEvent() {
+        if shouldLaunchStartEvent, let id = room.startEvent {
+            startEvent(with: id)
+            shouldLaunchStartEvent = false
+        }
+    }
+    
     func selectedAction(_ tag: Int) {
         if tag == filteredActions.count {
             router?.goToMovementView(actualRoom: room)
