@@ -16,15 +16,40 @@ class RoomFetcherImpl: RoomFetcher {
         let fetchRequest: NSFetchRequest<RoomDAO> = RoomDAO.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", id)
         
-        var room: RoomDAO?
         do {
             let results = try managedContext.fetch(fetchRequest)
-            room = results.first
+            return getRoom(fromDao: results.first)
+        } catch let error as NSError {
+            print("No ha sido posible guardar \(error), \(error.userInfo)")
+            return nil
+        }
+    }
+    
+    func getAllRooms() -> [Room] {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return [] }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest<RoomDAO> = RoomDAO.fetchRequest()
+        
+        var rooms: [RoomDAO] = []
+        do {
+            rooms = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        guard let roomId = room?.id, let imageUrl = room?.imageUrl, let name = room?.name, let description = room?.descriptionString, let isGeneric = room?.isGenericRoom, let actionsSet = room?.actions else { return nil }
+        var modeledRooms: [Room] = []
+        
+        for room in rooms {
+            if let newRoom = getRoom(fromDao: room) {
+                modeledRooms.append(newRoom)
+            }
+        }
+        return modeledRooms
+    }
+    
+    private func getRoom(fromDao dao: RoomDAO?) -> Room? {
+        guard let roomId = dao?.id, let imageUrl = dao?.imageUrl, let name = dao?.name, let description = dao?.descriptionString, let isGeneric = dao?.isGenericRoom, let actionsSet = dao?.actions else { return nil }
         
         var actions: [Action] = []
         
@@ -47,54 +72,7 @@ class RoomFetcherImpl: RoomFetcher {
             }
             actions.append(Action(name: action.name!, nextStep: action.nextStep, condition: condition))
         }
-        
-        return Room(id: roomId, name: name, description: description, imageUrl: imageUrl, isGenericRoom: isGeneric, actions: actions)
-    }
-    
-    func getAllRooms() -> [Room] {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return [] }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest: NSFetchRequest<RoomDAO> = RoomDAO.fetchRequest()
-        
-        var rooms: [RoomDAO] = []
-        do {
-            rooms = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError {
-            print("No ha sido posible guardar \(error), \(error.userInfo)")
-        }
-        
-        var modeledRooms: [Room] = []
-        
-        for room in rooms {
-            guard let roomId = room.id, let imageUrl = room.imageUrl, let name = room.name, let description = room.descriptionString, let actionsSet = room.actions else { continue }
-            
-            var actions: [Action] = []
-            
-            for action in actionsSet.compactMap({$0 as? ActionDAO}) where action.name != nil {
-                var condition: Condition?
-                
-                if let type = action.conditionType, let value = action.conditionValue {
-                    switch ConditionString(rawValue: type) {
-                    case .item:
-                        condition = .item(id: value)
-                    case .partner:
-                        condition = .partner(id: value)
-                    case .roomVisited:
-                        condition = .roomVisited(id: value)
-                    case .roomNotVisited:
-                        condition = .roomNotVisited(id: value)
-                    case nil:
-                        condition = nil
-                    }
-                }
-                actions.append(Action(name: action.name!, nextStep: action.nextStep, condition: condition))
-            }
-            
-            let modeledRoom = Room(id: roomId, name: name, description: description, imageUrl: imageUrl, isGenericRoom: room.isGenericRoom, actions: actions)
-            modeledRooms.append(modeledRoom)
-        }
-        return modeledRooms
+        return Room(id: roomId, name: name, description: description, imageUrl: imageUrl, isGenericRoom: dao.isGenericRoom, startEvent: dao?.startEvent, actions: actions)
     }
     
     func saveRoom(for room: Room, with id: String) -> Bool {
@@ -110,6 +88,7 @@ class RoomFetcherImpl: RoomFetcher {
         loadingRoom.descriptionString = room.description
         loadingRoom.imageUrl = room.imageUrl
         loadingRoom.isGenericRoom = room.isGenericRoom ?? false
+        loadingRoom.startEvent = room.startEvent
         
         var managedActions: [NSManagedObject] = []
         
