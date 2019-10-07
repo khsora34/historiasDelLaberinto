@@ -3,6 +3,12 @@
   message: "Miras a tu alrededor"
   characterId: "narrator" #idCharacter
   nextStep: ""
+  
+- id: "exampleRoomStartEvent"
+  mode: "dialogue"
+  message: "Te encuentras en un lujoso edificio de concepto abierto."
+  characterId: "narrator"
+  nextStep: ""
 
 - id: "room17Conversation"
   mode: "condition"

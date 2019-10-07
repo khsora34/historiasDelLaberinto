@@ -4,6 +4,7 @@ struct Room: Decodable, ImageRepresentable {
     let description: String
     let imageUrl: String
     var isGenericRoom: Bool?
+    var startEvent: String?
     var isVisited: Bool = false
     var isVisitedWithPartner: Bool = false
     var actions: [Action]
@@ -14,6 +15,7 @@ struct Room: Decodable, ImageRepresentable {
         case description
         case actions
         case isGenericRoom
+        case startEvent
         case imageUrl
     }
 }

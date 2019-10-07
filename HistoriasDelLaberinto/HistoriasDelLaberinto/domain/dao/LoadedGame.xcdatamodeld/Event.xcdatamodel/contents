@@ -87,6 +87,7 @@
         <attribute name="isVisited" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="isVisitedWithPartner" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
+        <attribute name="startEvent" optional="YES" attributeType="String"/>
         <relationship name="actions" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ActionDAO" inverseName="parentRoom" inverseEntity="ActionDAO"/>
     </entity>
     <entity name="RoomPosition" representedClassName="RoomPosition" syncable="YES" codeGenerationType="class">
@@ -116,7 +117,7 @@
         <element name="PlayableCharacterDAO" positionX="-560.4375" positionY="168.98046875" width="128" height="148"/>
         <element name="ProtagonistDAO" positionX="-394.8828125" positionY="314.58984375" width="128" height="73"/>
         <element name="RewardEventDAO" positionX="-380.99609375" positionY="-91.8359375" width="128" height="88"/>
-        <element name="RoomDAO" positionX="-557.7890625" positionY="-15.046875" width="128" height="163"/>
+        <element name="RoomDAO" positionX="-557.7890625" positionY="-15.046875" width="128" height="178"/>
         <element name="RoomPosition" positionX="114.40625" positionY="115.58984375" width="128" height="103"/>
         <element name="WeaponDAO" positionX="112.90625" positionY="-29.83203125" width="128" height="103"/>
     </elements>
