@@ -20,19 +20,20 @@ extension EventHandler {
             return
         }
         
-        updateNextStepStatus(event: event)
-        
+        updateVisitedStatus(event: event)
+        updateEndgameStatus(event: event)
         
         actualEvent = event
-        
         determineAction(type: EventType(event: event))
     }
     
-    private func updateNextStepStatus(event: Event) {
+    private func updateVisitedStatus(event: Event) {
         if !shouldSetVisitedWhenFinished, event.shouldSetVisited == true {
             shouldSetVisitedWhenFinished = true
         }
-        
+    }
+    
+    private func updateEndgameStatus(event: Event) {
         if !shouldEndGameWhenFinished, event.shouldEndGame == true {
             shouldEndGameWhenFinished = true
         }
