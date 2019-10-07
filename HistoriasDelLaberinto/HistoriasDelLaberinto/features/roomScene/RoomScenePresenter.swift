@@ -1,5 +1,5 @@
 protocol RoomScenePresentationLogic: Presenter {
-    func start(for tag: Int)
+    func selectedAction(_ tag: Int)
     func getInfoMessage() -> String
     func showMenu()
 }
@@ -72,7 +72,7 @@ class RoomScenePresenter: BasePresenter {
 }
 
 extension RoomScenePresenter: RoomScenePresentationLogic {
-    func start(for tag: Int) {
+    func selectedAction(_ tag: Int) {
         if tag == filteredActions.count {
             router?.goToMovementView(actualRoom: room)
             return

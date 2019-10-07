@@ -80,14 +80,12 @@ extension RoomSceneViewController: RoomSceneDisplayLogic {
 
 extension RoomSceneViewController {
     @objc func didTapOption(sender: UIButton) {
-        presenter?.start(for: sender.tag)
+        presenter?.selectedAction(sender.tag)
     }
     
     @objc func didTapInfoButton() {
         let alert = UIAlertController(title: title, message: presenter?.getInfoMessage(), preferredStyle: .alert)
-        
         alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: nil))
-        
         self.present(alert, animated: true)
     }
     
