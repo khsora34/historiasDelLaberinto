@@ -44,6 +44,7 @@ rooms:
     name: "Habitación de ejemplo"
     description: "Esta es la habitación de ejemplo"
     reloadWhenPartner: true
+    startEvent: "exampleRoomStartEvent"
     imageUrl: "https://images.pexels.com/photos/2121121/pexels-photo-2121121.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=2&h=1920&w=1080"
     actions:
       - action: "Hablar con Sora"

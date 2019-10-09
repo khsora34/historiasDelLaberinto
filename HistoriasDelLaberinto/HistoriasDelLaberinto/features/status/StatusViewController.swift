@@ -31,31 +31,16 @@ class StatusViewController: UIView {
     }
     
     var ailment: StatusAilment? {
-        get {
-            switch ailmentLabel.text {
-            case "Veneno":
-                return .poisoned
-            case "Parálisis":
-                return .paralyzed
-            case "Ceguera":
-                return .blind
-            default:
-                return nil
-            }
-        }
-        set {
-            switch newValue {
+        didSet {
+            ailmentLabel.text = ailment?.localizedAilmentName
+            switch ailment {
             case .poisoned?:
-                ailmentLabel.text = "Veneno"
                 ailmentLabel.textColor = UIColor.green
             case .blind?:
-                ailmentLabel.text = "Ceguera"
                 ailmentLabel.textColor = UIColor.darkGray
             case .paralyzed?:
-                ailmentLabel.text = "Parálisis"
                 ailmentLabel.textColor = UIColor.yellow
             case .none:
-                ailmentLabel.text = ""
                 ailmentLabel.textColor = UIColor.clear
             }
         }
