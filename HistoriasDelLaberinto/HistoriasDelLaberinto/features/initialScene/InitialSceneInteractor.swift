@@ -40,13 +40,12 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
         let charactersFile = getCharacters()
         let roomsFile = getRooms()
         let itemsFile = getItems()
-        let eventsFile = getEvents()
         
-        loadImages(protagonist, charactersFile, roomsFile, itemsFile, eventsFile)
-        save(protagonist, charactersFile, roomsFile, itemsFile, eventsFile)
+        loadImages(protagonist, charactersFile, roomsFile, itemsFile)
+        save(protagonist, charactersFile, roomsFile, itemsFile, getEvents(), getTexts())
     }
     
-    private func loadImages(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile, _ eventsFile: EventsFile) {
+    private func loadImages(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile) {
         print("😂 Starting to load images")
         var imageUrls: [String] = []
         imageUrls.append(protagonist.imageUrl)
@@ -63,11 +62,12 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
         loadImages(from: imageUrls)
     }
     
-    private func save(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile, _ eventsFile: EventsFile) {
+    private func save(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile, _ eventsFile: EventsFile, _ texts: [String: [String: String]]) {
         print("Characters are saved: \(saveCharacters(in: charactersFile, protagonist: protagonist, fetcher: databaseFetcherProvider.charactersFetcher))")
         print("Items are saved: \(saveItems(itemsFile, fetcher: databaseFetcherProvider.itemsFetcher))")
         print("Rooms are saved: \(saveRooms(roomsFile, fetcher: databaseFetcherProvider.roomsFetcher))")
         print("Events are saved: \(saveEvents(eventsFile, fetcher: databaseFetcherProvider.eventsFetcherManager))")
+        print("Texts are saved: \(saveTexts(texts, fetcher: databaseFetcherProvider.localizedValueFetcher))")
     }
     
     func deleteAllFiles() {
