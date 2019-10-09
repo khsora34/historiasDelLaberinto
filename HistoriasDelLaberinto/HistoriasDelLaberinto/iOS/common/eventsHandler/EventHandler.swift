@@ -130,8 +130,9 @@ extension EventHandler {
         let nextStep = event.nextStep(evaluator: self)
         if !nextStep.isEmpty {
             startEvent(with: nextStep)
+        } else {
+            finishFlow()
         }
-        finishFlow()
     }
     
     private func showChoice(_ event: ChoiceEvent) {
