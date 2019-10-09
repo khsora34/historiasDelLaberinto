@@ -59,4 +59,16 @@ extension FilesSaver {
         
         return bool
     }
+    
+    func saveTexts(_ texts: [String: [String: String]], fetcher: LocalizedValueFetcher) -> Bool {
+        var bool = true
+        
+        for (key, value) in texts {
+            for (literalKey, literalValue) in value {
+                bool = bool && fetcher.saveString(key: literalKey, value: literalValue, forLanguage: key)
+            }
+        }
+        
+        return bool
+    }
 }
