@@ -80,6 +80,7 @@
 		6D62D34A22A856B300C2CB60 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D62D34922A856B300C2CB60 /* ImageLoader.swift */; };
 		6D62D34D22A85DB900C2CB60 /* FilesSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D62D34C22A85DB900C2CB60 /* FilesSaver.swift */; };
 		6D6349E822B8488B009788D5 /* CharactersUpdateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6349E722B8488B009788D5 /* CharactersUpdateDelegate.swift */; };
+		6D6D10CE234E441B0034517D /* LocalizedValueFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6D10CD234E441B0034517D /* LocalizedValueFetcher.swift */; };
 		6D6DE4B9221DB40600C92B94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */; };
 		6D6DE4C3221DB40700C92B94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D6DE4C1221DB40700C92B94 /* LaunchScreen.storyboard */; };
 		6D74A09222B5AED500B37D1D /* DidTouchStatusDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D74A09122B5AED500B37D1D /* DidTouchStatusDelegate.swift */; };
@@ -252,6 +253,7 @@
 		6D62D34922A856B300C2CB60 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		6D62D34C22A85DB900C2CB60 /* FilesSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FilesSaver.swift; path = /Users/setoncios/repos/historiasDelLaberinto/HistoriasDelLaberinto/HistoriasDelLaberinto/iOS/common/initialScene/FilesSaver.swift; sourceTree = "<absolute>"; };
 		6D6349E722B8488B009788D5 /* CharactersUpdateDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersUpdateDelegate.swift; sourceTree = "<group>"; };
+		6D6D10CD234E441B0034517D /* LocalizedValueFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedValueFetcher.swift; sourceTree = "<group>"; };
 		6D6DE4B5221DB40600C92B94 /* HistoriasDelLaberinto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HistoriasDelLaberinto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D6DE4B8221DB40600C92B94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D6DE4C2221DB40700C92B94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -683,6 +685,7 @@
 				6D43D905229DAA61008C7ED0 /* RoomFetcher.swift */,
 				6D62D34722A8141500C2CB60 /* MovementFetcher.swift */,
 				6D263C25233F823100A63322 /* DaoConstants.swift */,
+				6D6D10CD234E441B0034517D /* LocalizedValueFetcher.swift */,
 			);
 			path = dao;
 			sourceTree = "<group>";
@@ -1170,6 +1173,7 @@
 				6D9250902268CD3000F2A3E3 /* BaseModels.swift in Sources */,
 				6D285CEE22AACEB9008C9A1D /* StatusViewModel.swift in Sources */,
 				6D398A1F22A2E4FC00D19FF8 /* RoundedButton.swift in Sources */,
+				6D6D10CE234E441B0034517D /* LocalizedValueFetcher.swift in Sources */,
 				6DDA434722A701F2003C7993 /* MovementSceneRouter.swift in Sources */,
 				6D4B57E8224A9A27001779DC /* StatusAilment.swift in Sources */,
 				6D6DE4B9221DB40600C92B94 /* AppDelegate.swift in Sources */,
