@@ -66,6 +66,11 @@ extension EventHandler {
         onFinish()
     }
     
+}
+
+// MARK: - Perform Selection
+
+extension EventHandler {
     func elementSelected(id: Int) {
         performChoice(tag: id)
     }
@@ -191,6 +196,15 @@ extension EventHandler {
     }
 }
 
+extension EventHandler {
+    func evaluate(_ condition: Condition) -> Bool {
+        guard let interactor = eventHandlerInteractor else { return false }
+        let request = EventsHandlerModels.CompareCondition.Request(condition: condition)
+        let response = interactor.compareCondition(request: request)
+        return response.result
+    }
+}
+
 // MARK: - Error
 
 extension EventHandler {
@@ -233,14 +247,7 @@ extension EventHandler {
     }
 }
 
-extension EventHandler {
-    func evaluate(_ condition: Condition) -> Bool {
-        guard let interactor = eventHandlerInteractor else { return false }
-        let request = EventsHandlerModels.CompareCondition.Request(condition: condition)
-        let response = interactor.compareCondition(request: request)
-        return response.result
-    }
-}
+// MARK: - On Battle Finished
 
 extension EventHandler {
     func onBattleFinished(reason: FinishedBattleReason) {
