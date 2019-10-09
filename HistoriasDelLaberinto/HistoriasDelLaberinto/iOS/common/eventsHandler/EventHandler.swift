@@ -51,7 +51,7 @@ extension EventHandler {
     }
     
     private func finishFlow() {
-        finishDialog()
+        hideDialog()
         
         guard !shouldEndGameWhenFinished else {
             shouldEndGame()
@@ -64,11 +64,6 @@ extension EventHandler {
             self.room = response.room
         }
         onFinish()
-    }
-    
-    private func finishDialog() {
-        eventHandlerRouter?.dismiss(animated: true)
-        dialog = nil
     }
     
     func elementSelected(id: Int) {
