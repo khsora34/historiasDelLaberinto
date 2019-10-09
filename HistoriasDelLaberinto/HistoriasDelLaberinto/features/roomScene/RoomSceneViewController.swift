@@ -2,6 +2,7 @@ import UIKit
 import Kingfisher
 
 protocol RoomSceneDisplayLogic: ViewControllerDisplay {
+    var dialog: DialogDisplayLogic? { get set }
     func set(title: String)
     func setImage(with literal: String)
     func set(actions: [String])
@@ -11,6 +12,8 @@ class RoomSceneViewController: BaseViewController {
     private var presenter: RoomScenePresentationLogic? {
         return _presenter as? RoomScenePresentationLogic
     }
+    
+    var dialog: DialogDisplayLogic?
     
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var backgroundButtonView: UIView!
@@ -26,6 +29,11 @@ class RoomSceneViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addNavigationBarButtons()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        presenter?.startWithStartEvent()
     }
     
     private func addNavigationBarButtons() {
@@ -77,14 +85,12 @@ extension RoomSceneViewController: RoomSceneDisplayLogic {
 
 extension RoomSceneViewController {
     @objc func didTapOption(sender: UIButton) {
-        presenter?.start(for: sender.tag)
+        presenter?.selectedAction(sender.tag)
     }
     
     @objc func didTapInfoButton() {
         let alert = UIAlertController(title: title, message: presenter?.getInfoMessage(), preferredStyle: .alert)
-        
         alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: nil))
-        
         self.present(alert, animated: true)
     }
     

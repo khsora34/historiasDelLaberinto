@@ -67,7 +67,6 @@ enum EventsHandlerError {
     case defaultError
     case eventNotFound
     case characterNotFound
-    case determinedCondition
     case itemsNotFound
     case invalidChoiceExecution
     case reasonIsPartnerDefeated

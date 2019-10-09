@@ -2,6 +2,17 @@ enum StatusAilment: String {
     case poisoned
     case paralyzed
     case blind
+    
+    var localizedAilmentName: String {
+        switch self {
+        case .poisoned:
+            return "Veneno"
+        case .paralyzed:
+            return "Parálisis"
+        case .blind:
+            return "Ceguera"
+        }
+    }
 }
 
 extension StatusAilment: Decodable {}
