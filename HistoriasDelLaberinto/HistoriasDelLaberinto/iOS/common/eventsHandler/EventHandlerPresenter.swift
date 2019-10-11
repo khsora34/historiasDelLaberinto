@@ -1,4 +1,4 @@
-protocol EventHandler: ConditionEvaluator, NextDialogHandler, BattleBuilderDelegate {
+protocol EventHandlerPresenter: ConditionEvaluator, NextDialogHandler, BattleBuilderDelegate, LocalizableStringPresenterProtocol {
     var eventHandlerRouter: EventHandlerRoutingLogic? { get }
     var eventHandlerInteractor: EventHandlerInteractor? { get }
     var room: Room { get set }
@@ -13,7 +13,7 @@ protocol EventHandler: ConditionEvaluator, NextDialogHandler, BattleBuilderDeleg
 
 // MARK: - Flow
 
-extension EventHandler {
+extension EventHandlerPresenter {
     func startEvent(with id: String) {
         guard let event = getEventInfo(with: id) else {
             showError(.eventNotFound)
@@ -90,7 +90,7 @@ extension EventHandler {
 
 // MARK: - Determiner
 
-extension EventHandler {
+extension EventHandlerPresenter {
     private func determineAction(type: EventType) {
         switch type {
         case .dialogue:
@@ -154,7 +154,7 @@ extension EventHandler {
 
 // MARK: - Interactor access
 
-extension EventHandler {
+extension EventHandlerPresenter {
     private func getEventInfo(with id: String) -> Event? {
         guard let interactor = eventHandlerInteractor else { return nil }
         let request = EventsHandlerModels.FetchEvent.Request(id: id)
@@ -197,7 +197,7 @@ extension EventHandler {
 
 // MARK: - Error
 
-extension EventHandler {
+extension EventHandlerPresenter {
     func showError(_ error: EventsHandlerError) {
         actualEvent = nil
         switch error {
@@ -237,7 +237,7 @@ extension EventHandler {
     }
 }
 
-extension EventHandler {
+extension EventHandlerPresenter {
     func evaluate(_ condition: Condition) -> Bool {
         guard let interactor = eventHandlerInteractor else { return false }
         let request = EventsHandlerModels.CompareCondition.Request(condition: condition)
@@ -246,7 +246,7 @@ extension EventHandler {
     }
 }
 
-extension EventHandler {
+extension EventHandlerPresenter {
     func onBattleFinished(reason: FinishedBattleReason) {
         switch reason {
         case .defeated(.protagonist):
@@ -274,7 +274,7 @@ extension EventHandler {
 
 // MARK: - Show dialog
 
-extension EventHandler {
+extension EventHandlerPresenter {
     func showDialog(with configurator: DialogConfigurator) {
         if dialog == nil {
             dialog = Dialog.createDialog(configurator, delegate: self)
