@@ -1,7 +1,7 @@
 import UIKit
 import Kingfisher
 
-class StatusViewController: UIView {
+class StatusView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -49,7 +49,7 @@ class StatusViewController: UIView {
     var characterChosen: CharacterChosen?
     var touchDelegate: DidTouchStatusDelegate?
     
-    @IBOutlet var contentView: StatusViewController!
+    @IBOutlet var contentView: StatusView!
     @IBOutlet weak var portraitImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var ailmentLabel: UILabel!
@@ -97,7 +97,7 @@ class StatusViewController: UIView {
     }
 }
 
-extension StatusViewController {
+extension StatusView {
     private func setup() {
         contentView.layer.cornerRadius = 5
         contentView.layer.masksToBounds = true
