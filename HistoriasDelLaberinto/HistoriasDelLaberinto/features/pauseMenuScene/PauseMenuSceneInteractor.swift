@@ -14,6 +14,7 @@ class PauseMenuSceneInteractor: BaseInteractor, PauseMenuSceneBusinessLogic {
     init(databaseProvider: DatabaseFetcherProvider) {
         self.characterFetcher = databaseProvider.charactersFetcher
         self.itemFetcher = databaseProvider.itemsFetcher
+        super.init(localizedStringAccess: databaseProvider.localizedValueFetcher)
     }
     
     func getProtagonist() -> PauseMenuScene.ProtagonistGetter.Response {

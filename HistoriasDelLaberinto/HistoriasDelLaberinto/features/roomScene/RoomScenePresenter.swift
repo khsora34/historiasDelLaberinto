@@ -101,7 +101,7 @@ extension RoomScenePresenter: RoomScenePresentationLogic {
     }
 }
 
-extension RoomScenePresenter: EventHandler {    
+extension RoomScenePresenter: EventHandlerPresenter {    
     var imageUrl: String {
         return room.imageUrl
     }

@@ -10,9 +10,10 @@ class MovementSceneInteractor: BaseInteractor, MovementSceneBusinessLogic {
     private let roomFetcher: RoomFetcher
     private let movementFetcher: MovementFetcher
     
-    init(roomFetcher: RoomFetcher, movementFetcher: MovementFetcher) {
-        self.roomFetcher = roomFetcher
-        self.movementFetcher = movementFetcher
+    init(databaseFetcherProvider: DatabaseFetcherProvider) {
+        self.roomFetcher = databaseFetcherProvider.roomsFetcher
+        self.movementFetcher = databaseFetcherProvider.movementFetcher
+        super.init(localizedStringAccess: databaseFetcherProvider.localizedValueFetcher)
     }
     
     func getMovement() -> MovementScene.GetMovement.Response {

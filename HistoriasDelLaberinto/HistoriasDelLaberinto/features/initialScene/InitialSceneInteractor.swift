@@ -8,7 +8,7 @@ protocol InitialSceneBusinessLogic: BusinessLogic {
     func createMovement()
 }
 
-class InitialSceneInteractor: InitialSceneBusinessLogic {
+class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
     private let databaseFetcherProvider: DatabaseFetcherProvider
     
     var operations: [Int: ImageLoadingOperation] = [:] {
@@ -25,6 +25,7 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
     
     init(databaseFetcherProvider: DatabaseFetcherProvider) {
         self.databaseFetcherProvider = databaseFetcherProvider
+        super.init(localizedStringAccess: databaseFetcherProvider.localizedValueFetcher)
     }
     
     func loadAllFiles(request: InitialScene.FileLoader.Request) {
@@ -78,6 +79,7 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
         databaseFetcherProvider.itemsFetcher.deleteAllItems()
         databaseFetcherProvider.roomsFetcher.deleteAllRooms()
         databaseFetcherProvider.movementFetcher.removeMovement()
+        databaseFetcherProvider.localizedValueFetcher.deleteAllTexts()
         removeImageCache()
         print("😂 Finished in \(Date().timeIntervalSinceReferenceDate - now)")
     }

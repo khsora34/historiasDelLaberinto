@@ -12,6 +12,7 @@ class BattleSceneInteractor: BaseInteractor, BattleSceneBusinessLogic {
     init(databaseProvider: DatabaseFetcherProvider) {
         self.characterFetcher = databaseProvider.charactersFetcher
         self.itemFetcher = databaseProvider.itemsFetcher
+        super.init(localizedStringAccess: databaseProvider.localizedValueFetcher)
     }
     
     func getProtagonist() -> BattleScene.ProtagonistGetter.Response {

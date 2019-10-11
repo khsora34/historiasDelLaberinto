@@ -2,17 +2,18 @@ import UIKit.UIApplication
 import CoreData
 
 protocol LocalizedValueFetcher {
-    func getString(key: String) -> String
+    func getString(key: String, forLocale locale: Locale) -> String
     func saveString(key: String, value: String, forLanguage langIdentifier: String) -> Bool
+    func deleteAllTexts()
 }
 
 class LocalizedValueFetcherImpl: LocalizedValueFetcher {
-    func getString(key: String) -> String {
+    func getString(key: String, forLocale locale: Locale) -> String {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return key }
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest<TextDAO> = TextDAO.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "\(DaoConstants.Generic.key) == %@ AND \(DaoConstants.Generic.language)", key, UserDefaults.standard.string(forKey: "gameLanguage")!)
+        fetchRequest.predicate = NSPredicate(format: "\(DaoConstants.Generic.key) == %@ AND \(DaoConstants.Generic.language) == %@", key, locale.identifier)
         
         do {
             let results = try managedContext.fetch(fetchRequest)
