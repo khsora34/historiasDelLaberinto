@@ -1,3 +1,9 @@
-class BaseInteractor: BusinessLogic {}
+class BaseInteractor: BusinessLogic {
+    internal var localizedStringAccess: LocalizedValueFetcher
+    
+    init(localizedStringAccess: LocalizedValueFetcher) {
+        self.localizedStringAccess = localizedStringAccess
+    }
+}
 
-protocol BusinessLogic {}
+protocol BusinessLogic: LocalizedStringBussinesLogic {}

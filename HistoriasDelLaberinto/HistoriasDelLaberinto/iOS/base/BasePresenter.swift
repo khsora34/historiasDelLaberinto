@@ -13,3 +13,9 @@ class BasePresenter: Presenter {
     
     func viewDidLoad() {}
 }
+
+extension BasePresenter: LocalizableStringTransformable {    
+    func localizedString(key: String) -> String {
+        return _interactor!.getString(key: key)
+    }
+}
