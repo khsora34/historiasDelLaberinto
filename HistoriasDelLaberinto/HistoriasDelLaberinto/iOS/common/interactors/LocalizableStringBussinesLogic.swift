@@ -1,12 +1,12 @@
 import Foundation
 
-protocol LocalizedStringBussinesLogic {
+protocol LocalizableStringBussinesLogic {
     var localizedStringAccess: LocalizedValueFetcher { get }
     func getString(key: String) -> String
     func getString(key: String, forLanguage language: Locale) -> String
 }
 
-extension LocalizedStringBussinesLogic {
+extension LocalizableStringBussinesLogic {
     func getString(key: String) -> String {
         guard let languageIdentifier: String = UserDefaults.standard.string(forKey: "loadedLanguageIdentifier") else {
             return key
