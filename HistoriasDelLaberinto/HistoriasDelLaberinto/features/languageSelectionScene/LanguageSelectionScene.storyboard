@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Language Selection Scene View Controller-->
+        <scene sceneID="b4h-Ad-vsp">
+            <objects>
+                <viewController storyboardIdentifier="LanguageSelectionScene" useStoryboardIdentifierAsRestorationIdentifier="YES" id="A7u-6N-Yew" customClass="LanguageSelectionSceneViewController" customModule="HistoriasDelLaberinto" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="D59-Vg-zxM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8h-3H-qnt">
+                                <rect key="frame" x="20" y="74" width="374" height="718"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="kVJ-EZ-maM">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="718"/>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="kVJ-EZ-maM" firstAttribute="centerX" secondItem="i8h-3H-qnt" secondAttribute="centerX" id="NQ9-NP-APi"/>
+                                    <constraint firstItem="kVJ-EZ-maM" firstAttribute="top" secondItem="i8h-3H-qnt" secondAttribute="top" id="cGz-jQ-NHz"/>
+                                    <constraint firstItem="kVJ-EZ-maM" firstAttribute="centerY" secondItem="i8h-3H-qnt" secondAttribute="centerY" id="ey6-An-NqM"/>
+                                    <constraint firstAttribute="bottom" secondItem="kVJ-EZ-maM" secondAttribute="bottom" id="lLS-Xq-Lay"/>
+                                    <constraint firstAttribute="trailing" secondItem="kVJ-EZ-maM" secondAttribute="trailing" id="mb1-SZ-aYF"/>
+                                    <constraint firstItem="kVJ-EZ-maM" firstAttribute="leading" secondItem="i8h-3H-qnt" secondAttribute="leading" id="qQs-Te-ncV"/>
+                                </constraints>
+                            </scrollView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="zfh-FI-eVL" userLabel="Buttons Container">
+                                <rect key="frame" x="52" y="812" width="310.5" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cci-jf-qb4" userLabel="Save Button">
+                                        <rect key="frame" x="0.0" y="0.0" width="155" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M7l-4F-ZGM">
+                                        <rect key="frame" x="155" y="0.0" width="155.5" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="i8h-3H-qnt" firstAttribute="top" secondItem="LQl-2b-rpi" secondAttribute="top" constant="30" id="6q2-Gd-rDn"/>
+                            <constraint firstItem="LQl-2b-rpi" firstAttribute="bottom" secondItem="zfh-FI-eVL" secondAttribute="bottom" constant="20" id="IAx-W9-a0r"/>
+                            <constraint firstItem="zfh-FI-eVL" firstAttribute="top" secondItem="i8h-3H-qnt" secondAttribute="bottom" constant="20" id="KAQ-CX-JGA"/>
+                            <constraint firstItem="i8h-3H-qnt" firstAttribute="leading" secondItem="LQl-2b-rpi" secondAttribute="leading" constant="20" id="ZB2-uP-AJE"/>
+                            <constraint firstItem="LQl-2b-rpi" firstAttribute="trailing" secondItem="i8h-3H-qnt" secondAttribute="trailing" constant="20" id="ZCy-cP-JmA"/>
+                            <constraint firstItem="zfh-FI-eVL" firstAttribute="centerX" secondItem="D59-Vg-zxM" secondAttribute="centerX" id="ben-Na-AAV"/>
+                            <constraint firstItem="zfh-FI-eVL" firstAttribute="width" secondItem="LQl-2b-rpi" secondAttribute="width" multiplier="0.75" id="hjg-lj-Cyu"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="LQl-2b-rpi"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ijf-VS-b6J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-123" y="94"/>
+        </scene>
+    </scenes>
+</document>

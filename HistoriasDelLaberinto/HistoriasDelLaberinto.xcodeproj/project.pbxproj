@@ -91,6 +91,16 @@
 		6D7900DC22B5910D00CA74BF /* ItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D7900DB22B5910D00CA74BF /* ItemView.xib */; };
 		6D7900DE22B5918900CA74BF /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7900DD22B5918900CA74BF /* ItemView.swift */; };
 		6D7A23022350FF0C00AED9A5 /* LocalizableStringBussinesLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A23012350FF0C00AED9A5 /* LocalizableStringBussinesLogic.swift */; };
+		6D7A230D2351058500AED9A5 /* LanguageSelectionSceneModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A23062351058500AED9A5 /* LanguageSelectionSceneModule.swift */; };
+		6D7A230E2351058500AED9A5 /* LanguageSelectionScenePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A23072351058500AED9A5 /* LanguageSelectionScenePresenter.swift */; };
+		6D7A230F2351058500AED9A5 /* LanguageSelectionSceneWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A23082351058500AED9A5 /* LanguageSelectionSceneWorker.swift */; };
+		6D7A23102351058500AED9A5 /* LanguageSelectionSceneRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A23092351058500AED9A5 /* LanguageSelectionSceneRouter.swift */; };
+		6D7A23112351058500AED9A5 /* LanguageSelectionSceneModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A230A2351058500AED9A5 /* LanguageSelectionSceneModels.swift */; };
+		6D7A23122351058500AED9A5 /* LanguageSelectionSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A230B2351058500AED9A5 /* LanguageSelectionSceneViewController.swift */; };
+		6D7A23132351058500AED9A5 /* LanguageSelectionSceneInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A230C2351058500AED9A5 /* LanguageSelectionSceneInteractor.swift */; };
+		6D7A2315235105E000AED9A5 /* LanguageSelectionScene.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D7A2314235105E000AED9A5 /* LanguageSelectionScene.storyboard */; };
+		6D7A23182351111600AED9A5 /* LanguageSelectableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A23172351111600AED9A5 /* LanguageSelectableView.swift */; };
+		6D7A231A2351118C00AED9A5 /* LanguageSelectableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D7A23192351118B00AED9A5 /* LanguageSelectableView.xib */; };
 		6D81DA2C228B18FE006DF3D0 /* EventFetcherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D81DA2B228B18FE006DF3D0 /* EventFetcherManager.swift */; };
 		6D823B222267694400522756 /* EventBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D823B212267694400522756 /* EventBuilder.swift */; };
 		6D880CDA228ACBF2008D0509 /* loadedGame in Resources */ = {isa = PBXBuildFile; fileRef = 6D880CD9228ACBF2008D0509 /* loadedGame */; };
@@ -269,6 +279,16 @@
 		6D7900DB22B5910D00CA74BF /* ItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemView.xib; sourceTree = "<group>"; };
 		6D7900DD22B5918900CA74BF /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		6D7A23012350FF0C00AED9A5 /* LocalizableStringBussinesLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizableStringBussinesLogic.swift; sourceTree = "<group>"; };
+		6D7A23062351058500AED9A5 /* LanguageSelectionSceneModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionSceneModule.swift; sourceTree = "<group>"; };
+		6D7A23072351058500AED9A5 /* LanguageSelectionScenePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionScenePresenter.swift; sourceTree = "<group>"; };
+		6D7A23082351058500AED9A5 /* LanguageSelectionSceneWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionSceneWorker.swift; sourceTree = "<group>"; };
+		6D7A23092351058500AED9A5 /* LanguageSelectionSceneRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionSceneRouter.swift; sourceTree = "<group>"; };
+		6D7A230A2351058500AED9A5 /* LanguageSelectionSceneModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionSceneModels.swift; sourceTree = "<group>"; };
+		6D7A230B2351058500AED9A5 /* LanguageSelectionSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionSceneViewController.swift; sourceTree = "<group>"; };
+		6D7A230C2351058500AED9A5 /* LanguageSelectionSceneInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionSceneInteractor.swift; sourceTree = "<group>"; };
+		6D7A2314235105E000AED9A5 /* LanguageSelectionScene.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LanguageSelectionScene.storyboard; sourceTree = "<group>"; };
+		6D7A23172351111600AED9A5 /* LanguageSelectableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectableView.swift; sourceTree = "<group>"; };
+		6D7A23192351118B00AED9A5 /* LanguageSelectableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageSelectableView.xib; sourceTree = "<group>"; };
 		6D81DA2B228B18FE006DF3D0 /* EventFetcherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFetcherManager.swift; sourceTree = "<group>"; };
 		6D823B212267694400522756 /* EventBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBuilder.swift; sourceTree = "<group>"; };
 		6D880CD9228ACBF2008D0509 /* loadedGame */ = {isa = PBXFileReference; lastKnownFileType = folder; name = loadedGame; path = ../loadedGame; sourceTree = "<group>"; };
@@ -493,6 +513,7 @@
 		6D45B010226A28A900906FBB /* features */ = {
 			isa = PBXGroup;
 			children = (
+				6D7A23052351056600AED9A5 /* languageSelectionScene */,
 				6D223BB922B56FF00086AFA2 /* itemInfo */,
 				6D223B9C22B56E460086AFA2 /* itemsScene */,
 				6D285CE822AAC720008C9A1D /* status */,
@@ -709,6 +730,31 @@
 				6D7900D722B58FAE00CA74BF /* ItemBackView.swift */,
 			);
 			path = back;
+			sourceTree = "<group>";
+		};
+		6D7A23052351056600AED9A5 /* languageSelectionScene */ = {
+			isa = PBXGroup;
+			children = (
+				6D7A23162351109800AED9A5 /* Language View */,
+				6D7A23062351058500AED9A5 /* LanguageSelectionSceneModule.swift */,
+				6D7A23072351058500AED9A5 /* LanguageSelectionScenePresenter.swift */,
+				6D7A23082351058500AED9A5 /* LanguageSelectionSceneWorker.swift */,
+				6D7A23092351058500AED9A5 /* LanguageSelectionSceneRouter.swift */,
+				6D7A230A2351058500AED9A5 /* LanguageSelectionSceneModels.swift */,
+				6D7A230B2351058500AED9A5 /* LanguageSelectionSceneViewController.swift */,
+				6D7A230C2351058500AED9A5 /* LanguageSelectionSceneInteractor.swift */,
+				6D7A2314235105E000AED9A5 /* LanguageSelectionScene.storyboard */,
+			);
+			path = languageSelectionScene;
+			sourceTree = "<group>";
+		};
+		6D7A23162351109800AED9A5 /* Language View */ = {
+			isa = PBXGroup;
+			children = (
+				6D7A23172351111600AED9A5 /* LanguageSelectableView.swift */,
+				6D7A23192351118B00AED9A5 /* LanguageSelectableView.xib */,
+			);
+			path = "Language View";
 			sourceTree = "<group>";
 		};
 		6D921218229DD4DC00440926 /* void */ = {
@@ -977,6 +1023,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D7A2315235105E000AED9A5 /* LanguageSelectionScene.storyboard in Resources */,
 				6D7900DC22B5910D00CA74BF /* ItemView.xib in Resources */,
 				6D6DE4C3221DB40700C92B94 /* LaunchScreen.storyboard in Resources */,
 				6D450B7122A9C319003D8405 /* PauseMenuScene.storyboard in Resources */,
@@ -988,6 +1035,7 @@
 				6D285CEC22AAC79A008C9A1D /* StatusView.xib in Resources */,
 				6D223BB822B56F460086AFA2 /* ItemsScene.storyboard in Resources */,
 				6D921212229DC75100440926 /* InitialScene.storyboard in Resources */,
+				6D7A231A2351118C00AED9A5 /* LanguageSelectableView.xib in Resources */,
 				6D9A45A522874C3D004F4D0C /* Assets.xcassets in Resources */,
 				6D880CDA228ACBF2008D0509 /* loadedGame in Resources */,
 				6D7900D622B58F0B00CA74BF /* ItemBackView.xib in Resources */,
@@ -1069,6 +1117,7 @@
 				6DD893A422A98B5A0065C0E8 /* ShowLoadingCapable.swift in Sources */,
 				6D62D34D22A85DB900C2CB60 /* FilesSaver.swift in Sources */,
 				6D92120C229DC74100440926 /* InitialSceneWorker.swift in Sources */,
+				6D7A23132351058500AED9A5 /* LanguageSelectionSceneInteractor.swift in Sources */,
 				6D082A03229AB4A900B13A56 /* ItemFetcher.swift in Sources */,
 				6D9A45AB22874C51004F4D0C /* TestViewController.swift in Sources */,
 				6DC67582224BD0FB00B795B6 /* RewardEvent.swift in Sources */,
@@ -1078,6 +1127,7 @@
 				6D285CE222AAC5B9008C9A1D /* BattleSceneRouter.swift in Sources */,
 				6D285CE022AAC5B9008C9A1D /* BattleScenePresenter.swift in Sources */,
 				6DDA434822A701F2003C7993 /* MovementSceneModels.swift in Sources */,
+				6D7A23122351058500AED9A5 /* LanguageSelectionSceneViewController.swift in Sources */,
 				6DDF3668225FBDCD00391B1D /* RoomsFile.swift in Sources */,
 				6D4C43FC229F1EF700D5A9E5 /* DialogConfigurator.swift in Sources */,
 				6DA2D25522674A5700D1B8DF /* EventsFile.swift in Sources */,
@@ -1098,6 +1148,7 @@
 				6D7A23022350FF0C00AED9A5 /* LocalizableStringBussinesLogic.swift in Sources */,
 				6D223BB122B56F3B0086AFA2 /* ItemsScenePresenter.swift in Sources */,
 				6DFE3FBE22A0537A000C3C2F /* IsEventAvailableCheckable.swift in Sources */,
+				6D7A230E2351058500AED9A5 /* LanguageSelectionScenePresenter.swift in Sources */,
 				6D7900DE22B5918900CA74BF /* ItemView.swift in Sources */,
 				6D7900DA22B590D200CA74BF /* ItemFrontView.swift in Sources */,
 				6DA290E122ABE248002BFC6A /* BattleConfigurator.swift in Sources */,
@@ -1129,6 +1180,7 @@
 				6D45AFB72269C5F700906FBB /* RouterProvider.swift in Sources */,
 				6D223BB322B56F3B0086AFA2 /* ItemsSceneRouter.swift in Sources */,
 				6D223BC122B574370086AFA2 /* ItemSelectedDelegate.swift in Sources */,
+				6D7A23102351058500AED9A5 /* LanguageSelectionSceneRouter.swift in Sources */,
 				6D92508C2268CA9F00F2A3E3 /* BaseInteractor.swift in Sources */,
 				6DB9A90C228DB3BE00F90098 /* DialogueDaoParser.swift in Sources */,
 				6D450B6C22A9C30B003D8405 /* PauseMenuSceneRouter.swift in Sources */,
@@ -1147,6 +1199,7 @@
 				6DC67570224BC91E00B795B6 /* Weapon.swift in Sources */,
 				6D92120F229DC74100440926 /* InitialSceneViewController.swift in Sources */,
 				6D74A09222B5AED500B37D1D /* DidTouchStatusDelegate.swift in Sources */,
+				6D7A230D2351058500AED9A5 /* LanguageSelectionSceneModule.swift in Sources */,
 				6D2DA74A229ED9C600BC5C0D /* DatabaseFetcherProvider.swift in Sources */,
 				6D43D906229DAA61008C7ED0 /* RoomFetcher.swift in Sources */,
 				6DEC0C9822A196E10050849F /* EventHandlerInteractor.swift in Sources */,
@@ -1159,6 +1212,7 @@
 				6DB6AD75229AA61900B436D2 /* BattleEventFetcher.swift in Sources */,
 				6DE18D0D22981B0D00138012 /* RewardEventFetcher.swift in Sources */,
 				6D398A1D22A2D39D00D19FF8 /* ChoiceConfigurator.swift in Sources */,
+				6D7A230F2351058500AED9A5 /* LanguageSelectionSceneWorker.swift in Sources */,
 				6DEF066122688C4C00A5C454 /* MainViewController.swift in Sources */,
 				6D45B01D226A28A900906FBB /* ExampleSceneModels.swift in Sources */,
 				6D90B09C225E361500362CDA /* Parser.swift in Sources */,
@@ -1196,8 +1250,10 @@
 				6D4B57E0224A9591001779DC /* Condition.swift in Sources */,
 				6D223BB022B56F3B0086AFA2 /* ItemsSceneModule.swift in Sources */,
 				6D5DB0D422A1A49C00C8745E /* EventHandlerRoutingLogic.swift in Sources */,
+				6D7A23182351111600AED9A5 /* LanguageSelectableView.swift in Sources */,
 				6DC67567224BC7A800B795B6 /* ImageRepresentable.swift in Sources */,
 				6D880CDC228ACBF2008D0509 /* CharactersFile.swift in Sources */,
+				6D7A23112351058500AED9A5 /* LanguageSelectionSceneModels.swift in Sources */,
 				6D450B6B22A9C30B003D8405 /* PauseMenuSceneWorker.swift in Sources */,
 				6D450B6D22A9C30B003D8405 /* PauseMenuSceneModels.swift in Sources */,
 				6D5DB0DB22A1B38200C8745E /* UITextViewExtension.swift in Sources */,
