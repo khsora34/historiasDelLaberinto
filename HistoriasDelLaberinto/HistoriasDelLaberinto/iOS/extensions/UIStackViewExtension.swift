@@ -2,31 +2,25 @@ import UIKit
 
 extension UIStackView {
     func setButtonsInColumns(names: [String], action: Selector, for view: Any, numberOfColumns: Int = 2, fixedHeight: Bool = false) {
+        func createButton(name: String, tag: Int) -> UIButton {
+            let button = ConfigurableButton(type: .custom)
+            button.setupStyle(ButtonStyle.defaultButtonStyle)
+            button.setTitle(name, for: .normal)
+            button.tag = tag
+            button.addTarget(view, action: action, for: .touchUpInside)
+            return button
+        }
         for i in 0...((names.count-1)/numberOfColumns) {
             let buttonStackView: UIStackView
-            
-            if i == names.count/numberOfColumns {
-                var buttons: [UIButton] = []
-                for j in numberOfColumns*i...(numberOfColumns*i)+(names.count - 1 - (names.count/numberOfColumns)*numberOfColumns) {
-                    let button = RoundedButton(type: .custom)
-                    button.setTitle(names[(j)], for: .normal)
-                    button.tag = j
-                    button.addTarget(view, action: action, for: .touchUpInside)
-                    buttons.append(button)
-                }
-                buttonStackView = UIStackView(arrangedSubviews: buttons)
-            } else {
-                var buttons: [UIButton] = []
-                for j in numberOfColumns*i...(numberOfColumns*i)+(numberOfColumns-1) {
-                    let button = RoundedButton(type: .custom)
-                    button.setTitle(names[j], for: .normal)
-                    button.tag = j
-                    button.addTarget(view, action: action, for: .touchUpInside)
-                    buttons.append(button)
-                }
-                
-                buttonStackView = UIStackView(arrangedSubviews: buttons)
+            let endRange: Int = i == names.count/numberOfColumns ?
+                (numberOfColumns*i)+(names.count-1-(names.count/numberOfColumns)*numberOfColumns):
+                (numberOfColumns*i)+(numberOfColumns-1)
+            var buttons: [UIButton] = []
+            for j in numberOfColumns*i...endRange {
+                buttons.append(createButton(name: names[j], tag: j))
             }
+            buttonStackView = UIStackView(arrangedSubviews: buttons)
+            
             buttonStackView.axis = .horizontal
             buttonStackView.distribution = .fillEqually
             buttonStackView.alignment = .center
