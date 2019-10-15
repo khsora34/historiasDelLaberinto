@@ -277,7 +277,7 @@ extension EventHandlerPresenter {
 extension EventHandlerPresenter {
     func showDialog(with configurator: DialogConfigurator) {
         if dialog == nil {
-            dialog = Dialog.createDialog(configurator, delegate: self)
+            dialog = Dialog.createDialog(configurator, delegate: self, localizer: self)
             eventHandlerRouter?.present(dialog!, animated: true)
         } else {
             dialog?.setNextConfigurator(configurator)
