@@ -8,10 +8,11 @@ class ConfigurableButton: UIButton {
         backgroundColor = style.backgroundColor
         setTitleColor(style.titleColor, for: .normal)
         layer.cornerRadius = style.cornerRadius ?? 0
+        contentEdgeInsets = style.insets
         titleLabel?.font = style.font
         titleLabel?.textAlignment = .center
         titleLabel?.lineBreakMode = .byWordWrapping
-        NSLayoutConstraint(item: titleLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 10).isActive = true
+        titleLabel?.numberOfLines = 0
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
