@@ -101,13 +101,13 @@ Inicié la búsqueda del tutor que pudiera llevar el trabajo, y por suerte encon
 Él se interesó desde el principio en la idea del proyecto, y me sugirió varias pautas para llevar el trabajo con él.
 
 \newpage
-\subsection{Qué era antes Historias del Laberinto}
+\subsection{Qué era antes Historias del Laberinto (Estado del arte?)}
 \onehalfspace
 
 Esta sección se centrará en la explicación de lo que fue Historias del Laberinto durante su desarrollo como proyecto de Programación I y sus mejoras posteriores.
 Primero se hablará de los aspectos relacionados con el primer proyecto.
 
-El proyecto original era una aplicación capaz de reproducir una historia única sobre dos personajes, Gerar y el jugador, al que se le podía poner un nombre.
+El proyecto original era una aplicación capaz de reproducir una historia única sobre dos personajes, Gerardo y el jugador, al que se le podía poner un nombre.
 
 La trama del juego sigue un argumento parecido a muchos juegos de escape: los dos personajes debían escapar del Laberinto, un misterioso lugar lleno de trampas del que no saben cómo llegaron ni cómo pueden salir. Por ello, el jugador y su compañero debían avanzar por las salas del laberinto hasta llegar a la sala final, donde un malvado dragón les separaba de su esperada salida. Durante el camino encontrarán carismáticos personajes como el Fantasma, salas del tesoro, encuentros con monstruos o salas con truco.
 
@@ -193,37 +193,50 @@ En desarrollos posteriores a la entrega del primer trabajo, se incluyó la posib
 Esto permitía hacer más diverso el combate, ya que los daños que se calculaban eran fijos y permitía que un jugador no pudiera actuar o que fallara siempre los ataques.
 \end{itemize}
 
-\subsection{Por qué un intérprete de videojuegos}
+\subsection{Por qué un intérprete de videojuegos (Motivación)}
 
-Desde siempre el juego ha conseguido tener una dimensión muy escalable de sí mismo: siempre se ha querido que la historia fuera lo más emocionante posible para enganchar al jugador en el mundo.
-Además, el nombre de Historias del Laberinto al principio tuvo una inspiración en la historia original del juego, con Gerardo como compañero. Sin embargo, este concepto de historia es muy genérico, ya que al final se puede resumir como una serie de compañeros intenta escapar de un laberinto, la historia extra que rellena desde el comienzo hasta el final del juego ya no importa tanto.
+Desde que se empezó el desarrollo del juego se ha intentado buscar una mecánica simple que se repitiera durante todo el desarrollo del juego: elegir entre las opciones de hablar, interactuar, inventario y moverse. 
+El nombre de "Historias del Laberinto" al principio fue pensado teniendo en cuenta la historia original del juego; sin embargo este concepto de historia se puede generalizar en un jugador que intenta escapar de un laberinto: el verdadero contenido de la historia no es tan importante como las capacidades que se quieren dar al juego, como puede ser la exploración, el combate o la resolución de puzles.
 
 Siguiendo esta línea de pensamiento, se elaboraron una serie de ficheros de texto que contenían información sobre los diálogos de la historia original y que permitían aliviar el contenido de impresiones por consola de la aplicación, en la clase de desarrollo del juego principal había más de mil lineas.
-Sacando la historia a los ficheros conseguiríamos quitarnos de encima todo el relleno de texto del videojuego y quedarnos solo con la lógica que permitiera realizar las acciones. Así podría intentar eliminar toda la historia de relleno que ocupaba casi el 60\% de la longitud del fichero de desarrollo.
+Sacando la historia a los ficheros conseguiríamos quitarnos de encima todo el relleno de texto del videojuego y quedarnos solo con la lógica que permitiera realizar las acciones. Así se podría intentar eliminar todas las acciones de imprimir en la consola la historia de relleno, que ocupaba casi el 60\% de la longitud del fichero principal de desarrollo.
 
-Y así se empezó a evaluar cómo podíamos hacer un videojuego genérico con ficheros extra que permitieran realizar todo el trabajo sucio de imprimir la historia. Sin embargo, este acercamiento no tuvo mucho éxito debido a que aunque el relleno pudieras cambiarlo, la lógica que existiera en las habitaciones debía seguir estando en el código: en la sala 17 estaba el comienzo del juego, en la sala 5 había un cofre del tesoro...
+Y así se empezó a evaluar cómo podíamos sacar todos los literales que definían la historia, pero a la hora de refactorizar el código muchas de esas líneas no se pudieron sacar, debido a que en ciertas partes se habían generado unas dependencias muy grandes. Sin embargo, se prosiguió adelante hasta conseguir eliminar todos los literales posibles del fichero.
 
-Aunque se podría haber seguido por este camino, esta forma de pensar al final limita mucho las capacidades del juego: básicamente el juego es siempre el mismo solo que con distintos rellenos de historia, capacidad que no hace muy especial al proyecto ya que en el fondo siempre va a ser el mismo juego.
+Durante mucho tiempo el proyecto se consideró acabado con esta solución, hasta que llegó la asignatura del trabajo de fin de grado y se presentó la posibilidad de rehacer el juego, esta vez en dispositivos móviles.
 
-Así que empecé a plantearme que la funcionalidad tendría que ser más genérica para que el juego tuviera un verdadero interés más allá de ser un videojuego muy simple. Respecto a esta idea, tengo que agradecerle al profesor Francisco Rosales que me orientó por este camino.
+Para presentar mi idea a un profesor, primero acudí a Francisco Rosales para que fuera mi tutor. Con la idea de tener un proyecto bastante bueno –tenía muchas líneas de código–, le enseñe el sistema. Sin embargo, tras hablarlo durante un rato, me planteó que realizar un videojuego con él no sería buena idea por dos razones: no tenía mucha idea sobre el tema, y un proyecto así no solo requiere trabajo para codificar, sino también para dibujar, planear pantallas... Si hubiera tenido un sistema de código potente o un motor bueno con el que empezar a trabajar habría ocurrido otra cosa, pero realmente hacer "Historias del Laberinto" como tal no era una buena idea.
+
+Y es que las capacidades del juego estaban muy limitadas: básicamente el juego era siempre el mismo, solo que con distintos rellenos de historia: la lógica que existiera en las habitaciones estaba definida directamente en el código, como que la sala 17 era el comienzo del juego o que en la sala 5 había un cofre del tesoro...
+Esta capacidad no hace muy especial al proyecto ya que en el fondo siempre va a ser el mismo juego.
+
+Así que empecé a plantearme que la totalidad del proyecto tendría que ser más genérico para que el juego tuviera un verdadero interés más allá de ser un videojuego muy simple. Esto permitiría a cualquier persona, no tendría por qué ser un desarrollador, crear un videojuego a su gusto.
+Con una serie de funcionalidades genéricas, como pueden ser el abrir un cofre o hablar con un personaje podrían traducirse en acciones simples que un usuario pudiera modelizar.
+
+Para explicar cómo se llevó esto a cabo, leer el siguiente capítulo.
+
+\newpage
+\section{Nos ponemos manos a la obra (Desarrollo de la aplicación)}
 
 Para que la funcionalidad fuera más genérica, tendríamos que poder modelizar estas funcionalidades de alguna manera. De esta manera, los diálogos se transformaron en eventos, y ya no solo tenían frases de personajes sino también ciertas funciones traducibles al sistema.
 
-\newpage
-\section{Nos ponemos manos a la obra}
-
-\subsection{Cómo funciona el intérprete}
+\subsection{Estructura del trabajo (Descripción)}
 
 El intérprete 
 
-\subsection{Una manera de llevarlo a cabo}
+\subsection{Una manera de llevarlo a cabo (Arquitectura)}
 
-\subsection{Desarrollando en dispositivos móviles}
+\subsection{Guía para usar el sistema (Diseño)}
+
+\subsection{Desarrollando en dispositivos móviles (Implementación)}
 
 \subsection{Diario del desarrollador}
 
 \newpage
-\section{Cuál es el futuro del intérprete}
+\section{Qué tal ha ido el desarrollo (Conclusiones)}
+
+\newpage
+\section{Cuál es el futuro del intérprete (Trabajo futuro)}
 
 \newpage
 \section{Referencias}
