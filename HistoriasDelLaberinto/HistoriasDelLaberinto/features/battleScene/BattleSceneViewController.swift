@@ -7,6 +7,7 @@ protocol BattleSceneDisplayLogic: ViewControllerDisplay {
     func setEnemyInfo(imageUrl: String, model: StatusViewModel)
     func updateView(_ model: StatusViewModel)
     func performDamage(on model: StatusViewModel)
+    func configureButtons(availableActions: [BattleAction])
 }
 
 class BattleSceneViewController: BaseViewController {
@@ -19,8 +20,30 @@ class BattleSceneViewController: BaseViewController {
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var enemyImageView: UIImageView!
     @IBOutlet weak var charactersStackView: UIStackView!
+    @IBOutlet weak var actionsStackView: UIStackView!
     
     // MARK: View lifecycle
+    
+    func configureButtons(availableActions: [BattleAction]) {
+        var views: [UIButton] = []
+        if availableActions.contains(.attack) {
+            let attackButton = ConfigurableButton(frame: .zero)
+            attackButton.setupStyle(ButtonStyle.defaultButtonStyle)
+            attackButton.setTitle("Atacar", for: .normal)
+            attackButton.addTarget(self, action: #selector(didTapAttackButton), for: .touchUpInside)
+            views.append(attackButton)
+        }
+        
+        if availableActions.contains(.items) {
+            let itemsButton = ConfigurableButton(frame: .zero)
+            itemsButton.setupStyle(ButtonStyle.defaultButtonStyle)
+            itemsButton.setTitle("Inventario", for: .normal)
+            itemsButton.addTarget(self, action: #selector(didTapItemsButton), for: .touchUpInside)
+            views.append(itemsButton)
+        }
+        
+        actionsStackView.addViewsInColumns(views)
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -32,11 +55,11 @@ class BattleSceneViewController: BaseViewController {
         navigationController?.navigationBar.isHidden = false
     }
     
-    @IBAction func didTapAttackButton(_ sender: Any) {
+    @objc func didTapAttackButton() {
         presenter?.protaWillAttack()
     }
     
-    @IBAction func didTapItemsButton(_ sender: Any) {
+    @objc func didTapItemsButton() {
         presenter?.protaWillUseItems()
     }
 }

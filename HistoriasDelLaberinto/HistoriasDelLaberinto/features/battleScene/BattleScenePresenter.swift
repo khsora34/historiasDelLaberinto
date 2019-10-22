@@ -50,8 +50,12 @@ class BattleScenePresenter: BasePresenter {
         getPartner()
         getWeapons()
         buildCharacters()
-        buildEnemy()
+        configureActions()
         showStartDialogue()
+    }
+    
+    private func configureActions() {
+        viewController?.configureButtons(availableActions: [.attack, .items])
     }
 }
 

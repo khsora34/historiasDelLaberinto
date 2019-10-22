@@ -68,3 +68,7 @@ enum CharacterChosen: Int {
 enum FinishedBattleReason {
     case defeated(CharacterChosen)
 }
+
+enum BattleAction {
+    case attack, items
+}
