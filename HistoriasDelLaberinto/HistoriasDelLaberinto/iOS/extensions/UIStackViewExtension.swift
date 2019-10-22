@@ -1,7 +1,7 @@
 import UIKit
 
 extension UIStackView {
-    func setButtonsInColumns(names: [String], action: Selector, for view: Any, numberOfColumns: Int = 2, fixedHeight: Bool = false) {
+    func createButtonsInColumns(names: [String], action: Selector, for view: Any, numberOfColumns: Int = 2) {
         func createButton(name: String, tag: Int) -> UIButton {
             let button = ConfigurableButton(type: .custom)
             button.setupStyle(ButtonStyle.defaultButtonStyle)
@@ -10,24 +10,28 @@ extension UIStackView {
             button.addTarget(view, action: action, for: .touchUpInside)
             return button
         }
-        for i in 0...((names.count-1)/numberOfColumns) {
+        
+        addViewsInColumns(
+            names.enumerated().map({createButton(name: $1, tag: $0)}),
+            numberOfColumns: numberOfColumns)
+    }
+    
+    func addViewsInColumns(_ views: [UIView], numberOfColumns: Int = 2) {
+        for i in 0...((views.count-1)/numberOfColumns) {
             let buttonStackView: UIStackView
-            let endRange: Int = i == names.count/numberOfColumns ?
-                (numberOfColumns*i)+(names.count-1-(names.count/numberOfColumns)*numberOfColumns):
+            let endRange: Int = i == views.count/numberOfColumns ?
+                (numberOfColumns*i)+(views.count-1-(views.count/numberOfColumns)*numberOfColumns):
                 (numberOfColumns*i)+(numberOfColumns-1)
-            var buttons: [UIButton] = []
+            var newButtons: [UIView] = []
             for j in numberOfColumns*i...endRange {
-                buttons.append(createButton(name: names[j], tag: j))
+                newButtons.append(views[j])
             }
-            buttonStackView = UIStackView(arrangedSubviews: buttons)
+            buttonStackView = UIStackView(arrangedSubviews: newButtons)
             
             buttonStackView.axis = .horizontal
             buttonStackView.distribution = .fillEqually
             buttonStackView.alignment = .center
             buttonStackView.spacing = 20
-            if fixedHeight {
-                NSLayoutConstraint(item: buttonStackView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 60).isActive = true
-            }
             self.addArrangedSubview(buttonStackView)
         }
     }
