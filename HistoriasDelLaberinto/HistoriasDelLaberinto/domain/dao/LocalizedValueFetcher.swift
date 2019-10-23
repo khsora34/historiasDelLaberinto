@@ -3,7 +3,8 @@ import CoreData
 
 protocol LocalizedValueFetcher {
     func getString(key: String, forLocale locale: Locale) -> String
-    func saveString(key: String, value: String, forLanguage langIdentifier: String) -> Bool
+    func getAvailableLanguages() -> [Locale]
+    func saveString(key: String, value: String, forLocale locale: Locale) -> Bool
     func deleteAllTexts()
 }
 
@@ -24,7 +25,28 @@ class LocalizedValueFetcherImpl: LocalizedValueFetcher {
         }
     }
     
-    func saveString(key: String, value: String, forLanguage langIdentifier: String) -> Bool {
+    func getAvailableLanguages() -> [Locale] {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return [] }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest<NSFetchRequestResult>(entityName: DaoConstants.ModelsNames.TextDAO.rawValue)
+        fetchRequest.propertiesToFetch = ["language"]
+        fetchRequest.returnsDistinctResults = true
+        fetchRequest.resultType = NSFetchRequestResultType.dictionaryResultType
+        
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            guard let finalResults = results as? [[String: String]] else {
+                return []
+            }
+            return finalResults.compactMap { Locale(identifier: $0.values.first!) }
+        } catch let error as NSError {
+            print("No ha sido posible conseguir los lenguajes disponibles.\n\(error), \(error.userInfo)")
+            return []
+        }
+    }
+    
+    func saveString(key: String, value: String, forLocale locale: Locale) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
@@ -33,7 +55,7 @@ class LocalizedValueFetcherImpl: LocalizedValueFetcher {
         
         text.key = key
         text.value = value
-        text.language = langIdentifier
+        text.language = locale.identifier
         
         do {
             try managedContext.save()
