@@ -1,4 +1,6 @@
-"new_game_button" = "New game";
-"load_game_button" = "Load game";
+"newGameButton" = "New game";
+"loadGameButton" = "Load game";
+"gameTitle" = "Labyrinth adventures";
+"changeLanguageButtonText" = "Change language";
 "room17LookAround" = "You take a look of your surroundings.";
 "exampleRoomStartEvent" = "You find yourself in a luxurious open concept building.";

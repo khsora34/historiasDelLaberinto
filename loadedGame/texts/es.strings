@@ -1,4 +1,6 @@
-"new_game_button" = "Nueva partida";
-"load_game_button" = "Cargar partida";
+"newGameButton" = "Nueva partida";
+"loadGameButton" = "Cargar partida";
+"gameTitle" = "Historias del Laberinto";
+"changeLanguageButtonText" = "Cambiar idioma";
 "room17LookAround" = "Miras a tu alrededor";
 "exampleRoomStartEvent" = "Te encuentras en un lujoso edificio de concepto abierto.";
