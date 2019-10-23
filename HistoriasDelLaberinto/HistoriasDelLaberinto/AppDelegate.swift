@@ -26,7 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let initialModule = dependencies.moduleProvider.initialSceneModule()
         let nav = UINavigationController(rootViewController: initialModule.viewController)
-        nav.isNavigationBarHidden = true
         UserDefaults.standard.set("es", forKey: "loadedLanguageIdentifier")
         
         setNavigationBarProperties()
