@@ -26,6 +26,7 @@ class InitialScenePresenter: BasePresenter {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        interactor?.updateTexts()
         movement = interactor?.getMovement().movement
         viewController?.setLoadButton(isHidden: movement == nil)
     }
