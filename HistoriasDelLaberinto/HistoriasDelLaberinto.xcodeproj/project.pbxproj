@@ -99,8 +99,7 @@
 		6D7A23122351058500AED9A5 /* LanguageSelectionSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A230B2351058500AED9A5 /* LanguageSelectionSceneViewController.swift */; };
 		6D7A23132351058500AED9A5 /* LanguageSelectionSceneInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A230C2351058500AED9A5 /* LanguageSelectionSceneInteractor.swift */; };
 		6D7A2315235105E000AED9A5 /* LanguageSelectionScene.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D7A2314235105E000AED9A5 /* LanguageSelectionScene.storyboard */; };
-		6D7A23182351111600AED9A5 /* LanguageSelectableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A23172351111600AED9A5 /* LanguageSelectableView.swift */; };
-		6D7A231A2351118C00AED9A5 /* LanguageSelectableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D7A23192351118B00AED9A5 /* LanguageSelectableView.xib */; };
+		6D7A23182351111600AED9A5 /* LanguageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7A23172351111600AED9A5 /* LanguageButton.swift */; };
 		6D81DA2C228B18FE006DF3D0 /* EventFetcherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D81DA2B228B18FE006DF3D0 /* EventFetcherManager.swift */; };
 		6D823B222267694400522756 /* EventBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D823B212267694400522756 /* EventBuilder.swift */; };
 		6D880CDA228ACBF2008D0509 /* loadedGame in Resources */ = {isa = PBXBuildFile; fileRef = 6D880CD9228ACBF2008D0509 /* loadedGame */; };
@@ -287,8 +286,7 @@
 		6D7A230B2351058500AED9A5 /* LanguageSelectionSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionSceneViewController.swift; sourceTree = "<group>"; };
 		6D7A230C2351058500AED9A5 /* LanguageSelectionSceneInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionSceneInteractor.swift; sourceTree = "<group>"; };
 		6D7A2314235105E000AED9A5 /* LanguageSelectionScene.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LanguageSelectionScene.storyboard; sourceTree = "<group>"; };
-		6D7A23172351111600AED9A5 /* LanguageSelectableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectableView.swift; sourceTree = "<group>"; };
-		6D7A23192351118B00AED9A5 /* LanguageSelectableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageSelectableView.xib; sourceTree = "<group>"; };
+		6D7A23172351111600AED9A5 /* LanguageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageButton.swift; sourceTree = "<group>"; };
 		6D81DA2B228B18FE006DF3D0 /* EventFetcherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFetcherManager.swift; sourceTree = "<group>"; };
 		6D823B212267694400522756 /* EventBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBuilder.swift; sourceTree = "<group>"; };
 		6D880CD9228ACBF2008D0509 /* loadedGame */ = {isa = PBXFileReference; lastKnownFileType = folder; name = loadedGame; path = ../loadedGame; sourceTree = "<group>"; };
@@ -735,15 +733,15 @@
 		6D7A23052351056600AED9A5 /* languageSelectionScene */ = {
 			isa = PBXGroup;
 			children = (
-				6D7A23162351109800AED9A5 /* Language View */,
+				6D7A2314235105E000AED9A5 /* LanguageSelectionScene.storyboard */,
+				6D7A230C2351058500AED9A5 /* LanguageSelectionSceneInteractor.swift */,
+				6D7A230A2351058500AED9A5 /* LanguageSelectionSceneModels.swift */,
 				6D7A23062351058500AED9A5 /* LanguageSelectionSceneModule.swift */,
 				6D7A23072351058500AED9A5 /* LanguageSelectionScenePresenter.swift */,
-				6D7A23082351058500AED9A5 /* LanguageSelectionSceneWorker.swift */,
 				6D7A23092351058500AED9A5 /* LanguageSelectionSceneRouter.swift */,
-				6D7A230A2351058500AED9A5 /* LanguageSelectionSceneModels.swift */,
 				6D7A230B2351058500AED9A5 /* LanguageSelectionSceneViewController.swift */,
-				6D7A230C2351058500AED9A5 /* LanguageSelectionSceneInteractor.swift */,
-				6D7A2314235105E000AED9A5 /* LanguageSelectionScene.storyboard */,
+				6D7A23082351058500AED9A5 /* LanguageSelectionSceneWorker.swift */,
+				6D7A23162351109800AED9A5 /* Language View */,
 			);
 			path = languageSelectionScene;
 			sourceTree = "<group>";
@@ -751,8 +749,7 @@
 		6D7A23162351109800AED9A5 /* Language View */ = {
 			isa = PBXGroup;
 			children = (
-				6D7A23172351111600AED9A5 /* LanguageSelectableView.swift */,
-				6D7A23192351118B00AED9A5 /* LanguageSelectableView.xib */,
+				6D7A23172351111600AED9A5 /* LanguageButton.swift */,
 			);
 			path = "Language View";
 			sourceTree = "<group>";
@@ -1035,7 +1032,6 @@
 				6D285CEC22AAC79A008C9A1D /* StatusView.xib in Resources */,
 				6D223BB822B56F460086AFA2 /* ItemsScene.storyboard in Resources */,
 				6D921212229DC75100440926 /* InitialScene.storyboard in Resources */,
-				6D7A231A2351118C00AED9A5 /* LanguageSelectableView.xib in Resources */,
 				6D9A45A522874C3D004F4D0C /* Assets.xcassets in Resources */,
 				6D880CDA228ACBF2008D0509 /* loadedGame in Resources */,
 				6D7900D622B58F0B00CA74BF /* ItemBackView.xib in Resources */,
@@ -1250,7 +1246,7 @@
 				6D4B57E0224A9591001779DC /* Condition.swift in Sources */,
 				6D223BB022B56F3B0086AFA2 /* ItemsSceneModule.swift in Sources */,
 				6D5DB0D422A1A49C00C8745E /* EventHandlerRoutingLogic.swift in Sources */,
-				6D7A23182351111600AED9A5 /* LanguageSelectableView.swift in Sources */,
+				6D7A23182351111600AED9A5 /* LanguageButton.swift in Sources */,
 				6DC67567224BC7A800B795B6 /* ImageRepresentable.swift in Sources */,
 				6D880CDC228ACBF2008D0509 /* CharactersFile.swift in Sources */,
 				6D7A23112351058500AED9A5 /* LanguageSelectionSceneModels.swift in Sources */,
