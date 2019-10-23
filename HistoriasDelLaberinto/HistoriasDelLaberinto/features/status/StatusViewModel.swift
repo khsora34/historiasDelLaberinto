@@ -8,7 +8,7 @@ struct StatusViewModel {
     let isEnemy: Bool
     var delegate: DidTouchStatusDelegate?
     
-    func configure(view: StatusViewController) {
+    func configure(view: StatusView) {
         view.characterChosen = chosenCharacter
         view.name = name
         view.setHealth(currentHealth: actualHealth, maxHealth: maxHealth)

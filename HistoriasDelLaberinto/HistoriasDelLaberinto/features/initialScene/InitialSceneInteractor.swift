@@ -6,6 +6,7 @@ protocol InitialSceneBusinessLogic: BusinessLogic {
     func getRoom(request: InitialScene.RoomBuilder.Request) -> InitialScene.RoomBuilder.Response
     func getMovement() -> InitialScene.MovementGetter.Response
     func createMovement()
+    func updateTexts()
 }
 
 class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
@@ -43,7 +44,7 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         let itemsFile = getItems()
         
         loadImages(protagonist, charactersFile, roomsFile, itemsFile)
-        save(protagonist, charactersFile, roomsFile, itemsFile, getEvents(), getTexts())
+        save(protagonist, charactersFile, roomsFile, itemsFile, getEvents())
     }
     
     private func loadImages(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile) {
@@ -63,12 +64,35 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         loadImages(from: imageUrls)
     }
     
-    private func save(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile, _ eventsFile: EventsFile, _ texts: [String: [String: String]]) {
+    func updateTexts() {
+        databaseFetcherProvider.localizedValueFetcher.deleteAllTexts()
+        print("Texts are saved: \(saveTexts(getTexts(), fetcher: databaseFetcherProvider.localizedValueFetcher))")
+        initLanguage()
+    }
+    
+    private func initLanguage() {
+        guard UserDefaults.standard.string(forKey: "loadedLanguageIdentifier") == nil else { return }
+        
+        let availableLanguages = databaseFetcherProvider.localizedValueFetcher.getAvailableLanguages().map({$0.identifier})
+        let systemLanguages = Locale.preferredLanguages
+        var choseLanguage: String?
+        var i = 0
+        while choseLanguage == nil && i < systemLanguages.count {
+            if availableLanguages.contains(systemLanguages[i]) {
+                choseLanguage = systemLanguages[i]
+            }
+            i+=1
+        }
+        choseLanguage = choseLanguage ?? systemLanguages.first
+        
+        UserDefaults.standard.set(choseLanguage ?? "en", forKey: "loadedLanguageIdentifier")
+    }
+    
+    private func save(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile, _ eventsFile: EventsFile) {
         print("Characters are saved: \(saveCharacters(in: charactersFile, protagonist: protagonist, fetcher: databaseFetcherProvider.charactersFetcher))")
         print("Items are saved: \(saveItems(itemsFile, fetcher: databaseFetcherProvider.itemsFetcher))")
         print("Rooms are saved: \(saveRooms(roomsFile, fetcher: databaseFetcherProvider.roomsFetcher))")
         print("Events are saved: \(saveEvents(eventsFile, fetcher: databaseFetcherProvider.eventsFetcherManager))")
-        print("Texts are saved: \(saveTexts(texts, fetcher: databaseFetcherProvider.localizedValueFetcher))")
     }
     
     func deleteAllFiles() {

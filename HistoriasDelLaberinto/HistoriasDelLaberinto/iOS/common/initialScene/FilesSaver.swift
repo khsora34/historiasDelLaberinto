@@ -1,3 +1,5 @@
+import Foundation
+
 protocol FilesSaver {
     func saveCharacters(in file: CharactersFile, protagonist: Protagonist, fetcher: CharacterFetcher) -> Bool
     func saveItems(_ file: ItemsFile, fetcher: ItemFetcher) -> Bool
@@ -60,12 +62,12 @@ extension FilesSaver {
         return bool
     }
     
-    func saveTexts(_ texts: [String: [String: String]], fetcher: LocalizedValueFetcher) -> Bool {
+    func saveTexts(_ texts: [Locale: [String: String]], fetcher: LocalizedValueFetcher) -> Bool {
         var bool = true
         
         for (key, value) in texts {
             for (literalKey, literalValue) in value {
-                bool = bool && fetcher.saveString(key: literalKey, value: literalValue, forLanguage: key)
+                bool = bool && fetcher.saveString(key: literalKey, value: literalValue, forLocale: key)
             }
         }
         
