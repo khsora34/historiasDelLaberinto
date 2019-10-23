@@ -31,4 +31,8 @@ class ModuleProvider {
     func itemsSceneModule(protagonist: Protagonist, partner: PlayableCharacter?, delegate: CharactersUpdateDelegate?) -> Module {
         return ItemsSceneModule(protagonist: protagonist, partner: partner, delegate: delegate, fetcherProvider: databaseFetcherProvider, routerProvider: routerProvider)
     }
+    
+    func languagesSelection() -> Module {
+        return LanguageSelectionSceneModule(routerProvider: routerProvider, databaseFetcher: databaseFetcherProvider)
+    }
 }

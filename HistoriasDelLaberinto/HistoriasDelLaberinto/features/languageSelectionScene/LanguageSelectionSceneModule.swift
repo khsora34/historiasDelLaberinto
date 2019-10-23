@@ -8,8 +8,8 @@ class LanguageSelectionSceneModule: Module {
     
     init(routerProvider: RouterProvider, databaseFetcher: DatabaseFetcherProvider) {
         viewController = ViewCreator.createFrom(storyboardName: storyboardName, forController: controllerName)
-        presenter = LanguageSelectionScenePresenter(availableLanguages: [])
-        router = routerProvider.voidRouter
+        presenter = LanguageSelectionScenePresenter()
+        router = routerProvider.languageSelectionSceneRouter
         interactor = LanguageSelectionSceneInteractor(localizedStringAccess: databaseFetcher.localizedValueFetcher)
         viewController._presenter = presenter
         presenter._interactor = interactor

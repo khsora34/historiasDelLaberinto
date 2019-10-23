@@ -1,11 +1,15 @@
+import Foundation
+
 enum LanguageSelectionScene {
-    
-  enum Something {
-    struct Request {
+    enum AvailableLanguages {
+        struct Response {
+            let languages: [Locale]
+            let currentLanguage: Locale
+        }
     }
-    struct Response {
+    enum SetLanguage {
+        struct Request {
+            let language: Locale
+        }
     }
-    struct ViewModel {
-    }
-  }
 }

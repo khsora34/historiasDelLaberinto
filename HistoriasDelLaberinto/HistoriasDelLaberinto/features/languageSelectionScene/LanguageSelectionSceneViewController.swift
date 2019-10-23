@@ -1,6 +1,8 @@
 import UIKit
 
 protocol LanguageSelectionSceneDisplayLogic: ViewControllerDisplay {
+    func showLanguages(models: [LanguageButtonInfo])
+    func didUpdateLanguages(newIdentifier: String)
 }
 
 class LanguageSelectionSceneViewController: BaseViewController {
@@ -9,12 +11,37 @@ class LanguageSelectionSceneViewController: BaseViewController {
         return _presenter as? LanguageSelectionScenePresentationLogic
     }
     
-    // MARK: View lifecycle
+    private var models: [LanguageButtonInfo] = []
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    @IBOutlet weak var languagesStackView: UIStackView!
+    
+    @IBAction func didTapSaveButton(_ sender: Any) {
+        presenter?.didConfirmLanguage()
     }
 }
 
 extension LanguageSelectionSceneViewController: LanguageSelectionSceneDisplayLogic {
+    func showLanguages(models: [LanguageButtonInfo]) {
+        self.models = models
+        for model in models {
+            let button = LanguageButton()
+            button.info = model
+            model.highlightAction?(model.isHighlighted)
+            button.setTitle(model.text ?? model.identifier, for: .normal)
+            button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+            button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+            languagesStackView.addArrangedSubview(button)
+        }
+    }
+    
+    @objc func didTapButton(_ button: LanguageButton) {
+        let model = button.info
+        model?.didTapAction?()
+    }
+    
+    func didUpdateLanguages(newIdentifier: String) {
+        for model in models {
+            model.highlightAction?(model.identifier == newIdentifier)
+        }
+    }
 }
