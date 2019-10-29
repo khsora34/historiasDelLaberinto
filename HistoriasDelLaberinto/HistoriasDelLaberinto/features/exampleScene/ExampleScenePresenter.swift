@@ -54,7 +54,7 @@ extension ExampleScenePresenter: ExampleScenePresentationLogic {
     }
 }
 
-extension ExampleScenePresenter: EventHandler {
+extension ExampleScenePresenter: EventHandlerPresenter {
     func onBattleFinished(reason: FinishedBattleReason) { }
     
     var imageUrl: String {

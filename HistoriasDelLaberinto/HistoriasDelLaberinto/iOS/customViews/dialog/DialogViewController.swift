@@ -2,9 +2,10 @@ import UIKit
 import Kingfisher
 
 class Dialog {
-    static func createDialog(_ dialog: DialogConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
+    static func createDialog(_ dialog: DialogConfigurator, delegate: NextDialogHandler, localizer: LocalizableStringPresenterProtocol? = nil) -> DialogDisplayLogic {
         let dialog = DialogViewController(dialog)
         dialog.delegate = delegate
+        dialog.localizer = localizer
         return dialog
     }
 }
@@ -18,9 +19,6 @@ class DialogViewController: UIViewController {
     private let dialogViewDefaultAlpha: CGFloat = 0.95
     private let transitionAlpha: CGFloat = 0.3
     
-    lazy var topConstraint: NSLayoutConstraint = {
-        return dialogView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10.0)
-    }()
     private var configurator: DialogConfigurator?
     private var timer: Timer?
     private var alignment: DialogAlignment = .bottom {
@@ -49,19 +47,23 @@ class DialogViewController: UIViewController {
         }
     }
     
+    private lazy var topConstraint: NSLayoutConstraint = {
+        return dialogView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10.0)
+    }()
+    
+    weak var delegate: NextDialogHandler?
+    weak var localizer: LocalizableStringPresenterProtocol?
+    
     @IBOutlet weak var dialogView: UIView!
     @IBOutlet weak var characterLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var characterImageView: UIImageView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet var tapWindowGesture: UITapGestureRecognizer!
-    
     @IBOutlet weak var dialogHeightConstraint: NSLayoutConstraint!
     @IBOutlet var dialogTopConstraint: NSLayoutConstraint!
     @IBOutlet var dialogToScrollInequalityConstraint: NSLayoutConstraint!
     @IBOutlet var dialogBottomConstraint: NSLayoutConstraint!
-    
-    weak var delegate: NextDialogHandler?
     
     fileprivate init(_ configurator: DialogConfigurator) {
         self.configurator = configurator
@@ -103,8 +105,6 @@ class DialogViewController: UIViewController {
             setup(choice: choice)
         } else if let battle = configurator as? BattleConfigurator {
             setup(battle: battle)
-        } else {
-            setup(dialogue: DialogueConfigurator(name: "Cisco", message: "Error looking for configurator.", imageUrl: ""))
         }
     }
     
@@ -137,7 +137,7 @@ extension DialogViewController: DialogDisplayLogic {
     }
     
     private func internalSetTypingText() {
-        guard let message = configurator?.message else { return }
+        guard let key = configurator?.message, let message = localizer?.localizedString(key: key) else { return }
         timer = textView.setTypingText(message: message, timeInterval: typingTimeInterval)
     }
     
@@ -190,7 +190,7 @@ extension DialogViewController {
         
         for (item, quantity) in reward.items {
             let newView = RewardView(frame: CGRect(x: 0, y: 0, width: self.stackView.frame.width, height: 80.0))
-            newView.item = item.name
+            newView.item = localizer?.localizedString(key: item.name)
             newView.quantity = "\(quantity)"
             let url = URL(string: item.imageUrl)
             newView.imageView.kf.setImage(with: url) { _ in
@@ -209,8 +209,7 @@ extension DialogViewController {
         stackView.spacing = 10
         
         let actions = choice.actions
-        
-        stackView.createButtonsInColumns(names: actions.map({$0.name}), action: #selector(buttonSelected(sender:)), for: self)
+        stackView.createButtonsInColumns(names: actions.compactMap({self.localizer?.localizedString(key: $0.name)}), action: #selector(buttonSelected(sender:)), for: self)
         alignment = .bottom
     }
     

@@ -1,10 +1,10 @@
 enum DaoConstants {
     enum Generic: String {
-        case id
+        case id, key, language
     }
     
     enum ModelsNames: String {
-        case ActionDAO, BattleEventDAO, CharacterDAO, ChoiceEventDAO, ConditionEventDAO, ConsumableItemDAO, DialogueEventDAO, EventDAO, ItemDAO, Movement, ItemsQuantity, PlayableCharacterDAO, ProtagonistDAO, RewardEventDAO, RoomDAO, RoomPosition, WeaponDAO
+        case ActionDAO, BattleEventDAO, CharacterDAO, ChoiceEventDAO, ConditionEventDAO, ConsumableItemDAO, DialogueEventDAO, EventDAO, ItemDAO, Movement, ItemsQuantity, PlayableCharacterDAO, ProtagonistDAO, RewardEventDAO, RoomDAO, RoomPosition, TextDAO, WeaponDAO
     }
     
     enum Event: String {

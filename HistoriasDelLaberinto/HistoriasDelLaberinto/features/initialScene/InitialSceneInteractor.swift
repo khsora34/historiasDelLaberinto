@@ -6,9 +6,10 @@ protocol InitialSceneBusinessLogic: BusinessLogic {
     func getRoom(request: InitialScene.RoomBuilder.Request) -> InitialScene.RoomBuilder.Response
     func getMovement() -> InitialScene.MovementGetter.Response
     func createMovement()
+    func updateTexts()
 }
 
-class InitialSceneInteractor: InitialSceneBusinessLogic {
+class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
     private let databaseFetcherProvider: DatabaseFetcherProvider
     
     var operations: [Int: ImageLoadingOperation] = [:] {
@@ -25,6 +26,7 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
     
     init(databaseFetcherProvider: DatabaseFetcherProvider) {
         self.databaseFetcherProvider = databaseFetcherProvider
+        super.init(localizedStringAccess: databaseFetcherProvider.localizedValueFetcher)
     }
     
     func loadAllFiles(request: InitialScene.FileLoader.Request) {
@@ -40,13 +42,12 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
         let charactersFile = getCharacters()
         let roomsFile = getRooms()
         let itemsFile = getItems()
-        let eventsFile = getEvents()
         
-        loadImages(protagonist, charactersFile, roomsFile, itemsFile, eventsFile)
-        save(protagonist, charactersFile, roomsFile, itemsFile, eventsFile)
+        loadImages(protagonist, charactersFile, roomsFile, itemsFile)
+        save(protagonist, charactersFile, roomsFile, itemsFile, getEvents())
     }
     
-    private func loadImages(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile, _ eventsFile: EventsFile) {
+    private func loadImages(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile) {
         print("😂 Starting to load images")
         var imageUrls: [String] = []
         imageUrls.append(protagonist.imageUrl)
@@ -61,6 +62,30 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
         imageUrls.append(contentsOf: itemsFile.keyItems.values.map({$0.imageUrl}))
         imageUrls.append(contentsOf: itemsFile.weapons.values.map({$0.imageUrl}))
         loadImages(from: imageUrls)
+    }
+    
+    func updateTexts() {
+        databaseFetcherProvider.localizedValueFetcher.deleteAllTexts()
+        print("Texts are saved: \(saveTexts(getTexts(), fetcher: databaseFetcherProvider.localizedValueFetcher))")
+        initLanguage()
+    }
+    
+    private func initLanguage() {
+        guard UserDefaults.standard.string(forKey: "loadedLanguageIdentifier") == nil else { return }
+        
+        let availableLanguages = databaseFetcherProvider.localizedValueFetcher.getAvailableLanguages().map({$0.identifier})
+        let systemLanguages = Locale.preferredLanguages
+        var choseLanguage: String?
+        var i = 0
+        while choseLanguage == nil && i < systemLanguages.count {
+            if availableLanguages.contains(systemLanguages[i]) {
+                choseLanguage = systemLanguages[i]
+            }
+            i+=1
+        }
+        choseLanguage = choseLanguage ?? systemLanguages.first
+        
+        UserDefaults.standard.set(choseLanguage ?? "en", forKey: "loadedLanguageIdentifier")
     }
     
     private func save(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile, _ eventsFile: EventsFile) {
@@ -78,6 +103,7 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
         databaseFetcherProvider.itemsFetcher.deleteAllItems()
         databaseFetcherProvider.roomsFetcher.deleteAllRooms()
         databaseFetcherProvider.movementFetcher.removeMovement()
+        databaseFetcherProvider.localizedValueFetcher.deleteAllTexts()
         removeImageCache()
         print("😂 Finished in \(Date().timeIntervalSinceReferenceDate - now)")
     }

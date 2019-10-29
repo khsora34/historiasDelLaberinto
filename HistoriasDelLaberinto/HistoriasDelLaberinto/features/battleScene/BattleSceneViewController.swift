@@ -16,7 +16,7 @@ class BattleSceneViewController: BaseViewController {
         return _presenter as? BattleScenePresentationLogic
     }
     
-    var enemyStatus: StatusViewController!
+    var enemyStatus: StatusView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var enemyImageView: UIImageView!
     @IBOutlet weak var charactersStackView: UIStackView!
@@ -68,7 +68,7 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
     func addCharactersStatus(_ models: [StatusViewModel]) {
         for model in models {
             // Auto Layout will do the job.
-            let statusView = StatusViewController(frame: CGRect.zero)
+            let statusView = StatusView(frame: CGRect.zero)
             model.configure(view: statusView)
             charactersStackView.addArrangedSubview(statusView)
         }
@@ -81,7 +81,7 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
     
     func setEnemyInfo(imageUrl: String, model: StatusViewModel) {
         enemyImageView.kf.setImage(with: URL(string: imageUrl))
-        enemyStatus = StatusViewController(frame: CGRect(x: 0, y: 0, width: 394, height: 100))
+        enemyStatus = StatusView(frame: CGRect(x: 0, y: 0, width: 394, height: 100))
         model.configure(view: enemyStatus)
         enemyStatus.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(enemyStatus)
@@ -91,7 +91,7 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
     func updateView(_ model: StatusViewModel) {
         if model.isEnemy {
             model.configure(view: enemyStatus)
-        } else if let view = charactersStackView.arrangedSubviews.filter({ ($0 as? StatusViewController)?.characterChosen == model.chosenCharacter }).first as? StatusViewController {
+        } else if let view = charactersStackView.arrangedSubviews.filter({ ($0 as? StatusView)?.characterChosen == model.chosenCharacter }).first as? StatusView {
             model.configure(view: view)
         }
     }
@@ -99,7 +99,7 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
     func performDamage(on model: StatusViewModel) {
         if model.isEnemy {
             enemyStatus.shake()
-        } else if let view = charactersStackView.arrangedSubviews.filter({ ($0 as? StatusViewController)?.characterChosen == model.chosenCharacter }).first {
+        } else if let view = charactersStackView.arrangedSubviews.filter({ ($0 as? StatusView)?.characterChosen == model.chosenCharacter }).first {
             view.shake()
         }
     }

@@ -1,6 +1,6 @@
 - id: "room17LookAround"
   mode: "dialogue"
-  message: "Encuentras cerca de ti un espejo."
+  message: "room17LookAround"
   characterId: "narrator" #idCharacter
   nextStep: "room17LookAround2"
 
@@ -12,7 +12,7 @@
 
 - id: "exampleRoomStartEvent"
   mode: "dialogue"
-  message: "Te encuentras en un lujoso edificio de concepto abierto."
+  message: "exampleRoomStartEvent"
   characterId: "narrator"
   nextStep: ""
 

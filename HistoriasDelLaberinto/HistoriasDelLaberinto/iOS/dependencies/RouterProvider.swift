@@ -38,4 +38,8 @@ class RouterProvider {
     var itemsSceneRouter: ItemsSceneRoutingLogic {
         return ItemsSceneRouter(moduleProvider: moduleProvider, drawer: drawer)
     }
+    
+    var languageSelectionSceneRouter: LanguageSelectionSceneRoutingLogic {
+        return LanguageSelectionSceneRouter(moduleProvider: moduleProvider, drawer: drawer)
+    }
 }
