@@ -6,17 +6,22 @@ protocol LanguageSelectionSceneDisplayLogic: ViewControllerDisplay {
 }
 
 class LanguageSelectionSceneViewController: BaseViewController {
-    
     private var presenter: LanguageSelectionScenePresentationLogic? {
         return _presenter as? LanguageSelectionScenePresentationLogic
     }
     
     private var models: [LanguageButtonInfo] = []
     
+    @IBOutlet weak var saveButton: ConfigurableButton!
     @IBOutlet weak var languagesStackView: UIStackView!
     
     @IBAction func didTapSaveButton(_ sender: Any) {
         presenter?.didConfirmLanguage()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        saveButton.setupStyle(ButtonStyle.defaultButtonStyle)
     }
 }
 

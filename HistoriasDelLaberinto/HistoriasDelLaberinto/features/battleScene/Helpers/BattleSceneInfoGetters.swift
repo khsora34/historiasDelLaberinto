@@ -15,9 +15,7 @@ extension BattleScenePresenter {
             models[.partner] = partnerModel
         }
         viewController?.addCharactersStatus(charactersForStatus)
-    }
-    
-    func buildEnemy() {
+        
         let model = StatusViewModel(chosenCharacter: .enemy, name: enemy.name, ailment: enemy.currentStatusAilment, actualHealth: enemy.currentHealthPoints, maxHealth: enemy.maxHealthPoints, imageUrl: enemy.portraitUrl, isEnemy: true, delegate: nil)
         models[.enemy] = model
         viewController?.setEnemyInfo(imageUrl: enemy.imageUrl, model: model)

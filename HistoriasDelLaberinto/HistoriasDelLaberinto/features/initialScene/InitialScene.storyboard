@@ -17,12 +17,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="startView1" translatesAutoresizingMaskIntoConstraints="NO" id="PTu-5w-yxk">
-                                <rect key="frame" x="0.0" y="0.0" width="375.00000000000182" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EB9-oZ-6cO">
-                                <rect key="frame" x="0.0" y="462.5" width="375" height="204.5"/>
+                                <rect key="frame" x="0.0" y="472.5" width="375" height="194.5"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Cqu-9U-3WP" userLabel="Blurred View">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="204.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="194.5"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="a2j-mY-cbf">
@@ -90,7 +90,7 @@
                             <constraint firstItem="PTu-5w-yxk" firstAttribute="leading" secondItem="bJ0-Vb-V2S" secondAttribute="leading" id="ZK5-6V-auK"/>
                             <constraint firstAttribute="bottom" secondItem="EB9-oZ-6cO" secondAttribute="bottom" id="bcl-K1-qA6"/>
                             <constraint firstAttribute="bottom" secondItem="PTu-5w-yxk" secondAttribute="bottom" id="q0i-xb-qOS"/>
-                            <constraint firstItem="bJ0-Vb-V2S" firstAttribute="bottom" secondItem="a2j-mY-cbf" secondAttribute="bottom" constant="20" id="tDC-DW-02p"/>
+                            <constraint firstItem="bJ0-Vb-V2S" firstAttribute="bottom" secondItem="a2j-mY-cbf" secondAttribute="bottom" constant="10" id="tDC-DW-02p"/>
                             <constraint firstItem="bJ0-Vb-V2S" firstAttribute="trailing" secondItem="EB9-oZ-6cO" secondAttribute="trailing" id="x2l-i7-PgE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bJ0-Vb-V2S"/>

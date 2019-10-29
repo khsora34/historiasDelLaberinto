@@ -20,7 +20,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8h-3H-qnt">
-                                <rect key="frame" x="50" y="84" width="314" height="680"/>
+                                <rect key="frame" x="50" y="84" width="314" height="688"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="kVJ-EZ-maM">
                                         <rect key="frame" x="0.0" y="0.0" width="314" height="50"/>
@@ -37,8 +37,8 @@
                                     <constraint firstAttribute="trailing" secondItem="kVJ-EZ-maM" secondAttribute="trailing" id="vDU-je-ppk"/>
                                 </constraints>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cci-jf-qb4" userLabel="Save Button" customClass="RoundedButton" customModule="HistoriasDelLaberinto" customModuleProvider="target">
-                                <rect key="frame" x="20" y="784" width="374" height="38"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cci-jf-qb4" userLabel="Save Button" customClass="ConfigurableButton" customModule="HistoriasDelLaberinto" customModuleProvider="target">
+                                <rect key="frame" x="20" y="792" width="374" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="didTapSaveButton:" destination="A7u-6N-Yew" eventType="touchUpInside" id="Dsx-X6-VH2"/>
@@ -63,6 +63,7 @@
                     </view>
                     <connections>
                         <outlet property="languagesStackView" destination="kVJ-EZ-maM" id="4ID-wj-CcC"/>
+                        <outlet property="saveButton" destination="Cci-jf-qb4" id="2QX-XD-Nyk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ijf-VS-b6J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

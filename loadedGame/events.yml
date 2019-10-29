@@ -2,6 +2,12 @@
   mode: "dialogue"
   message: "room17LookAround"
   characterId: "narrator" #idCharacter
+  nextStep: "room17LookAround2"
+
+- id: "room17LookAround2"
+  mode: "dialogue"
+  message: "Este eres tú ahora mismo."
+  characterId: "protagonist" #idCharacter
   nextStep: ""
 
 - id: "exampleRoomStartEvent"

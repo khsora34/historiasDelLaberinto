@@ -51,7 +51,7 @@ extension EventHandlerPresenter {
     }
     
     private func finishFlow() {
-        finishDialog()
+        hideDialog()
         
         guard !shouldEndGameWhenFinished else {
             shouldEndGame()
@@ -66,11 +66,11 @@ extension EventHandlerPresenter {
         onFinish()
     }
     
-    private func finishDialog() {
-        eventHandlerRouter?.dismiss(animated: true)
-        dialog = nil
-    }
-    
+}
+
+// MARK: - Perform Selection
+
+extension EventHandlerPresenter {
     func elementSelected(id: Int) {
         performChoice(tag: id)
     }
@@ -130,8 +130,9 @@ extension EventHandlerPresenter {
         let nextStep = event.nextStep(evaluator: self)
         if !nextStep.isEmpty {
             startEvent(with: nextStep)
+        } else {
+            finishFlow()
         }
-        finishFlow()
     }
     
     private func showChoice(_ event: ChoiceEvent) {
@@ -245,6 +246,8 @@ extension EventHandlerPresenter {
         return response.result
     }
 }
+
+// MARK: - On Battle Finished
 
 extension EventHandlerPresenter {
     func onBattleFinished(reason: FinishedBattleReason) {

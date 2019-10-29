@@ -165,8 +165,17 @@ extension DialogViewController {
         let url = URL(string: dialogue.imageUrl)
         characterImageView.kf.setImage(with: url, placeholder: nil, options: [.transition(.fade(0.1))]) { [weak self] (result) in
             switch result {
-            case .success:
+            case .success(let result):
                 self?.characterImageView.isHidden = false
+                if let viewSize = self?.characterImageView.bounds {
+                    let imageSize = result.image.size
+                    let viewProportion: CGFloat = viewSize.width / viewSize.height
+                    let imageProportion: CGFloat = imageSize.width / imageSize.height
+                    self?.characterImageView.contentMode = imageProportion >= viewProportion ? .scaleAspectFit: .scaleAspectFill
+                } else {
+                    self?.characterImageView.contentMode = .scaleAspectFit
+                }
+                
             case .failure:
                 self?.characterImageView.image = nil
                 self?.characterImageView.isHidden = true
@@ -200,8 +209,7 @@ extension DialogViewController {
         stackView.spacing = 10
         
         let actions = choice.actions
-        
-        stackView.setButtonsInColumns(names: actions.compactMap({ self.localizer?.localizedString(key: $0.name) }), action: #selector(buttonSelected(sender:)), for: self, numberOfColumns: 2, fixedHeight: true)
+        stackView.createButtonsInColumns(names: actions.compactMap({self.localizer?.localizedString(key: $0.name)}), action: #selector(buttonSelected(sender:)), for: self)
         alignment = .bottom
     }
     

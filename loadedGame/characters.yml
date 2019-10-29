@@ -4,9 +4,9 @@ playable:
 
     currentHealthPoints: 300
     maxHealthPoints: 300
-    attack: 5
-    defense: 0
-    agility: 0
+    attack: 15
+    defense: 15
+    agility: 4
 
     imageUrl: "https://imgur.com/zNGi05P.png"
     portraitUrl: "https://i.imgur.com/g3WIUf4.png"
@@ -58,11 +58,11 @@ playable:
   "eternalGod":
     name: "Malvado"
 
-    currentHealthPoints: 20000
-    maxHealthPoints: 20000
-    attack: 80
-    defense: 0
-    agility: 60
+    currentHealthPoints: 100
+    maxHealthPoints: 100
+    attack: 20
+    defense: 10
+    agility: 5
 
     imageUrl: "https://i.imgur.com/U6RBjYo.png"
 
