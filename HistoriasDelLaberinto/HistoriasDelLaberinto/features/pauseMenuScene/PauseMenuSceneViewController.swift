@@ -77,7 +77,9 @@ extension PauseMenuSceneViewController: PauseMenuSceneDisplayLogic {
     
     func createOptions(with optionsAvailable: [(String, Int)]) {
         for option in optionsAvailable {
-            let button = RoundedButton(color: UIColor.black.withAlphaComponent(0.3), frame: .zero)
+            let button = ConfigurableButton(type: .custom)
+            let style = ButtonStyle(backgroundColor: .orange, highlightedBackgroundColor: .red, font: .systemFont(ofSize: 18.0), titleColor: .white, cornerRadius: 4)
+            button.setupStyle(style)
             button.setTitle(option.0, for: .normal)
             button.tag = option.1
             button.addTarget(self, action: #selector(buttonSelected(sender:)), for: .touchUpInside)

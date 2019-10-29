@@ -1,7 +1,13 @@
 - id: "room17LookAround"
   mode: "dialogue"
-  message: "Miras a tu alrededor"
+  message: "Encuentras cerca de ti un espejo."
   characterId: "narrator" #idCharacter
+  nextStep: "room17LookAround2"
+
+- id: "room17LookAround2"
+  mode: "dialogue"
+  message: "Este eres tú ahora mismo."
+  characterId: "protagonist" #idCharacter
   nextStep: ""
 
 - id: "exampleRoomStartEvent"

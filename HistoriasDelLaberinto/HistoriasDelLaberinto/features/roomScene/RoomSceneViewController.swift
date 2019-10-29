@@ -72,7 +72,7 @@ extension RoomSceneViewController: RoomSceneDisplayLogic {
             buttonStackView.removeArrangedSubview(stack)
             stack.removeFromSuperview()
         }
-        buttonStackView.setButtonsInColumns(names: actions, action: #selector(didTapOption), for: self, numberOfColumns: 2, fixedHeight: false)
+        buttonStackView.createButtonsInColumns(names: actions, action: #selector(didTapOption), for: self, numberOfColumns: 2)
         
         if #available(iOS 11, *) {
             let iphoneXView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: view.safeAreaInsets.bottom)))
