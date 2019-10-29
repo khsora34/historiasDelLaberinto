@@ -5,11 +5,12 @@ protocol ExampleSceneBusinessLogic: BusinessLogic {
     func loadDb()
 }
 
-class ExampleSceneInteractor: ExampleSceneBusinessLogic {
+class ExampleSceneInteractor: BaseInteractor, ExampleSceneBusinessLogic {
     private let databaseFetcherProvider: DatabaseFetcherProvider
     
     init(databaseFetcherProvider: DatabaseFetcherProvider) {
         self.databaseFetcherProvider = databaseFetcherProvider
+        super.init(localizedStringAccess: databaseFetcherProvider.localizedValueFetcher)
     }
     
     // MARK: Do something
