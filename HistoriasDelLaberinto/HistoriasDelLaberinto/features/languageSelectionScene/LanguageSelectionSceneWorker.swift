@@ -1,0 +1,4 @@
+class LanguageSelectionSceneWorker {
+  func doSomeWork() {
+  }
+}

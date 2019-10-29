@@ -1,6 +1,11 @@
 protocol InitialScenePresentationLogic: Presenter {
+    var gameTitle: String { get }
+    var newGameButtonText: String { get }
+    var loadGameButtonText: String { get }
+    var changeLanguageButtonText: String { get }
     func startNewGame()
     func loadGame()
+    func goToLanguagesSelection()
 }
 
 class InitialScenePresenter: BasePresenter {
@@ -21,12 +26,29 @@ class InitialScenePresenter: BasePresenter {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        interactor?.updateTexts()
         movement = interactor?.getMovement().movement
         viewController?.setLoadButton(isHidden: movement == nil)
     }
 }
 
 extension InitialScenePresenter: InitialScenePresentationLogic {
+    var gameTitle: String {
+        return localizedString(key: "gameTitle")
+    }
+    
+    var newGameButtonText: String {
+        return localizedString(key: "newGameButton")
+    }
+    
+    var loadGameButtonText: String {
+        return localizedString(key: "loadGameButton")
+    }
+    
+    var changeLanguageButtonText: String {
+        return localizedString(key: "changeLanguageButtonText")
+    }
+    
     func startNewGame() {
         viewController?.setLoadButton(isHidden: true)
         viewController?.showLoading()
@@ -48,6 +70,10 @@ extension InitialScenePresenter: InitialScenePresentationLogic {
         }
         
         goToRoom(id: roomId)
+    }
+    
+    func goToLanguagesSelection() {
+        router?.goToLanguagesSelection()
     }
 }
 

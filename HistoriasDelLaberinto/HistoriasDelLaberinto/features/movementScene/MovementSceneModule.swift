@@ -10,7 +10,7 @@ class MovementSceneModule: Module {
         viewController = ViewCreator.createFrom(storyboardName: storyboardName, forController: controllerName)
         presenter = MovementScenePresenter(room: room)
         router = routerProvider.movementSceneRouter
-        interactor = MovementSceneInteractor(roomFetcher: databaseProvider.roomsFetcher, movementFetcher: databaseProvider.movementFetcher)
+        interactor = MovementSceneInteractor(databaseFetcherProvider: databaseProvider)
         viewController._presenter = presenter
         presenter._interactor = interactor
         presenter._router = router
