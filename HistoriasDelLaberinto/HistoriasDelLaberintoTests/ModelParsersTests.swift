@@ -136,4 +136,22 @@ class ModelParsersTests: XCTestCase {
         print(texts)
     }
     
+    func testVariablesModel() {
+        guard let path = Bundle.main.path(forResource: "variables", ofType: "yml", inDirectory: "loadedGame") else {
+            XCTFail("Couldn't find variables.yml in loadedGame directory.")
+            return
+        }
+        
+        guard let fileContent = try? String(contentsOfFile: path) else {
+            XCTFail("Unable to read the content of the file in path \(path).")
+            return
+        }
+        
+        let parser = VariablesFileParser()
+        guard let variables = parser.serialize(fileContent), !variables.isEmpty else {
+            XCTFail("Failed to parse variables body.")
+            return
+        }
+        print(variables)
+    }
 }
