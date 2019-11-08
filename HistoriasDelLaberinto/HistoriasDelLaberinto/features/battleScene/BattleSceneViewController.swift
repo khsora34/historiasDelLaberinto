@@ -3,7 +3,7 @@ import Kingfisher
 
 protocol BattleSceneDisplayLogic: ViewControllerDisplay {
     func addCharactersStatus(_ models: [StatusViewModel])
-    func setBackground(with imageUrl: String?)
+    func setBackground(using imageSource: ImageSource?)
     func setEnemyInfo(imageUrl: String, model: StatusViewModel)
     func updateView(_ model: StatusViewModel)
     func performDamage(on model: StatusViewModel)
@@ -74,9 +74,12 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
         }
     }
     
-    func setBackground(with imageUrl: String?) {
-        guard let imageUrl = imageUrl else { return }
-        backgroundImageView.kf.setImage(with: URL(string: imageUrl))
+    func setBackground(using imageSource: ImageSource?) {
+        guard let imageSource = imageSource else {
+            backgroundImageView.image = UIImage(named: "GenericRoom1")
+            return
+        }
+        backgroundImageView.setImage(for: imageSource)
     }
     
     func setEnemyInfo(imageUrl: String, model: StatusViewModel) {

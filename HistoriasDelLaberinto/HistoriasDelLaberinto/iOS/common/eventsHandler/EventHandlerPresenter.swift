@@ -1,4 +1,4 @@
-protocol EventHandlerPresenter: ConditionEvaluator, NextDialogHandler, BattleBuilderDelegate, LocalizableStringPresenterProtocol {
+protocol EventHandlerPresenter: ConditionEvaluator, NextDialogHandler, OnBattleFinishedDelegate, LocalizableStringPresenterProtocol {
     var eventHandlerRouter: EventHandlerRoutingLogic? { get }
     var eventHandlerInteractor: EventHandlerInteractor? { get }
     var room: Room { get set }
@@ -149,7 +149,7 @@ extension EventHandlerPresenter {
             return
         }
         hideDialog()
-        eventHandlerRouter?.goToBattle(with: enemy, with: self)
+        eventHandlerRouter?.goToBattle(against: enemy, backgroundImage: room.imageSource, finisher: self)
     }
 }
 

@@ -4,6 +4,7 @@ rooms:
     name: "Primera habitación"
     description: "Esta es la primera habitación"
     reloadWhenPartner: true
+    imageUrl: "https://images.pexels.com/photos/2121121/pexels-photo-2121121.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=2&h=1920&w=1080"
     imageSource:
       type: local
       source: "cave-near-body-of-water-at-sunset-931910.jpg"
@@ -20,6 +21,7 @@ rooms:
     id: "genericRoom1"
     name: "Habitación genérica"
     description: "Esta es una habitación genérica"
+    imageUrl: "https://images.pexels.com/photos/2121121/pexels-photo-2121121.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=2&h=1920&w=1080"
     imageSource:
       type: local
       source: "orange-and-brown-cave-1533483.jpg"
@@ -35,8 +37,9 @@ rooms:
     description: "Esta es una habitación con un malvado"
     reloadWhenPartner: false
     isGenericRoom: true
+    imageUrl: "https://images.pexels.com/photos/2121121/pexels-photo-2121121.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=2&h=1920&w=1080"
     imageSource:
-      type: remote
+      type: local
       source: "photo-of-geological-formation-2537641.jpg"
     actions:
       - action: "Luchar"
@@ -51,6 +54,7 @@ rooms:
     description: "Esta es la habitación de ejemplo"
     reloadWhenPartner: true
     startEvent: "exampleRoomStartEvent"
+    imageUrl: "https://images.pexels.com/photos/2121121/pexels-photo-2121121.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=2&h=1920&w=1080"
     imageSource:
       type: remote
       source: "https://images.pexels.com/photos/2121121/pexels-photo-2121121.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=2&h=1920&w=1080"
@@ -70,6 +74,7 @@ rooms:
     name: "Primera habitación"
     description: "Esta es la primera habitación"
     reloadWhenPartner: true
+    imageUrl: "https://images.pexels.com/photos/2633/nature-france-rocks-caves.jpg?auto=format%2Ccompress&cs=tinysrgb&dpr=2&h=1080&w=1626"
     imageSource:
       type: remote
       source: "https://images.pexels.com/photos/2633/nature-france-rocks-caves.jpg?auto=format%2Ccompress&cs=tinysrgb&dpr=2&h=1080&w=1626"

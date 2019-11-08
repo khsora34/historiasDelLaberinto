@@ -4,7 +4,7 @@ enum DaoConstants {
     }
     
     enum ModelsNames: String {
-        case ActionDAO, BattleEventDAO, CharacterDAO, ChoiceEventDAO, ConditionEventDAO, ConsumableItemDAO, DialogueEventDAO, EventDAO, ItemDAO, Movement, ItemsQuantity, PlayableCharacterDAO, ProtagonistDAO, RewardEventDAO, RoomDAO, RoomPosition, TextDAO, WeaponDAO
+        case ActionDAO, BattleEventDAO, CharacterDAO, ChoiceEventDAO, ConditionEventDAO, ConsumableItemDAO, DialogueEventDAO, EventDAO, ImageSourceDAO, ItemDAO, Movement, ItemsQuantity, PlayableCharacterDAO, ProtagonistDAO, RewardEventDAO, RoomDAO, RoomPosition, TextDAO, WeaponDAO
     }
     
     enum Event: String {
