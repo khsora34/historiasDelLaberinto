@@ -101,11 +101,7 @@ extension RoomScenePresenter: RoomScenePresentationLogic {
     }
 }
 
-extension RoomScenePresenter: EventHandlerPresenter {    
-    var imageUrl: String {
-        return room.imageUrl
-    }
-    
+extension RoomScenePresenter: EventHandlerPresenter {
     func onFinish() {
         loadActions()
     }

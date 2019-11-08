@@ -1,8 +1,9 @@
-struct Room: Decodable, ImageRepresentable {
+struct Room: Decodable, ImageRepresentable, ImageSourceRepresentable {
     let id: String
     let name: String
     let description: String
     let imageUrl: String
+    let imageSource: ImageSource
     var isGenericRoom: Bool?
     var startEvent: String?
     var isVisited: Bool = false
@@ -17,5 +18,6 @@ struct Room: Decodable, ImageRepresentable {
         case isGenericRoom
         case startEvent
         case imageUrl
+        case imageSource
     }
 }
