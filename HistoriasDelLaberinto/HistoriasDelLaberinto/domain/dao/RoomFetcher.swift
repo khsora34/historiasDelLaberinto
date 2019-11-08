@@ -49,7 +49,7 @@ class RoomFetcherImpl: RoomFetcher {
     }
     
     private func getRoom(fromDao dao: RoomDAO?) -> Room? {
-        guard let roomId = dao?.id, let imageUrl = dao?.imageUrl, let name = dao?.name, let description = dao?.descriptionString, let actionsSet = dao?.actions else { return nil }
+        guard let roomId = dao?.id, let imageUrl = dao?.imageUrl, let loadedImageType = dao?.imageSource?.type, let loadedImageSource = dao?.imageSource?.source, let name = dao?.name, let description = dao?.descriptionString, let actionsSet = dao?.actions else { return nil }
         
         var actions: [Action] = []
         
@@ -72,7 +72,17 @@ class RoomFetcherImpl: RoomFetcher {
             }
             actions.append(Action(name: action.name!, nextStep: action.nextStep, condition: condition))
         }
-        return Room(id: roomId, name: name, description: description, imageUrl: imageUrl, isGenericRoom: dao?.isGenericRoom, startEvent: dao?.startEvent, actions: actions)
+        
+        let imageSource: ImageSource
+        if loadedImageType == "local" {
+            imageSource = .local(loadedImageSource)
+        } else if loadedImageType == "remote" {
+            imageSource = .remote(loadedImageSource)
+        } else {
+            return nil
+        }
+        
+        return Room(id: roomId, name: name, description: description, imageUrl: imageUrl, imageSource: imageSource, isGenericRoom: dao?.isGenericRoom, startEvent: dao?.startEvent, actions: actions)
     }
     
     func saveRoom(for room: Room, with id: String) -> Bool {
@@ -80,13 +90,20 @@ class RoomFetcherImpl: RoomFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         guard let roomEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.RoomDAO)", in: managedContext),
-            let actionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ActionDAO)", in: managedContext) else { return false }
+            let actionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ActionDAO)", in: managedContext),
+            let imageEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ImageSourceDAO)", in: managedContext)else { return false }
         let loadingRoom = RoomDAO(entity: roomEntity, insertInto: managedContext)
         
         loadingRoom.id = id
         loadingRoom.name = room.name
         loadingRoom.descriptionString = room.description
         loadingRoom.imageUrl = room.imageUrl
+
+        let imageSource = ImageSourceDAO(entity: imageEntity, insertInto: managedContext)
+        imageSource.type = room.imageSource.name
+        imageSource.source = room.imageSource.value
+        loadingRoom.imageSource = imageSource
+
         loadingRoom.isGenericRoom = room.isGenericRoom ?? false
         loadingRoom.startEvent = room.startEvent
         
