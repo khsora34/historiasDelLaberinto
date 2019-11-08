@@ -91,7 +91,7 @@ class RoomFetcherImpl: RoomFetcher {
         
         guard let roomEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.RoomDAO)", in: managedContext),
             let actionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ActionDAO)", in: managedContext),
-            let imageEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ImageSourceDAO)", in: managedContext)else { return false }
+            let imageEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ImageSourceDAO)", in: managedContext) else { return false }
         let loadingRoom = RoomDAO(entity: roomEntity, insertInto: managedContext)
         
         loadingRoom.id = id

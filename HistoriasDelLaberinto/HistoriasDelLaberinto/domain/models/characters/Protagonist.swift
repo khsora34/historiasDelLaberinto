@@ -2,6 +2,8 @@ struct Protagonist: CharacterStatus, Decodable {
     let name: String
     let imageUrl: String
     let portraitUrl: String?
+    let imageSource: ImageSource
+    let portraitSource: ImageSource
     var currentHealthPoints: Int {
         didSet {
             if currentHealthPoints > maxHealthPoints {
