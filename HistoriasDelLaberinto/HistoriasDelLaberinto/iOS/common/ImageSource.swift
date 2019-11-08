@@ -2,7 +2,25 @@ import Foundation
 
 enum ImageSource {
     case local(String)
-    case remote(URL)
+    case remote(String)
+    
+    var name: String {
+        switch self {
+        case .local:
+            return "local"
+        case .remote:
+            return "remote"
+        }
+    }
+    
+    var value: String {
+        switch self {
+        case .local(let path):
+            return path
+        case .remote(let path):
+            return path
+        }
+    }
 }
 
 extension ImageSource: Decodable {
@@ -24,10 +42,7 @@ extension ImageSource: Decodable {
             self = .local(fileName)
         case "remote":
             let urlPath = try container.decode(String.self, forKey: .sourceValue)
-            guard let url = URL(string: urlPath) else {
-                throw CodingError.unknownValue
-            }
-            self = .remote(url)
+            self = .remote(urlPath)
         default:
             throw CodingError.unknownValue
         }
