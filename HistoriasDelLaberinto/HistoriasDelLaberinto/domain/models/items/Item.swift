@@ -1,4 +1,4 @@
-protocol Item: ImageRepresentable {
+protocol Item: ImageRepresentable, ImageSourceRepresentable {
     var name: String { get }
     var description: String { get }
 }

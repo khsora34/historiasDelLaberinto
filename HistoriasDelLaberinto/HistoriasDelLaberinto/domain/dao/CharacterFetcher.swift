@@ -35,7 +35,7 @@ class CharacterFetcherImpl: CharacterFetcher {
             return nil
         }
         
-        if let playableCharacter = character as? PlayableCharacterDAO, let loadedPortraitType = character?.imageSource?.type, let loadedPortraitSource = character?.imageSource?.source {
+        if let playableCharacter = character as? PlayableCharacterDAO, let loadedPortraitType = playableCharacter.portraitSource?.type, let loadedPortraitSource = playableCharacter.portraitSource?.source {
             let portraitSource: ImageSource
             if loadedPortraitType == "local" {
                 portraitSource = .local(loadedPortraitSource)

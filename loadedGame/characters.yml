@@ -31,6 +31,9 @@ playable:
     imageSource:
       type: remote
       source: "https://vignette.wikia.nocookie.net/kingdomhearts/images/f/f4/Sora_%28Blitz_Form%29_KHIII.png/revision/latest?cb=20190325141138"
+    portraitSource:
+      type: remote
+      source: "https://i.imgur.com/g3WIUf4.png"
 
   "shieldSora":
     name: "Shield Sora"
@@ -45,6 +48,9 @@ playable:
     imageSource:
       type: remote
       source: "https://images.khinsider.com/KINGDOM%20HEARTS%20III/Renders/Main%20Characters/SoraGF.png"
+    portraitSource:
+      type: remote
+      source: "https://i.imgur.com/g3WIUf4.png"
 
   "sora":
     name: "Sora"
@@ -59,6 +65,9 @@ playable:
     imageSource:
       type: remote
       source: "https://images.khinsider.com/KINGDOM%20HEARTS%20III/Renders/Main%20Characters/Sora03.png"
+    portraitSource:
+      type: remote
+      source: "https://i.imgur.com/g3WIUf4.png"
 
   "badMonster":
     name: "Monstruo"
@@ -73,6 +82,9 @@ playable:
     imageSource:
       type: remote
       source: "http://www.lalaland.com/badMonster_image"
+    portraitSource:
+      type: remote
+      source: "https://i.imgur.com/g3WIUf4.png"
 
   "eternalGod":
     name: "Malvado"
@@ -87,6 +99,9 @@ playable:
     imageSource:
       type: remote
       source: "https://i.imgur.com/U6RBjYo.png"
+    portraitSource:
+      type: remote
+      source: "https://i.imgur.com/g3WIUf4.png"
 
   "grima_monster":
     name: "Grima"
@@ -102,6 +117,9 @@ playable:
     imageSource:
       type: remote
       source: "http://www.lalaland.com/grima_monster_image"
+    portraitSource:
+      type: remote
+      source: "https://i.imgur.com/g3WIUf4.png"
 
 notPlayable:
   "grandma_npc":

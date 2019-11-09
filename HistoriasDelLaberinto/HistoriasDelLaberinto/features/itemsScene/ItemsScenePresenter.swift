@@ -44,7 +44,7 @@ class ItemsScenePresenter: BasePresenter {
             let response = interactor?.getItem(request: request)
             guard let item = response?.item else { continue }
             items[element] = item
-            let model = ItemViewModel(id: element, name: item.name, description: item.description, itemType: ItemType(item: item), quantity: protagonist.items[element]!, imageUrl: item.imageUrl, tag: i, delegate: self)
+            let model = ItemViewModel(id: element, name: item.name, description: item.description, itemType: ItemType(item: item), quantity: protagonist.items[element]!, imageSource: item.imageSource, tag: i, delegate: self)
             itemModels[i] = model
             i += 1
         }
