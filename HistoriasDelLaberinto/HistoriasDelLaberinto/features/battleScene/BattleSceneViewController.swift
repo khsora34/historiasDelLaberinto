@@ -4,7 +4,7 @@ import Kingfisher
 protocol BattleSceneDisplayLogic: ViewControllerDisplay {
     func addCharactersStatus(_ models: [StatusViewModel])
     func setBackground(using imageSource: ImageSource?)
-    func setEnemyInfo(imageUrl: String, model: StatusViewModel)
+    func setEnemyInfo(imageSource: ImageSource, model: StatusViewModel)
     func updateView(_ model: StatusViewModel)
     func performDamage(on model: StatusViewModel)
     func configureButtons(availableActions: [BattleAction])
@@ -82,8 +82,8 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
         backgroundImageView.setImage(for: imageSource)
     }
     
-    func setEnemyInfo(imageUrl: String, model: StatusViewModel) {
-        enemyImageView.kf.setImage(with: URL(string: imageUrl))
+    func setEnemyInfo(imageSource: ImageSource, model: StatusViewModel) {
+        enemyImageView.setImage(for: imageSource)
         enemyStatus = StatusView(frame: CGRect(x: 0, y: 0, width: 394, height: 100))
         model.configure(view: enemyStatus)
         enemyStatus.translatesAutoresizingMaskIntoConstraints = false
