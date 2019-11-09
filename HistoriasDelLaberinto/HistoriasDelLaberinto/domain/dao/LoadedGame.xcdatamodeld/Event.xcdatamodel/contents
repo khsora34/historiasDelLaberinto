@@ -17,7 +17,7 @@
         <attribute name="id" attributeType="String"/>
         <attribute name="imageUrl" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="imageSource" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ImageSourceDAO" inverseName="parentCharacter" inverseEntity="ImageSourceDAO"/>
+        <relationship name="imageSource" maxCount="1" deletionRule="Nullify" destinationEntity="ImageSourceDAO" inverseName="parentCharacter" inverseEntity="ImageSourceDAO"/>
     </entity>
     <entity name="ChoiceEventDAO" representedClassName="ChoiceEventDAO" parentEntity="EventDAO" syncable="YES" codeGenerationType="class">
         <relationship name="actionsAssociated" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ActionDAO" inverseName="parentChoiceEvent" inverseEntity="ActionDAO"/>
@@ -46,6 +46,7 @@
         <attribute name="source" attributeType="String"/>
         <attribute name="type" attributeType="String"/>
         <relationship name="parentCharacter" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CharacterDAO" inverseName="imageSource" inverseEntity="CharacterDAO"/>
+        <relationship name="parentItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ItemDAO" inverseName="imageSource" inverseEntity="ItemDAO"/>
         <relationship name="parentPlayableCharacter" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayableCharacterDAO" inverseName="portraitSource" inverseEntity="PlayableCharacterDAO"/>
         <relationship name="parentRoom" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RoomDAO" inverseName="imageSource" inverseEntity="RoomDAO"/>
     </entity>
@@ -54,7 +55,7 @@
         <attribute name="id" attributeType="String"/>
         <attribute name="imageUrl" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
-        <attribute name="type" attributeType="String"/>
+        <relationship name="imageSource" maxCount="1" deletionRule="Nullify" destinationEntity="ImageSourceDAO" inverseName="parentItem" inverseEntity="ImageSourceDAO"/>
     </entity>
     <entity name="ItemsQuantity" representedClassName="ItemsQuantity" syncable="YES" codeGenerationType="class">
         <attribute name="itemId" attributeType="String" defaultValueString=""/>
@@ -77,7 +78,7 @@
         <attribute name="maxHealthPoints" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="portraitUrl" optional="YES" attributeType="String"/>
         <attribute name="weaponId" optional="YES" attributeType="String"/>
-        <relationship name="portraitSource" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ImageSourceDAO" inverseName="parentPlayableCharacter" inverseEntity="ImageSourceDAO"/>
+        <relationship name="portraitSource" maxCount="1" deletionRule="Nullify" destinationEntity="ImageSourceDAO" inverseName="parentPlayableCharacter" inverseEntity="ImageSourceDAO"/>
     </entity>
     <entity name="ProtagonistDAO" representedClassName="ProtagonistDAO" parentEntity="PlayableCharacterDAO" syncable="YES" codeGenerationType="class">
         <attribute name="partner" optional="YES" attributeType="String"/>
@@ -98,7 +99,7 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="startEvent" optional="YES" attributeType="String"/>
         <relationship name="actions" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ActionDAO" inverseName="parentRoom" inverseEntity="ActionDAO"/>
-        <relationship name="imageSource" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ImageSourceDAO" inverseName="parentRoom" inverseEntity="ImageSourceDAO"/>
+        <relationship name="imageSource" maxCount="1" deletionRule="Nullify" destinationEntity="ImageSourceDAO" inverseName="parentRoom" inverseEntity="ImageSourceDAO"/>
     </entity>
     <entity name="RoomPosition" representedClassName="RoomPosition" syncable="YES" codeGenerationType="class">
         <attribute name="roomId" attributeType="String"/>
@@ -126,7 +127,7 @@
         <element name="ConsumableItemDAO" positionX="114.265625" positionY="-302.4609375" width="128" height="58"/>
         <element name="DialogueEventDAO" positionX="-220.78515625" positionY="-99.4921875" width="128" height="88"/>
         <element name="EventDAO" positionX="-220.2578125" positionY="-210.05859375" width="128" height="103"/>
-        <element name="ImageSourceDAO" positionX="-391.3125" positionY="54.91796875" width="128" height="118"/>
+        <element name="ImageSourceDAO" positionX="-391.3125" positionY="54.91796875" width="128" height="133"/>
         <element name="ItemDAO" positionX="113.8984375" positionY="-210.9765625" width="128" height="118"/>
         <element name="ItemsQuantity" positionX="-212.9921875" positionY="183.4296875" width="128" height="103"/>
         <element name="Movement" positionX="-64.171875" positionY="112.69921875" width="128" height="118"/>
