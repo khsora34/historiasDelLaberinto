@@ -6,19 +6,19 @@ extension BattleScenePresenter {
 
 extension BattleScenePresenter {
     func buildCharacters() {
-        let protagonistModel = StatusViewModel(chosenCharacter: .protagonist, name: protagonist.name, ailment: protagonist.currentStatusAilment, actualHealth: protagonist.currentHealthPoints, maxHealth: protagonist.maxHealthPoints, imageUrl: protagonist.portraitUrl, isEnemy: false, delegate: nil)
+        let protagonistModel = StatusViewModel(chosenCharacter: .protagonist, name: protagonist.name, ailment: protagonist.currentStatusAilment, actualHealth: protagonist.currentHealthPoints, maxHealth: protagonist.maxHealthPoints, imageSource: protagonist.portraitSource, isEnemy: false, delegate: nil)
         models[.protagonist] = protagonistModel
         var charactersForStatus: [StatusViewModel] = [protagonistModel]
         if let partner = partner {
-            let partnerModel = StatusViewModel(chosenCharacter: .partner, name: partner.name, ailment: partner.currentStatusAilment, actualHealth: partner.currentHealthPoints, maxHealth: partner.maxHealthPoints, imageUrl: partner.portraitUrl, isEnemy: false, delegate: nil)
+            let partnerModel = StatusViewModel(chosenCharacter: .partner, name: partner.name, ailment: partner.currentStatusAilment, actualHealth: partner.currentHealthPoints, maxHealth: partner.maxHealthPoints, imageSource: partner.portraitSource, isEnemy: false, delegate: nil)
             charactersForStatus.append(partnerModel)
             models[.partner] = partnerModel
         }
         viewController?.addCharactersStatus(charactersForStatus)
         
-        let model = StatusViewModel(chosenCharacter: .enemy, name: enemy.name, ailment: enemy.currentStatusAilment, actualHealth: enemy.currentHealthPoints, maxHealth: enemy.maxHealthPoints, imageUrl: enemy.portraitUrl, isEnemy: true, delegate: nil)
+        let model = StatusViewModel(chosenCharacter: .enemy, name: enemy.name, ailment: enemy.currentStatusAilment, actualHealth: enemy.currentHealthPoints, maxHealth: enemy.maxHealthPoints, imageSource: enemy.portraitSource, isEnemy: true, delegate: nil)
         models[.enemy] = model
-        viewController?.setEnemyInfo(imageUrl: enemy.imageUrl, model: model)
+        viewController?.setEnemyInfo(imageSource: enemy.imageSource, model: model)
     }
     
     func getCharacter(from chosen: CharacterChosen) -> CharacterStatus {
@@ -127,10 +127,10 @@ extension BattleScenePresenter {
     }
     
     func updateStatusModels() {
-        let protagonistModel = StatusViewModel(chosenCharacter: .protagonist, name: protagonist.name, ailment: protagonist.currentStatusAilment, actualHealth: protagonist.currentHealthPoints, maxHealth: protagonist.maxHealthPoints, imageUrl: protagonist.portraitUrl, isEnemy: false, delegate: nil)
+        let protagonistModel = StatusViewModel(chosenCharacter: .protagonist, name: protagonist.name, ailment: protagonist.currentStatusAilment, actualHealth: protagonist.currentHealthPoints, maxHealth: protagonist.maxHealthPoints, imageSource: protagonist.portraitSource, isEnemy: false, delegate: nil)
         updateCharacterModel(chosen: .protagonist, model: protagonistModel)
         if let partner = partner {
-            let partnerModel = StatusViewModel(chosenCharacter: .partner, name: partner.name, ailment: partner.currentStatusAilment, actualHealth: partner.currentHealthPoints, maxHealth: partner.maxHealthPoints, imageUrl: partner.portraitUrl, isEnemy: false, delegate: nil)
+            let partnerModel = StatusViewModel(chosenCharacter: .partner, name: partner.name, ailment: partner.currentStatusAilment, actualHealth: partner.currentHealthPoints, maxHealth: partner.maxHealthPoints, imageSource: partner.portraitSource, isEnemy: false, delegate: nil)
             updateCharacterModel(chosen: .partner, model: partnerModel)
         }
     }
