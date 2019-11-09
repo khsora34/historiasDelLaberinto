@@ -4,18 +4,18 @@ class ItemViewModel {
     let description: String
     let itemType: ItemType?
     var quantity: Int
-    let imageUrl: String?
+    let imageSource: ImageSource
     let tag: Int
     var isSelected = false
     let delegate: ItemSelectedDelegate?
     
-    init(id: String, name: String, description: String, itemType: ItemType?, quantity: Int, imageUrl: String?, tag: Int, delegate: ItemSelectedDelegate?) {
+    init(id: String, name: String, description: String, itemType: ItemType?, quantity: Int, imageSource: ImageSource, tag: Int, delegate: ItemSelectedDelegate?) {
         self.id = id
         self.name = name
         self.description = description
         self.itemType = itemType
         self.quantity = quantity
-        self.imageUrl = imageUrl
+        self.imageSource = imageSource
         self.tag = tag
         self.delegate = delegate
     }
@@ -24,7 +24,7 @@ class ItemViewModel {
         view.frontItemView.name = name
         view.frontItemView.itemType = itemType
         view.frontItemView.quantity = quantity
-        view.frontItemView.setImage(with: imageUrl)
+        view.frontItemView.setImage(for: imageSource)
         view.frontItemView.tag = tag
         view.frontItemView.delegate = delegate
         view.frontItemView.isSelected = isSelected
