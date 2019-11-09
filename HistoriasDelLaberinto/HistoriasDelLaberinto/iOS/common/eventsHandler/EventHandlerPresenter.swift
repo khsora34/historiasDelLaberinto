@@ -227,7 +227,7 @@ extension EventHandlerPresenter {
     
     func showErrorDialogue(_ event: DialogueEvent) {
         actualEvent = event
-        let configurator = DialogueConfigurator(name: event.characterId, message: event.message, imageUrl: "cisco")
+        let configurator = DialogueConfigurator(name: event.characterId, message: event.message, imageSource: .local(""))
         
         if dialog == nil {
             dialog = Dialog.createDialog(configurator, delegate: self)

@@ -159,7 +159,7 @@ extension BattleScenePresenter {
                     return
                 }
                 
-                let configurator = DialogueConfigurator(name: partner.name, message: "Lo siento, ya no puedo más...", imageUrl: partner.imageUrl)
+                let configurator = DialogueConfigurator(name: partner.name, message: "Lo siento, ya no puedo más...", imageSource: partner.imageSource)
                 isPartnerDead = true
                 showDialog(with: configurator)
                 return
@@ -207,7 +207,7 @@ extension BattleScenePresenter {
                     return
                 }
                 
-                let configurator = DialogueConfigurator(name: partner.name, message: "Lo siento, ya no puedo más...", imageUrl: partner.imageUrl)
+                let configurator = DialogueConfigurator(name: partner.name, message: "Lo siento, ya no puedo más...", imageSource: partner.imageSource)
                 isPartnerDead = true
                 showDialog(with: configurator)
             } else {
@@ -336,7 +336,7 @@ extension BattleScenePresenter {
         
         finishedBattleReason = .defeated(.enemy)
         if let partner = partner {
-            let configurator = DialogueConfigurator(name: partner.name, message: "¡Sí, lo hemos conseguido!", imageUrl: partner.imageUrl)
+            let configurator = DialogueConfigurator(name: partner.name, message: "¡Sí, lo hemos conseguido!", imageSource: partner.imageSource)
             showDialog(with: configurator)
             
         } else {

@@ -2,7 +2,6 @@ consumableItems:
   "potion":
     name: "Poción"
     description: "Restaura puntos de vida."
-    imageUrl: "https://cdn.bulbagarden.net/upload/2/2e/GO_Potion.png"
     imageSource:
       type: remote
       source: "https://cdn.bulbagarden.net/upload/2/2e/GO_Potion.png"
@@ -11,7 +10,6 @@ consumableItems:
   "high_potion":
     name: "Poción grande"
     description: "Restaura puntos de vida."
-    imageUrl: "https://cdn.bulbagarden.net/upload/2/2e/GO_Potion.png"
     imageSource:
       type: remote
       source: "https://cdn.bulbagarden.net/upload/b/b5/GO_Super_Potion.png"
@@ -21,7 +19,6 @@ keyItems:
   "small_key":
     name: "Llave pequeña"
     description: "Una llave pequeña."
-    imageUrl: "https://cdn.bulbagarden.net/upload/2/2e/GO_Potion.png"
     imageSource:
       type: local
       source: "small_key.png"
@@ -30,7 +27,6 @@ weapons:
   "magic_sword":
     name: "Espada mágica"
     description: "Una espada mágica."
-    imageUrl: "https://cdn.bulbagarden.net/upload/2/2e/GO_Potion.png"
     imageSource:
       type: local
       source: "magic_sword.png"
@@ -40,7 +36,6 @@ weapons:
   "poisoned_bow":
     name: "Arco envenenado"
     description: "Un arco que puede provocar veneno."
-    imageUrl: "https://cdn.bulbagarden.net/upload/2/2e/GO_Potion.png"
     imageSource:
       type: local
       source: "ModernBowFarket.png"

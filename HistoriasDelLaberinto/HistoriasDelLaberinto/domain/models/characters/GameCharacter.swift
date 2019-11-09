@@ -1,4 +1,4 @@
-protocol GameCharacter: Decodable, ImageRepresentable, ImageSourceRepresentable {
+protocol GameCharacter: Decodable, ImageRepresentable {
     var name: String { get }
 }
 
@@ -11,5 +11,4 @@ protocol CharacterStatus: GameCharacter {
     var agility: Int { get }
     var currentStatusAilment: StatusAilment? { get set }
     var weapon: String? { get set }
-    var portraitUrl: String? { get }
 }

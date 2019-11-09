@@ -1,7 +1,6 @@
 struct Weapon: Item, Decodable {
     let name: String
     let description: String
-    let imageUrl: String
     let imageSource: ImageSource
     
     let extraDamage: Int

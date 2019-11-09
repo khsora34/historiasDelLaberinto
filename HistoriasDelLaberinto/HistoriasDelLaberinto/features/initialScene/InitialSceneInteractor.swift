@@ -57,9 +57,9 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         
         imageUrls.append(contentsOf: roomsFile.rooms.values.map({$0.imageSource}))
         
-        imageUrls.append(contentsOf: itemsFile.consumableItems.values.map({.remote($0.imageUrl)}))
-        imageUrls.append(contentsOf: itemsFile.keyItems.values.map({.remote($0.imageUrl)}))
-        imageUrls.append(contentsOf: itemsFile.weapons.values.map({.remote($0.imageUrl)}))
+        imageUrls.append(contentsOf: itemsFile.consumableItems.values.map({$0.imageSource}))
+        imageUrls.append(contentsOf: itemsFile.keyItems.values.map({$0.imageSource}))
+        imageUrls.append(contentsOf: itemsFile.weapons.values.map({$0.imageSource}))
         loadImages(from: imageUrls)
     }
     

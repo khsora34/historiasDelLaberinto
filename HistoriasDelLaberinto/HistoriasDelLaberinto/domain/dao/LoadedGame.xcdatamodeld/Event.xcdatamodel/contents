@@ -15,7 +15,6 @@
     </entity>
     <entity name="CharacterDAO" representedClassName="CharacterDAO" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="String"/>
-        <attribute name="imageUrl" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
         <relationship name="imageSource" maxCount="1" deletionRule="Nullify" destinationEntity="ImageSourceDAO" inverseName="parentCharacter" inverseEntity="ImageSourceDAO"/>
     </entity>
@@ -53,7 +52,6 @@
     <entity name="ItemDAO" representedClassName="ItemDAO" syncable="YES" codeGenerationType="class">
         <attribute name="descriptionString" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
-        <attribute name="imageUrl" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
         <relationship name="imageSource" maxCount="1" deletionRule="Nullify" destinationEntity="ImageSourceDAO" inverseName="parentItem" inverseEntity="ImageSourceDAO"/>
     </entity>
@@ -76,7 +74,6 @@
         <attribute name="currentHealthPoints" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="defense" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="maxHealthPoints" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="portraitUrl" optional="YES" attributeType="String"/>
         <attribute name="weaponId" optional="YES" attributeType="String"/>
         <relationship name="portraitSource" maxCount="1" deletionRule="Nullify" destinationEntity="ImageSourceDAO" inverseName="parentPlayableCharacter" inverseEntity="ImageSourceDAO"/>
     </entity>
@@ -92,7 +89,6 @@
     <entity name="RoomDAO" representedClassName="RoomDAO" syncable="YES" codeGenerationType="class">
         <attribute name="descriptionString" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
-        <attribute name="imageUrl" attributeType="String"/>
         <attribute name="isGenericRoom" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isVisited" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="isVisitedWithPartner" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
@@ -121,20 +117,20 @@
     <elements>
         <element name="ActionDAO" positionX="-552.46875" positionY="-164.203125" width="128" height="133"/>
         <element name="BattleEventDAO" positionX="-64.7421875" positionY="-39.09375" width="128" height="88"/>
-        <element name="CharacterDAO" positionX="-394.703125" positionY="182.46484375" width="128" height="103"/>
+        <element name="CharacterDAO" positionX="-394.703125" positionY="182.46484375" width="128" height="88"/>
         <element name="ChoiceEventDAO" positionX="-379.828125" positionY="-212.3984375" width="128" height="58"/>
         <element name="ConditionEventDAO" positionX="-57.5859375" positionY="-207.5234375" width="128" height="103"/>
         <element name="ConsumableItemDAO" positionX="114.265625" positionY="-302.4609375" width="128" height="58"/>
         <element name="DialogueEventDAO" positionX="-220.78515625" positionY="-99.4921875" width="128" height="88"/>
         <element name="EventDAO" positionX="-220.2578125" positionY="-210.05859375" width="128" height="103"/>
         <element name="ImageSourceDAO" positionX="-391.3125" positionY="54.91796875" width="128" height="133"/>
-        <element name="ItemDAO" positionX="113.8984375" positionY="-210.9765625" width="128" height="118"/>
+        <element name="ItemDAO" positionX="113.8984375" positionY="-210.9765625" width="128" height="103"/>
         <element name="ItemsQuantity" positionX="-212.9921875" positionY="183.4296875" width="128" height="103"/>
         <element name="Movement" positionX="-64.171875" positionY="112.69921875" width="128" height="118"/>
-        <element name="PlayableCharacterDAO" positionX="-560.4375" positionY="168.98046875" width="128" height="163"/>
+        <element name="PlayableCharacterDAO" positionX="-560.4375" positionY="168.98046875" width="128" height="148"/>
         <element name="ProtagonistDAO" positionX="-394.8828125" positionY="314.58984375" width="128" height="73"/>
         <element name="RewardEventDAO" positionX="-380.99609375" positionY="-80.4296875" width="128" height="88"/>
-        <element name="RoomDAO" positionX="-557.7890625" positionY="-15.046875" width="128" height="193"/>
+        <element name="RoomDAO" positionX="-557.7890625" positionY="-15.046875" width="128" height="178"/>
         <element name="RoomPosition" positionX="114.40625" positionY="115.58984375" width="128" height="103"/>
         <element name="TextDAO" positionX="-67.109375" positionY="257.67578125" width="128" height="88"/>
         <element name="WeaponDAO" positionX="112.90625" positionY="-29.83203125" width="128" height="103"/>

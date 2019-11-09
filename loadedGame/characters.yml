@@ -7,9 +7,6 @@ playable:
     attack: 15
     defense: 15
     agility: 4
-    imageUrl: "https://imgur.com/zNGi05P.png"
-    portraitUrl: "https://i.imgur.com/g3WIUf4.png"
-
     imageSource:
       type: remote
       source: "https://imgur.com/zNGi05P.png"
@@ -26,8 +23,6 @@ playable:
     attack: 30
     defense: 13
     agility: 30
-    imageUrl: "https://vignette.wikia.nocookie.net/kingdomhearts/images/f/f4/Sora_%28Blitz_Form%29_KHIII.png/revision/latest?cb=20190325141138"
-
     imageSource:
       type: remote
       source: "https://vignette.wikia.nocookie.net/kingdomhearts/images/f/f4/Sora_%28Blitz_Form%29_KHIII.png/revision/latest?cb=20190325141138"
@@ -43,8 +38,6 @@ playable:
     attack: 25
     defense: 22
     agility: 10
-    imageUrl: "https://images.khinsider.com/KINGDOM%20HEARTS%20III/Renders/Main%20Characters/SoraGF.png"
-
     imageSource:
       type: remote
       source: "https://images.khinsider.com/KINGDOM%20HEARTS%20III/Renders/Main%20Characters/SoraGF.png"
@@ -60,8 +53,6 @@ playable:
     attack: 33
     defense: 15
     agility: 18
-    imageUrl: "https://images.khinsider.com/KINGDOM%20HEARTS%20III/Renders/Main%20Characters/Sora03.png"
-
     imageSource:
       type: remote
       source: "https://images.khinsider.com/KINGDOM%20HEARTS%20III/Renders/Main%20Characters/Sora03.png"
@@ -77,8 +68,6 @@ playable:
     attack: 15
     defense: 13
     agility: 6
-    imageUrl: "https://images.khinsider.com/KINGDOM%20HEARTS%20III/Renders/Main%20Characters/Sora03.png"
-
     imageSource:
       type: remote
       source: "http://www.lalaland.com/badMonster_image"
@@ -94,7 +83,6 @@ playable:
     attack: 20
     defense: 10
     agility: 5
-    imageUrl: "https://i.imgur.com/U6RBjYo.png"
 
     imageSource:
       type: remote
@@ -112,7 +100,6 @@ playable:
     defense: 22
     agility: 10
     weapon: "dragon_claw"
-    imageUrl: "https://images.khinsider.com/KINGDOM%20HEARTS%20III/Renders/Main%20Characters/Sora03.png"
 
     imageSource:
       type: remote
@@ -124,14 +111,12 @@ playable:
 notPlayable:
   "grandma_npc":
     name: "Abuela"
-    imageUrl: "https://images.khinsider.com/KINGDOM%20HEARTS%20III/Renders/Main%20Characters/Sora03.png"
     imageSource:
       type: remote
       source: "http://www.lalaland.com/grandma_npc_image"
 
   "narrator":
     name: "Narrador"
-    imageUrl: "https://i.imgur.com/Upcm999.png"
     imageSource:
       type: remote
       source: "https://i.imgur.com/Upcm999.png"
