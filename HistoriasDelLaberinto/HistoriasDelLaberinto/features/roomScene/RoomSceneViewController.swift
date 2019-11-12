@@ -4,7 +4,7 @@ import Kingfisher
 protocol RoomSceneDisplayLogic: ViewControllerDisplay {
     var dialog: DialogDisplayLogic? { get set }
     func set(title: String)
-    func setImage(with literal: String)
+    func setImage(for source: ImageSource)
     func set(actions: [String])
 }
 
@@ -58,13 +58,8 @@ extension RoomSceneViewController: RoomSceneDisplayLogic {
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24)]
     }
     
-    func setImage(with literal: String) {
-        if literal.isEmpty {
-            let image = UIImage(named: "GenericRoom1")
-            backgroundImageView.image = image
-        }
-        
-        backgroundImageView.kf.setImage(with: URL(string: literal))
+    func setImage(for source: ImageSource) {
+        backgroundImageView.setImage(for: source)
     }
     
     func set(actions: [String]) {

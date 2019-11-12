@@ -6,9 +6,9 @@ class BattleSceneModule: Module {
     var presenter: Presenter
     var router: RouterLogic
     
-    init(enemy: PlayableCharacter, delegate: BattleBuilderDelegate, routerProvider: RouterProvider, databaseProvider: DatabaseFetcherProvider) {
+    init(enemy: PlayableCharacter, backgroundImage: ImageSource, delegate: OnBattleFinishedDelegate, routerProvider: RouterProvider, databaseProvider: DatabaseFetcherProvider) {
         viewController = ViewCreator.createFrom(storyboardName: storyboardName, forController: controllerName)
-        presenter = BattleScenePresenter(enemy: enemy)
+        presenter = BattleScenePresenter(enemy: enemy, backgroundImage: backgroundImage)
         (presenter as? BattleScenePresenter)?.delegate = delegate
         router = routerProvider.battleSceneRouter
         interactor = BattleSceneInteractor(databaseProvider: databaseProvider)

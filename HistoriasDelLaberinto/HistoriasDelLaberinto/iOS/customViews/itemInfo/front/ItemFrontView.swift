@@ -72,12 +72,8 @@ class ItemFrontView: UIView {
         setup()
     }
     
-    func setImage(with url: String?) {
-        if let imageUrl = url {
-            imageView.kf.setImage(with: URL(string: imageUrl), placeholder: UIImage(named: "noItemImage"))
-        } else {
-            imageView.image = UIImage(named: "noItemImage")
-        }
+    func setImage(for source: ImageSource) {
+        imageView.setImage(for: source)
     }
     
     @IBAction func infoButton(_ sender: Any) {

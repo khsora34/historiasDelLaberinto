@@ -4,7 +4,7 @@ struct StatusViewModel {
     var ailment: StatusAilment?
     var actualHealth: Int
     let maxHealth: Int
-    let imageUrl: String?
+    let imageSource: ImageSource
     let isEnemy: Bool
     var delegate: DidTouchStatusDelegate?
     
@@ -13,7 +13,7 @@ struct StatusViewModel {
         view.name = name
         view.setHealth(currentHealth: actualHealth, maxHealth: maxHealth)
         view.ailment = ailment
-        view.setImage(with: imageUrl)
+        view.setImage(for: imageSource)
         view.setBackground(shouldDisplayForEnemy: isEnemy)
         view.touchDelegate = delegate
     }

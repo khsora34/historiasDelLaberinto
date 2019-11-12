@@ -44,7 +44,7 @@ class ItemsScenePresenter: BasePresenter {
             let response = interactor?.getItem(request: request)
             guard let item = response?.item else { continue }
             items[element] = item
-            let model = ItemViewModel(id: element, name: item.name, description: item.description, itemType: ItemType(item: item), quantity: protagonist.items[element]!, imageUrl: item.imageUrl, tag: i, delegate: self)
+            let model = ItemViewModel(id: element, name: item.name, description: item.description, itemType: ItemType(item: item), quantity: protagonist.items[element]!, imageSource: item.imageSource, tag: i, delegate: self)
             itemModels[i] = model
             i += 1
         }
@@ -53,11 +53,11 @@ class ItemsScenePresenter: BasePresenter {
     }
     
     private func buildCharacters() {
-        let protagonistModel = StatusViewModel(chosenCharacter: .protagonist, name: protagonist.name, ailment: protagonist.currentStatusAilment, actualHealth: protagonist.currentHealthPoints, maxHealth: protagonist.maxHealthPoints, imageUrl: protagonist.portraitUrl, isEnemy: false, delegate: self)
+        let protagonistModel = StatusViewModel(chosenCharacter: .protagonist, name: protagonist.name, ailment: protagonist.currentStatusAilment, actualHealth: protagonist.currentHealthPoints, maxHealth: protagonist.maxHealthPoints, imageSource: protagonist.portraitSource, isEnemy: false, delegate: self)
         charactersModels[.protagonist] = protagonistModel
         var charactersForStatus: [StatusViewModel] = [protagonistModel]
         if let partner = partner {
-            let partnerModel = StatusViewModel(chosenCharacter: .partner, name: partner.name, ailment: partner.currentStatusAilment, actualHealth: partner.currentHealthPoints, maxHealth: partner.maxHealthPoints, imageUrl: partner.portraitUrl, isEnemy: false, delegate: self)
+            let partnerModel = StatusViewModel(chosenCharacter: .partner, name: partner.name, ailment: partner.currentStatusAilment, actualHealth: partner.currentHealthPoints, maxHealth: partner.maxHealthPoints, imageSource: partner.portraitSource, isEnemy: false, delegate: self)
             charactersForStatus.append(partnerModel)
             charactersModels[.partner] = partnerModel
         }
