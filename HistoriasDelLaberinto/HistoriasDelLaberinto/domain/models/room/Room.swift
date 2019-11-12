@@ -1,8 +1,7 @@
-struct Room: Decodable, ImageRepresentable, ImageSourceRepresentable {
+struct Room: Decodable, ImageRepresentable {
     let id: String
     let name: String
     let description: String
-    let imageUrl: String
     let imageSource: ImageSource
     var isGenericRoom: Bool?
     var startEvent: String?
@@ -17,7 +16,6 @@ struct Room: Decodable, ImageRepresentable, ImageSourceRepresentable {
         case actions
         case isGenericRoom
         case startEvent
-        case imageUrl
         case imageSource
     }
 }

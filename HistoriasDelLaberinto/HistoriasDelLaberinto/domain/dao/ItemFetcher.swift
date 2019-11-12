@@ -23,7 +23,7 @@ class ItemFetcherImpl: ItemFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        guard let name = item?.name, let description = item?.descriptionString, let imageUrl = item?.imageUrl, let loadedImageType = item?.imageSource?.type, let loadedImageSource = item?.imageSource?.source else { return nil }
+        guard let name = item?.name, let description = item?.descriptionString, let loadedImageType = item?.imageSource?.type, let loadedImageSource = item?.imageSource?.source else { return nil }
         
         let imageSource: ImageSource
         if loadedImageType == "local" {
@@ -35,7 +35,7 @@ class ItemFetcherImpl: ItemFetcher {
         }
         
         if let consumable = item as? ConsumableItemDAO {
-            return ConsumableItem(name: name, description: description, imageUrl: imageUrl, imageSource: imageSource, healthRecovered: Int(consumable.healthRecovered))
+            return ConsumableItem(name: name, description: description, imageSource: imageSource, healthRecovered: Int(consumable.healthRecovered))
             
         } else if let weapon = item as? WeaponDAO {
             var inducedAilment: InduceAilment?
@@ -44,10 +44,10 @@ class ItemFetcherImpl: ItemFetcher {
                 inducedAilment = InduceAilment(ailment: ailment, induceRate: Int(weapon.induceRate))
             }
             
-            return Weapon(name: name, description: description, imageUrl: imageUrl, imageSource: imageSource, extraDamage: Int(weapon.extraDamage), hitRate: Int(weapon.hitRate), inducedAilment: inducedAilment)
+            return Weapon(name: name, description: description, imageSource: imageSource, extraDamage: Int(weapon.extraDamage), hitRate: Int(weapon.hitRate), inducedAilment: inducedAilment)
             
         } else {
-            return KeyItem(name: name, description: description, imageUrl: imageUrl, imageSource: imageSource)
+            return KeyItem(name: name, description: description, imageSource: imageSource)
         }
     }
     
@@ -85,7 +85,6 @@ class ItemFetcherImpl: ItemFetcher {
         loadingItem.id = id
         loadingItem.name = item.name
         loadingItem.descriptionString = item.description
-        loadingItem.imageUrl = item.imageUrl
         let imageSource = ImageSourceDAO(entity: imageEntity, insertInto: managedContext)
         imageSource.type = item.imageSource.name
         imageSource.source = item.imageSource.value

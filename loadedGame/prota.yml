@@ -1,7 +1,5 @@
 name: "Cisco"
 partner: "gerar"
-imageUrl: "https://vignette.wikia.nocookie.net/megamitensei/images/6/63/Persona_5_Hero.png"
-portraitUrl: "https://vignette.wikia.nocookie.net/megamitensei/images/1/14/P5_manga_Akira.jpg"
 imageSource:
   type: remote
   source: "https://vignette.wikia.nocookie.net/megamitensei/images/6/63/Persona_5_Hero.png"

@@ -162,23 +162,19 @@ extension DialogViewController: DialogDisplayLogic {
 
 extension DialogViewController {
     private func setup(dialogue: DialogueConfigurator) {
-        let url = URL(string: dialogue.imageUrl)
-        characterImageView.kf.setImage(with: url, placeholder: nil, options: [.transition(.fade(0.1))]) { [weak self] (result) in
-            switch result {
-            case .success(let result):
-                self?.characterImageView.isHidden = false
-                if let viewSize = self?.characterImageView.bounds {
-                    let imageSize = result.image.size
-                    let viewProportion: CGFloat = viewSize.width / viewSize.height
-                    let imageProportion: CGFloat = imageSize.width / imageSize.height
-                    self?.characterImageView.contentMode = imageProportion >= viewProportion ? .scaleAspectFit: .scaleAspectFill
-                } else {
-                    self?.characterImageView.contentMode = .scaleAspectFit
-                }
-                
-            case .failure:
+        characterImageView.setImage(for: dialogue.imageSource) { [weak self] (isSuccess, imageSize) in
+            guard isSuccess else {
                 self?.characterImageView.image = nil
                 self?.characterImageView.isHidden = true
+                return
+            }
+            self?.characterImageView.isHidden = false
+            if let viewSize = self?.characterImageView.bounds {
+                let viewProportion: CGFloat = viewSize.width / viewSize.height
+                let imageProportion: CGFloat = imageSize.width / imageSize.height
+                self?.characterImageView.contentMode = imageProportion >= viewProportion ? .scaleAspectFill: .scaleAspectFit
+            } else {
+                self?.characterImageView.contentMode = .scaleAspectFit
             }
         }
         alignment = .bottom
@@ -192,10 +188,7 @@ extension DialogViewController {
             let newView = RewardView(frame: CGRect(x: 0, y: 0, width: self.stackView.frame.width, height: 80.0))
             newView.item = localizer?.localizedString(key: item.name)
             newView.quantity = "\(quantity)"
-            let url = URL(string: item.imageUrl)
-            newView.imageView.kf.setImage(with: url) { _ in
-                newView.imageView.isHidden = false
-            }
+            newView.imageView.setImage(for: item.imageSource)
             self.stackView.addArrangedSubview(newView)
         }
         (stackView.arrangedSubviews.last as? RewardView)?.isLast = true

@@ -24,7 +24,7 @@ class CharacterFetcherImpl: CharacterFetcher {
             print("💔 No ha sido posible conseguir al personaje con id \(id).\n \(error), \(error.userInfo)")
         }
         
-        guard let name = character?.name, let imageUrl = character?.imageUrl, let loadedImageType = character?.imageSource?.type, let loadedImageSource = character?.imageSource?.source else { return nil }
+        guard let name = character?.name, let loadedImageType = character?.imageSource?.type, let loadedImageSource = character?.imageSource?.source else { return nil }
         
         let imageSource: ImageSource
         if loadedImageType == "local" {
@@ -47,7 +47,7 @@ class CharacterFetcherImpl: CharacterFetcher {
             
             if let protagonist = character as? ProtagonistDAO {
                 return Protagonist(
-                    name: name, imageUrl: imageUrl, portraitUrl: protagonist.portraitUrl, imageSource: imageSource, portraitSource: portraitSource,
+                    name: name, imageSource: imageSource, portraitSource: portraitSource,
                     currentHealthPoints: Int(protagonist.currentHealthPoints),
                     maxHealthPoints: Int(protagonist.maxHealthPoints),
                     attack: Int(protagonist.attack),
@@ -59,7 +59,7 @@ class CharacterFetcherImpl: CharacterFetcher {
                     items: getInventory(from: protagonist))
             } else {
                 return PlayableCharacter(
-                    name: name, imageUrl: imageUrl, portraitUrl: playableCharacter.portraitUrl, imageSource: imageSource, portraitSource: portraitSource,
+                    name: name, imageSource: imageSource, portraitSource: portraitSource,
                     currentHealthPoints: Int(playableCharacter.currentHealthPoints),
                     maxHealthPoints: Int(playableCharacter.maxHealthPoints),
                     attack: Int(playableCharacter.attack),
@@ -69,7 +69,7 @@ class CharacterFetcherImpl: CharacterFetcher {
                     weapon: playableCharacter.weaponId)
             }
         } else {
-            return NotPlayableCharacter(name: name, imageUrl: imageUrl, imageSource: imageSource)
+            return NotPlayableCharacter(name: name, imageSource: imageSource)
         }
     }
     
@@ -120,12 +120,10 @@ class CharacterFetcherImpl: CharacterFetcher {
                 loadingPlayableCharacter = PlayableCharacterDAO(entity: playableEntity, insertInto: managedContext)
             }
             
-            loadingPlayableCharacter.portraitUrl = playableCharacter.portraitUrl
             let portraitSource = ImageSourceDAO(entity: imageEntity, insertInto: managedContext)
             portraitSource.type = playableCharacter.portraitSource.name
             portraitSource.source = playableCharacter.portraitSource.value
             loadingPlayableCharacter.portraitSource = portraitSource
-            
             loadingPlayableCharacter.currentHealthPoints = Int16(playableCharacter.currentHealthPoints)
             loadingPlayableCharacter.maxHealthPoints = Int16(playableCharacter.maxHealthPoints)
             loadingPlayableCharacter.attack = Int16(playableCharacter.attack)
@@ -139,14 +137,12 @@ class CharacterFetcherImpl: CharacterFetcher {
             loadingCharacter = CharacterDAO(entity: characterEntity, insertInto: managedContext)
         }
         
-        loadingCharacter.id = id
-        loadingCharacter.name = character.name
-        loadingCharacter.imageUrl = character.imageUrl
-        
         let imageSource = ImageSourceDAO(entity: imageEntity, insertInto: managedContext)
         imageSource.type = character.imageSource.name
         imageSource.source = character.imageSource.value
         loadingCharacter.imageSource = imageSource
+        loadingCharacter.id = id
+        loadingCharacter.name = character.name
         
         do {
             try managedContext.save()

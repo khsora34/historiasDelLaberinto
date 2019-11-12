@@ -49,7 +49,7 @@ class RoomFetcherImpl: RoomFetcher {
     }
     
     private func getRoom(fromDao dao: RoomDAO?) -> Room? {
-        guard let roomId = dao?.id, let imageUrl = dao?.imageUrl, let loadedImageType = dao?.imageSource?.type, let loadedImageSource = dao?.imageSource?.source, let name = dao?.name, let description = dao?.descriptionString, let actionsSet = dao?.actions else { return nil }
+        guard let roomId = dao?.id, let loadedImageType = dao?.imageSource?.type, let loadedImageSource = dao?.imageSource?.source, let name = dao?.name, let description = dao?.descriptionString, let actionsSet = dao?.actions else { return nil }
         
         var actions: [Action] = []
         
@@ -82,7 +82,7 @@ class RoomFetcherImpl: RoomFetcher {
             return nil
         }
         
-        return Room(id: roomId, name: name, description: description, imageUrl: imageUrl, imageSource: imageSource, isGenericRoom: dao?.isGenericRoom, startEvent: dao?.startEvent, actions: actions)
+        return Room(id: roomId, name: name, description: description, imageSource: imageSource, isGenericRoom: dao?.isGenericRoom, startEvent: dao?.startEvent, actions: actions)
     }
     
     func saveRoom(for room: Room, with id: String) -> Bool {
@@ -97,7 +97,6 @@ class RoomFetcherImpl: RoomFetcher {
         loadingRoom.id = id
         loadingRoom.name = room.name
         loadingRoom.descriptionString = room.description
-        loadingRoom.imageUrl = room.imageUrl
 
         let imageSource = ImageSourceDAO(entity: imageEntity, insertInto: managedContext)
         imageSource.type = room.imageSource.name

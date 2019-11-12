@@ -1,7 +1,5 @@
 struct PlayableCharacter: CharacterStatus {
     let name: String
-    let imageUrl: String
-    let portraitUrl: String?
     let imageSource: ImageSource
     let portraitSource: ImageSource
     

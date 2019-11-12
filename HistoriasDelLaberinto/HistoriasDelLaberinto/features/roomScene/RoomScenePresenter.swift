@@ -43,7 +43,7 @@ class RoomScenePresenter: BasePresenter {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewController?.set(title: room.name)
-        viewController?.setImage(with: room.imageUrl)
+        viewController?.setImage(for: room.imageSource)
         loadActions()
     }
     
