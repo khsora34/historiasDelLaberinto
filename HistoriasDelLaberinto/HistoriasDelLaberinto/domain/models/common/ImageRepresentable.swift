@@ -1,3 +1,3 @@
 protocol ImageRepresentable {
-    var imageUrl: String { get }
+    var imageSource: ImageSource { get }
 }

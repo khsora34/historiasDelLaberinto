@@ -2,33 +2,43 @@ consumableItems:
   "potion":
     name: "Poción"
     description: "Restaura puntos de vida."
-    imageUrl: "https://cdn.bulbagarden.net/upload/2/2e/GO_Potion.png"
+    imageSource:
+      type: remote
+      source: "https://cdn.bulbagarden.net/upload/2/2e/GO_Potion.png"
     healthRecovered: 40
 
   "high_potion":
     name: "Poción grande"
     description: "Restaura puntos de vida."
-    imageUrl: "https://cdn.bulbagarden.net/upload/b/b5/GO_Super_Potion.png"
+    imageSource:
+      type: remote
+      source: "https://cdn.bulbagarden.net/upload/b/b5/GO_Super_Potion.png"
     healthRecovered: 140
 
 keyItems:
   "small_key":
     name: "Llave pequeña"
     description: "Una llave pequeña."
-    imageUrl: "http://LALALAND.com/small_key_image"
+    imageSource:
+      type: local
+      source: "small_key.png"
 
 weapons:
   "magic_sword":
     name: "Espada mágica"
     description: "Una espada mágica."
-    imageUrl: "http://LALALAND.com/magic_sword_image"
+    imageSource:
+      type: local
+      source: "magic_sword.png"
     extraDamage: 12
     hitRate: 99 # This field means a percentage
 
   "poisoned_bow":
     name: "Arco envenenado"
     description: "Un arco que puede provocar veneno."
-    imageUrl: "http://LALALAND.com/poisoned_bow_image"
+    imageSource:
+      type: local
+      source: "ModernBowFarket.png"
     extraDamage: 0
     hitRate: 94 # This field means a percentage
     inducedAilment:

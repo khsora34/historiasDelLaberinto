@@ -32,7 +32,7 @@
 		6D285CEC22AAC79A008C9A1D /* StatusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D285CEB22AAC79A008C9A1D /* StatusView.xib */; };
 		6D285CEE22AACEB9008C9A1D /* StatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D285CED22AACEB9008C9A1D /* StatusViewModel.swift */; };
 		6D285CF022AAD351008C9A1D /* BattleSceneModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D285CEF22AAD351008C9A1D /* BattleSceneModule.swift */; };
-		6D285CF222AAF8A4008C9A1D /* BattleBuilderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D285CF122AAF8A4008C9A1D /* BattleBuilderDelegate.swift */; };
+		6D285CF222AAF8A4008C9A1D /* OnBattleFinishedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D285CF122AAF8A4008C9A1D /* OnBattleFinishedDelegate.swift */; };
 		6D2DA748229ED8DE00BC5C0D /* GameFilesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2DA747229ED8DE00BC5C0D /* GameFilesLoader.swift */; };
 		6D2DA74A229ED9C600BC5C0D /* DatabaseFetcherProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2DA749229ED9C600BC5C0D /* DatabaseFetcherProvider.swift */; };
 		6D2DA752229EE49200BC5C0D /* DialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2DA750229EE49200BC5C0D /* DialogViewController.swift */; };
@@ -119,6 +119,8 @@
 		6D9250902268CD3000F2A3E3 /* BaseModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D92508F2268CD3000F2A3E3 /* BaseModels.swift */; };
 		6D92A74323564A5600521B3F /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D92A74223564A5600521B3F /* ButtonStyle.swift */; };
 		6D92A74523564AB100521B3F /* UIFontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D92A74423564AB100521B3F /* UIFontExtension.swift */; };
+		6D97E96B23720E3B0047EC51 /* ImageSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D97E96A23720E3B0047EC51 /* ImageSource.swift */; };
+		6D97E96D2372187C0047EC51 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D97E96C2372187B0047EC51 /* UIImageExtension.swift */; };
 		6D997A4F22A3049D0025DC8D /* RoomScenePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D997A4922A3049D0025DC8D /* RoomScenePresenter.swift */; };
 		6D997A5022A3049D0025DC8D /* RoomSceneWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D997A4A22A3049D0025DC8D /* RoomSceneWorker.swift */; };
 		6D997A5122A3049D0025DC8D /* RoomSceneRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D997A4B22A3049D0025DC8D /* RoomSceneRouter.swift */; };
@@ -217,7 +219,7 @@
 		6D285CEB22AAC79A008C9A1D /* StatusView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatusView.xib; sourceTree = "<group>"; };
 		6D285CED22AACEB9008C9A1D /* StatusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewModel.swift; sourceTree = "<group>"; };
 		6D285CEF22AAD351008C9A1D /* BattleSceneModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSceneModule.swift; sourceTree = "<group>"; };
-		6D285CF122AAF8A4008C9A1D /* BattleBuilderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleBuilderDelegate.swift; sourceTree = "<group>"; };
+		6D285CF122AAF8A4008C9A1D /* OnBattleFinishedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBattleFinishedDelegate.swift; sourceTree = "<group>"; };
 		6D2DA747229ED8DE00BC5C0D /* GameFilesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameFilesLoader.swift; sourceTree = "<group>"; };
 		6D2DA749229ED9C600BC5C0D /* DatabaseFetcherProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseFetcherProvider.swift; sourceTree = "<group>"; };
 		6D2DA750229EE49200BC5C0D /* DialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogViewController.swift; sourceTree = "<group>"; };
@@ -308,6 +310,8 @@
 		6D92508F2268CD3000F2A3E3 /* BaseModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModels.swift; sourceTree = "<group>"; };
 		6D92A74223564A5600521B3F /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		6D92A74423564AB100521B3F /* UIFontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontExtension.swift; sourceTree = "<group>"; };
+		6D97E96A23720E3B0047EC51 /* ImageSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSource.swift; sourceTree = "<group>"; };
+		6D97E96C2372187B0047EC51 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		6D997A4922A3049D0025DC8D /* RoomScenePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomScenePresenter.swift; sourceTree = "<group>"; };
 		6D997A4A22A3049D0025DC8D /* RoomSceneWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSceneWorker.swift; sourceTree = "<group>"; };
 		6D997A4B22A3049D0025DC8D /* RoomSceneRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSceneRouter.swift; sourceTree = "<group>"; };
@@ -448,7 +452,7 @@
 			children = (
 				6D61636822AEBBD10065E2B7 /* Helpers */,
 				6D285CE622AAC5E1008C9A1D /* BattleScene.storyboard */,
-				6D285CF122AAF8A4008C9A1D /* BattleBuilderDelegate.swift */,
+				6D285CF122AAF8A4008C9A1D /* OnBattleFinishedDelegate.swift */,
 				6D285CDF22AAC5B9008C9A1D /* BattleSceneInteractor.swift */,
 				6D285CDD22AAC5B9008C9A1D /* BattleSceneModels.swift */,
 				6D285CEF22AAD351008C9A1D /* BattleSceneModule.swift */,
@@ -516,7 +520,7 @@
 			isa = PBXGroup;
 			children = (
 				6D7A23052351056600AED9A5 /* languageSelectionScene */,
-                6D223B9C22B56E460086AFA2 /* itemsScene */,
+				6D223B9C22B56E460086AFA2 /* itemsScene */,
 				6D285CE822AAC720008C9A1D /* status */,
 				6D285CD922AAC5A6008C9A1D /* battleScene */,
 				6D450B6322A9C2F4003D8405 /* pauseMenuScene */,
@@ -546,8 +550,8 @@
 		6D4B57D9224A93E1001779DC /* domain */ = {
 			isa = PBXGroup;
 			children = (
+				6D9A45A422874C3D004F4D0C /* Assets.xcassets */,
 				6D75802322899CC0009A48D7 /* dao */,
-				6D9A45A322874C3D004F4D0C /* images */,
 				6D4B57E6224A9A15001779DC /* models */,
 				6D4B57DA224A93F4001779DC /* parsedTypes */,
 			);
@@ -613,6 +617,7 @@
 				6D5DB0DC22A1DED700C8745E /* ConditionEvaluator.swift */,
 				6DD893A322A98B5A0065C0E8 /* ShowLoadingCapable.swift */,
 				6D61636A22AEBCDB0065E2B7 /* DialogLauncher.swift */,
+				6D97E96A23720E3B0047EC51 /* ImageSource.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -620,6 +625,7 @@
 		6D5DB0D722A1B1CA00C8745E /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				6D97E96C2372187B0047EC51 /* UIImageExtension.swift */,
 				6D5DB0D822A1B1DB00C8745E /* UITextFieldExtension.swift */,
 				6D5DB0DA22A1B38200C8745E /* UITextViewExtension.swift */,
 				6D398A2022A2E69400D19FF8 /* UIColorExtension.swift */,
@@ -763,14 +769,6 @@
 				6D921219229DD4E600440926 /* VoidRouter.swift */,
 			);
 			path = void;
-			sourceTree = "<group>";
-		};
-		6D9A45A322874C3D004F4D0C /* images */ = {
-			isa = PBXGroup;
-			children = (
-				6D9A45A422874C3D004F4D0C /* Assets.xcassets */,
-			);
-			path = images;
 			sourceTree = "<group>";
 		};
 		6D9A45A622874C51004F4D0C /* testController */ = {
@@ -1153,6 +1151,7 @@
 				6D7A230E2351058500AED9A5 /* LanguageSelectionScenePresenter.swift in Sources */,
 				6D7900DE22B5918900CA74BF /* ItemView.swift in Sources */,
 				6D7900DA22B590D200CA74BF /* ItemFrontView.swift in Sources */,
+				6D97E96D2372187C0047EC51 /* UIImageExtension.swift in Sources */,
 				6DA290E122ABE248002BFC6A /* BattleConfigurator.swift in Sources */,
 				6DA290E322ABE3AA002BFC6A /* NextDialogHandler.swift in Sources */,
 				6D997A5822A309460025DC8D /* RoomSceneModule.swift in Sources */,
@@ -1190,6 +1189,7 @@
 				6DC67572224BC99C00B795B6 /* ConsumableItem.swift in Sources */,
 				6D92120E229DC74100440926 /* InitialSceneModels.swift in Sources */,
 				6D5D8FF82268620D00D11390 /* ViewCreator.swift in Sources */,
+				6D97E96B23720E3B0047EC51 /* ImageSource.swift in Sources */,
 				6D81DA2C228B18FE006DF3D0 /* EventFetcherManager.swift in Sources */,
 				6D997A5322A3049D0025DC8D /* RoomSceneViewController.swift in Sources */,
 				6D285CEA22AAC780008C9A1D /* StatusView.swift in Sources */,
@@ -1246,7 +1246,7 @@
 				6D223BBF22B573DD0086AFA2 /* ItemViewModel.swift in Sources */,
 				6D223BB222B56F3B0086AFA2 /* ItemsSceneWorker.swift in Sources */,
 				6D2DA752229EE49200BC5C0D /* DialogViewController.swift in Sources */,
-				6D285CF222AAF8A4008C9A1D /* BattleBuilderDelegate.swift in Sources */,
+				6D285CF222AAF8A4008C9A1D /* OnBattleFinishedDelegate.swift in Sources */,
 				6D285CE522AAC5B9008C9A1D /* BattleSceneInteractor.swift in Sources */,
 				6D450B6E22A9C30B003D8405 /* PauseMenuSceneViewController.swift in Sources */,
 				6D4B57DC224A9489001779DC /* Room.swift in Sources */,
