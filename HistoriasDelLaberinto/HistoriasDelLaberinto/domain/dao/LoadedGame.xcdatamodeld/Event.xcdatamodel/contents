@@ -108,6 +108,11 @@
         <attribute name="language" attributeType="String"/>
         <attribute name="value" attributeType="String"/>
     </entity>
+    <entity name="VariableDAO" representedClassName="VariableDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="name" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+        <attribute name="value" attributeType="String"/>
+    </entity>
     <entity name="WeaponDAO" representedClassName="WeaponDAO" parentEntity="ItemDAO" syncable="YES" codeGenerationType="class">
         <attribute name="ailment" optional="YES" attributeType="String"/>
         <attribute name="extraDamage" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -134,5 +139,6 @@
         <element name="RoomPosition" positionX="114.40625" positionY="115.58984375" width="128" height="103"/>
         <element name="TextDAO" positionX="-67.109375" positionY="257.67578125" width="128" height="88"/>
         <element name="WeaponDAO" positionX="112.90625" positionY="-29.83203125" width="128" height="103"/>
+        <element name="VariableDAO" positionX="-369" positionY="-153" width="128" height="88"/>
     </elements>
 </model>
