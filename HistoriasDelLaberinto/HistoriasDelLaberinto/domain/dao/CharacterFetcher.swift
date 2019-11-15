@@ -24,32 +24,52 @@ class CharacterFetcherImpl: CharacterFetcher {
             print("💔 No ha sido posible conseguir al personaje con id \(id).\n \(error), \(error.userInfo)")
         }
         
-        guard let name = character?.name, let imageUrl = character?.imageUrl else { return nil }
+        guard let name = character?.name, let loadedImageType = character?.imageSource?.type, let loadedImageSource = character?.imageSource?.source else { return nil }
         
-        if let protagonist = character as? ProtagonistDAO {
-            return Protagonist(
-                name: name, imageUrl: imageUrl, portraitUrl: protagonist.portraitUrl,
-                currentHealthPoints: Int(protagonist.currentHealthPoints),
-                maxHealthPoints: Int(protagonist.maxHealthPoints),
-                attack: Int(protagonist.attack),
-                defense: Int(protagonist.defense),
-                agility: Int(protagonist.agility),
-                currentStatusAilment: nil,
-                weapon: protagonist.weaponId,
-                partner: protagonist.partner,
-                items: getInventory(from: protagonist))
-        } else if let playableCharacter = character as? PlayableCharacterDAO {
-            return PlayableCharacter(
-                name: name, imageUrl: imageUrl, portraitUrl: playableCharacter.portraitUrl,
-                currentHealthPoints: Int(playableCharacter.currentHealthPoints),
-                maxHealthPoints: Int(playableCharacter.maxHealthPoints),
-                attack: Int(playableCharacter.attack),
-                defense: Int(playableCharacter.defense),
-                agility: Int(playableCharacter.agility),
-                currentStatusAilment: nil,
-                weapon: playableCharacter.weaponId)
+        let imageSource: ImageSource
+        if loadedImageType == "local" {
+            imageSource = .local(loadedImageSource)
+        } else if loadedImageType == "remote" {
+            imageSource = .remote(loadedImageSource)
         } else {
-            return NotPlayableCharacter(name: name, imageUrl: imageUrl)
+            return nil
+        }
+        
+        if let playableCharacter = character as? PlayableCharacterDAO, let loadedPortraitType = playableCharacter.portraitSource?.type, let loadedPortraitSource = playableCharacter.portraitSource?.source {
+            let portraitSource: ImageSource
+            if loadedPortraitType == "local" {
+                portraitSource = .local(loadedPortraitSource)
+            } else if loadedPortraitType == "remote" {
+                portraitSource = .remote(loadedPortraitSource)
+            } else {
+                return nil
+            }
+            
+            if let protagonist = character as? ProtagonistDAO {
+                return Protagonist(
+                    name: name, imageSource: imageSource, portraitSource: portraitSource,
+                    currentHealthPoints: Int(protagonist.currentHealthPoints),
+                    maxHealthPoints: Int(protagonist.maxHealthPoints),
+                    attack: Int(protagonist.attack),
+                    defense: Int(protagonist.defense),
+                    agility: Int(protagonist.agility),
+                    currentStatusAilment: nil,
+                    weapon: protagonist.weaponId,
+                    partner: protagonist.partner,
+                    items: getInventory(from: protagonist))
+            } else {
+                return PlayableCharacter(
+                    name: name, imageSource: imageSource, portraitSource: portraitSource,
+                    currentHealthPoints: Int(playableCharacter.currentHealthPoints),
+                    maxHealthPoints: Int(playableCharacter.maxHealthPoints),
+                    attack: Int(playableCharacter.attack),
+                    defense: Int(playableCharacter.defense),
+                    agility: Int(playableCharacter.agility),
+                    currentStatusAilment: nil,
+                    weapon: playableCharacter.weaponId)
+            }
+        } else {
+            return NotPlayableCharacter(name: name, imageSource: imageSource)
         }
     }
     
@@ -72,7 +92,9 @@ class CharacterFetcherImpl: CharacterFetcher {
         guard let characterEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.CharacterDAO.rawValue, in: managedContext),
             let playableEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.PlayableCharacterDAO.rawValue, in: managedContext),
             let protagonistEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ProtagonistDAO.rawValue, in: managedContext),
-            let itemsEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ItemsQuantity.rawValue, in: managedContext) else { return false }
+            let itemsEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ItemsQuantity.rawValue, in: managedContext),
+            let imageEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ImageSourceDAO)", in: managedContext)
+            else { return false }
         
         deleteCharacter(with: id)
         
@@ -98,23 +120,29 @@ class CharacterFetcherImpl: CharacterFetcher {
                 loadingPlayableCharacter = PlayableCharacterDAO(entity: playableEntity, insertInto: managedContext)
             }
             
-            loadingPlayableCharacter.portraitUrl = playableCharacter.portraitUrl
+            let portraitSource = ImageSourceDAO(entity: imageEntity, insertInto: managedContext)
+            portraitSource.type = playableCharacter.portraitSource.name
+            portraitSource.source = playableCharacter.portraitSource.value
+            loadingPlayableCharacter.portraitSource = portraitSource
             loadingPlayableCharacter.currentHealthPoints = Int16(playableCharacter.currentHealthPoints)
             loadingPlayableCharacter.maxHealthPoints = Int16(playableCharacter.maxHealthPoints)
             loadingPlayableCharacter.attack = Int16(playableCharacter.attack)
             loadingPlayableCharacter.defense = Int16(playableCharacter.defense)
             loadingPlayableCharacter.agility = Int16(playableCharacter.agility)
             loadingPlayableCharacter.weaponId = playableCharacter.weapon
-
+            
             loadingCharacter = loadingPlayableCharacter
             
         } else {
             loadingCharacter = CharacterDAO(entity: characterEntity, insertInto: managedContext)
         }
         
+        let imageSource = ImageSourceDAO(entity: imageEntity, insertInto: managedContext)
+        imageSource.type = character.imageSource.name
+        imageSource.source = character.imageSource.value
+        loadingCharacter.imageSource = imageSource
         loadingCharacter.id = id
         loadingCharacter.name = character.name
-        loadingCharacter.imageUrl = character.imageUrl
         
         do {
             try managedContext.save()

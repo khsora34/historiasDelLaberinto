@@ -3,13 +3,16 @@ import Kingfisher
 protocol ImageLoader: OnFinishedLoadingImageDelegate, ImageRemover {
     var operations: [Int: ImageLoadingOperation] { get set }
     var successfulOperations: Int { get set }
-    func loadImages(from imageUrls: [String])
+    func loadImages(from imageUrls: [ImageSource])
     func removeImageCache()
 }
 
 extension ImageLoader {
-    func loadImages(from imageUrls: [String]) {
-        let urls = imageUrls.compactMap({ URL(string: $0) })
+    func loadImages(from imageUrls: [ImageSource]) {
+        let urls = imageUrls.compactMap { (source) -> URL? in
+            guard case let .remote(stringUrl) = source else { return nil }
+            return URL(string: stringUrl)
+        }
         var i = 0
         for url in urls {
             let operation = ImageLoadingOperation(identifier: i, url: url)

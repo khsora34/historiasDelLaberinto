@@ -38,9 +38,9 @@ extension RoomSceneRouter {
         drawer?.dismiss(animated: animated, completion: nil)
     }
     
-    func goToBattle(with enemy: PlayableCharacter, with delegate: BattleBuilderDelegate) {
+    func goToBattle(against enemy: PlayableCharacter, backgroundImage: ImageSource, finisher delegate: OnBattleFinishedDelegate) {
         guard let navigation = drawer?.currentRootViewController as? UINavigationController else { return }
-        let module = moduleProvider.battleSceneModule(enemy: enemy, delegate: delegate)
+        let module = moduleProvider.battleSceneModule(enemy: enemy, backgroundImage: backgroundImage, delegate: delegate)
         navigation.pushViewController(module.viewController, animated: true)
     }
     

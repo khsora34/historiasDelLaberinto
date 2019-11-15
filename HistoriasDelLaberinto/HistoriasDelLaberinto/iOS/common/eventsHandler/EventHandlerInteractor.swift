@@ -72,7 +72,7 @@ extension EventHandlerInteractor {
             return EventsHandlerModels.BuildDialogue.Response(configurator: nil)
         }
         
-        let configurator = DialogueConfigurator(name: safeCharacter.name, message: dialogue.message, imageUrl: safeCharacter.imageUrl)
+        let configurator = DialogueConfigurator(name: safeCharacter.name, message: dialogue.message, imageSource: safeCharacter.imageSource)
         return EventsHandlerModels.BuildDialogue.Response(configurator: configurator)
     }
     

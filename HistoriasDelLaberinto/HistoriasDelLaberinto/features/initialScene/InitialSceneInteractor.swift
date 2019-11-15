@@ -49,18 +49,17 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
     
     private func loadImages(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile) {
         print("😂 Starting to load images")
-        var imageUrls: [String] = []
-        imageUrls.append(protagonist.imageUrl)
+        var imageUrls: [ImageSource] = []
+        imageUrls.append(protagonist.imageSource)
+        imageUrls.append(contentsOf: charactersFile.notPlayable.values.map({$0.imageSource}))
+        imageUrls.append(contentsOf: charactersFile.playable.values.map({$0.imageSource}))
+        imageUrls.append(contentsOf: charactersFile.playable.values.map({$0.portraitSource}))
         
-        imageUrls.append(contentsOf: charactersFile.notPlayable.values.map({$0.imageUrl}))
-        imageUrls.append(contentsOf: charactersFile.playable.values.map({$0.imageUrl}))
-        imageUrls.append(contentsOf: charactersFile.playable.values.compactMap({$0.portraitUrl}))
+        imageUrls.append(contentsOf: roomsFile.rooms.values.map({$0.imageSource}))
         
-        imageUrls.append(contentsOf: roomsFile.rooms.values.map({$0.imageUrl}))
-        
-        imageUrls.append(contentsOf: itemsFile.consumableItems.values.map({$0.imageUrl}))
-        imageUrls.append(contentsOf: itemsFile.keyItems.values.map({$0.imageUrl}))
-        imageUrls.append(contentsOf: itemsFile.weapons.values.map({$0.imageUrl}))
+        imageUrls.append(contentsOf: itemsFile.consumableItems.values.map({$0.imageSource}))
+        imageUrls.append(contentsOf: itemsFile.keyItems.values.map({$0.imageSource}))
+        imageUrls.append(contentsOf: itemsFile.weapons.values.map({$0.imageSource}))
         loadImages(from: imageUrls)
     }
     

@@ -23,6 +23,14 @@ class BattleScenePresenter: BasePresenter {
         return _router as? BattleSceneRouter
     }
     
+    private let backgroundImage: ImageSource
+    
+    private var actualWeapons: [String: Weapon] = [:]
+    private var ailmentTurnsElapsed: [CharacterChosen: Int] = [:]
+    private var actualState = ActualState(step: .userInput, character: .protagonist, target: nil)
+    private var finishedBattleReason: FinishedBattleReason?
+    private var isPartnerDead = false
+    
     var models: [CharacterChosen: StatusViewModel] = [:]
     var dialog: DialogDisplayLogic?
     
@@ -30,22 +38,16 @@ class BattleScenePresenter: BasePresenter {
     var partner: CharacterStatus?
     var enemy: CharacterStatus
     
-    private var actualWeapons: [String: Weapon] = [:]
-    private var ailmentTurnsElapsed: [CharacterChosen: Int] = [:]
+    weak var delegate: OnBattleFinishedDelegate?
     
-    private var actualState = ActualState(step: .userInput, character: .protagonist, target: nil)
-    private var finishedBattleReason: FinishedBattleReason?
-    private var isPartnerDead = false
-    
-    weak var delegate: BattleBuilderDelegate?
-    
-    init(enemy: PlayableCharacter) {
+    init(enemy: PlayableCharacter, backgroundImage: ImageSource) {
         self.enemy = enemy
+        self.backgroundImage = backgroundImage
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewController?.setBackground(with: delegate?.imageUrl)
+        viewController?.setBackground(using: backgroundImage)
         getProtagonist()
         getPartner()
         getWeapons()
@@ -157,7 +159,7 @@ extension BattleScenePresenter {
                     return
                 }
                 
-                let configurator = DialogueConfigurator(name: partner.name, message: "Lo siento, ya no puedo más...", imageUrl: partner.imageUrl)
+                let configurator = DialogueConfigurator(name: partner.name, message: "Lo siento, ya no puedo más...", imageSource: partner.imageSource)
                 isPartnerDead = true
                 showDialog(with: configurator)
                 return
@@ -205,7 +207,7 @@ extension BattleScenePresenter {
                     return
                 }
                 
-                let configurator = DialogueConfigurator(name: partner.name, message: "Lo siento, ya no puedo más...", imageUrl: partner.imageUrl)
+                let configurator = DialogueConfigurator(name: partner.name, message: "Lo siento, ya no puedo más...", imageSource: partner.imageSource)
                 isPartnerDead = true
                 showDialog(with: configurator)
             } else {
@@ -334,7 +336,7 @@ extension BattleScenePresenter {
         
         finishedBattleReason = .defeated(.enemy)
         if let partner = partner {
-            let configurator = DialogueConfigurator(name: partner.name, message: "¡Sí, lo hemos conseguido!", imageUrl: partner.imageUrl)
+            let configurator = DialogueConfigurator(name: partner.name, message: "¡Sí, lo hemos conseguido!", imageSource: partner.imageSource)
             showDialog(with: configurator)
             
         } else {
