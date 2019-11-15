@@ -7,6 +7,28 @@ enum VariableValue: Decodable {
     case integer(Int)
     case string(String)
     
+    var type: VariableTypeString {
+        switch self {
+        case .boolean:
+            return VariableTypeString.boolean
+        case .integer:
+            return VariableTypeString.integer
+        case .string:
+            return VariableTypeString.string
+        }
+    }
+    
+    var valueAsString: String {
+        switch self {
+        case .boolean(let value):
+            return value.description
+        case .integer(let value):
+            return value.description
+        case .string(let value):
+            return value
+        }
+    }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let rawValue = try container.decode(String.self, forKey: .rawValue)
