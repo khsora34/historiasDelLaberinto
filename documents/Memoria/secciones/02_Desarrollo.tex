@@ -1,0 +1,62 @@
+\chapter{Descripción del proyecto}
+En este capítulo se describe todo lo relacionado con el funcionamiento de la aplicación desarrollada.
+
+\section{Qué es capaz de hacer el motor (Descripción)}
+
+El programa que se ha desarrollado es un intérprete de videojuegos que permite a un usuario cualquiera crear un videojuego a su gusto. 
+
+¿A qué me refiero con un intérprete de videojuegos?
+No es una aplicación que permita crear un videojuego, porque no dispone de esta funcionalidad, sino que es capaz de reproducir videojuegos creados por un usuario.
+El proyecto también se le puede definir como un motor de videojuegos:
+\begin{quote}
+	\small Un motor de videojuego es un término que hace referencia a una serie de librerías de programación que permiten el diseño, la creación y la representación de un videojuego. \cite{Alberto_Carrasco}
+\end{quote}
+En este caso, el proyecto no es una serie de librerías sino que es directamente una aplicación. De esta manera, se puede abstraer a un creador del videojuego de la parte programática.
+
+¿Qué tipo de videojuegos se pueden crear?
+Este interprete está orientado a reproducir juegos de estilo ''crea tu propia aventura'', pero probablemente cualquier creador pueda ir más allá de este concepto o incluso cambiarlo radicalmente. El límite lo pone la imaginación del usuario.
+
+¿Dónde se podrá reproducir un juego?
+Este juego se podrá reproducir en todos los dispositivos que dispongan de este motor. Todavía no se ha afrontado el problema de soportar múltiples versiones del intérprete. Se hablará más sobre este aspecto en apartado sobre el futuro del intérprete.
+
+Con todas estas dudas resueltas ya solo queda mostrar las funciones de las que dispone el motor.
+
+Para ello, volviendo al proyecto anterior, se escogieron funcionalidades que permitieran representar el videojuego original, siempre siguiendo la idea de que las acciones dentro del juego debían ser genéricas, es decir, un usuario podría modificarlas a su gusto dentro de unos límites. 
+
+Así, se modelizan estas acciones como eventos. Un evento representa una acción atómica que puede realizar el motor, es decir, son acciones que buscan siempre realizar una única acción en cada momento.
+Estos eventos son intercambiables, intercalables y no tienen dependencia entre sí. 
+Los eventos se ejecutan de forma síncrona siempre siguiendo un orden predefinido por el usuario.
+
+La idea detrás de los eventos es muy sencilla: al interactuar el usuario con una parte de la aplicación activa un evento. Este evento principal tiene una referencia a otro evento, al que le da paso cuando termina el original. Este encadenamiento sigue hasta que uno de los eventos no tenga ninguna referencia a un evento siguiente, permitiendo que la acción termine.
+
+Existen varios tipos de eventos:
+
+\begin{itemize}
+	\item Diálogo: la mayor traba del proyecto original era que los diálogos correspondían con la mayor parte del código fuente. Así, los diálogos se transformaron en eventos. Permiten crear cajas de texto con un título y una imagen que representan al personaje que dice un texto.
+	\item Condición: permite verificar una condición sobre el estado actual del juego. Se ejecutará un evento u otro siguiente dependiendo de si la confición es cierta o no. Existen tres tipos de condiciones: si tienes un compañero con un nombre concreto, si tienes un objeto en tu inventario o si has visitado una habitación.
+	\item Elección: muestra al usuario una serie de opciones, tras las cuales se ejecutará el evento que contengan por debajo. El jugador podrá elegir cualquiera de estas opciones. 
+	\item Batalla: ejecuta una nueva batalla con la información de un enemigo al que enfrentarse. Al terminar la batalla se ejecutará un evento según si el jugador ha ganado o ha perdido.
+	\item Recompensa: muestra una pantalla con una lista de objetos nuevos que se añaden al inventario de un jugador.
+\end{itemize} 
+
+De la forma en la que están desarrollados los eventos en este momento, permite a los desarrolladores de este motor crear nuevos tipos de eventos, sin perjuicio de ninguna implementación de los anteriores. Están en camino los eventos de variables y puzzles.
+
+\section{Guía para usar el sistema (Diseño)}
+
+Para crear un videojuego disponemos de x archivos.
+Describir cada uno y explicar en qué se traduce en el juego
+
+\chapter{Desarrollo de la aplicación}
+
+\section{Una manera de llevarlo a cabo (Arquitectura)}
+
+\section{Desarrollando en dispositivos móviles (Implementación)}
+
+
+
+\chapter{Qué tal ha ido el desarrollo (Conclusiones)}
+
+\section{Futuro del intérprete (Trabajo futuro)}
+
+Nube
+Compartir historias
