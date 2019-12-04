@@ -24,7 +24,7 @@ extension ConditionEventFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        guard let conditionEvent = event, let nextTrueStep = conditionEvent.nextStepIfTrue, let nextFalseStep = conditionEvent.nextStepIfFalse, let type = conditionEvent.conditionType, let value = conditionEvent.conditionValue, let conditionString = ConditionString(rawValue: type) else { return nil }
+        guard let conditionEvent = event, let nextTrueStep = conditionEvent.nextStepIfTrue, let nextFalseStep = conditionEvent.nextStepIfFalse, let type = conditionEvent.condition?.conditionType, let value = conditionEvent.condition?.conditionValue, let conditionString = ConditionString(rawValue: type) else { return nil }
         
         var condition: Condition
         switch conditionString {
@@ -45,7 +45,10 @@ extension ConditionEventFetcher {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        guard let entity = NSEntityDescription.entity(forEntityName: "ConditionEventDAO", in: managedContext) else { return false }
+        guard
+            let entity = NSEntityDescription.entity(forEntityName: "ConditionEventDAO", in: managedContext),
+            let conditionEntity = NSEntityDescription.entity(forEntityName: "ConditionDAO", in: managedContext)
+            else { return false }
         let loadingEvent = ConditionEventDAO(entity: entity, insertInto: managedContext)
         
         loadingEvent.id = condition.id
@@ -55,20 +58,23 @@ extension ConditionEventFetcher {
         loadingEvent.nextStepIfTrue = condition.nextStepIfTrue
         loadingEvent.nextStepIfFalse = condition.nextStepIfFalse
         
+        let loadingCondition = ConditionDAO(entity: conditionEntity, insertInto: managedContext)
         switch condition.condition {
         case .item(let value):
-            loadingEvent.conditionType = "\(ConditionString.item)"
-            loadingEvent.conditionValue = value
+            loadingCondition.conditionType = "\(ConditionString.item)"
+            loadingCondition.conditionValue = value
         case .partner(let value):
-            loadingEvent.conditionType = "\(ConditionString.partner)"
-            loadingEvent.conditionValue = value
+            loadingCondition.conditionType = "\(ConditionString.partner)"
+            loadingCondition.conditionValue = value
         case .roomVisited(let value):
-            loadingEvent.conditionType = "\(ConditionString.roomVisited)"
-            loadingEvent.conditionValue = value
+            loadingCondition.conditionType = "\(ConditionString.roomVisited)"
+            loadingCondition.conditionValue = value
         case .roomNotVisited(let value):
-            loadingEvent.conditionType = "\(ConditionString.roomNotVisited)"
-            loadingEvent.conditionValue = value
+            loadingCondition.conditionType = "\(ConditionString.roomNotVisited)"
+            loadingCondition.conditionValue = value
         }
+        
+        loadingEvent.condition = loadingCondition
         
         do {
             try managedContext.save()

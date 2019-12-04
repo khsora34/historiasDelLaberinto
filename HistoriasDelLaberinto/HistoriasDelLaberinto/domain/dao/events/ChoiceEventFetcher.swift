@@ -32,7 +32,7 @@ extension ChoiceEventFetcher {
             if let actionManaged = element as? ActionDAO, let name = actionManaged.name {
                 var condition: Condition?
                 
-                if let type = actionManaged.conditionType, let value = actionManaged.conditionValue {
+                if let type = actionManaged.condition?.conditionType, let value = actionManaged.condition?.conditionValue {
                     switch ConditionString(rawValue: type) {
                     case .item:
                         condition = .item(id: value)
@@ -59,8 +59,8 @@ extension ChoiceEventFetcher {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         guard let choiceEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ChoiceEventDAO)", in: managedContext),
-            let actionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ActionDAO)", in: managedContext) else { return false }
-        
+            let actionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ActionDAO)", in: managedContext),
+        let conditionEntity = NSEntityDescription.entity(forEntityName: "ConditionDAO", in: managedContext) else { return false }
         let loadingEvent = ChoiceEventDAO(entity: choiceEntity, insertInto: managedContext)
         loadingEvent.id = choice.id
         loadingEvent.type = "\(DaoConstants.Event.choice)"
@@ -68,25 +68,25 @@ extension ChoiceEventFetcher {
         loadingEvent.shouldEndGame = choice.shouldEndGame ?? false
         
         var managedActions: [NSManagedObject] = []
-        
         for action in choice.options {
             let loadingAction = ActionDAO(entity: actionEntity, insertInto: managedContext)
             loadingAction.name = action.name
             loadingAction.nextStep = action.nextStep
             if let condition = action.condition {
+                let loadingCondition: ConditionDAO = ConditionDAO(entity: conditionEntity, insertInto: managedContext)
                 switch condition {
                 case .item(let value):
-                    loadingAction.conditionType = "\(ConditionString.item)"
-                    loadingAction.conditionValue = value
+                    loadingCondition.conditionType = "\(ConditionString.item)"
+                    loadingCondition.conditionValue = value
                 case .partner(let value):
-                    loadingAction.conditionType = "\(ConditionString.partner)"
-                    loadingAction.conditionValue = value
+                    loadingCondition.conditionType = "\(ConditionString.partner)"
+                    loadingCondition.conditionValue = value
                 case .roomVisited(let value):
-                    loadingAction.conditionType = "\(ConditionString.roomVisited)"
-                    loadingAction.conditionValue = value
+                    loadingCondition.conditionType = "\(ConditionString.roomVisited)"
+                    loadingCondition.conditionValue = value
                 case .roomNotVisited(let value):
-                    loadingAction.conditionType = "\(ConditionString.roomNotVisited)"
-                    loadingAction.conditionValue = value
+                    loadingCondition.conditionType = "\(ConditionString.roomNotVisited)"
+                    loadingCondition.conditionValue = value
                 }
             }
             managedActions.append(loadingAction)

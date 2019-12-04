@@ -56,7 +56,7 @@ class RoomFetcherImpl: RoomFetcher {
         for action in actionsSet.compactMap({$0 as? ActionDAO}) where action.name != nil {
             var condition: Condition?
             
-            if let type = action.conditionType, let value = action.conditionValue {
+            if let type = action.condition?.conditionType, let value = action.condition?.conditionValue {
                 switch ConditionString(rawValue: type) {
                 case .item:
                     condition = .item(id: value)
@@ -91,18 +91,19 @@ class RoomFetcherImpl: RoomFetcher {
         
         guard let roomEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.RoomDAO)", in: managedContext),
             let actionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ActionDAO)", in: managedContext),
-            let imageEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ImageSourceDAO)", in: managedContext) else { return false }
+            let imageEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ImageSourceDAO)", in: managedContext),
+            let conditionEntity = NSEntityDescription.entity(forEntityName: "ConditionDAO", in: managedContext) else { return false }
         let loadingRoom = RoomDAO(entity: roomEntity, insertInto: managedContext)
         
         loadingRoom.id = id
         loadingRoom.name = room.name
         loadingRoom.descriptionString = room.description
-
+        
         let imageSource = ImageSourceDAO(entity: imageEntity, insertInto: managedContext)
         imageSource.type = room.imageSource.name
         imageSource.source = room.imageSource.value
         loadingRoom.imageSource = imageSource
-
+        
         loadingRoom.isGenericRoom = room.isGenericRoom ?? false
         loadingRoom.startEvent = room.startEvent
         
@@ -112,21 +113,24 @@ class RoomFetcherImpl: RoomFetcher {
             let loadingAction = ActionDAO(entity: actionEntity, insertInto: managedContext)
             loadingAction.name = action.name
             loadingAction.nextStep = action.nextStep
+            
             if let condition = action.condition {
+                let loadingCondition = ConditionDAO(entity: conditionEntity, insertInto: managedContext)
                 switch condition {
                 case .item(let value):
-                    loadingAction.conditionType = ConditionString.item.rawValue
-                    loadingAction.conditionValue = value
+                    loadingCondition.conditionType = ConditionString.item.rawValue
+                    loadingCondition.conditionValue = value
                 case .partner(let value):
-                    loadingAction.conditionType = ConditionString.partner.rawValue
-                    loadingAction.conditionValue = value
+                    loadingCondition.conditionType = ConditionString.partner.rawValue
+                    loadingCondition.conditionValue = value
                 case .roomVisited(let value):
-                    loadingAction.conditionType = ConditionString.roomVisited.rawValue
-                    loadingAction.conditionValue = value
+                    loadingCondition.conditionType = ConditionString.roomVisited.rawValue
+                    loadingCondition.conditionValue = value
                 case .roomNotVisited(let value):
-                    loadingAction.conditionType = ConditionString.roomNotVisited.rawValue
-                    loadingAction.conditionValue = value
+                    loadingCondition.conditionType = ConditionString.roomNotVisited.rawValue
+                    loadingCondition.conditionValue = value
                 }
+                loadingAction.condition = loadingCondition
             }
             managedActions.append(loadingAction)
         }
