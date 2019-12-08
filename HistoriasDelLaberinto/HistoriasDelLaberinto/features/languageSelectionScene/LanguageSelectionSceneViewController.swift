@@ -21,7 +21,7 @@ class LanguageSelectionSceneViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        saveButton.setupStyle(ButtonStyle.defaultButtonStyle)
+        saveButton.setStyle(ButtonStyle.defaultButtonStyle)
     }
 }
 

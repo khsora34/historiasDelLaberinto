@@ -67,7 +67,7 @@ extension RoomSceneViewController: RoomSceneDisplayLogic {
             buttonStackView.removeArrangedSubview(stack)
             stack.removeFromSuperview()
         }
-        buttonStackView.createButtonsInColumns(names: actions, action: #selector(didTapOption), for: self, numberOfColumns: 2)
+        buttonStackView.createButtonsInColumns(names: actions, action: #selector(didTapOption(sender:)), for: self, numberOfColumns: 2)
         
         if #available(iOS 11, *) {
             let iphoneXView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: view.safeAreaInsets.bottom)))
@@ -79,7 +79,7 @@ extension RoomSceneViewController: RoomSceneDisplayLogic {
 }
 
 extension RoomSceneViewController {
-    @objc func didTapOption(sender: UIButton) {
+    @objc func didTapOption(sender: UIControl) {
         presenter?.selectedAction(sender.tag)
     }
     
