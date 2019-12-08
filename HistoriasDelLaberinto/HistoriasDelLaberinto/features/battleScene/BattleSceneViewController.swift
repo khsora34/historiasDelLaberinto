@@ -25,19 +25,19 @@ class BattleSceneViewController: BaseViewController {
     // MARK: View lifecycle
     
     func configureButtons(availableActions: [BattleAction]) {
-        var views: [UIButton] = []
+        var views: [UIView] = []
         if availableActions.contains(.attack) {
             let attackButton = ConfigurableButton(frame: .zero)
-            attackButton.setupStyle(ButtonStyle.defaultButtonStyle)
-            attackButton.setTitle("Atacar", for: .normal)
+            attackButton.setStyle(ButtonStyle.defaultButtonStyle)
+            attackButton.text = "Atacar"
             attackButton.addTarget(self, action: #selector(didTapAttackButton), for: .touchUpInside)
             views.append(attackButton)
         }
         
         if availableActions.contains(.items) {
             let itemsButton = ConfigurableButton(frame: .zero)
-            itemsButton.setupStyle(ButtonStyle.defaultButtonStyle)
-            itemsButton.setTitle("Inventario", for: .normal)
+            itemsButton.setStyle(ButtonStyle.defaultButtonStyle)
+            itemsButton.text = "Inventario"
             itemsButton.addTarget(self, action: #selector(didTapItemsButton), for: .touchUpInside)
             views.append(itemsButton)
         }
