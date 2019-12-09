@@ -1,3 +1,6 @@
+import CoreData
+import UIKit.UIApplication
+
 protocol EventFetcherManager {
     func getEvent(with id: String) -> Event?
     func saveEvent(_ event: Event) -> Bool
@@ -5,6 +8,18 @@ protocol EventFetcherManager {
 }
 
 class EventFetcherManagerImpl: EventFetcherManager {
+    let persistentContainer: NSPersistentContainer
+    
+    init(container: NSPersistentContainer) {
+        self.persistentContainer = container
+    }
+    
+    convenience init() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            fatalError("Unable to retrieve shared app delegate.")
+        }
+        self.init(container: appDelegate.persistentContainer)
+    }
     
     func getEvent(with id: String) -> Event? {
         guard let newEvent = getEvent(id), let type = newEvent.type, let eventType = EventType(rawValue: type) else { return nil }
@@ -61,7 +76,7 @@ class EventFetcherManagerImpl: EventFetcherManager {
 }
 
 extension EventFetcherManagerImpl: EventFetcher {}
-extension EventFetcherManagerImpl: DialogueDaoParser {}
+extension EventFetcherManagerImpl: DialogueEventFetcher {}
 extension EventFetcherManagerImpl: ChoiceEventFetcher {}
 extension EventFetcherManagerImpl: RewardEventFetcher {}
 extension EventFetcherManagerImpl: ConditionEventFetcher {}

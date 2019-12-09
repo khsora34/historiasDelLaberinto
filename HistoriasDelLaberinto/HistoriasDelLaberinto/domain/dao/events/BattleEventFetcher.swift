@@ -2,16 +2,18 @@ import UIKit.UIApplication
 import CoreData
 
 protocol BattleEventFetcher {
+    var persistentContainer: NSPersistentContainer { get }
     func getBattle(with id: String) -> BattleEvent?
     func saveBattle(_ battle: BattleEvent) -> Bool
     func deleteAllBattles()
 }
 
 extension BattleEventFetcher {
+    var managedContext: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
+    
     func getBattle(with id: String) -> BattleEvent? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
         let fetchRequest: NSFetchRequest<BattleEventDAO> = BattleEventDAO.fetchRequest()
         let predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", NSString(string: id))
         fetchRequest.predicate = predicate
@@ -30,9 +32,6 @@ extension BattleEventFetcher {
     }
     
     func saveBattle(_ battle: BattleEvent) -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
         guard let entity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.BattleEventDAO)", in: managedContext) else { return false }
         
         let loadingEvent = BattleEventDAO(entity: entity, insertInto: managedContext)
@@ -54,11 +53,7 @@ extension BattleEventFetcher {
     }
     
     func deleteAllBattles() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
         let fetchRequest: NSFetchRequest<BattleEventDAO> = BattleEventDAO.fetchRequest()
-        
         do {
             let results = try managedContext.fetch(fetchRequest)
             for result in results {

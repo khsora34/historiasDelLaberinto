@@ -2,16 +2,18 @@ import UIKit.UIApplication
 import CoreData
 
 protocol ChoiceEventFetcher {
+    var persistentContainer: NSPersistentContainer { get }
     func getChoice(with id: String) -> ChoiceEvent?
     func saveChoice(_ choice: ChoiceEvent) -> Bool
     func deleteAllChoices()
 }
 
 extension ChoiceEventFetcher {
+    var managedContext: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
+    
     func getChoice(with id: String) -> ChoiceEvent? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
         let fetchRequest: NSFetchRequest<ChoiceEventDAO> = ChoiceEventDAO.fetchRequest()
         let predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", id)
         fetchRequest.predicate = predicate
@@ -55,9 +57,6 @@ extension ChoiceEventFetcher {
     }
     
     func saveChoice(_ choice: ChoiceEvent) -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
         guard let choiceEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ChoiceEventDAO)", in: managedContext),
             let actionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ActionDAO)", in: managedContext),
             let conditionEntity = NSEntityDescription.entity(forEntityName: "ConditionDAO", in: managedContext),
@@ -120,9 +119,6 @@ extension ChoiceEventFetcher {
     }
     
     func deleteAllChoices() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
         let eventFetchRequest: NSFetchRequest<ChoiceEventDAO> = ChoiceEventDAO.fetchRequest()
         
         do {
