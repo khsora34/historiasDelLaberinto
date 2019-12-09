@@ -2,16 +2,18 @@ import UIKit.UIApplication
 import CoreData
 
 protocol ConditionEventFetcher {
+    var persistentContainer: NSPersistentContainer { get }
     func getCondition(with id: String) -> ConditionEvent?
     func saveCondition(_ condition: ConditionEvent) -> Bool
     func deleteAllConditions()
 }
 
 extension ConditionEventFetcher {
+    var managedContext: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
+    
     func getCondition(with id: String) -> ConditionEvent? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
         let fetchRequest: NSFetchRequest<ConditionEventDAO> = ConditionEventDAO.fetchRequest()
         let predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", NSString(string: id))
         fetchRequest.predicate = predicate
@@ -42,9 +44,6 @@ extension ConditionEventFetcher {
     }
     
     func saveCondition(_ condition: ConditionEvent) -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
         guard let entity = NSEntityDescription.entity(forEntityName: "ConditionEventDAO", in: managedContext) else { return false }
         let loadingEvent = ConditionEventDAO(entity: entity, insertInto: managedContext)
         
@@ -80,9 +79,6 @@ extension ConditionEventFetcher {
     }
     
     func deleteAllConditions() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
         let fetchRequest: NSFetchRequest<ConditionEventDAO> = ConditionEventDAO.fetchRequest()
         
         do {

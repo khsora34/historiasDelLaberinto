@@ -9,6 +9,19 @@ protocol VariableFetcher {
 }
 
 class VariableFetcherImpl: VariableFetcher {
+    let persistentContainer: NSPersistentContainer
+    
+    init(container: NSPersistentContainer) {
+        self.persistentContainer = container
+    }
+    
+    convenience init() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            fatalError("Unable to retrieve shared app delegate.")
+        }
+        self.init(container: appDelegate.persistentContainer)
+    }
+    
     func getVariable(with name: String) -> Variable? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext
@@ -27,7 +40,6 @@ class VariableFetcherImpl: VariableFetcher {
         guard let name = variable?.name, let value = variable?.value, let loadedType = variable?.type else { return nil }
         
         let type: VariableValue
-        
         switch loadedType {
         case "string":
             type = .string(value)

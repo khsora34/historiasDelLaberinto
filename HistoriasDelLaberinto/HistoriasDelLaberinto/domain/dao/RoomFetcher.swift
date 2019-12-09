@@ -9,6 +9,19 @@ protocol RoomFetcher {
 }
 
 class RoomFetcherImpl: RoomFetcher {
+    let persistentContainer: NSPersistentContainer
+    
+    init(container: NSPersistentContainer) {
+        self.persistentContainer = container
+    }
+    
+    convenience init() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            fatalError("Unable to retrieve shared app delegate.")
+        }
+        self.init(container: appDelegate.persistentContainer)
+    }
+    
     func getRoom(with id: String) -> Room? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
         let managedContext = appDelegate.persistentContainer.viewContext

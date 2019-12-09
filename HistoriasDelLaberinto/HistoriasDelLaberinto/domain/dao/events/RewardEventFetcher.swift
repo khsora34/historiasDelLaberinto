@@ -2,16 +2,18 @@ import UIKit.UIApplication
 import CoreData
 
 protocol RewardEventFetcher {
+    var persistentContainer: NSPersistentContainer { get }
     func getReward(with id: String) -> RewardEvent?
     func saveReward(_ reward: RewardEvent) -> Bool
     func deleteAllRewards()
 }
 
 extension RewardEventFetcher {
+    var managedContext: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
+    
     func getReward(with id: String) -> RewardEvent? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
         let fetchRequest: NSFetchRequest<RewardEventDAO> = RewardEventDAO.fetchRequest()
         let predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", id)
         fetchRequest.predicate = predicate
@@ -37,9 +39,6 @@ extension RewardEventFetcher {
     }
     
     func saveReward(_ reward: RewardEvent) -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
         guard let eventEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.RewardEventDAO)", in: managedContext),
             let rewardEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ItemsQuantity)", in: managedContext) else { return false }
         
@@ -73,9 +72,6 @@ extension RewardEventFetcher {
     }
     
     func deleteAllRewards() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
         let eventFetchRequest: NSFetchRequest<RewardEventDAO> = RewardEventDAO.fetchRequest()
         
         do {
