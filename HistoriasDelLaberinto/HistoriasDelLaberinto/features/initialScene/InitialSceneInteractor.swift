@@ -45,6 +45,7 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         
         loadImages(protagonist, charactersFile, roomsFile, itemsFile)
         save(protagonist, charactersFile, roomsFile, itemsFile, getEvents())
+        updateTexts()
     }
     
     private func loadImages(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile) {

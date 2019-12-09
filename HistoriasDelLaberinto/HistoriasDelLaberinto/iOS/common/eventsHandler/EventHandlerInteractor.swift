@@ -37,6 +37,8 @@ extension EventHandlerInteractor {
             return isRoomVisited(protagonist: protagonist, roomId: id)
         case .roomNotVisited(let id):
             return !isRoomVisited(protagonist: protagonist, roomId: id)
+        case .variable(let variable):
+            return true
         }
     }
     
