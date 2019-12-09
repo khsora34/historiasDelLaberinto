@@ -29,6 +29,33 @@ enum VariableValue: Decodable {
         }
     }
     
+    init?(type: String?, value: String?) {
+        guard let type = type, let value = value else { return nil }
+        switch type {
+        case "string":
+            self = .string(value)
+        case "integer":
+            guard let value = Int(value) else { return nil }
+            self = .integer(value)
+        case "boolean":
+            guard let value = Bool(value) else { return nil }
+            self = .boolean(value)
+        default:
+            return nil
+        }
+    }
+}
+
+extension VariableValue {
+    enum CodingKeys: String, CodingKey {
+        case rawValue = "type"
+        case associatedValue = "value"
+    }
+    
+    enum CodingError: Error {
+        case unknownValue
+    }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let rawValue = try container.decode(String.self, forKey: .rawValue)
@@ -47,13 +74,6 @@ enum VariableValue: Decodable {
             throw CodingError.unknownValue
         }
     }
-    
-    enum CodingKeys: String, CodingKey {
-        case rawValue = "type"
-        case associatedValue = "value"
-    }
-    
-    enum CodingError: Error {
-        case unknownValue
-    }
 }
+
+extension VariableValue: Equatable {}

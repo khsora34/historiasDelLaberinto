@@ -3,6 +3,7 @@ enum Condition {
     case item(id: String)
     case roomVisited(id: String)
     case roomNotVisited(id: String)
+    case variable(ConditionVariable)
     
     func evaluate(evaluator: ConditionEvaluator?) -> Bool {
         return evaluator?.evaluate(self) ?? false
@@ -36,6 +37,9 @@ extension Condition: Decodable {
         case .roomNotVisited:
             let roomId = try container.decode(String.self, forKey: .associatedValue)
             self = .roomNotVisited(id: roomId)
+        case .variable:
+            let variable = try container.decode(ConditionVariable.self, forKey: .associatedValue)
+            self = .variable(variable)
         default:
             throw CodingError.unknownValue
         }
@@ -43,7 +47,7 @@ extension Condition: Decodable {
 }
 
 enum ConditionString: String {
-    case partner, item, roomVisited, roomNotVisited
+    case partner, item, roomVisited, roomNotVisited, variable
 }
 
 typealias ConditionParser = YamlParser<Condition>

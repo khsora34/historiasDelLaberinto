@@ -37,23 +37,8 @@ class VariableFetcherImpl: VariableFetcher {
             print("💔 No ha sido posible conseguir la variable \(name).\n \(error), \(error.userInfo)")
         }
         
-        guard let name = variable?.name, let value = variable?.value, let loadedType = variable?.type else { return nil }
-        
-        let type: VariableValue
-        switch loadedType {
-        case "string":
-            type = .string(value)
-        case "integer":
-            guard let value = Int(value) else { return nil }
-            type = .integer(value)
-        case "boolean":
-            guard let value = Bool(value) else { return nil }
-            type = .boolean(value)
-        default:
-            return nil
-        }
-        
-        return Variable(name: name, content: type)
+        guard let name = variable?.name, let variableValue = VariableValue(type: variable?.type, value: variable?.value) else { return nil }
+        return Variable(name: name, content: variableValue)
     }
     
     func saveVariable(for variable: Variable) -> Bool {
