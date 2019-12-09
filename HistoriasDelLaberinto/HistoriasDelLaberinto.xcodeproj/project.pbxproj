@@ -184,6 +184,7 @@
 		6DEF065D2268898100A5C454 /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEF065C2268898100A5C454 /* Dependencies.swift */; };
 		6DEF065F22688B5200A5C454 /* BaseModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEF065E22688B5200A5C454 /* BaseModule.swift */; };
 		6DEF066122688C4C00A5C454 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DEF066022688C4C00A5C454 /* MainViewController.swift */; };
+		6DF28C20239D5A1D00FBBE93 /* ConditionVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF28C1F239D5A1D00FBBE93 /* ConditionVariable.swift */; };
 		6DFE3FBE22A0537A000C3C2F /* IsEventAvailableCheckable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFE3FBD22A0537A000C3C2F /* IsEventAvailableCheckable.swift */; };
 /* End PBXBuildFile section */
 
@@ -380,6 +381,7 @@
 		6DEF065C2268898100A5C454 /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		6DEF065E22688B5200A5C454 /* BaseModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModule.swift; sourceTree = "<group>"; };
 		6DEF066022688C4C00A5C454 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		6DF28C1F239D5A1D00FBBE93 /* ConditionVariable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionVariable.swift; sourceTree = "<group>"; };
 		6DFE3FBD22A0537A000C3C2F /* IsEventAvailableCheckable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsEventAvailableCheckable.swift; sourceTree = "<group>"; };
 		7233A83E5CB3B122ECDD5D3B /* Pods-HistoriasDelLaberinto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HistoriasDelLaberinto.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto.debug.xcconfig"; sourceTree = "<group>"; };
 		B18D44CD4BED83926DE99D1B /* Pods-HistoriasDelLaberinto.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HistoriasDelLaberinto.release.xcconfig"; path = "Pods/Target Support Files/Pods-HistoriasDelLaberinto/Pods-HistoriasDelLaberinto.release.xcconfig"; sourceTree = "<group>"; };
@@ -579,8 +581,6 @@
 			isa = PBXGroup;
 			children = (
 				6D4B57DB224A9489001779DC /* Room.swift */,
-				6D4B57DD224A9528001779DC /* Action.swift */,
-				6D4B57DF224A9591001779DC /* Condition.swift */,
 			);
 			path = room;
 			sourceTree = "<group>";
@@ -784,6 +784,7 @@
 			children = (
 				6D97E963237204B60047EC51 /* Variable.swift */,
 				6D97E966237206B50047EC51 /* VariableValue.swift */,
+				6DF28C1F239D5A1D00FBBE93 /* ConditionVariable.swift */,
 			);
 			path = variable;
 			sourceTree = "<group>";
@@ -887,6 +888,8 @@
 		6DDF3663225FBD6200391B1D /* common */ = {
 			isa = PBXGroup;
 			children = (
+				6D4B57DD224A9528001779DC /* Action.swift */,
+				6D4B57DF224A9591001779DC /* Condition.swift */,
 				6DC67566224BC7A800B795B6 /* ImageRepresentable.swift */,
 			);
 			path = common;
@@ -1256,6 +1259,7 @@
 				6D285CEE22AACEB9008C9A1D /* StatusViewModel.swift in Sources */,
 				6D398A1F22A2E4FC00D19FF8 /* ConfigurableButton.swift in Sources */,
 				6D6D10CE234E441B0034517D /* LocalizedValueFetcher.swift in Sources */,
+				6DF28C20239D5A1D00FBBE93 /* ConditionVariable.swift in Sources */,
 				6DDA434722A701F2003C7993 /* MovementSceneRouter.swift in Sources */,
 				6D4B57E8224A9A27001779DC /* StatusAilment.swift in Sources */,
 				6D6DE4B9221DB40600C92B94 /* AppDelegate.swift in Sources */,

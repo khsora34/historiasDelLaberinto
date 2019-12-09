@@ -5,7 +5,7 @@ struct EventBuilder {
     let type: EventType
     
     func getEvent() -> Event? {
-        guard let stringNode = nodeToString() else { return nil }
+        guard let stringNode = try? Yams.serialize(node: node) else { return nil }
         let event: Event?
         switch type {
         case .battle:
@@ -23,9 +23,5 @@ struct EventBuilder {
             event = nil
         }
         return event
-    }
-    
-    private func nodeToString() -> String? {
-        return try? Yams.serialize(node: node)
     }
 }

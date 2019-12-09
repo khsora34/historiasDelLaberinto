@@ -25,12 +25,20 @@
         <attribute name="conditionValue" optional="YES" attributeType="String"/>
         <relationship name="parentAction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ActionDAO" inverseName="condition" inverseEntity="ActionDAO"/>
         <relationship name="parentConditionEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ConditionEventDAO" inverseName="condition" inverseEntity="ConditionEventDAO"/>
-        <relationship name="variableInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VariableDAO" inverseName="parentCondition" inverseEntity="VariableDAO"/>
+        <relationship name="variableCondition" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ConditionVariableDAO" inverseName="parentCondition" inverseEntity="ConditionVariableDAO"/>
     </entity>
     <entity name="ConditionEventDAO" representedClassName="ConditionEventDAO" parentEntity="EventDAO" syncable="YES" codeGenerationType="class">
         <attribute name="nextStepIfFalse" attributeType="String"/>
         <attribute name="nextStepIfTrue" attributeType="String"/>
         <relationship name="condition" maxCount="1" deletionRule="Nullify" destinationEntity="ConditionDAO" inverseName="parentConditionEvent" inverseEntity="ConditionDAO"/>
+    </entity>
+    <entity name="ConditionVariableDAO" representedClassName="ConditionVariableDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="comparationVariableName" optional="YES" attributeType="String"/>
+        <attribute name="initialVariableName" optional="YES" attributeType="String"/>
+        <attribute name="initialVariableType" optional="YES" attributeType="String"/>
+        <attribute name="initialVariableValue" optional="YES" attributeType="String"/>
+        <attribute name="relation" optional="YES" attributeType="String"/>
+        <relationship name="parentCondition" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ConditionDAO" inverseName="variableCondition" inverseEntity="ConditionDAO"/>
     </entity>
     <entity name="ConsumableItemDAO" representedClassName="ConsumableItemDAO" parentEntity="ItemDAO" syncable="YES" codeGenerationType="class">
         <attribute name="healthRecovered" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -117,7 +125,6 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="type" attributeType="String"/>
         <attribute name="value" attributeType="String"/>
-        <relationship name="parentCondition" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ConditionDAO" inverseName="variableInfo" inverseEntity="ConditionDAO"/>
     </entity>
     <entity name="WeaponDAO" representedClassName="WeaponDAO" parentEntity="ItemDAO" syncable="YES" codeGenerationType="class">
         <attribute name="ailment" optional="YES" attributeType="String"/>
@@ -130,6 +137,7 @@
         <element name="BattleEventDAO" positionX="-64.7421875" positionY="-39.09375" width="128" height="88"/>
         <element name="CharacterDAO" positionX="-394.703125" positionY="182.46484375" width="128" height="88"/>
         <element name="ChoiceEventDAO" positionX="-379.828125" positionY="-212.3984375" width="128" height="58"/>
+        <element name="ConditionDAO" positionX="-360" positionY="-144" width="128" height="118"/>
         <element name="ConditionEventDAO" positionX="-57.5859375" positionY="-207.5234375" width="128" height="88"/>
         <element name="ConsumableItemDAO" positionX="114.265625" positionY="-302.4609375" width="128" height="58"/>
         <element name="DialogueEventDAO" positionX="-220.78515625" positionY="-99.4921875" width="128" height="88"/>
@@ -144,8 +152,8 @@
         <element name="RoomDAO" positionX="-557.7890625" positionY="-15.046875" width="128" height="178"/>
         <element name="RoomPosition" positionX="114.40625" positionY="115.58984375" width="128" height="103"/>
         <element name="TextDAO" positionX="-67.109375" positionY="257.67578125" width="128" height="88"/>
-        <element name="VariableDAO" positionX="-369" positionY="-153" width="128" height="103"/>
+        <element name="VariableDAO" positionX="-369" positionY="-153" width="128" height="88"/>
         <element name="WeaponDAO" positionX="112.90625" positionY="-29.83203125" width="128" height="103"/>
-        <element name="ConditionDAO" positionX="-360" positionY="-144" width="128" height="118"/>
+        <element name="ConditionVariableDAO" positionX="-369" positionY="-153" width="128" height="133"/>
     </elements>
 </model>

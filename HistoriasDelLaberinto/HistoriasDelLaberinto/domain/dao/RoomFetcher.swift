@@ -56,16 +56,29 @@ class RoomFetcherImpl: RoomFetcher {
         for action in actionsSet.compactMap({$0 as? ActionDAO}) where action.name != nil {
             var condition: Condition?
             
-            if let type = action.condition?.conditionType, let value = action.condition?.conditionValue {
+            if let type = action.condition?.conditionType {
                 switch ConditionString(rawValue: type) {
                 case .item:
+                    guard let value = action.condition?.conditionValue else { break }
                     condition = .item(id: value)
                 case .partner:
+                    guard let value = action.condition?.conditionValue else { break }
                     condition = .partner(id: value)
                 case .roomVisited:
+                    guard let value = action.condition?.conditionValue else { break }
                     condition = .roomVisited(id: value)
                 case .roomNotVisited:
+                    guard let value = action.condition?.conditionValue else { break }
                     condition = .roomNotVisited(id: value)
+                case .variable:
+                    guard let value = action.condition?.variableCondition, let variableToCompareId = value.comparationVariableName, let relationString = value.relation, let relation = VariableRelation(rawValue: relationString) else { break }
+                    if let initialVariableName = value.initialVariableName {
+                        condition = .variable(ConditionVariable(variableToCompareId: variableToCompareId, relation: relation, initialVariableName: initialVariableName))
+                    } else if let variableValue = VariableValue(type: value.initialVariableType, value: value.initialVariableValue) {
+                        condition = .variable(ConditionVariable(variableToCompareId: variableToCompareId, relation: relation, initialVariable: variableValue))
+                    } else {
+                        condition = nil
+                    }
                 case nil:
                     condition = nil
                 }
@@ -129,6 +142,8 @@ class RoomFetcherImpl: RoomFetcher {
                 case .roomNotVisited(let value):
                     loadingCondition.conditionType = ConditionString.roomNotVisited.rawValue
                     loadingCondition.conditionValue = value
+                case .variable(let variable):
+                    loadingCondition.conditionType = "\(ConditionString.variable)"
                 }
                 loadingAction.condition = loadingCondition
             }

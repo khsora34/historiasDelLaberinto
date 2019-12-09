@@ -60,7 +60,8 @@ extension ChoiceEventFetcher {
         
         guard let choiceEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ChoiceEventDAO)", in: managedContext),
             let actionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ActionDAO)", in: managedContext),
-        let conditionEntity = NSEntityDescription.entity(forEntityName: "ConditionDAO", in: managedContext) else { return false }
+            let conditionEntity = NSEntityDescription.entity(forEntityName: "ConditionDAO", in: managedContext),
+            let conditionVariableEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ConditionVariableDAO)", in: managedContext) else { return false }
         let loadingEvent = ChoiceEventDAO(entity: choiceEntity, insertInto: managedContext)
         loadingEvent.id = choice.id
         loadingEvent.type = "\(DaoConstants.Event.choice)"
@@ -87,6 +88,9 @@ extension ChoiceEventFetcher {
                 case .roomNotVisited(let value):
                     loadingCondition.conditionType = "\(ConditionString.roomNotVisited)"
                     loadingCondition.conditionValue = value
+                case .variable(let variable):
+                    loadingCondition.conditionType = "\(ConditionString.variable)"
+                    loadingCondition.variableCondition = loadVariable(variable, for: ConditionVariableDAO(entity: conditionVariableEntity, insertInto: managedContext))
                 }
             }
             managedActions.append(loadingAction)
@@ -101,6 +105,18 @@ extension ChoiceEventFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
             return false
         }
+    }
+    
+    private func loadVariable(_ variable: ConditionVariable, for daoObject: ConditionVariableDAO) -> ConditionVariableDAO {
+        daoObject.comparationVariableName = variable.comparationVariableName
+        daoObject.relation = "\(variable.relation)"
+        if let initialVariableName = variable.initialVariableName {
+            daoObject.initialVariableName = initialVariableName
+        } else if let initialVariable = variable.initialVariable {
+            daoObject.initialVariableType = initialVariable.type.rawValue
+            daoObject.initialVariableValue = initialVariable.valueAsString
+        }
+        return daoObject
     }
     
     func deleteAllChoices() {

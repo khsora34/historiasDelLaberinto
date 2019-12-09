@@ -19,8 +19,16 @@
 - id: "exampleRoomStartEvent2"
   mode: "condition"
   condition:
-    kind: "item" #For items, the keyword is "item".
-    required: "poisoned_bow" #Item's or partner's id.
+    kind: "variable"
+    required:
+      compareToId: "numberOfApples"
+      relation: equal
+      initialVariable:
+        type: integer
+        value: 10
+      #compareToId: "numberOfApples"
+      #relation: equal
+      #initialVariable: "cupcakes"
   nextStepIfTrue: "exampleRoomStartEvent"
   nextStepIfFalse: ""
 

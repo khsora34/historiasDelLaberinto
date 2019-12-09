@@ -24,18 +24,31 @@ extension ConditionEventFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        guard let conditionEvent = event, let nextTrueStep = conditionEvent.nextStepIfTrue, let nextFalseStep = conditionEvent.nextStepIfFalse, let type = conditionEvent.condition?.conditionType, let value = conditionEvent.condition?.conditionValue, let conditionString = ConditionString(rawValue: type) else { return nil }
+        guard let conditionEvent = event, let nextTrueStep = conditionEvent.nextStepIfTrue, let nextFalseStep = conditionEvent.nextStepIfFalse, let type = conditionEvent.condition?.conditionType, let conditionString = ConditionString(rawValue: type) else { return nil }
         
         var condition: Condition
         switch conditionString {
         case .item:
+            guard let value = conditionEvent.condition?.conditionValue else { return nil }
             condition = .item(id: value)
         case .partner:
+            guard let value = conditionEvent.condition?.conditionValue else { return nil }
             condition = .partner(id: value)
         case .roomVisited:
+            guard let value = conditionEvent.condition?.conditionValue else { return nil }
             condition = .roomVisited(id: value)
         case .roomNotVisited:
+            guard let value = conditionEvent.condition?.conditionValue else { return nil }
             condition = .roomNotVisited(id: value)
+        case .variable:
+            guard let value = conditionEvent.condition?.variableCondition, let variableToCompareId = value.comparationVariableName, let relationString = value.relation, let relation = VariableRelation(rawValue: relationString) else { return nil }
+            if let initialVariableName = value.initialVariableName {
+                condition = .variable(ConditionVariable(variableToCompareId: variableToCompareId, relation: relation, initialVariableName: initialVariableName))
+            } else if let variableValue = VariableValue(type: value.initialVariableType, value: value.initialVariableValue) {
+                condition = .variable(ConditionVariable(variableToCompareId: variableToCompareId, relation: relation, initialVariable: variableValue))
+            } else {
+                return nil
+            }
         }
         
         return ConditionEvent(id: id, condition: condition, shouldSetVisited: conditionEvent.shouldSetVisited, shouldEndGame: event?.shouldEndGame, nextStepIfTrue: nextTrueStep, nextStepIfFalse: nextFalseStep)
@@ -72,6 +85,9 @@ extension ConditionEventFetcher {
         case .roomNotVisited(let value):
             loadingCondition.conditionType = "\(ConditionString.roomNotVisited)"
             loadingCondition.conditionValue = value
+        case .variable(let variable):
+            loadingCondition.conditionType = "\(ConditionString.variable)"
+//            loadingCondition.
         }
         
         loadingEvent.condition = loadingCondition
