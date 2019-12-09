@@ -57,8 +57,12 @@ extension ConditionEventFetcher {
     }
     
     func saveCondition(_ condition: ConditionEvent) -> Bool {
-        guard let entity = NSEntityDescription.entity(forEntityName: "ConditionEventDAO", in: managedContext), let conditionEntity = NSEntityDescription.entity(forEntityName: "ConditionDAO", in: managedContext) else { return false }
-        let loadingEvent = ConditionEventDAO(entity: entity, insertInto: managedContext)
+        guard
+            let conditionEventEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ConditionEventDAO)", in: managedContext),
+            let conditionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ConditionDAO)", in: managedContext),
+            let variableConditionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ConditionVariableDAO)", in: managedContext)
+            else { return false }
+        let loadingEvent = ConditionEventDAO(entity: conditionEventEntity, insertInto: managedContext)
         
         loadingEvent.id = condition.id
         loadingEvent.type = "\(DaoConstants.Event.condition)"
@@ -82,6 +86,14 @@ extension ConditionEventFetcher {
             loadingCondition.conditionType = "\(ConditionString.roomNotVisited)"
             loadingCondition.conditionValue = value
         case .variable(let variable):
+            let loadingVariableCondition = ConditionVariableDAO(entity: variableConditionEntity, insertInto: managedContext)
+            loadingVariableCondition.comparationVariableName = variable.comparationVariableName
+            loadingVariableCondition.initialVariableName = variable.initialVariableName
+            loadingVariableCondition.initialVariableType = variable.initialVariable?.type.rawValue
+            loadingVariableCondition.initialVariableValue = variable.initialVariable?.valueAsString
+            loadingVariableCondition.relation = variable.relation.rawValue
+            
+            loadingCondition.variableCondition = loadingVariableCondition
             loadingCondition.conditionType = "\(ConditionString.variable)"
         }
         
