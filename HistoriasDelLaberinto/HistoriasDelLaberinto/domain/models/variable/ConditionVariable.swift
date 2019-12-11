@@ -1,7 +1,3 @@
-enum VariableRelation: String, Decodable {
-    case equal, notEqual, greater, lower, greaterOrEqual, lowerOrEqual
-}
-
 struct ConditionVariable: Decodable {
     let comparationVariableName: String
     let relation: VariableRelation

@@ -37,8 +37,28 @@ extension EventHandlerInteractor {
             return isRoomVisited(protagonist: protagonist, roomId: id)
         case .roomNotVisited(let id):
             return !isRoomVisited(protagonist: protagonist, roomId: id)
-        case .variable(let variable):
-            return true
+        case .variable(let operation):
+            guard let leftVariable = fetcherProvider.variableFetcher.getVariable(with: operation.comparationVariableName) else { return false }
+            let relation = operation.relation
+            if let rightVariable = operation.initialVariable {
+                return evaluateVariables(lhs: leftVariable.content, rhs: rightVariable, withOperator: relation)
+            } else if let initialVariableName = operation.initialVariableName, let rightVariable = fetcherProvider.variableFetcher.getVariable(with: initialVariableName) {
+                return evaluateVariables(lhs: leftVariable.content, rhs: rightVariable.content, withOperator: relation)
+            }
+            return false
+        }
+    }
+    
+    private func evaluateVariables(lhs: VariableValue, rhs: VariableValue, withOperator relation: VariableRelation) -> Bool {
+        switch (lhs, rhs) {
+        case (.boolean(let lhsBool), .boolean(let rhsBool)):
+            return relation.evaluate(left: lhsBool, right: rhsBool)
+        case (.integer(let lhsInt), .integer(let rhsInt)):
+            return relation.evaluate(left: lhsInt, right: rhsInt)
+        case (.string(let lhsString), .string(let rhsString)):
+            return relation.evaluate(left: lhsString, right: rhsString)
+        default:
+            return false
         }
     }
     
