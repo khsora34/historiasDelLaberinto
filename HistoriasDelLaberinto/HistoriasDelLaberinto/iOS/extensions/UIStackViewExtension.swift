@@ -2,11 +2,11 @@ import UIKit
 
 extension UIStackView {
     func createButtonsInColumns(names: [String], action: Selector, for view: Any, numberOfColumns: Int = 2) {
-        func createButton(name: String, tag: Int) -> UIButton {
-            let button = ConfigurableButton(type: .custom)
-            button.setupStyle(ButtonStyle.defaultButtonStyle)
-            button.setTitle(name, for: .normal)
+        func createButton(name: String, tag: Int) -> UIView {
+            let button = ConfigurableButton(frame: .zero)
             button.tag = tag
+            button.text = name
+            button.setStyle(ButtonStyle.defaultButtonStyle)
             button.addTarget(view, action: action, for: .touchUpInside)
             return button
         }
@@ -30,7 +30,7 @@ extension UIStackView {
             
             buttonStackView.axis = .horizontal
             buttonStackView.distribution = .fillEqually
-            buttonStackView.alignment = .center
+            buttonStackView.alignment = .fill
             buttonStackView.spacing = 20
             self.addArrangedSubview(buttonStackView)
         }
