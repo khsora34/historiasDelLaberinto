@@ -2,29 +2,19 @@ import UIKit.UIApplication
 import CoreData
 
 protocol ConditionEventFetcher {
-    func getCondition(with id: String) -> ConditionEvent?
+    func getCondition(from event: EventDAO) -> ConditionEvent?
     func saveCondition(_ condition: ConditionEvent) -> Bool
-    func deleteAllConditions()
 }
 
 extension ConditionEventFetcher {
-    func getCondition(with id: String) -> ConditionEvent? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest: NSFetchRequest<ConditionEventDAO> = ConditionEventDAO.fetchRequest()
-        let predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", NSString(string: id))
-        fetchRequest.predicate = predicate
-        
-        var event: ConditionEventDAO?
-        do {
-            let results = try managedContext.fetch(fetchRequest)
-            event = results.first
-        } catch let error as NSError {
-            print("No ha sido posible guardar \(error), \(error.userInfo)")
-        }
-        
-        guard let conditionEvent = event, let nextTrueStep = conditionEvent.nextStepIfTrue, let nextFalseStep = conditionEvent.nextStepIfFalse, let type = conditionEvent.conditionType, let value = conditionEvent.conditionValue, let conditionString = ConditionString(rawValue: type) else { return nil }
+    func getCondition(from event: EventDAO) -> ConditionEvent? {
+        guard let conditionEvent = event as? ConditionEventDAO,
+            let id = event.id,
+            let nextTrueStep = conditionEvent.nextStepIfTrue,
+            let nextFalseStep = conditionEvent.nextStepIfFalse,
+            let type = conditionEvent.conditionType,
+            let value = conditionEvent.conditionValue,
+            let conditionString = ConditionString(rawValue: type) else { return nil }
         
         var condition: Condition
         switch conditionString {
@@ -38,7 +28,7 @@ extension ConditionEventFetcher {
             condition = .roomNotVisited(id: value)
         }
         
-        return ConditionEvent(id: id, condition: condition, shouldSetVisited: conditionEvent.shouldSetVisited, shouldEndGame: event?.shouldEndGame, nextStepIfTrue: nextTrueStep, nextStepIfFalse: nextFalseStep)
+        return ConditionEvent(id: id, condition: condition, shouldSetVisited: conditionEvent.shouldSetVisited, shouldEndGame: event.shouldEndGame, nextStepIfTrue: nextTrueStep, nextStepIfFalse: nextFalseStep)
     }
     
     func saveCondition(_ condition: ConditionEvent) -> Bool {
