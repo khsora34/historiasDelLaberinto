@@ -2,31 +2,19 @@ import UIKit.UIApplication
 import CoreData
 
 protocol BattleEventFetcher {
-    func getBattle(with id: String) -> BattleEvent?
+    func getBattle(from event: EventDAO) -> BattleEvent?
     func saveBattle(_ battle: BattleEvent) -> Bool
-    func deleteAllBattles()
 }
 
 extension BattleEventFetcher {
-    func getBattle(with id: String) -> BattleEvent? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-        let managedContext = appDelegate.persistentContainer.viewContext
+    func getBattle(from event: EventDAO) -> BattleEvent? {
+        guard let event = event as? BattleEventDAO,
+            let id = event.id,
+            let enemyId = event.enemyId,
+            let winStep = event.winStep,
+            let loseStep = event.loseStep else { return nil }
         
-        let fetchRequest: NSFetchRequest<BattleEventDAO> = BattleEventDAO.fetchRequest()
-        let predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", NSString(string: id))
-        fetchRequest.predicate = predicate
-        
-        var event: BattleEventDAO?
-        do {
-            let results = try managedContext.fetch(fetchRequest)
-            event = results.first
-        } catch let error as NSError {
-            print("No ha sido posible guardar \(error), \(error.userInfo)")
-        }
-        
-        guard let enemyId = event?.enemyId, let winStep = event?.winStep, let loseStep = event?.loseStep else { return nil }
-        
-        return BattleEvent(id: id, enemyId: enemyId, shouldSetVisited: event?.shouldSetVisited, shouldEndGame: event?.shouldEndGame, winStep: winStep, loseStep: loseStep)
+        return BattleEvent(id: id, enemyId: enemyId, shouldSetVisited: event.shouldSetVisited, shouldEndGame: event.shouldEndGame, winStep: winStep, loseStep: loseStep)
     }
     
     func saveBattle(_ battle: BattleEvent) -> Bool {

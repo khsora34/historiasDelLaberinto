@@ -2,32 +2,17 @@ import UIKit.UIApplication
 import CoreData
 
 protocol ChoiceEventFetcher {
-    func getChoice(with id: String) -> ChoiceEvent?
+    func getChoice(from event: EventDAO) -> ChoiceEvent?
     func saveChoice(_ choice: ChoiceEvent) -> Bool
-    func deleteAllChoices()
 }
 
 extension ChoiceEventFetcher {
-    func getChoice(with id: String) -> ChoiceEvent? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest: NSFetchRequest<ChoiceEventDAO> = ChoiceEventDAO.fetchRequest()
-        let predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", id)
-        fetchRequest.predicate = predicate
-        
-        var event: ChoiceEventDAO?
-        do {
-            let results = try managedContext.fetch(fetchRequest)
-            event = results.first
-        } catch let error as NSError {
-            print("No ha sido posible guardar \(error), \(error.userInfo)")
-        }
-        
-        guard let actionsSet = event?.actionsAssociated else { return nil }
+    func getChoice(from event: EventDAO) -> ChoiceEvent? {
+        guard let event = event as? ChoiceEventDAO,
+            let id = event.id,
+            let actionsSet = event.actionsAssociated else { return nil }
         
         var actions: [Action] = []
-        
         for element in actionsSet {
             if let actionManaged = element as? ActionDAO, let name = actionManaged.name {
                 var condition: Condition?
@@ -51,7 +36,7 @@ extension ChoiceEventFetcher {
             }
         }
         
-        return ChoiceEvent(id: id, options: actions, shouldSetVisited: event?.shouldSetVisited, shouldEndGame: event?.shouldEndGame)
+        return ChoiceEvent(id: id, options: actions, shouldSetVisited: event.shouldSetVisited, shouldEndGame: event.shouldEndGame)
     }
     
     func saveChoice(_ choice: ChoiceEvent) -> Bool {

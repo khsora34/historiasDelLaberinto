@@ -2,29 +2,16 @@ import UIKit.UIApplication
 import CoreData
 
 protocol RewardEventFetcher {
-    func getReward(with id: String) -> RewardEvent?
+    func getReward(from event: EventDAO) -> RewardEvent?
     func saveReward(_ reward: RewardEvent) -> Bool
-    func deleteAllRewards()
 }
 
 extension RewardEventFetcher {
-    func getReward(with id: String) -> RewardEvent? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest: NSFetchRequest<RewardEventDAO> = RewardEventDAO.fetchRequest()
-        let predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", id)
-        fetchRequest.predicate = predicate
-        
-        var event: RewardEventDAO?
-        do {
-            let results = try managedContext.fetch(fetchRequest)
-            event = results.first
-        } catch let error as NSError {
-            print("No ha sido posible guardar \(error), \(error.userInfo)")
-        }
-        
-        guard let rewardEvent = event, let message = rewardEvent.message, let rewardsSet = rewardEvent.rewardsAssociated else { return nil }
+    func getReward(from event: EventDAO) -> RewardEvent? {
+        guard let rewardEvent = event as? RewardEventDAO,
+            let id = event.id,
+            let message = rewardEvent.message,
+            let rewardsSet = rewardEvent.rewardsAssociated else { return nil }
         
         var rewards: [String: Int] = [:]
         
@@ -33,7 +20,7 @@ extension RewardEventFetcher {
             rewards[pair.itemId!] = Int(pair.quantity)
         }
         
-        return RewardEvent(id: id, message: message, rewards: rewards, shouldSetVisited: rewardEvent.shouldSetVisited, shouldEndGame: event?.shouldEndGame, nextStep: rewardEvent.nextStep)
+        return RewardEvent(id: id, message: message, rewards: rewards, shouldSetVisited: rewardEvent.shouldSetVisited, shouldEndGame: rewardEvent.shouldEndGame, nextStep: rewardEvent.nextStep)
     }
     
     func saveReward(_ reward: RewardEvent) -> Bool {

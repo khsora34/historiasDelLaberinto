@@ -14,13 +14,13 @@ class EventFetcherManagerImpl: EventFetcherManager {
         case .dialogue:
             loadedEvent = getDialogue(from: newEvent)
         case .choice:
-            loadedEvent = getChoice(with: id)
+            loadedEvent = getChoice(from: newEvent)
         case .reward:
-            loadedEvent = getReward(with: id)
+            loadedEvent = getReward(from: newEvent)
         case .battle:
-            loadedEvent = getBattle(with: id)
+            loadedEvent = getBattle(from: newEvent)
         case .condition:
-            loadedEvent = getCondition(with: id)
+            loadedEvent = getCondition(from: newEvent)
         case .unknown:
             return nil
         }
