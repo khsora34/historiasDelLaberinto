@@ -3,31 +3,23 @@ import CoreData
 
 protocol ConditionEventFetcher {
     var persistentContainer: NSPersistentContainer { get }
-    func getCondition(with id: String) -> ConditionEvent?
+    func getCondition(from event: EventDAO) -> ConditionEvent?
     func saveCondition(_ condition: ConditionEvent) -> Bool
-    func deleteAllConditions()
 }
 
 extension ConditionEventFetcher {
     var managedContext: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
-    
-    func getCondition(with id: String) -> ConditionEvent? {
-        let fetchRequest: NSFetchRequest<ConditionEventDAO> = ConditionEventDAO.fetchRequest()
-        let predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", NSString(string: id))
-        fetchRequest.predicate = predicate
-        
-        var event: ConditionEventDAO?
-        do {
-            let results = try managedContext.fetch(fetchRequest)
-            event = results.first
-        } catch let error as NSError {
-            print("No ha sido posible guardar \(error), \(error.userInfo)")
-        }
-        
-        guard let conditionEvent = event, let nextTrueStep = conditionEvent.nextStepIfTrue, let nextFalseStep = conditionEvent.nextStepIfFalse, let type = conditionEvent.condition?.conditionType, let conditionString = ConditionString(rawValue: type) else { return nil }
-        
+
+    func getCondition(from event: EventDAO) -> ConditionEvent? {
+        guard let conditionEvent = event as? ConditionEventDAO,
+            let id = event.id,
+            let nextTrueStep = conditionEvent.nextStepIfTrue,
+            let nextFalseStep = conditionEvent.nextStepIfFalse,
+            let type = conditionEvent.condition?.conditionType,
+            let conditionString = ConditionString(rawValue: type) else { return nil }
+            
         var condition: Condition
         switch conditionString {
         case .item:
@@ -52,10 +44,10 @@ extension ConditionEventFetcher {
                 return nil
             }
         }
-        
-        return ConditionEvent(id: id, condition: condition, shouldSetVisited: conditionEvent.shouldSetVisited, shouldEndGame: event?.shouldEndGame, nextStepIfTrue: nextTrueStep, nextStepIfFalse: nextFalseStep)
+
+        return ConditionEvent(id: id, condition: condition, shouldSetVisited: conditionEvent.shouldSetVisited, shouldEndGame: event.shouldEndGame, nextStepIfTrue: nextTrueStep, nextStepIfFalse: nextFalseStep)
     }
-    
+
     func saveCondition(_ condition: ConditionEvent) -> Bool {
         guard
             let conditionEventEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ConditionEventDAO)", in: managedContext),
@@ -63,14 +55,14 @@ extension ConditionEventFetcher {
             let variableConditionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ConditionVariableDAO)", in: managedContext)
             else { return false }
         let loadingEvent = ConditionEventDAO(entity: conditionEventEntity, insertInto: managedContext)
-        
+
         loadingEvent.id = condition.id
         loadingEvent.type = "\(DaoConstants.Event.condition)"
         loadingEvent.shouldSetVisited = condition.shouldSetVisited ?? false
         loadingEvent.shouldEndGame = condition.shouldEndGame ?? false
         loadingEvent.nextStepIfTrue = condition.nextStepIfTrue
         loadingEvent.nextStepIfFalse = condition.nextStepIfFalse
-        
+
         let loadingCondition = ConditionDAO(entity: conditionEntity, insertInto: managedContext)
         switch condition.condition {
         case .item(let value):
@@ -92,13 +84,13 @@ extension ConditionEventFetcher {
             loadingVariableCondition.initialVariableType = variable.initialVariable?.type.rawValue
             loadingVariableCondition.initialVariableValue = variable.initialVariable?.value
             loadingVariableCondition.relation = variable.relation.rawValue
-            
+
             loadingCondition.variableCondition = loadingVariableCondition
             loadingCondition.conditionType = "\(ConditionString.variable)"
         }
-        
+
         loadingEvent.condition = loadingCondition
-        
+
         do {
             try managedContext.save()
             return true
@@ -107,20 +99,20 @@ extension ConditionEventFetcher {
             return false
         }
     }
-    
+
     func deleteAllConditions() {
         let fetchRequest: NSFetchRequest<ConditionEventDAO> = ConditionEventDAO.fetchRequest()
-        
+
         do {
             let results = try managedContext.fetch(fetchRequest)
             for result in results {
                 managedContext.delete(result)
             }
-            
+
             if managedContext.hasChanges {
                 try managedContext.save()
             }
-            
+
         } catch {
             print(error)
         }
