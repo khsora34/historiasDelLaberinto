@@ -113,7 +113,7 @@ extension ChoiceEventFetcher {
             daoObject.initialVariableName = initialVariableName
         } else if let initialVariable = variable.initialVariable {
             daoObject.initialVariableType = initialVariable.type.rawValue
-            daoObject.initialVariableValue = initialVariable.valueAsString
+            daoObject.initialVariableValue = initialVariable.value as? String
         }
         return daoObject
     }

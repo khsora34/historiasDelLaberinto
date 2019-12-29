@@ -162,7 +162,7 @@ class RoomFetcherImpl: RoomFetcher {
                     loadingVariableCondition.comparationVariableName = variable.comparationVariableName
                     loadingVariableCondition.initialVariableName = variable.initialVariableName
                     loadingVariableCondition.initialVariableType = variable.initialVariable?.type.rawValue
-                    loadingVariableCondition.initialVariableValue = variable.initialVariable?.valueAsString
+                    loadingVariableCondition.initialVariableValue = variable.initialVariable?.value
                     loadingVariableCondition.relation = variable.relation.rawValue
                     
                     loadingCondition.variableCondition = loadingVariableCondition
