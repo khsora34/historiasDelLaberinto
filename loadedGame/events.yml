@@ -188,3 +188,13 @@
   characterId: "gerar"
   shouldEndGame: true
   nextStep: ""
+
+- id: "soraCanDoIt"
+  mode: "modifyVariable"
+  variableId: "partnerName"
+  operation: set
+  initialVariable:
+    type: string
+    value: "Sora"
+  #initialVariableName: "variableName"
+  nextStep: ""

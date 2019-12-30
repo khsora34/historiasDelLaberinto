@@ -50,13 +50,15 @@ extension EventHandlerInteractor {
     }
     
     private func evaluateVariables(lhs: VariableValue, rhs: VariableValue, withOperator relation: VariableRelation) -> Bool {
-        switch (lhs, rhs) {
-        case (.boolean(let lhsBool), .boolean(let rhsBool)):
+        switch (lhs.type, rhs.type) {
+        case (.boolean, .boolean):
+            guard let lhsBool = lhs.getBool(), let rhsBool = rhs.getBool() else { return false }
             return relation.evaluate(left: lhsBool, right: rhsBool)
-        case (.integer(let lhsInt), .integer(let rhsInt)):
+        case (.integer, .integer):
+            guard let lhsInt = lhs.getInt(), let rhsInt = rhs.getInt() else { return false }
             return relation.evaluate(left: lhsInt, right: rhsInt)
-        case (.string(let lhsString), .string(let rhsString)):
-            return relation.evaluate(left: lhsString, right: rhsString)
+        case (.string, .string):
+            return relation.evaluate(left: lhs.value, right: rhs.value)
         default:
             return false
         }
