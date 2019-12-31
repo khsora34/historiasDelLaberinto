@@ -162,7 +162,7 @@ extension DialogViewController: DialogDisplayLogic {
 
 extension DialogViewController {
     private func setup(dialogue: DialogueConfigurator) {
-        characterImageView.setImage(for: dialogue.imageSource) { [weak self] (isSuccess, imageSize) in
+        characterImageView.setImage(from: dialogue.imageSource) { [weak self] (isSuccess, imageSize) in
             guard isSuccess else {
                 self?.characterImageView.image = nil
                 self?.characterImageView.isHidden = true
@@ -188,7 +188,7 @@ extension DialogViewController {
             let newView = RewardView(frame: CGRect(x: 0, y: 0, width: self.stackView.frame.width, height: 80.0))
             newView.item = localizer?.localizedString(key: item.name)
             newView.quantity = "\(quantity)"
-            newView.imageView.setImage(for: item.imageSource)
+            newView.imageView.setImage(from: item.imageSource)
             self.stackView.addArrangedSubview(newView)
         }
         (stackView.arrangedSubviews.last as? RewardView)?.isLast = true
