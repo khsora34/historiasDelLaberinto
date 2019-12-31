@@ -2,10 +2,9 @@ import UIKit
 import Kingfisher
 
 extension UIImageView {
-    func setImage(for source: ImageSource, completion: ((Bool, CGSize) -> Void)? = nil) {
+    func setImage(from source: ImageSource, completion: ((Bool, CGSize) -> Void)? = nil) {
         if case let .local(file) = source {
-            if
-                let path = Bundle.main.path(forResource: file, ofType: nil, inDirectory: "loadedGame/images"),
+            if let path = Bundle.main.path(forResource: file, ofType: nil, inDirectory: "loadedGame/images"),
                 let image = UIImage(contentsOfFile: path) {
                 self.image = image
                 completion?(true, image.size)
@@ -14,7 +13,7 @@ extension UIImageView {
             }
             
         } else if case let .remote(stringUrl) = source {
-            self.kf.setImage(with: URL(string: stringUrl)) { (result: (Result<RetrieveImageResult, KingfisherError>)) -> Void in
+            self.kf.setImage(with: URL(string: stringUrl)) { result in
                 switch result {
                 case .success(let result):
                     completion?(true, result.image.size)

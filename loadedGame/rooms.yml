@@ -47,23 +47,19 @@ rooms:
 
   "exampleRoom":
     id: "exampleRoom"
-    name: "Habitación de ejemplo"
-    description: "Esta es la habitación de ejemplo"
+    name: "Habitación de las cuentas"
+    description: "En esta habitación se realizan cuentas mediante una variable entera."
     reloadWhenPartner: true
-    startEvent: "exampleRoomStartEvent"
     imageSource:
       type: remote
       source: "https://images.pexels.com/photos/2121121/pexels-photo-2121121.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=2&h=1920&w=1080"
     actions:
-      - action: "Hablar con Sora"
-        nextStep: "exampleDialogue3"
-      - action: "Hablar con Sora veloz"
-        nextStep: "exampleDialogue1"
-      - action: "Hablar con Sora defensor"
-        nextStep: "exampleDialogue2"
-        condition:
-          kind: "roomVisited"
-          required: "exampleRoom"
+      - action: "Poner a 0"
+        nextStep: "resetCountNumber"
+      - action: "Añadir 1"
+        nextStep: "addNumberToCount"
+      - action: "Comprobar resultado"
+        nextStep: "firstCountCondition"
 
   "startRoom":
     id: "startRoom"

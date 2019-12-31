@@ -103,7 +103,6 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         databaseFetcherProvider.itemsFetcher.deleteAllItems()
         databaseFetcherProvider.roomsFetcher.deleteAllRooms()
         databaseFetcherProvider.movementFetcher.removeMovement()
-        databaseFetcherProvider.localizedValueFetcher.deleteAllTexts()
         removeImageCache()
         print("😂 Finished in \(Date().timeIntervalSinceReferenceDate - now)")
     }

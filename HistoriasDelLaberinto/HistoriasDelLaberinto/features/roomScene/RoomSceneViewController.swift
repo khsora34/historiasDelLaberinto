@@ -59,7 +59,7 @@ extension RoomSceneViewController: RoomSceneDisplayLogic {
     }
     
     func setImage(for source: ImageSource) {
-        backgroundImageView.setImage(for: source)
+        backgroundImageView.setImage(from: source)
     }
     
     func set(actions: [String]) {

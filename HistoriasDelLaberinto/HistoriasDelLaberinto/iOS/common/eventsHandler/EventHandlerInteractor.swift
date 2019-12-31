@@ -7,6 +7,7 @@ protocol EventHandlerInteractor: ImageRemover {
     func buildReward(request: EventsHandlerModels.BuildItems.Request) -> EventsHandlerModels.BuildItems.Response
     func buildChoice(request: EventsHandlerModels.BuildChoice.Request) -> EventsHandlerModels.BuildChoice.Response
     func buildBattle(request: EventsHandlerModels.BuildBattle.Request) -> EventsHandlerModels.BuildBattle.Response
+    func performVariableModification(request: EventsHandlerModels.VariableModification.Request)
     func endGame()
 }
 
@@ -50,13 +51,15 @@ extension EventHandlerInteractor {
     }
     
     private func evaluateVariables(lhs: VariableValue, rhs: VariableValue, withOperator relation: VariableRelation) -> Bool {
-        switch (lhs, rhs) {
-        case (.boolean(let lhsBool), .boolean(let rhsBool)):
+        switch (lhs.type, rhs.type) {
+        case (.boolean, .boolean):
+            guard let lhsBool = lhs.getBool(), let rhsBool = rhs.getBool() else { return false }
             return relation.evaluate(left: lhsBool, right: rhsBool)
-        case (.integer(let lhsInt), .integer(let rhsInt)):
+        case (.integer, .integer):
+            guard let lhsInt = lhs.getInt(), let rhsInt = rhs.getInt() else { return false }
             return relation.evaluate(left: lhsInt, right: rhsInt)
-        case (.string(let lhsString), .string(let rhsString)):
-            return relation.evaluate(left: lhsString, right: rhsString)
+        case (.string, .string):
+            return relation.evaluate(left: lhs.value, right: rhs.value)
         default:
             return false
         }
@@ -139,6 +142,34 @@ extension EventHandlerInteractor {
             return EventsHandlerModels.BuildBattle.Response(enemy: nil)
         }
         return EventsHandlerModels.BuildBattle.Response(enemy: enemy)
+    }
+    
+    func performVariableModification(request: EventsHandlerModels.VariableModification.Request) {
+        let event = request.event
+        if let oldVariable = fetcherProvider.variableFetcher.getVariable(with: event.variableId) {
+            if let value = event.initialVariable {
+                perform(operation: event.operation, variableToModify: oldVariable, withContent: value)
+                
+            } else if let variableForCopyName = event.initialVariableName, let variableForCopy = fetcherProvider.variableFetcher.getVariable(with: variableForCopyName) {
+                perform(operation: event.operation, variableToModify: oldVariable, withContent: variableForCopy.content)
+            }
+            
+        } else if event.operation == .set {
+            if let value = event.initialVariable {
+                let newVariable = Variable(name: event.variableId, content: value)
+                _ = fetcherProvider.variableFetcher.saveVariable(for: newVariable)
+                
+            } else if let variableForCopyName = event.initialVariableName, let variableForCopy = fetcherProvider.variableFetcher.getVariable(with: variableForCopyName) {
+                let newVariable = Variable(name: variableForCopyName, content: variableForCopy.content)
+                _ = fetcherProvider.variableFetcher.saveVariable(for: newVariable)
+            }
+        }
+    }
+    
+    private func perform(operation: VariableOperation, variableToModify: Variable, withContent newContent: VariableValue) {
+        guard variableToModify.content.type == newContent.type else { return }
+        let newValue = operation.performOperation(originalContent: variableToModify.content, newContent: newContent)
+        _ = fetcherProvider.variableFetcher.saveVariable(for: Variable(name: variableToModify.name, content: newValue))
     }
     
     func endGame() {

@@ -56,7 +56,7 @@ class VariableFetcherImpl: VariableFetcher {
     }
     
     private func updateVariable(for variable: Variable, to model: VariableDAO, in context: NSManagedObjectContext) -> Bool {
-        model.value = variable.content.valueAsString
+        model.value = variable.content.value
         
         do {
             try context.save()
@@ -73,7 +73,7 @@ class VariableFetcherImpl: VariableFetcher {
         let loadingVariable: VariableDAO = VariableDAO(entity: variableEntity, insertInto: context)
         loadingVariable.name = variable.name
         loadingVariable.type = variable.content.type.rawValue
-        loadingVariable.value = variable.content.valueAsString
+        loadingVariable.value = variable.content.value
         
         do {
             try context.save()

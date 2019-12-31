@@ -79,11 +79,11 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
             backgroundImageView.image = UIImage(named: "GenericRoom1")
             return
         }
-        backgroundImageView.setImage(for: imageSource)
+        backgroundImageView.setImage(from: imageSource)
     }
     
     func setEnemyInfo(imageSource: ImageSource, model: StatusViewModel) {
-        enemyImageView.setImage(for: imageSource)
+        enemyImageView.setImage(from: imageSource)
         enemyStatus = StatusView(frame: CGRect(x: 0, y: 0, width: 394, height: 100))
         model.configure(view: enemyStatus)
         enemyStatus.translatesAutoresizingMaskIntoConstraints = false
