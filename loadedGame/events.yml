@@ -198,3 +198,67 @@
     value: "Sora"
   #initialVariableName: "variableName"
   nextStep: ""
+
+- id: "addNumberToCount"
+  mode: "modifyVariable"
+  variableId: "countNumber"
+  operation: add
+  initialVariable:
+    type: integer
+    value: 1
+  #initialVariableName: "variableName"
+  nextStep: ""
+
+- id: "resetCountNumber"
+  mode: "modifyVariable"
+  variableId: "countNumber"
+  operation: set
+  initialVariable:
+    type: integer
+    value: 0
+  #initialVariableName: "variableName"
+  nextStep: ""
+
+- id: "countNumberIs0"
+  mode: "dialogue"
+  message: "Parece que la cuenta ha vuelto a 0."
+  characterId: "gerar"
+  nextStep: ""
+
+- id: "countNumberIs5"
+  mode: "dialogue"
+  message: "¡Hemos conseguido que la cuenta sea 5!"
+  characterId: "sora"
+  nextStep: ""
+
+- id: "countNumberIsGreaterThan0"
+  mode: "dialogue"
+  message: "Todavía no es el número especial."
+  characterId: "narrator"
+  nextStep: ""
+
+- id: "firstCountCondition"
+  mode: "condition"
+  condition:
+    kind: "variable"
+    required:
+      compareToId: "countNumber"
+      relation: equal
+      initialVariable:
+        type: integer
+        value: 5
+  nextStepIfTrue: "countNumberIs5"
+  nextStepIfFalse: "secondCountCondition"
+
+- id: "secondCountCondition"
+  mode: "condition"
+  condition:
+    kind: "variable"
+    required:
+      compareToId: "countNumber"
+      relation: greater
+      initialVariable:
+        type: integer
+        value: 0
+  nextStepIfTrue: "countNumberIsGreaterThan0"
+  nextStepIfFalse: "countNumberIs0"

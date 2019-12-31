@@ -13,41 +13,32 @@ extension ModifyVariableEventFetcher {
     }
     
     func getModifyVariable(from event: EventDAO) -> ModifyVariableEvent? {
-        guard let rewardEvent = event as? ModifyVariableEventDAO, let message = rewardEvent.message, let rewardsSet = rewardEvent.rewardsAssociated else { return nil }
+        guard let event = event as? ModifyVariableEventDAO, let id = event.id, let operationString = event.operation, let operation = VariableOperation(rawValue: operationString), let variableId = event.variableId else { return nil }
         
-        var rewards: [String: Int] = [:]
-        
-        rewardsSet.filter({ $0 is ItemsQuantity && ($0 as! ItemsQuantity).itemId != nil }).forEach {
-            let pair = $0 as! ItemsQuantity
-            rewards[pair.itemId!] = Int(pair.quantity)
+        if let initialVariableName = event.initialVariableName {
+            return ModifyVariableEvent(id: id, nextStep: event.nextStep, shouldSetVisited: event.shouldSetVisited, shouldEndGame: event.shouldEndGame, variableId: variableId, operation: operation, initialVariableName: initialVariableName)
+        } else if let value = VariableValue(type: event.initialVariableType, value: event.initialVariableValue) {
+            return ModifyVariableEvent(id: id, nextStep: event.nextStep, shouldSetVisited: event.shouldSetVisited, shouldEndGame: event.shouldEndGame, variableId: variableId, operation: operation, initialVariable: value)
+        } else {
+            return nil
         }
-        
-        return RewardEvent(id: id, message: message, rewards: rewards, shouldSetVisited: rewardEvent.shouldSetVisited, shouldEndGame: event?.shouldEndGame, nextStep: rewardEvent.nextStep)
     }
     
-    func saveReward(_ reward: RewardEvent) -> Bool {
-        guard let eventEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.RewardEventDAO)", in: managedContext),
-            let rewardEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ItemsQuantity)", in: managedContext) else { return false }
+    func saveModifyVariable(_ event: ModifyVariableEvent) -> Bool {
+        guard let eventEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ModifyVariableEventDAO)", in: managedContext) else { return false }
         
-        let loadingEvent = RewardEventDAO(entity: eventEntity, insertInto: managedContext)
-        loadingEvent.id = reward.id
-        loadingEvent.type = "\(DaoConstants.Event.reward)"
-        loadingEvent.message = reward.message
-        loadingEvent.shouldSetVisited = reward.shouldSetVisited ?? false
-        loadingEvent.shouldEndGame = reward.shouldEndGame ?? false
-        loadingEvent.nextStep = reward.nextStep
+        let loadingEvent = ModifyVariableEventDAO(entity: eventEntity, insertInto: managedContext)
+        loadingEvent.id = event.id
+        loadingEvent.type = "\(DaoConstants.Event.modifyVariable)"
+        loadingEvent.shouldSetVisited = event.shouldSetVisited ?? false
+        loadingEvent.shouldEndGame = event.shouldEndGame ?? false
+        loadingEvent.nextStep = event.nextStep
         
-        var managedRewards: [NSManagedObject] = []
-        
-        for rewardKey in reward.rewards.keys {
-            let loadingReward = ItemsQuantity(entity: rewardEntity, insertInto: managedContext)
-            loadingReward.itemId = rewardKey
-            loadingReward.quantity = Int16(reward.rewards[rewardKey] ?? 0)
-            
-            managedRewards.append(loadingReward)
-        }
-        
-        loadingEvent.rewardsAssociated = NSOrderedSet(array: managedRewards)
+        loadingEvent.operation = event.operation.rawValue
+        loadingEvent.variableId = event.variableId
+        loadingEvent.initialVariableType = event.initialVariable?.type.rawValue
+        loadingEvent.initialVariableValue = event.initialVariable?.value
+        loadingEvent.initialVariableName = event.initialVariableName
         
         do {
             try managedContext.save()

@@ -6,6 +6,11 @@ struct VariableValue: Decodable {
     let type: VariableType
     var value: String
     
+    init(type: VariableType, value: String) {
+        self.type = type
+        self.value = value
+    }
+    
     init?(type: String?, value: String?) {
         guard let type = type, let value = value else { return nil }
         switch type {

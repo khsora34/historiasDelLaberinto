@@ -36,6 +36,8 @@ class EventFetcherManagerImpl: EventFetcherManager {
             loadedEvent = getBattle(from: newEvent)
         case .condition:
             loadedEvent = getCondition(from: newEvent)
+        case .modifyVariable:
+            loadedEvent = getModifyVariable(from: newEvent)
         case .unknown:
             return nil
         }
@@ -60,6 +62,9 @@ class EventFetcherManagerImpl: EventFetcherManager {
         case .condition:
             guard let event = event as? ConditionEvent else { return false }
             return saveCondition(event)
+        case .modifyVariable:
+            guard let event = event as? ModifyVariableEvent else { return false }
+            return saveModifyVariable(event)
         case .unknown:
             print("Unable to find the type of the event \(event.id)")
             return false
@@ -67,10 +72,6 @@ class EventFetcherManagerImpl: EventFetcherManager {
     }
     
     func deleteAll() {
-        deleteAllBattles()
-        deleteAllChoices()
-        deleteAllRewards()
-        deleteAllConditions()
         deleteAllEvents()
     }
 }
@@ -81,3 +82,4 @@ extension EventFetcherManagerImpl: ChoiceEventFetcher {}
 extension EventFetcherManagerImpl: RewardEventFetcher {}
 extension EventFetcherManagerImpl: ConditionEventFetcher {}
 extension EventFetcherManagerImpl: BattleEventFetcher {}
+extension EventFetcherManagerImpl: ModifyVariableEventFetcher {}

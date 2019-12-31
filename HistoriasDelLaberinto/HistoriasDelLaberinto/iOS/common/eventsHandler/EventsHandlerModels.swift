@@ -61,6 +61,12 @@ enum EventsHandlerModels {
             let enemy: GameCharacter?
         }
     }
+    
+    enum VariableModification {
+        struct Request {
+            let event: ModifyVariableEvent
+        }
+    }
 }
 
 enum EventsHandlerError {

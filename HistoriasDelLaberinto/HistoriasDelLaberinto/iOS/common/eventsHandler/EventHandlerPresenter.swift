@@ -103,6 +103,8 @@ extension EventHandlerPresenter {
             evaluateCondition(actualEvent as! ConditionEvent)
         case .battle:
             showBattle(actualEvent as! BattleEvent)
+        case .modifyVariable:
+            performVariableModification(actualEvent as! ModifyVariableEvent)
         case .unknown:
             print("Unable to determine action for unknown type.")
         }
@@ -150,6 +152,12 @@ extension EventHandlerPresenter {
         }
         hideDialog()
         eventHandlerRouter?.goToBattle(against: enemy, backgroundImage: room.imageSource, finisher: self)
+    }
+    
+    private func performVariableModification(_ event: ModifyVariableEvent) {
+        guard let interactor = eventHandlerInteractor else { return }
+        let request = EventsHandlerModels.VariableModification.Request(event: event)
+        interactor.performVariableModification(request: request)
     }
 }
 

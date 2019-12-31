@@ -76,8 +76,9 @@
     </entity>
     <entity name="ModifyVariableEventDAO" representedClassName="ModifyVariableEventDAO" parentEntity="EventDAO" syncable="YES" codeGenerationType="class">
         <attribute name="initialVariableName" optional="YES" attributeType="String"/>
-        <attribute name="initialVariableType" attributeType="String"/>
-        <attribute name="initialVariableValue" attributeType="String"/>
+        <attribute name="initialVariableType" optional="YES" attributeType="String"/>
+        <attribute name="initialVariableValue" optional="YES" attributeType="String"/>
+        <attribute name="nextStep" optional="YES" attributeType="String"/>
         <attribute name="operation" attributeType="String"/>
         <attribute name="variableId" attributeType="String"/>
     </entity>
@@ -153,6 +154,7 @@
         <element name="ImageSourceDAO" positionX="-391.3125" positionY="54.91796875" width="128" height="133"/>
         <element name="ItemDAO" positionX="113.8984375" positionY="-210.9765625" width="128" height="103"/>
         <element name="ItemsQuantity" positionX="-212.9921875" positionY="183.4296875" width="128" height="103"/>
+        <element name="ModifyVariableEventDAO" positionX="-369" positionY="-153" width="128" height="133"/>
         <element name="Movement" positionX="-64.171875" positionY="112.69921875" width="128" height="118"/>
         <element name="PlayableCharacterDAO" positionX="-560.4375" positionY="168.98046875" width="128" height="148"/>
         <element name="ProtagonistDAO" positionX="-394.8828125" positionY="314.58984375" width="128" height="73"/>
@@ -162,6 +164,5 @@
         <element name="TextDAO" positionX="-67.109375" positionY="257.67578125" width="128" height="88"/>
         <element name="VariableDAO" positionX="-369" positionY="-153" width="128" height="88"/>
         <element name="WeaponDAO" positionX="112.90625" positionY="-29.83203125" width="128" height="103"/>
-        <element name="ModifyVariableEventDAO" positionX="-369" positionY="-153" width="128" height="118"/>
     </elements>
 </model>
