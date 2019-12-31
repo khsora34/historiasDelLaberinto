@@ -6,6 +6,7 @@ protocol GameFilesLoader {
     func getRooms() -> RoomsFile
     func getEvents() -> EventsFile
     func getTexts() -> [Locale: [String: String]]
+    func getVariables() -> [Variable]
 }
 
 extension GameFilesLoader {
@@ -90,5 +91,18 @@ extension GameFilesLoader {
             texts[Locale(identifier: languageCode)] = literals
         }
         return texts
+    }
+    
+    func getVariables() -> [Variable] {
+        guard let path = Bundle.main.path(forResource: "variables", ofType: "yml", inDirectory: "loadedGame"), let fileContent = try? String(contentsOfFile: path) else {
+            fatalError()
+        }
+        
+        let parser = VariablesFileParser()
+        guard let variables = parser.serialize(fileContent) else {
+            fatalError()
+        }
+        
+        return variables
     }
 }

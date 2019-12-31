@@ -5,7 +5,7 @@ struct EventBuilder {
     let type: EventType
     
     func getEvent() -> Event? {
-        guard let stringNode = nodeToString() else { return nil }
+        guard let stringNode = try? Yams.serialize(node: node) else { return nil }
         let event: Event?
         switch type {
         case .battle:
@@ -18,14 +18,12 @@ struct EventBuilder {
             event = DialogueEventParser().serialize(stringNode)
         case .reward:
             event = RewardEventParser().serialize(stringNode)
+        case .modifyVariable:
+            event = ModifyVariableEventParser().serialize(stringNode)
         case .unknown:
             print("Unable to serialize unknown type event.")
             event = nil
         }
         return event
-    }
-    
-    private func nodeToString() -> String? {
-        return try? Yams.serialize(node: node)
     }
 }

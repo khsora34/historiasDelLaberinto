@@ -45,6 +45,7 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         
         loadImages(protagonist, charactersFile, roomsFile, itemsFile)
         save(protagonist, charactersFile, roomsFile, itemsFile, getEvents())
+        updateTexts()
     }
     
     private func loadImages(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile) {
@@ -102,7 +103,6 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         databaseFetcherProvider.itemsFetcher.deleteAllItems()
         databaseFetcherProvider.roomsFetcher.deleteAllRooms()
         databaseFetcherProvider.movementFetcher.removeMovement()
-        databaseFetcherProvider.localizedValueFetcher.deleteAllTexts()
         removeImageCache()
         print("😂 Finished in \(Date().timeIntervalSinceReferenceDate - now)")
     }

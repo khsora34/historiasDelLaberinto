@@ -60,7 +60,7 @@ class StatusView: UIView {
     @IBOutlet weak var flashView: UIView!
     
     func setImage(for imageSource: ImageSource) {
-        portraitImageView.setImage(for: imageSource)
+        portraitImageView.setImage(from: imageSource)
     }
     
     func setHealth(currentHealth: Int, maxHealth: Int) {

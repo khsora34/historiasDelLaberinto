@@ -2,15 +2,17 @@ import UIKit.UIApplication
 import CoreData
 
 protocol EventFetcher {
+    var persistentContainer: NSPersistentContainer { get }
     func getEvent(_ id: String) -> EventDAO?
     func deleteAllEvents()
 }
 
 extension EventFetcher {
+    var managedContext: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
+    
     func getEvent(_ id: String) -> EventDAO? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
         let fetchRequest: NSFetchRequest<EventDAO> = EventDAO.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", id)
         
@@ -19,9 +21,6 @@ extension EventFetcher {
     }
     
     func deleteAllEvents() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
         let fetchRequest: NSFetchRequest<EventDAO> = EventDAO.fetchRequest()
         
         do {

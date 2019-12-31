@@ -120,3 +120,9 @@ notPlayable:
     imageSource:
       type: remote
       source: "https://i.imgur.com/Upcm999.png"
+
+  "aurelionSol":
+    name: "Aurelion Sol"
+    imageSource:
+      type: local
+      source: "aurelionSol.PNG"

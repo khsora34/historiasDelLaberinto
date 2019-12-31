@@ -9,6 +9,19 @@ protocol LocalizedValueFetcher {
 }
 
 class LocalizedValueFetcherImpl: LocalizedValueFetcher {
+    let persistentContainer: NSPersistentContainer
+    
+    init(container: NSPersistentContainer) {
+        self.persistentContainer = container
+    }
+    
+    convenience init() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            fatalError("Unable to retrieve shared app delegate.")
+        }
+        self.init(container: appDelegate.persistentContainer)
+    }
+    
     func getString(key: String, forLocale locale: Locale) -> String {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return key }
         let managedContext = appDelegate.persistentContainer.viewContext
