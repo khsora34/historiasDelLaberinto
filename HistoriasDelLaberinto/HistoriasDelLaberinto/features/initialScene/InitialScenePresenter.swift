@@ -93,12 +93,12 @@ extension InitialScenePresenter {
 
 extension InitialScenePresenter: ImageLoaderDelegate {
     func finishedLoadingImages(numberOfImagesLoaded: Int) {
-        guard numberOfImagesLoaded > 0 else {
-            viewController?.dismissLoading { [weak self] in
-                self?.viewController?.showUnableToStartGame()
-            }
-            return
-        }
+//        guard numberOfImagesLoaded > 0 else {
+//            viewController?.dismissLoading { [weak self] in
+//                self?.viewController?.showUnableToStartGame()
+//            }
+//            return
+//        }
         viewController?.dismissLoading { [weak self] in
             self?.goToRoom(id: "startRoom")
         }

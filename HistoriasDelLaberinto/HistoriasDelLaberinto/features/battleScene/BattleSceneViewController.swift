@@ -25,19 +25,19 @@ class BattleSceneViewController: BaseViewController {
     // MARK: View lifecycle
     
     func configureButtons(availableActions: [BattleAction]) {
-        var views: [UIButton] = []
+        var views: [UIView] = []
         if availableActions.contains(.attack) {
             let attackButton = ConfigurableButton(frame: .zero)
-            attackButton.setupStyle(ButtonStyle.defaultButtonStyle)
-            attackButton.setTitle("Atacar", for: .normal)
+            attackButton.setStyle(ButtonStyle.defaultButtonStyle)
+            attackButton.text = "Atacar"
             attackButton.addTarget(self, action: #selector(didTapAttackButton), for: .touchUpInside)
             views.append(attackButton)
         }
         
         if availableActions.contains(.items) {
             let itemsButton = ConfigurableButton(frame: .zero)
-            itemsButton.setupStyle(ButtonStyle.defaultButtonStyle)
-            itemsButton.setTitle("Inventario", for: .normal)
+            itemsButton.setStyle(ButtonStyle.defaultButtonStyle)
+            itemsButton.text = "Inventario"
             itemsButton.addTarget(self, action: #selector(didTapItemsButton), for: .touchUpInside)
             views.append(itemsButton)
         }
@@ -79,11 +79,11 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
             backgroundImageView.image = UIImage(named: "GenericRoom1")
             return
         }
-        backgroundImageView.setImage(for: imageSource)
+        backgroundImageView.setImage(from: imageSource)
     }
     
     func setEnemyInfo(imageSource: ImageSource, model: StatusViewModel) {
-        enemyImageView.setImage(for: imageSource)
+        enemyImageView.setImage(from: imageSource)
         enemyStatus = StatusView(frame: CGRect(x: 0, y: 0, width: 394, height: 100))
         model.configure(view: enemyStatus)
         enemyStatus.translatesAutoresizingMaskIntoConstraints = false

@@ -73,7 +73,7 @@ class ItemFrontView: UIView {
     }
     
     func setImage(for source: ImageSource) {
-        imageView.setImage(for: source)
+        imageView.setImage(from: source)
     }
     
     @IBAction func infoButton(_ sender: Any) {
