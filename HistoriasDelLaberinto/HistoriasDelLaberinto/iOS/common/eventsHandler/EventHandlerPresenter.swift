@@ -201,40 +201,30 @@ extension EventHandlerPresenter {
 extension EventHandlerPresenter {
     func showError(_ error: EventsHandlerError) {
         actualEvent = nil
+        let message: String
         switch error {
         case .eventNotFound:
-            let errorEvent = DialogueEvent(id: "-1", characterId: "Cisco", message: "This event doesn't seem to be available. Sorry for the inconveniences!", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
-            showErrorDialogue(errorEvent)
+            message = "This event doesn't seem to be available. Sorry for the inconveniences!"
         case .characterNotFound:
-            let errorEvent = DialogueEvent(id: "-1", characterId: "Cisco", message: "It seems we encountered a problem showing the character. So sorry for that.", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
-            showErrorDialogue(errorEvent)
+            message = "It seems we encountered a problem showing the character. So sorry for that."
         case .defaultError:
-            let errorEvent = DialogueEvent(id: "-1", characterId: "Cisco", message: "An error ocurred, sorry about that...", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
-            showErrorDialogue(errorEvent)
+            message = "A generic error ocurred, sorry about that..."
         case .itemsNotFound:
-            let errorEvent = DialogueEvent(id: "-1", characterId: "Cisco", message: "There was a problem finding the items rewarded. Sorry for that...", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
-            showErrorDialogue(errorEvent)
+            message = "There was a problem finding the items rewarded. Sorry for that..."
         case .invalidChoiceExecution:
-            let errorEvent = DialogueEvent(id: "-1", characterId: "Cisco", message: "The function for a choice was executed without asking for it.", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
-            showErrorDialogue(errorEvent)
+            message = "The function for a choice was executed without asking for it."
         case .reasonIsPartnerDefeated:
-            let errorEvent = DialogueEvent(id: "-1", characterId: "Cisco", message: "It seems you finished a battle because your partner was defeated.", shouldSetVisited: false, shouldEndGame: true, nextStep: nil)
-            showErrorDialogue(errorEvent)
-        case .custom:
-            fatalError()
+            message = "It seems you finished a battle because your partner was defeated."
+        case .custom(let errorMessage):
+            message = errorMessage
         }
+        showErrorDialogue(message)
     }
     
-    func showErrorDialogue(_ event: DialogueEvent) {
-        actualEvent = event
-        let configurator = DialogueConfigurator(name: event.characterId, message: event.message, imageSource: .local(""))
-        
-        if dialog == nil {
-            dialog = Dialog.createDialog(configurator, delegate: self)
-            eventHandlerRouter?.present(dialog!, animated: true)
-        } else {
-            dialog?.setNextConfigurator(configurator)
-        }
+    func showErrorDialogue(_ message: String) {
+        let errorCharacter = "Aurelion Sol"
+        let configurator = DialogueConfigurator(name: errorCharacter, message: message, imageSource: .local("aurelionSol.PNG"))
+        showDialog(with: configurator)
     }
 }
 

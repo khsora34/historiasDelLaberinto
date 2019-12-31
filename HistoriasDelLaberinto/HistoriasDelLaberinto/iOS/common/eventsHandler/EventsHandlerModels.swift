@@ -70,5 +70,5 @@ enum EventsHandlerError {
     case itemsNotFound
     case invalidChoiceExecution
     case reasonIsPartnerDefeated
-    case custom
+    case custom(String)
 }
