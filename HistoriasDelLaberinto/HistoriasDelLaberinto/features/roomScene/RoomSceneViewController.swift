@@ -41,7 +41,6 @@ class RoomSceneViewController: BaseViewController {
         let button = UIButton(type: .custom)
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(didTapMenuButton), for: .touchUpInside)
-        button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         let barButton = UIBarButtonItem(customView: button)
         self.navigationItem.rightBarButtonItem = barButton
         

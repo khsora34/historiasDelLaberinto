@@ -23,6 +23,14 @@ class InitialSceneViewController: BaseViewController {
         newGameButton.setTitle(presenter?.newGameButtonText, for: .normal)
         loadGameButton.setTitle(presenter?.loadGameButtonText, for: .normal)
         changeLanguageButton.setTitle(presenter?.changeLanguageButtonText, for: .normal)
+        let image = UIImage(named: "settingsIcon")
+        let button = UIButton(type: .system)
+        button.setImage(image, for: .normal)
+        button.addTarget(self, action: #selector(didTapSettingsButton), for: .touchUpInside)
+        let barButton = UIBarButtonItem(customView: button)
+        var other = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(didTapSettingsButton))
+        
+        self.navigationItem.rightBarButtonItem = other
     }
     
     @IBAction func didTapNewGame(_ sender: Any) {
@@ -35,6 +43,10 @@ class InitialSceneViewController: BaseViewController {
     
     @IBAction func didTapLanguagesButton(_ sender: Any) {
         presenter?.goToLanguagesSelection()
+    }
+    
+    @objc func didTapSettingsButton() {
+        
     }
 }
 
