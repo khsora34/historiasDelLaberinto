@@ -53,78 +53,75 @@ A continuación se describirá un poco qué hacía cada uno de ellos.
 	\includegraphics[width=0.25\textwidth]{include/GerardoPres.png}
 \end{figure}
 
-\begin{itemize}
-	\item \textbf{Menú de juego}:
+\subsection{Menú de juego}
+
+El juego se pensó desde un principio como un sistema simple que incluía lo que en otros cursos llamaríamos estados  y un bucle de ejecución que evaluaba estos estados y generaba los eventos necesarios.
+
+Este sistema consistía en un bucle que siempre mostraba las mismas opciones: hablar, interactuar, inventario y moverse. Estas acciones cambiaban según una serie de parámetros que definían el estado de ejecución del programa: un número que indicaba una sala, un valor booleano que decía si el compañero estaba jugando y un mapa de lugares ya visitados.
+
+\subsection{Siguiente paso}
+
+En el desarrollo inicial del juego, toda la salida de la interfaz y los diálogos era por consola, por lo que todos los diálogos que ocurrían en la historia se imprimían por consola.
+
+Debido a la rapidez de la ejecución de las instrucciones, las líneas de código que se encargaban del diálogo eran directamente impresas en consola y se ejecutaban muy rápidamente, provocando que al pulsar una acción o una respuesta, todo el texto siguiente apareciera rápidamente en consola  y muchas veces fuera ilegible.
+
+Por ello se pensó en una funcionalidad que esperaba ante una respuesta del usuario cualquiera, normalmente un pulsado de la tecla "\textit{intro}", para mostrar el siguiente diálogo y hacer posible que la ejecución del juego fuera más legible.
+
+\subsection{Pantalla de carga}
+
+El funcionamiento del juego en la aplicación era muy rápido, aunque la calidad del código no fuera óptima. Los conceptos adquiridos en la asignatura nos introdujeron en ámbitos básicos del lenguaje de programación Java, por lo que las operaciones que se llevaban a cabo siempre eran muy rápidas. Además, ninguna operación dependía de otra, no contaba con concurrencia, no hacía conexiones con Internet ni se encargaba de parsear  información antes de ejecutar el núcleo del juego.
+
+Debido a que no había ningún recurso que cargar ni inicializar, el juego se iniciaba instantáneamente.
+Aunque esto puede ser positivo para un programa, nosotros creímos en su momento indispensable separar ciertas funcionalidades del juego como el inicio, una batalla, un evento del resto para intentar emular una característica que aparece en todos los juegos actuales: la pantalla de carga.
+
+Esta funcionalidad simplemente paraba el hilo de ejecución cada cierto tiempo y mientras tanto iba imprimiendo por consola un mensaje que indicaba que la aplicación estaba cargando.
+
+\subsection{Movimiento}
+
+La función de movimiento permitía a un jugador moverse entre las salas del laberinto. Para ello, se pensó en un mapa de posiciones, de manera que cada posición representara una habitación.
+Cada sala estaba representada como un número del 1 al 20, y cada uno de estos números se ubicaron en un mapa, representado como una matriz de 5 columnas y 4 filas que recogía la información de la sala que se ubicaba en cada casilla. Todas las salas eran diferentes entre sí.
+
+De esta manera se deducía que la posición actual de un jugador y las posiciones de cada sala estaban dadas por unas coordenadas que representaban los índices legales para la matriz, es decir, índices para que no surja un error al intentar acceder a la información de la matriz del mapa. Las coordenadas que se usaban eran una para la primera matriz, que representaba como el eje de la x, y otra para las submatrices de la primera matriz, que representaba como el eje de la y.
+
+Un jugador tiene cuatro opciones para moverse: ir hacia delante, hacia atrás, a la derecha o a la izquierda. Al seleccionar una dirección, el sistema calculaba si ese movimiento era posible y lo ejecutaba.
+Todo esto incluía como un extra un sistema de direcciones mediante el uso de una brújula. Esto significa que al moverse a cualquier dirección que no fuera adelante se cambiaba la dirección hacia la que estaba mirando el grupo. De esta manera el jugador estaba siempre mirando a alguno de los puntos cardinales, y calculaba el movimiento teniendo en cuenta la dirección escogida.
+
+Este sistema era capaz de evitar que al moverse el jugador pudiera irse fuera de los límites de la matriz y también de evitar el movimiento hacia ciertas salas desde ciertos lados.
+
+\subsection{Inventario}
+
+La función del inventario está pensada como un sistema de uso de objetos. Incluye un gestor de objetos y un menú de uso de los objetos.
+
+En el proyecto original, la idea principal para manejar los objetos contaba con que solo el protagonista podía tener un inventario, es decir, una referencia a los objetos conseguidos y guardados. De esta manera, solo el protagonista podía conseguir objetos y usarlos, aunque posteriormente se añadió funcionalidad para que el compañero pueda usarlos también.
+
+Existían dos tipos de objetos genéricos: consumibles y objetos clave. 
+Los consumibles son objetos que se pueden consumir por el protagonista o el compañero y que modifican el valor de los puntos de vida actuales de los personajes. Un ejemplo de un objeto consumible es una poción, que recuperaba una cantidad de puntos de vida actuales.
+Los objetos clave son objetos que solo pueden usarse fuera de las batallas en ciertas salas del laberinto y que suelen activar eventos. Son objetos que además no se pueden usar dentro de una batalla, y por lo tanto al usarlos mostraban un diálogo con una descripción del objeto.
+
+Los dos tipos de objetos son limitados, es decir, hay una cantidad reducida de los mismos por partida y además al usarse se gastan, por lo que podría llegar un momento en el juego en que no quedaran objetos.
+
+\subsection{Combate}
+
+El combate se presentó como un sistema genérico de combate que incluía tres posibles actores: el protagonista, el compañero y un enemigo. El protagonista y el compañero formaban un equipo y se enfrentaban al enemigo, que podía ser un personaje genérico cualquiera.
+
+El combate siempre giraba alrededor de los puntos de vida actuales del enemigo y del protagonista, por lo que si alguno de estos llegaba al cero entonces el combate se terminaba.
+
+El sistema de combate es un combate por turnos del estilo de juegos de rol (RPG) como los descritos en la introducción, es decir, un sistema de combate por turnos, siguiendo un orden fijo preestablecido:
+\begin{enumerate}
+	\item Protagonista
+	\item Enemigo
+	\item Compañero
+\end{enumerate} 
 	
-	El juego se pensó desde un principio como un sistema simple que incluía lo que en otros cursos llamaríamos estados  y un bucle de ejecución que evaluaba estos estados y generaba los eventos necesarios.
+Siempre siguiendo este orden de actuación en los turnos, cada turno tenía una serie de fases bien fijadas:
+\begin{enumerate}
+	\item Cálculo de daño inicial: permitía calcular si el siguiente turno debía ejecutarse o no, según si el actor que fuera a actuar tuviera más de cero puntos de vida actuales.
+	\item Selección de acción y objetivo: dependiendo del personaje, se podían realizar ciertas acciones. En el caso del protagonista, el personaje controlado por el jugador, existían tres opciones: atacar, estado e inventario. El enemigo siempre usa el comando Atacar y se elige aleatoriamente el objetivo del ataque. El compañero podía elegir entre atacar o usar el inventario según ciertos parámetros, cómo la vida restante.
+	\item Resolución de daño: tras haber atacado a un objetivo, se calculan los puntos de vida restantes del objetivo del ataque y se calcula si la batalla ha de terminar o si debe continuar. La batalla terminaba si el protagonista o el enemigo eran derrotados.
+\end{enumerate} 
 	
-	Este sistema consistía en un bucle que siempre mostraba las mismas opciones: hablar, interactuar, inventario y moverse. Estas acciones cambiaban según una serie de parámetros que definían el estado de ejecución del programa: un número que indicaba una sala, un valor booleano que decía si el compañero estaba jugando y un mapa de lugares ya visitados.
-	
-	\item \textbf{Siguiente paso}:
-	
-	En el desarrollo inicial del juego, toda la salida de la interfaz y los diálogos era por consola, por lo que todos los diálogos que ocurrían en la historia se imprimían por consola.
-	
-	Debido a la rapidez de la ejecución de las instrucciones, las líneas de código que se encargaban del diálogo eran directamente impresas en consola y se ejecutaban muy rápidamente, provocando que al pulsar una acción o una respuesta, todo el texto siguiente apareciera rápidamente en consola  y muchas veces fuera ilegible.
-	
-	Por ello se pensó en una funcionalidad que esperaba ante una respuesta del usuario cualquiera, normalmente un pulsado de la tecla "\textit{intro}", para mostrar el siguiente diálogo y hacer posible que la ejecución del juego fuera más legible.
-	
-	\item \textbf{Pantalla de carga}:
-	
-	El funcionamiento del juego en la aplicación era muy rápido, aunque la calidad del código no fuera óptima. Los conceptos adquiridos en la asignatura nos introdujeron en ámbitos básicos del lenguaje de programación Java, por lo que las operaciones que se llevaban a cabo siempre eran muy rápidas. Además, ninguna operación dependía de otra, no contaba con concurrencia, no hacía conexiones con Internet ni se encargaba de parsear  información antes de ejecutar el núcleo del juego.
-	
-	Debido a que no había ningún recurso que cargar ni inicializar, el juego se iniciaba instantáneamente.
-	Aunque esto puede ser positivo para un programa, nosotros creímos en su momento indispensable separar ciertas funcionalidades del juego como el inicio, una batalla, un evento del resto para intentar emular una característica que aparece en todos los juegos actuales: la pantalla de carga.
-	
-	Esta funcionalidad simplemente paraba el hilo de ejecución cada cierto tiempo y mientras tanto iba imprimiendo por consola un mensaje que indicaba que la aplicación estaba cargando.
-	
-	\item \textbf{Movimiento}:
-	
-	La función de movimiento permitía a un jugador moverse entre las salas del laberinto. Para ello, se pensó en un mapa de posiciones, de manera que cada posición representara una habitación.
-	Cada sala estaba representada como un número del 1 al 20, y cada uno de estos números se ubicaron en un mapa, representado como una matriz de 5 columnas y 4 filas que recogía la información de la sala que se ubicaba en cada casilla. Todas las salas eran diferentes entre sí.
-	
-	De esta manera se deducía que la posición actual de un jugador y las posiciones de cada sala estaban dadas por unas coordenadas que representaban los índices legales para la matriz, es decir, índices para que no surja un error al intentar acceder a la información de la matriz del mapa. Las coordenadas que se usaban eran una para la primera matriz, que representaba como el eje de la x, y otra para las submatrices de la primera matriz, que representaba como el eje de la y.
-	
-	Un jugador tiene cuatro opciones para moverse: ir hacia delante, hacia atrás, a la derecha o a la izquierda. Al seleccionar una dirección, el sistema calculaba si ese movimiento era posible y lo ejecutaba.
-	Todo esto incluía como un extra un sistema de direcciones mediante el uso de una brújula. Esto significa que al moverse a cualquier dirección que no fuera adelante se cambiaba la dirección hacia la que estaba mirando el grupo. De esta manera el jugador estaba siempre mirando a alguno de los puntos cardinales, y calculaba el movimiento teniendo en cuenta la dirección escogida.
-	
-	Este sistema era capaz de evitar que al moverse el jugador pudiera irse fuera de los límites de la matriz y también de evitar el movimiento hacia ciertas salas desde ciertos lados.
-	
-	\item \textbf{Inventario}:
-	
-	La función del inventario está pensada como un sistema de uso de objetos. Incluye un gestor de objetos y un menú de uso de los objetos.
-	
-	En el proyecto original, la idea principal para manejar los objetos contaba con que solo el protagonista podía tener un inventario, es decir, una referencia a los objetos conseguidos y guardados. De esta manera, solo el protagonista podía conseguir objetos y usarlos, aunque posteriormente se añadió funcionalidad para que el compañero pueda usarlos también.
-	
-	Existían dos tipos de objetos genéricos: consumibles y objetos clave. 
-	Los consumibles son objetos que se pueden consumir por el protagonista o el compañero y que modifican el valor de los puntos de vida actuales de los personajes. Un ejemplo de un objeto consumible es una poción, que recuperaba una cantidad de puntos de vida actuales.
-	Los objetos clave son objetos que solo pueden usarse fuera de las batallas en ciertas salas del laberinto y que suelen activar eventos. Son objetos que además no se pueden usar dentro de una batalla, y por lo tanto al usarlos mostraban un diálogo con una descripción del objeto.
-	
-	Los dos tipos de objetos son limitados, es decir, hay una cantidad reducida de los mismos por partida y además al usarse se gastan, por lo que podría llegar un momento en el juego en que no quedaran objetos.
-	
-	\item \textbf{Combate}:
-	
-	El combate se presentó como un sistema genérico de combate que incluía tres posibles actores: el protagonista, el compañero y un enemigo. El protagonista y el compañero formaban un equipo y se enfrentaban al enemigo, que podía ser un personaje genérico cualquiera.
-	
-	El combate siempre giraba alrededor de los puntos de vida actuales del enemigo y del protagonista, por lo que si alguno de estos llegaba al cero entonces el combate se terminaba.
-	
-	El sistema de combate es un combate por turnos del estilo de juegos de rol (RPG) como los descritos en la introducción, es decir, un sistema de combate por turnos, siguiendo un orden fijo preestablecido:
-	\begin{enumerate}
-		\item Protagonista
-		\item Enemigo
-		\item Compañero
-	\end{enumerate} 
-	
-	Siempre siguiendo este orden de actuación en los turnos, cada turno tenía una serie de fases bien fijadas:
-	\begin{enumerate}
-		\item Cálculo de daño inicial: permitía calcular si el siguiente turno debía ejecutarse o no, según si el actor que fuera a actuar tuviera más de cero puntos de vida actuales.
-		\item Selección de acción y objetivo: siempre aparecían tres opciones que cualquier personaje de una batalla podía usar, que son Atacar, Estado e Inventario.
-		En el turno del protagonista se pueden elegir cualquiera de las tres opciones. En el turno del enemigo siempre se usa el comando Atacar y se elige el objetivo del ataque. En el turno del compañero se elegía automáticamente Inventario o Atacar según ciertos parámetros aleatorios.
-		\item Resolución de daño: tras haber atacado a un objetivo, se calculan los puntos de vida restantes del objetivo del ataque y se calcula si la batalla ha de terminar o si debe seguir con un objetivo menos.
-	\end{enumerate} 
-	
-	En desarrollos posteriores a la entrega del primer trabajo, se incluyó la posibilidad de que un personaje del combate pudiera tener un estado alterado de una lista fija: envenenado, paralizado y ciego.
-	Esto permitía hacer más diverso el combate, ya que los daños que se calculaban eran fijos y permitía que un jugador no pudiera actuar o que fallara siempre los ataques.
-\end{itemize}
+En desarrollos posteriores a la entrega del primer trabajo, se incluyó la posibilidad de que un personaje del combate pudiera tener un estado alterado de una lista fija: envenenado, paralizado y ciego.
+Esto permitía hacer más diverso el combate, ya que impedía a un jugador no actuar o provocaba que fallara siempre los ataques.
 
 \section{Por qué un intérprete de videojuegos}
 
@@ -166,7 +163,6 @@ Este motor no se basa sólo en que sea lo más genérico posible, a veces hacer 
 	\item Compatibilidad: el motor tendría que ser compatible con la mayoría de las plataformas disponibles en el mercado, para que cualquier cliente sea capaz de reproducir este motor en distintos dispositivos. De momento no hay planes de traducir el proyecto a Android, solo está pensado para iOS.
 \end{itemize}
 
-Para resumir, el proyecto se ha convertido en un intérprete de videojuegos porque el juego original tenía esta idea como evolución directa y porque creo que no existe ningún creador de videojuegos que se centre específicamente en el desarrollo de una historia. Por ello, aproveché que además es un tema que me encanta para poder centrarme completamente en ello.
-
+Para resumir, el proyecto se ha convertido en un intérprete de videojuegos porque el juego original tenía esta idea como evolución directa y porque creo que demuestra mi crecimiento en el conocimiento que he ido adquiriendo a lo largo del tiempo en la universidad. Por ello, aproveché que además es un tema que me encanta para poder centrarme completamente en ello.
 
 %%---------------------------------------------------------
