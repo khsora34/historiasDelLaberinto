@@ -80,17 +80,30 @@ Evento que agrega objetos al inventario del jugador. En ningún caso agregará o
 Se suele usar para recompensar a un jugador por haber ganado una batalla o por haber abierto un cofre.
 
 \subsection{Habitaciones}
-Todo el desarrollo de un juego es en un laberinto. Sin embargo no es un laberinto vacío lleno de pasillos delgados y oscuros, sino que está pensado como una serie de habitaciones interconectadas entre sí.
+La idea original para el desarrollo del juego es un laberinto. Un laberinto se puede representar como una serie de pasillos delgados y oscuros por los que el protagonista debe orientarse, o como una serie de habitaciones interconectadas entre sí.
+Esta última opción nos permite obtener mayor detalle sobre los eventos y ayudar al jugador a recordar la estructura del laberinto. 
 
-Una habitación es el sitio donde ocurren todos los eventos que se pueden encontrar en el juego. Está representado con una imagen y una serie de acciones que puede realizar un jugador dentro de ella.
+Una habitación es el sitio donde ocurren todos los eventos que se pueden encontrar en el juego. Es en estos lugares donde el jugador va a tener mayor libertad de movimientos porque es el lugar donde se ejecutan cadenas de eventos, puede ir hacia otras habitaciones o donde puede guardar la partida y cambiar ciertos ajustes.
 
-Una habitación es donde el jugador va a tener mayor libertad de movimientos, porque es el lugar donde se ejecutan cadenas de eventos.
-
-
+Está representada con una imagen principal que describe a la habitación junto con un título y una descripción, y una serie de acciones que puede realizar el jugador dentro de ella.
 
 \subsection{Personajes}
+Durante la aventura el protagonista puede interactuar con múltiples personajes: compañeros, enemigos y NPCs, las siglas de \textit{''non playable character''}. \cite{npcGeekno} Además, el jugador también cuenta como un personaje aparte.
+
+Los personajes contienen un nombre y una imagen que los representa, aparte de una serie de características como la resistencia que tiene en batalla y otras estadísticas.
+
+Los personajes por lo tanto son piezas esenciales de la acción durante el juego por distintas razones:
+
+\begin{itemize}
+	\item Los diálogos siempre son enunciados por alguien, que debe ser un personaje.
+	\item El protagonista y su compañero tienen una serie de características que son cruciales para la evaluación de condiciones.
+	\item En una batalla, siempre luchan un personaje enemigo con el protagonista y sus compañeros.
+\end{itemize}
+
+Además, usar personajes permite que los jugadores puedan adentrarse en la aventura con mayor facilidad e incluso identificarse con ellos.
 
 \subsection{Condiciones} \label{conditionsSubsection}
+El motor tiene varios puntos donde se necesita ejecutar condiciones para resolver ciertas acciones. Estas condiciones dependen de varios factores como las estadísticas del protagonista, las variables, etc.
 
 Existen varios tipos de evaluaciones:
 \begin{itemize}
