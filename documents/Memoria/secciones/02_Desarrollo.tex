@@ -168,8 +168,42 @@ A continuación se describe lo que realiza cada operación:
 	\item \textbf{Sustituir}: concatena el texto de la primera variable con el de la segunda.
 \end{itemize}
 
- 
+Con todas estas operaciones se pueden modificar el contenido de las variables, mediante una segunda variable u otro dato estático.
 
+El uso principal de las variables, cuando ya tienen un valor, es el evaluar su valor comparándolo con otra variable o un dato estático. Para ello, el motor permite realizar operaciones de comparación, y al igual que las operaciones de modificación solo funcionan si los dos tipos de las variables a comparar son iguales. En este caso los operadores son compatibles para todos los tipos de variables, aunque su funcionalidad cambie.
+
+Los operadores disponibles son igual, distinto, mayor, mayor o igual, menor y menor o igual. A continuación se describe la comparación que se realiza dependiendo del operador. La condición es cierta:
+
+\begin{itemize}
+	\item Operadores enteros:
+	\begin{itemize}
+		\item \textbf{Igual}: si los dos enteros son iguales.
+		\item \textbf{Distinto}: si los dos enteros son distintos.
+		\item \textbf{Mayor}: si el primer entero es mayor que el segundo.
+		\item \textbf{Mayor o igual}: si el primer entero es mayor que el segundo o si son iguales.
+		\item \textbf{Menor}: si el primer entero es menor que el segundo.
+		\item \textbf{Menor o igual}: si el primer entero es menor que el segundo o si son iguales.
+	\end{itemize}
+	\item Operadores booleanos:
+	\begin{itemize}
+		\item \textbf{Igual}: si los dos valores son iguales.
+		\item \textbf{Distinto}: si los dos valores son distintos.
+		\item \textbf{Mayor}: si el primer valor es verdadero y el segundo es falso.
+		\item \textbf{Mayor o igual}: si el primero es verdadero o si los dos son falsos.
+		\item \textbf{Menor}: si el primero es falso y el segundo es verdadero.
+		\item \textbf{Menor o igual}: si el primero es falso o si los dos son verdaderos.
+	\end{itemize}
+	\item Operadores de cadenas de texto:
+	\begin{itemize}
+		\item \textbf{Igual}: si las dos cadenas son iguales.
+		\item \textbf{Distinto}: si las dos cadenas son distintas.
+		\item \textbf{Mayor}: si la primera cadena se sitúa posteriormente a la otra según el orden lexicográfico.
+		\item \textbf{Mayor o igual}: si la primera cadena se sitúa posteriormente a la otra según el orden lexicográfico o si las cadenas son iguales.
+		\item \textbf{Menor}: si la primera cadena se sitúa anteriormente a la otra según el orden lexicográfico.
+		\item \textbf{Menor o igual}: si la primera cadena se sitúa anteriormente a la otra según el orden lexicográfico o si las cadenas son iguales.
+	\end{itemize}
+\end{itemize}
+ 
 \section{Qué esperar del sistema (Diseño)} \label{designSection}
 
 \subsection{Batalla} \label{battleDesignSubsection}
@@ -189,7 +223,7 @@ Antes de comenzar, todos los eventos tienen una serie de características comune
 Para crear un videojuego disponemos de x archivos.
 Describir cada uno y explicar en qué se traduce en el juego
 
-\subsection{Música}
+
 
 \chapter{Desarrollo de la aplicación}
 

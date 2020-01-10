@@ -4,12 +4,37 @@ Resumen de resultados obtenidos en el TFG. Y conclusiones personales del estudia
 De la forma en la que están desarrollados los eventos en este momento, permite a los desarrolladores de este motor crear nuevos tipos de eventos, sin perjuicio de ninguna implementación de los anteriores.
 
 \section{Futuro del intérprete (Trabajo futuro)}
- Todavía no se ha afrontado el problema de soportar múltiples versiones del intérprete. Se hablará más sobre este aspecto en apartado sobre el futuro del intérprete.
- 
- Tutorial
- 
- Nube
- Compartir historias
- Están en camino los eventos de puzzles.
+Aunque es cierto que lo que se ha marcado como objetivo es suficiente para un trabajo de fin de grado, el motor todavía está en una fase temprana de su desarrollo, con mucho potencial por todas partes que permita a un usuario o un diseñador de juegos aprovechar hasta la última capacidad de crear juegos para móviles de forma sencilla.
 
+Por ello, en esta sección se describirán algunas de las funcionalidades que alguna vez aparecieron durante el desarrollo pero se descartaron o posibles nuevas funcionalidades.
+
+
+
+\subsection{Versiones}
+Durante el desarrollo se han tenido que llevar a cabo varios mantenimientos que no son compatibles con el ciclo de vida de una aplicación normal para un usuario final:
+
+\begin{itemize}
+	\item Al modificar las tablas o las propiedades de la base de datos, Core Data inutiliza la base de datos original y no permite lanzar la aplicación debido a un error. La única solución rápida pasa por reinstalar la aplicación. Al no disponer de migrado automático, esto requiere un extra de funcionalidad que no dio tiempo a ser implementada. 
+	\item Los juegos realizados para distintas versiones de la aplicación no son compatibles entre sí: puede ocurrir que lleguen a funcionar y que la funcionalidad no sea completa, o que el juego sea directamente injugable. Falta establecer una serie de versiones del sistema según  ciertas actualizaciones e intentar avisar al jugador o al diseñador de historias de que el juego no es compatible con ciertas versiones.
+\end{itemize}
+
+\subsection{Música}
+Apple cuenta con muchas librerías en Swift que ofrecen funcionalidades extra a los dispositivos de su marca. Una de ellas es \textbf{''Media Player''} \cite{mediaPlayer}.
+Esta librería nos ofrece muchas funcionalidades, como reproducir sonidos o música.
+
+Está pensado ofrecer herramientas a los diseñadores de juegos para poder usar su propio sonido y su propia música en los juegos, para que se reproduzcan en sitios específicos. Los sonidos y la música podrían ser activados por un evento nuevo, y se podría añadir música específica para batallas, el menú o las salas.
+
+Por último, un usuario podría modificar la música que se reproduce en algunos sitios por una de su propia biblioteca.
+
+\subsection{Animaciones directas}
+
+\subsection{Movimiento}
+
+\subsection{Nuevo combate}
+
+\subsection{Tutorial}
+ 
+\subsection{Compartir historias}
+
+\subsection{Puzzles}
 
