@@ -31,11 +31,15 @@ Con todas estas dudas resueltas ya solo queda mostrar las funciones de las que d
 \subsection{Qué es capaz de hacer el motor}
 
 El proyecto anterior se considera un punto de partida para muchos conceptos que se querían llevar a cabo para el nuevo motor. Por ello, se escogieron ciertas funcionalidades comunes que permitieran representar al videojuego original, separandolas en pequeñas piezas: mostrar un diálogo, iniciar un combate...
-De esta manera nacen los eventos.
+De esta manera nacen los \textbf{eventos}.
+
+El juego original también contaba con una serie de jugadores con los que podía interactuar el usuario, salas en las que se desarrollaba la historia, un sistema de movimiento en forma de cuadrícula... Todos estos aspectos se han traducido al motor de manera que sean lo más fieles posibles al juego original.
+
+A continuación, se describen por partes las funcionalidades que tiene el motor. De momento no se entra en las especificaciones propias de la implementación, pero aparecerá en la sección \ref{engineGuideSection}.
 
 \subsection{Eventos}
 
-Un \textbf{evento} representa una acción atómica que puede realizar el motor. Estas acciones se consideran básicas en el ámbito de una aventura, como escoger una opción o mostrar un diálogo; aunque requieran de más trabajo a la hora de programarlas.
+Un evento representa una acción atómica que puede realizar el motor. Estas acciones se consideran básicas en el ámbito de una aventura, como escoger una opción o mostrar un diálogo; aunque requieran de más trabajo a la hora de programarlas.
 
 Los eventos están pensados para unirse entre ellos, de manera que se puedan mezclar entre sí varias acciones básicas para formar una cadena de eventos. Por ello, cualquiera de ellos son intercambiables, intercalables y no pueden tener dependencias entre sí.
 Además, siempre se ejecutan de forma lineal, siguiendo un orden predefinido por el creador del juego.
@@ -81,7 +85,7 @@ Se suele usar para recompensar a un jugador por haber ganado una batalla o por h
 
 \subsection{Habitaciones}
 La idea original para el desarrollo del juego es un laberinto. Un laberinto se puede representar como una serie de pasillos delgados y oscuros por los que el protagonista debe orientarse, o como una serie de habitaciones interconectadas entre sí.
-Esta última opción nos permite obtener mayor detalle sobre los eventos y ayudar al jugador a recordar la estructura del laberinto. 
+Esta última opción permite al jugador orientarse por cada partida, obtener mayor detalle sobre los eventos, recordar lugares memorables y ayudar a estructurar el laberinto para el usuario. 
 
 Una habitación es el sitio donde ocurren todos los eventos que se pueden encontrar en el juego. Es en estos lugares donde el jugador va a tener mayor libertad de movimientos porque es el lugar donde se ejecutan cadenas de eventos, puede ir hacia otras habitaciones o donde puede guardar la partida y cambiar ciertos ajustes.
 
@@ -90,20 +94,33 @@ Está representada con una imagen principal que describe a la habitación junto 
 \subsection{Personajes}
 Durante la aventura el protagonista puede interactuar con múltiples personajes: compañeros, enemigos y NPCs, las siglas de \textit{''non playable character''}. \cite{npcGeekno} Además, el jugador también cuenta como un personaje aparte.
 
-Los personajes contienen un nombre y una imagen que los representa, aparte de una serie de características como la resistencia que tiene en batalla y otras estadísticas.
+Todos los personajes cuentan con un nombre y una imagen que los representa, y los compañeros y enemigos añaden una serie de características.
+Las posibles estadísticas que puede tener un personaje son:
+
+\begin{itemize}
+	\item \textbf{Puntos de vida actuales}: representan la vida restante del personaje. Si los puntos de vida actuales del protagonista llegan a 0, entonces el juego termina.
+	\item \textbf{Puntos de vida totales}: representan la vida máxima que tiene un personaje.
+	\item \textbf{Puntos de ataque}: representan los puntos de vida actuales que puede quitar un personaje con un ataque.
+	\item \textbf{Puntos de defensa}: representan los puntos de vida actuales que el personaje elimina de un ataque al recibirlo.
+	\item \textbf{Puntos de agilidad}: representan la velocidad de un personaje. En un combate, si un personaje supera por un factor multiplicativo la agilidad del contrario, entonces el personaje puede atacar múltiples veces en un mismo turno. 
+	\item \textbf{Estado alterado}: representa un cambio en el estado normal del personaje y pueden reportar beneficios o perjuicios al mismo. Los estados soportados por el motor son veneno, ceguera y parálisis.
+	\item \textbf{Arma}: un personaje puede tener un arma consigo para atacar. Estas armas aumentarán el estado base de ataque, añadirán un porcentaje de acierto del ataque y un estado alterado a provocar.
+\end{itemize}
+
+Respecto a las tres últimas estadísticas, se explican con más detalle en el apartado de batalla de la sección de diseño \ref{battleDesignSubsection}.
 
 Los personajes por lo tanto son piezas esenciales de la acción durante el juego por distintas razones:
 
 \begin{itemize}
-	\item Los diálogos siempre son enunciados por alguien, que debe ser un personaje.
-	\item El protagonista y su compañero tienen una serie de características que son cruciales para la evaluación de condiciones.
-	\item En una batalla, siempre luchan un personaje enemigo con el protagonista y sus compañeros.
+	\item Los diálogos siempre son enunciados por alguien, que debe ser un personaje. Un diálogo no se puede ejecutar si no existe un personaje que lo enuncie.
+	\item El protagonista y su compañero tienen una serie de características que son cruciales para la evaluación de condiciones, como los indicadores de habitaciones visitadas.
+	\item En una batalla, siempre lucha un personaje enemigo contra el protagonista y sus compañeros.
 \end{itemize}
 
 Además, usar personajes permite que los jugadores puedan adentrarse en la aventura con mayor facilidad e incluso identificarse con ellos.
 
 \subsection{Condiciones} \label{conditionsSubsection}
-El motor tiene varios puntos donde se necesita ejecutar condiciones para resolver ciertas acciones. Estas condiciones dependen de varios factores como las estadísticas del protagonista, las variables, etc.
+El motor tiene varios puntos donde se necesita ejecutar condiciones para resolver ciertas acciones. Estas condiciones están sujetas a varios factores como las estadísticas del protagonista, valor de las variables internas, etc.
 
 Existen varios tipos de evaluaciones:
 \begin{itemize}
@@ -115,11 +132,51 @@ Existen varios tipos de evaluaciones:
 
 \subsection{Variables personalizadas} \label{variablesSection}
 
+Esta es una nueva funcionalidad del motor que no se encontraba en la original.
+
+Las variables personalizadas es una capacidad del juego que permite almacenar información dinámica de la partida, sin estar limitados por la propia capacidad del motor. Estas permiten a un diseñador de juegos controlar ciertos aspectos internos del juego como puede ser la activación de un evento o de ciertas elecciones.
+
+Estas variables se pueden usar para guardar la información del estado de ejecución de un evento, almacenar la cantidad de tesoros que ha encontrado el jugador durante su partida...
+
+De esta manera, la capacidad de formular condiciones aumenta sobremanera, ya que no dependen de las que puedan estar definidas en el motor. Es más, el diseñador del juego puede emular cualquier condición por defecto si usa las variables correctamente.
+
+Las variables siempre tienen un id que las identifica, el dato que guarda y el tipo de ese dato. Una variable siempre se crea definiendo estos tres campos.
+El motor soporta de momento los tipos entero, que representa números enteros; booleano, que representa valores de verdad, como verdadero y falso; y cadena de texto, que son un literal de texto.
+
+Debido a que estas variables son dinámicas, el motor permite no solo sustituir el valor o crear nuevas variables, sino que también permite operaciones entre variables o más datos estáticos.
+
+Las operaciones estarán formadas por dos variables y la operación que realizan entre ellos. Las operaciones soportadas por el motor dependen del tipo de dato que guarde la variable, y nunca podrán operarse dos variables con distintos tipos de datos. El resultado de la operación siempre se guarda en la primera variable con la que se opera.
+
+\begin{itemize}
+	\item Las variables \textbf{enteras} soportan las operaciones sustituir, suma, resta, multiplicación, división entera y módulo/resto.
+	\item Las variables \textbf{booleanas} soportan las operaciones sustituir, conjunción, disyunción y negación.
+	\item Las variables que son \textbf{cadenas de texto} permiten sustituir el texto o concatenarlo.
+\end{itemize}
+
+A continuación se describe lo que realiza cada operación:
+
+\begin{itemize}
+	\item \textbf{Sustituir}: modifica el valor anterior de la variable con uno nuevo.
+	\item \textbf{Disyunción}: ejecuta la operación disyunción booleana sobre la primera y la segunda variable.
+	\item \textbf{Conjunción}: ejecuta la operación conjunción booleana sobre la primera y la segunda variable.
+	\item \textbf{Negación}: ejecuta la operación negación booleana sobre la segunda variable.
+	\item \textbf{Suma}: suma el valor de la primera variable con el de la segunda.
+	\item \textbf{Resta}: resta el valor de la primera variable con el de la segunda.
+	\item \textbf{Multiplicación}: multiplica el valor de la primera variable por el de la segunda.
+	\item \textbf{División entera}: realiza la división entera del valor de la primera variable con el de la segunda.
+	\item \textbf{Resto}: halla el resto de la división entera entre el valor de la primera variable y el de la segunda.
+	\item \textbf{Sustituir}: concatena el texto de la primera variable con el de la segunda.
+\end{itemize}
+
+ 
+
 \section{Qué esperar del sistema (Diseño)} \label{designSection}
+
+\subsection{Batalla} \label{battleDesignSubsection}
 
 \section{Cómo se ve el motor en funcionamiento}
 
-\section{Guía para usar el sistema}
+\section{Guía para usar el sistema} \label{engineGuideSection}
 
 Antes de comenzar, todos los eventos tienen una serie de características comunes entre ellos:
 
