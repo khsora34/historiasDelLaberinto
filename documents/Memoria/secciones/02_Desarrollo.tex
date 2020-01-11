@@ -217,12 +217,11 @@ Por ello, al desarrollar una aplicación para un teléfono móvil, uno de los fa
 En esta sección se describirán las elecciones de diseño que se han llevado a cabo para las funcionalidades visuales del motor, dividiéndolas en pantallas visuales. Están adjuntas capturas de la propia aplicación para ayudar a la comprensión de ciertas decisiones.
 
 \subsection{Pantalla de menú principal}
+\begin{center}
+	\includegraphics[width=0.3\textwidth]{include/snapshots/mainMenu-es.jpg}
+	\includegraphics[width=0.3\textwidth]{include/snapshots/mainMenu-en.jpg}
+\end{center}
 El menú principal es la primera pantalla de la aplicación. Sirve para iniciar la partida cargada, continuar una partida o cambiar el idioma del juego. Debido a que es la primera pantalla del motor, está incluida una imagen con grandes cultivos que asemejan a un laberinto. Esta imagen no se puede cambiar, está fija y no depende del juego cargado.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.3\textwidth]{include/snapshots/mainMenu-es.png}
-\end{figure}
 
 Nada más cargarse la aplicación, se cargan los ficheros de texto del juego cargado y se escoge un idioma.
 El idioma que se elige depende del usuario: si es la primera vez que carga la aplicación, se escogerá uno que corresponda con algún idioma configurado en el dispositivo. En otro caso, usa el lenguaje usado por última vez en la aplicación.
@@ -236,12 +235,52 @@ A continuación se describe la acción que debe realizar cada botón:
 \end{itemize}
 
 \subsection{Pantalla de cambio de idioma}
-En esta pantalla se permite al usuario cambiar el idioma entre una lista de idiomas soportados en ese momento por el motor. La aplicación soporta cualquier lenguaje reconocido en el estándar ISO 639-1 \cite{iso639-1Codes}.
+\begin{center}
+	\includegraphics[width=0.3\textwidth]{include/snapshots/languageSettings.jpg}
+\end{center}
+En esta pantalla se permite al usuario cambiar el idioma entre una lista de idiomas soportados en ese momento por el motor. La aplicación soporta cualquier lenguaje recogido en el estándar ISO 639-1 \cite{iso639-1Codes}.
 
+El fondo no se puede cambiar, aunque muy posiblemente cambie en un futuro muy cercano.
+El idioma seleccionado actualmente es el que está marcado en azul. Un jugador puede seleccionar cualquier otro idioma para cambiar la selección, aunque los cambios no se guardan hasta que el usuario pulse el botón de guardado en la parte inferior.
+Al pulsar guardar, se recarga la aplicación para que muestre todos los textos en el idioma seleccionado. 
 
 \subsection{Pantalla de habitación}
+\begin{center}
+	\includegraphics[width=0.3\textwidth]{include/snapshots/roomView.jpg}
+	\includegraphics[width=0.3\textwidth]{include/snapshots/secondRoomView.jpg}
+\end{center}
+
+La pantalla de habitación es donde se desarrolla la mayor parte de los eventos del juego y es donde el jugador pasará más tiempo en una partida.
+Esta pantalla es la encargada de gestionar las acciones principales del jugador: moverse entre otras habitaciones, abrir el menú secundario y ejecutar eventos según una serie de acciones incluidas en la habitación.
+
+La vista cuenta con botones de acción en la parte inferior, un botón de información y un botón de bocadillo. Además el nombre de la misma está escrita en la parte superior, y la imagen de fondo cambia según la habitación en la que se encuentre el usuario.
+
+Esto es lo que ocurre si se pulsan en los distintos botones:
+\begin{itemize}
+	\item \textbf{Botón de información}: situado en la esquina superior izquierda, el botón de información muestra un diálogo que describe a la habitación en la que se encuentra el jugador.
+	\item \textbf{Botón de bocadillo}: situado en la esquina superior derecha, lleva al jugador al menú secundario.
+	\item \textbf{Eventos}: las acciones de eventos son los botones azules que siempre están en la parte inferior de la pantalla y representan las acciones que puede realizar el jugador en esa habitación. Al pulsar en uno de ellos, se ejecuta el evento que contenga.
+	\item \textbf{''Moverse''}: es el botón azul que está ubicado en la parte inferior de la pantalla como la última acción. Pulsarlo lleva al usuario a la pantalla de movimiento o de cambio de sala.
+\end{itemize}
+
+Normalmente una habitación cuenta como máximo con cuatro acciones, incluyendo la de ''Moverse'', aunque soporta muchas acciones, técnicamente infinitas. Cuando aparezcan más de cuatro acciones, entonces la vista de los botones se podrá desplazar para mostrarlos todos.
 
 \subsection{Pantalla de movimiento}
+\begin{center}
+	\includegraphics[width=0.3\textwidth]{include/snapshots/movementView.jpg}
+	\includegraphics[width=0.3\textwidth]{include/snapshots/movementView_2.jpg}
+\end{center}
+
+La pantalla de movimiento permite al jugador cambiar la posición de su personaje y navegar en el laberinto de habitaciones.
+Se muestra una pantalla que se superpone a la de la habitación y que contiene el nombre de la habitación en la que se encuentra el usuario y unas flechas que le permiten elegir hacia qué dirección quiere moverse.
+
+Al pulsar en una de las flechas, el jugador se moverá a la habitación que se encuentre en esa dirección, por lo que saldrá de la vista de movimiento y cambiará a la nueva habitación.
+
+El mapa del laberinto es aleatorio, cada vez que el usuario elija una habitación en la que todavía no ha estado presente, el motor recogerá una habitación que no se haya visitado de entre todas las habitaciones configuradas en el juego y fijará su posición, por lo que el jugador podrá volver a visitarla si vuelve al mismo lugar.
+En ciertas ocasiones el motor usará una habitación genérica en lugar de las habitaciones configuradas con el propósito de alargar el juego con eventos genéricos, como puede ser un cofre con contenido común, un enemigo débil...
+
+Hay que resaltar que en el juego original el jugador cambiaba la dirección a la que miraba cada vez que se movía, simulando un movimiento real de forma más fiel, y para orientarse contaba con una brújula que le permitía saber hacia que punto cardinal estaba mirando.
+Sin embargo, en esta aplicación todavía no se ha implementado esta funcionalidad, por lo que no existe este sistema de giro, el jugador siempre estará mirando hacia el mismo sitio.
 
 \subsection{Ejecución de eventos}
 
