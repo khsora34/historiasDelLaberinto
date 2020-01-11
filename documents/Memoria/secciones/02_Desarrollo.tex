@@ -3,18 +3,26 @@ En este capítulo se describe cómo funciona el motor en esencia, es decir, sin 
 
 Hay un apartado que describe al motor y sus capacidades, y otro apartado que muestra el diseño actual de la aplicación y expone otras ideas que se pueden llevar a cabo.
 
-\section{Qué es un motor de videojuegos (Descripción)}
+\section{Qué es Historias del Laberinto (Descripción)}
+Historias del Laberinto es una aplicación que funciona como \textbf{intérprete de videojuegos}. Los posibles nombres con los que se identifica al motor en este trabajo son motor, intérprete, aplicación o proyecto.
 
-El programa que se ha desarrollado es un motor que funciona como \textbf{intérprete de videojuegos}. Permite a un usuario cualquiera reproducir un videojuego definido en un formato predefinido. Este formato permite abstraer de toda la capa programática a un diseñador.
+Esta aplicación permite a un usuario reproducir un videojuego definido en un formato predefinido. Este formato permite abstraer de toda la capa programática a un diseñador.
+De momento solo es capaz de reproducir videojuegos, no es capaz de crearlos, aunque en una futura versión probablemente se desarrolle esta opción.
 
-Aunque lo parezca, y quizás en una futura compilación sea capaz de hacerlo, no es una aplicación que permita crear un videojuego, sino que es capaz de reproducir videojuegos creados por un usuario.
-
-El proyecto también se le puede definir como un motor de videojuegos:
+Nos hemos referido antes al proyecto también como un motor de videojuegos, que se puede definir de esta manera:
 \begin{quote}
 	\small Un motor de videojuego es un término que hace referencia a una serie de librerías de programación que permiten el diseño, la creación y la representación de un videojuego. \cite{Alberto_Carrasco}
 \end{quote}
 
-En este caso, el proyecto no es una serie de librerías sino que es directamente una aplicación. De esta manera, se puede abstraer a un creador del videojuego de la programación directa de un juego.
+En el caso de este trabajo, el proyecto no es una serie de librerías sino que es directamente una aplicación. De esta manera, se puede abstraer a un creador del videojuego de la programación directa de un juego.
+
+Otros motores de videojuego que ahora están en el mercado y tienen una funcionalidad similar son Unreal Engine\cite{unrealEngineHomepage} o Unity\cite{unity3dHomepage}. Estos motores permiten crear videojuegos con una capacidad genérica muy potente, pero en muchos casos necesitan que el diseñador tenga conocimientos de diseño 3D, programación y matemáticas. No se ha conseguido llegar al nivel de estos motores, porque supondría un reto muy grande para el ámbito de un trabajo de fin de grado.
+
+\begin{figure}[h]
+	\caption{Logo del motor Unreal engine}
+	\centering
+	\includegraphics[width=0.3\textwidth]{include/unrealEngineLogo.png}
+\end{figure}
 
 \subsection{Qué tipo de videojuegos se pueden crear}
 El interprete está orientado a reproducir juegos en los que el jugador tiene que escapar de una mazmorra. Para ello, el jugador debe reunir objetos como llaves para abrir puertas, esquivar trampas, resolver rompecabezas, luchar contra monstruos, usar pociones y llegar a una habitación final.
@@ -29,16 +37,14 @@ Tampoco hay planes actuales de mover el motor a otra plataforma, pero es posible
 Con todas estas dudas resueltas ya solo queda mostrar las funciones de las que dispone el motor.
 
 \subsection{Qué es capaz de hacer el motor}
-
 El proyecto anterior se considera un punto de partida para muchos conceptos que se querían llevar a cabo para el nuevo motor. Por ello, se escogieron ciertas funcionalidades comunes que permitieran representar al videojuego original, separandolas en pequeñas piezas: mostrar un diálogo, iniciar un combate...
 De esta manera nacen los \textbf{eventos}.
 
 El juego original también contaba con una serie de jugadores con los que podía interactuar el usuario, salas en las que se desarrollaba la historia, un sistema de movimiento en forma de cuadrícula... Todos estos aspectos se han traducido al motor de manera que sean lo más fieles posibles al juego original.
 
-A continuación, se describen por partes las funcionalidades que tiene el motor. De momento no se entra en las especificaciones propias de la implementación, pero aparecerá en la sección \ref{engineGuideSection}.
+A continuación, se describen por partes las funcionalidades que tiene el motor. De momento no se entra en las especificaciones propias de la implementación, pero aparecerá el diseño llevado a cabo en la sección \ref{designSection}, y cómo se ha implementado en el capítulo \ref{applicationImplementation}.
 
 \subsection{Eventos}
-
 Un evento representa una acción atómica que puede realizar el motor. Estas acciones se consideran básicas en el ámbito de una aventura, como escoger una opción o mostrar un diálogo; aunque requieran de más trabajo a la hora de programarlas.
 
 Los eventos están pensados para unirse entre ellos, de manera que se puedan mezclar entre sí varias acciones básicas para formar una cadena de eventos. Por ello, cualquiera de ellos son intercambiables, intercalables y no pueden tener dependencias entre sí.
@@ -131,21 +137,20 @@ Existen varios tipos de evaluaciones:
 \end{itemize}
 
 \subsection{Variables personalizadas} \label{variablesSection}
-
 Esta es una nueva funcionalidad del motor que no se encontraba en la original.
 
-Las variables personalizadas es una capacidad del juego que permite almacenar información dinámica de la partida, sin estar limitados por la propia capacidad del motor. Estas permiten a un diseñador de juegos controlar ciertos aspectos internos del juego como puede ser la activación de un evento o de ciertas elecciones.
+Las variables personalizadas es una capacidad del juego que permite almacenar información dinámica de la partida, sin estar limitados por la propia capacidad de evaluar condiciones del motor. Estas permiten a un diseñador de juegos controlar ciertos aspectos internos del desarrollo del juego como puede ser la activación de un evento o de ciertas elecciones.
 
 Estas variables se pueden usar para guardar la información del estado de ejecución de un evento, almacenar la cantidad de tesoros que ha encontrado el jugador durante su partida...
 
-De esta manera, la capacidad de formular condiciones aumenta sobremanera, ya que no dependen de las que puedan estar definidas en el motor. Es más, el diseñador del juego puede emular cualquier condición por defecto si usa las variables correctamente.
+De esta manera, la capacidad de formular condiciones aumenta drásticamente, ya que no dependen de las que puedan estar definidas en el motor. Es más, el diseñador del juego puede emular cualquier condición de las ya definidas si usa las variables correctamente.
 
-Las variables siempre tienen un id que las identifica, el dato que guarda y el tipo de ese dato. Una variable siempre se crea definiendo estos tres campos.
-El motor soporta de momento los tipos entero, que representa números enteros; booleano, que representa valores de verdad, como verdadero y falso; y cadena de texto, que son un literal de texto.
+Las variables tienen un id que las identifica, el dato que guarda y el tipo de ese dato. Una variable siempre se crea definiendo estos tres campos.
+El motor soporta de momento los tipos entero, que representa números enteros; booleano, que representa valores de verdad como verdadero y falso; y cadena de texto, que son un literal de texto.
 
-Debido a que estas variables son dinámicas, el motor permite no solo sustituir el valor o crear nuevas variables, sino que también permite operaciones entre variables o más datos estáticos.
+Debido a que estas variables son dinámicas, el motor permite no solo sustituir el valor o crear nuevas variables, sino que también permite operaciones entre variables u otros datos estáticos.
 
-Las operaciones estarán formadas por dos variables y la operación que realizan entre ellos. Las operaciones soportadas por el motor dependen del tipo de dato que guarde la variable, y nunca podrán operarse dos variables con distintos tipos de datos. El resultado de la operación siempre se guarda en la primera variable con la que se opera.
+Las operaciones estarán formadas por dos variables y la operación que realizan entre ellos. El resultado de la operación siempre se guarda en la primera variable con la que se opera. Las operaciones soportadas por el motor dependen del tipo de dato que guarde la variable, y nunca podrán operarse dos variables con distintos tipos de datos.
 
 \begin{itemize}
 	\item Las variables \textbf{enteras} soportan las operaciones sustituir, suma, resta, multiplicación, división entera y módulo/resto.
@@ -168,12 +173,11 @@ A continuación se describe lo que realiza cada operación:
 	\item \textbf{Sustituir}: concatena el texto de la primera variable con el de la segunda.
 \end{itemize}
 
-Con todas estas operaciones se pueden modificar el contenido de las variables, mediante una segunda variable u otro dato estático.
+El uso principal de las variables, cuando ya tienen un valor, es el evaluar su valor comparándolo con otra variable o un dato estático. Para ello, el motor permite realizar operaciones de comparación, y al igual que las operaciones de modificación solo funcionan si los dos tipos de las variables a comparar son iguales. En este caso los operadores son compatibles para todos los tipos de variables, aunque su funcionalidad sea distinta depediendo del tipo.
 
-El uso principal de las variables, cuando ya tienen un valor, es el evaluar su valor comparándolo con otra variable o un dato estático. Para ello, el motor permite realizar operaciones de comparación, y al igual que las operaciones de modificación solo funcionan si los dos tipos de las variables a comparar son iguales. En este caso los operadores son compatibles para todos los tipos de variables, aunque su funcionalidad cambie.
+Los operadores disponibles son igual, distinto, mayor, mayor o igual, menor y menor o igual. A continuación se describe la comparación que se realiza dependiendo del operador.
 
-Los operadores disponibles son igual, distinto, mayor, mayor o igual, menor y menor o igual. A continuación se describe la comparación que se realiza dependiendo del operador. La condición es cierta:
-
+La condición es cierta:
 \begin{itemize}
 	\item Operadores enteros:
 	\begin{itemize}
@@ -205,13 +209,49 @@ Los operadores disponibles son igual, distinto, mayor, mayor o igual, menor y me
 \end{itemize}
  
 \section{Qué esperar del sistema (Diseño)} \label{designSection}
+En un mundo en el que todo el mundo puede acceder a miles de aplicaciones a través de un dispositivo portátil que siempre llevan encima y en el que recibir información es lo primordial, es muy importante el diseño que se tiene que llevar a cabo en una aplicación.
 
-\subsection{Batalla} \label{battleDesignSubsection}
+Por ello, al desarrollar una aplicación para un teléfono móvil, uno de los factores clave es que sea muy atractiva, bonita y usable.
+En esta sección se describirán las elecciones de diseño que se han llevado a cabo para las funcionalidades visuales del motor, dividiéndolas en pantallas visuales. Están adjuntas capturas de la propia aplicación para ayudar a la comprensión de ciertas decisiones.
 
-\section{Cómo se ve el motor en funcionamiento}
+\subsection{Menú principal}
 
-\section{Guía para usar el sistema} \label{engineGuideSection}
+\subsection{Pantalla de habitación}
 
+\subsection{Pantalla de movimiento}
+
+\subsection{Ejecución de eventos}
+
+\subsubsection{Diálogo}
+Evento que muestra un mensaje dicho por un personaje en el videojuego. La mayor traba del proyecto original era que los diálogos correspondían con la mayor parte del código fuente, por lo que este evento permite quitar mucha lógica duplicada en el código.
+
+Su uso más frecuente es para mostrar conversaciones entre personajes, aunque también se puede usar para escribir los pensamientos del protagonista, describir una sala o un personaje, plantear un problema...
+
+\subsubsection{Condición}
+Evento que verifica una condición sobre el estado actual del juego. Este evento es transparente para el usuario, ya que se ejecutará un evento u otro siguiente dependiendo de si la condición es cierta o no. Las condiciones son las que se describen en la sección \ref{conditionsSubsection}.
+
+Este evento se suele usar cuando se quiere evaluar el estado del juego y tomar acciones en consecuencia. Por ejemplo, diálogos dependientes del compañero, cofres que no se abren si no dispones de una llave...
+
+\subsubsection{Elección}
+Evento que permite al jugador escoger entre una serie de opciones. Dependiendo de la opción escogida, se ejecutará un evento u otro. Además, las opciones pueden incluir una condición para que se muestren, como las descritas en la sección \ref{conditionsSubsection}.
+
+Algunos ejemplos en los que aparece este evento son cuando hay que resolver un acertijo y se muestran varias respuestas, o cuando un personaje te ofrece posibles formas de pago para un trueque.
+
+\subsubsection{Batalla} \label{battleDesignSubsection}
+Evento que inicia una nueva batalla con la información de un enemigo al que enfrentarse.
+Hasta que no termine la batalla no se pasará al siguiente evento de la cadena.
+
+Al terminar la batalla se ejecutará un evento según si el jugador ha ganado o ha perdido.
+
+\subsubsection{Recompensa}
+
+\subsection{Menú secundario}
+
+\subsection{Inventario}
+
+\section{Cómo implementar un videojuego}
+
+También se describe cómo se han diseñado los ficheros que contienen la información de un juego y cuáles son los datos necesarios para poder crear un juego.
 Antes de comenzar, todos los eventos tienen una serie de características comunes entre ellos:
 
 \begin{itemize}
@@ -225,7 +265,7 @@ Describir cada uno y explicar en qué se traduce en el juego
 
 
 
-\chapter{Desarrollo de la aplicación}
+\chapter{Desarrollo de la aplicación} \label{applicationImplementation}
 
 \section{Una manera de llevarlo a cabo (Arquitectura)}
 
