@@ -1,40 +1,64 @@
 \chapter{Qué tal ha ido el desarrollo (Resultados y conclusiones)}
 Resumen de resultados obtenidos en el TFG. Y conclusiones personales del estudiante sobre el trabajo realizado.
+Este trabajo de fin de grado me ha afectado de muchas maneras:
 
-De la forma en la que están desarrollados los eventos en este momento, permite a los desarrolladores de este motor crear nuevos tipos de eventos, sin perjuicio de ninguna implementación de los anteriores.
+\begin{itemize}
+	\item Gracias al proyecto he podido plasmar mis conocimientos adquiridos durante todo mi proceso de aprenidzaje, durante la universidad. Que hayamos podido empezar desde tan poco en Programación I a llegar a crear una aplicación móvil funcional muestra una evolución evidente en tan solo cinco años. Todavía queda mucho más que aprender, tecnologías que estudiar y otras áreas que emprender, pero es un gran paso hacia el futuro.
+	\item No podría haber hecho sin toda la experiencia que adquirí en el trabajo: cómo usar un control de versiones para mantener la aplicación, adquirir desde cero el lenguaje Swift, orientado en este caso a dispositivos móviles, sin tener conocimiento de ello en la universidad; aprender los métodos de trabajo de una empresa de desarrollo de software. Y sobre todo, la paciencia y las ganas que han tenido de enseñarme todos los compañeros con los que me he cruzado en la empresa.
+	\item Ha permitido poder llegar a participar en el desarrollo de un videojuego. Aunque sea un proyecto simple, todavía es un desarrollo que no ha terminado y que todavía tiene mucho que ofrecer, por lo que seguiré en el desarrollo de maner que algún día podamos ver todas las funcionalidades suficientes para que se le pueda llamar un juego en toda regla.
+\end{itemize}
+
+Historias del Laberinto me ha acompañado durante la mayor parte de la carrera, por lo que es un proyecto que siempre quise llegar a ver finalizado, por todas las cosas que podría llegar a enseñarme y por la satisfacción que produce ver un proyecto desarrollado por ti terminado, mi primer proyecto de verdad.
+Sin embargo, puedo decir que esto no es el fin del proyecto, porque los tiempos y las necesidades cambian, porque todavía queda mucho para que el motor alcance su culmen de capacidad y porque sé que este tipo de proyectos pueden llegar a mucha gente que les guste este tipo de juegos o diseños.
+
+Agradecer también a mi tutor el haber aceptado en un primer lugar este trabajo, y la ayuda para centrarme en objetivos clave del proyecto y desarrollar este trabajo.
+
+También darle las gracias a todos los amigos que he hecho durante mi periodo en la universidad: multitud de opiniones, buenas ideas y ánimos cuando más faltaban. Agradecer personalmente además a Andrea del Nido y Andrea de las Heras, porque sin su imaginación, ideas y otros puntos de vista el proyecto no podría haber salido adelante, o no habría sido interesante mejorarlo.
 
 \section{Futuro del intérprete (Trabajo futuro)}
 Aunque es cierto que lo que se ha marcado como objetivo es suficiente para un trabajo de fin de grado, el motor todavía está en una fase temprana de su desarrollo, con mucho potencial por todas partes que permita a un usuario o un diseñador de juegos aprovechar hasta la última capacidad de crear juegos para móviles de forma sencilla.
 
 Por ello, en esta sección se describirán algunas de las funcionalidades que alguna vez aparecieron durante el desarrollo pero se descartaron o posibles nuevas funcionalidades.
 
-
-
 \subsection{Versiones}
-Durante el desarrollo se han tenido que llevar a cabo varios mantenimientos que no son compatibles con el ciclo de vida de una aplicación normal para un usuario final:
+Durante el desarrollo se han tenido que llevar a cabo varios mantenimientos que no son compatibles con el ciclo de vida de una aplicación normal para un usuario final. Estos problemas todavía no se han resuelto porque la aplicación estaba en desarrollo y no se suponía disponible para el público. Sin embargo, ahora que sí está disponible, se tendrán que solucionar para futuras versiones.
 
 \begin{itemize}
-	\item Al modificar las tablas o las propiedades de la base de datos, Core Data inutiliza la base de datos original y no permite lanzar la aplicación debido a un error. La única solución rápida pasa por reinstalar la aplicación. Al no disponer de migrado automático, esto requiere un extra de funcionalidad que no dio tiempo a ser implementada. 
-	\item Los juegos realizados para distintas versiones de la aplicación no son compatibles entre sí: puede ocurrir que lleguen a funcionar y que la funcionalidad no sea completa, o que el juego sea directamente injugable. Falta establecer una serie de versiones del sistema según  ciertas actualizaciones e intentar avisar al jugador o al diseñador de historias de que el juego no es compatible con ciertas versiones.
+	\item Al modificar las tablas o las propiedades de la base de datos, Core Data inutiliza la base de datos original y no permite lanzar la aplicación. La única solución rápida pasa por reinstalar la aplicación. Al no disponer de migrado automático de tablas, esto requiere un extra de funcionalidad que no dio tiempo a ser implementado. 
+	\item Los juegos realizados para una versión del motor no tienen porqué ser compatibles entre sí: puede ocurrir que lleguen a funcionar y que la funcionalidad no sea completa, o que el juego sea directamente injugable. Falta establecer una serie de versiones del sistema según  ciertas actualizaciones y avisar al jugador o al diseñador de historias de que el juego puede no ser compatible para ciertas versiones.
 \end{itemize}
 
 \subsection{Música}
 Apple cuenta con muchas librerías en Swift que ofrecen funcionalidades extra a los dispositivos de su marca. Una de ellas es \textbf{''Media Player''} \cite{mediaPlayer}.
 Esta librería nos ofrece muchas funcionalidades, como reproducir sonidos o música.
 
-Está pensado ofrecer herramientas a los diseñadores de juegos para poder usar su propio sonido y su propia música en los juegos, para que se reproduzcan en sitios específicos. Los sonidos y la música podrían ser activados por un evento nuevo, y se podría añadir música específica para batallas, el menú o las salas.
+Está pensado ofrecer herramientas a los diseñadores de juegos para poder usar su propios sonidos y música en los juegos, para que se reproduzcan en sitios específicos. Los sonidos y la música podrían ser activados por un evento nuevo, y se podría añadir música específica para batallas, el menú o las salas.
 
 Por último, un usuario podría modificar la música que se reproduce en algunos sitios por una de su propia biblioteca.
 
-\subsection{Animaciones directas}
-
 \subsection{Movimiento}
+Acceder a una opción extra para moverse entre salas hace que el movimiento sea más torpe y lento para un jugador. La idea pasa por sacar las direcciones disponibles a la pantalla de sala o añadir gestos que activen el movimiento directamente. Aparte, se construiría un mapa que permitiera al jugador ver las habitaciones que ya ha visitado.
 
 \subsection{Nuevo combate}
+El combate actual es idéntico al desarrollado por el juego original, pero no ha habido muchos más cambios aparte de los que ofrece la estadística de velocidad. Por ello, es un combate tedioso y puede llegar a ser aburrido si se alarga mucho, debido a que solo hay dos posibles acciones que el jugador puede realizar.
+
+Esto no implica que el combate actual no esté bien planteado o que no pueda llegar a tener futuro, sino que todavía le faltan pequeñas características que lo hagan más fluido o cambiante, como daños variables.
+Además, también se quiere añadir en un futuro un sistema de habilidades, de manera que existe un mayor rango de acciones para el jugador.
+
+Otra posible mejora es que el combate y las estadísticas se parezcan más a las planteadas por el juego ''Dragones y Mazmorras'', cuyo sistema de combate está bien planteado desde el principio y permitiría simplificar además el combate actual.
+
+Aparte de todos los cambios que se pueden hacer en los combates actuales, se pretende realizar un nuevo combate que sea mucho más rápido y fluido para un jugador. Estaría basada en las reglas del juego ''Pistolero'', de manera que los personajes dispongan de una barra de vida muy pequeña y sus acciones sean únicamente disparar, recargar un ataque o defenderse.
 
 \subsection{Tutorial}
+Un jugador nuevo puede considerar tediosa la aplicación si no conoce el diseño del juego o las posibles acciones que puede realizar. Por ello sería bueno implementar un tutorial que permitiera al jugador familiarizarse con la interfaz.
+
+Aunque esto podría llegar a lograrse simplemente usando diálogos y elecciones, puede ser más interesante crear un evento específico que permita mostrar imágenes y flechas y no tener que depender de un evento que esté orientado principalmente a mostrar texto.
  
 \subsection{Compartir historias}
+La idea del motor no es que cualquier diseñador pueda implementar su versión del motor única con su historia única, sino que la única aplicación existente sea la actual y que se puedan modificar los ficheros que crean la historia.
 
-\subsection{Puzzles}
+Para ello, se había pensado en una nube donde cualquier diseñador pudiera subir sus ficheros para que cualquier usuario se los descargue y pueda comenzar a jugar.
+
+\subsection{Puzles}
+Uno de los recursos más típicos en una mazmorra es la resolución de rompecabezas. Para el futuro se han planteado varias formas de resolver puzles sencillos, como nonogramas \cite{nonograms} o rompecabezas de combinación \cite{combinationPuzzles}.
 
