@@ -85,8 +85,7 @@ Hasta que no termine la batalla no se pasará al siguiente evento de la cadena.
 Al terminar la batalla se ejecutará un evento según si el jugador ha ganado o ha perdido.
 
 \subsubsection{Recompensa}
-Evento que agrega objetos al inventario del jugador. En ningún caso agregará objetos que no existan en el videojuego.
-
+Evento que agrega objetos al inventario del jugador.
 Se suele usar para recompensar a un jugador por haber ganado una batalla o por haber abierto un cofre.
 
 \subsection{Habitaciones}
@@ -208,6 +207,15 @@ La condición es cierta:
 	\end{itemize}
 \end{itemize}
 
+\subsection{Localización}
+Supongamos que un diseñador de juegos quiera hacer llegar su juego a la mayor cantidad de gente posible. Aparte de la barrera de los dispositivos que pueden reproducir ese juego, está la barrera del idioma. Aunque ciertos idiomas sean hablados por gran cantidad de gente alrededor del mundo, qué mejor que procurar un juego en el idioma nativo del jugador.
+
+Para ayudar a los diseñadores con este paso, el motor cuenta con soporte para todos los idiomas recogidos en el estándar ISO 639-1 \cite{iso639-1Codes}. Este sistema se ha elegido porque es el estándar que recoge todos los idiomas de forma genérica, sin tener en cuenta diferencias regionales. 
+
+Para ello existen unos ficheros extra donde se pueden definir ciertas claves para ciertos literales de texto que quieren ser traducidos. De esta manera un diseñador puede añadir idiomas extra incluso una vez ya desarrollado el juego. La forma de implementación se describirá en la sección \ref{developmentGuide}.
+
+De ahora en adelante, si se habla de que una funcionalidad es localizable, significa que puede usar una clave que permita traducir el contenido a un idioma.
+
 \newpage
  
 \section{Qué esperar del sistema (Diseño)} \label{designSection}
@@ -277,33 +285,50 @@ Se muestra una pantalla que se superpone a la de la habitación y que contiene e
 Al pulsar en una de las flechas, el jugador se moverá a la habitación que se encuentre en esa dirección, por lo que saldrá de la vista de movimiento y cambiará a la nueva habitación.
 
 El mapa del laberinto es aleatorio, cada vez que el usuario elija una habitación en la que todavía no ha estado presente, el motor recogerá una habitación que no se haya visitado de entre todas las habitaciones configuradas en el juego y fijará su posición, por lo que el jugador podrá volver a visitarla si vuelve al mismo lugar.
-En ciertas ocasiones el motor usará una habitación genérica en lugar de las habitaciones configuradas con el propósito de alargar el juego con eventos genéricos, como puede ser un cofre con contenido común, un enemigo débil...
+Mientras el laberinto tenga varias salas disponibles sin visitar, el movimiento estará disponible en cualquier dirección.
+ 
+En ciertas ocasiones el motor usará una habitación genérica en lugar de las habitaciones configuradas con el propósito de alargar el juego con eventos genéricos determinados por el diseñador. Estas salas normalmente tienen eventos como un cofre con contenido común, un enemigo débil...
 
 Hay que resaltar que en el juego original el jugador cambiaba la dirección a la que miraba cada vez que se movía, simulando un movimiento real de forma más fiel, y para orientarse contaba con una brújula que le permitía saber hacia que punto cardinal estaba mirando.
 Sin embargo, en esta aplicación todavía no se ha implementado esta funcionalidad, por lo que no existe este sistema de giro, el jugador siempre estará mirando hacia el mismo sitio.
 
 \subsection{Ejecución de eventos}
+La aplicación realiza una acción dependiendo del tipo de evento que se vaya a ejecutar. Algunas de estas acciones muestran una vista que las representa y otras se mantienen invisibles, transparentes para un jugador.
+
+A continuación se describe la acción que realiza cada uno de los eventos, dependiendo del tipo:
 
 \subsubsection{Diálogo}
-Evento que muestra un mensaje dicho por un personaje en el videojuego. La mayor traba del proyecto original era que los diálogos correspondían con la mayor parte del código fuente, por lo que este evento permite quitar mucha lógica duplicada en el código.
+\begin{center}
+	\includegraphics[width=0.3\textwidth]{include/snapshots/dialogue.jpg}
+\end{center}
+Este evento está encargado de mostrar un mensaje para que el jugador pueda leerlo. Para ello, la aplicación muestra una pantalla por encima de la sala actual, el jugador se mantiene en la misma sala, con ciertas características:
 
-Su uso más frecuente es para mostrar conversaciones entre personajes, aunque también se puede usar para escribir los pensamientos del protagonista, describir una sala o un personaje, plantear un problema...
+\begin{itemize}
+	\item Mensaje: se muestra el mensaje recogido en el evento. Este mensaje es localizable, por lo que se puede traducir a cualquier idioma.
+	\item Personaje: se muestra el nombre y la imagen de un personaje, para que el jugador reconozca quién está diciendo el mensaje.
+\end{itemize}
+
+Aunque la interfaz de la sala siga viéndose por detrás del diálogo, no se puede interactuar con ella.
+Si el usuario pulsa en cualquier sitio de la pantalla, se ejecutará el siguiente evento.
 
 \subsubsection{Condición}
-Evento que verifica una condición sobre el estado actual del juego. Este evento es transparente para el usuario, ya que se ejecutará un evento u otro siguiente dependiendo de si la condición es cierta o no. Las condiciones son las que se describen en la sección \ref{conditionsSubsection}.
-
-Este evento se suele usar cuando se quiere evaluar el estado del juego y tomar acciones en consecuencia. Por ejemplo, diálogos dependientes del compañero, cofres que no se abren si no dispones de una llave...
+Una condición es un evento transparente para el usuario, no se realizará ningún cambio en la UI. Sin embargo, como realiza operaciones rápidas no bloquea la experiencia de usuario.
 
 \subsubsection{Elección}
-Evento que permite al jugador escoger entre una serie de opciones. Dependiendo de la opción escogida, se ejecutará un evento u otro. Además, las opciones pueden incluir una condición para que se muestren, como las descritas en la sección \ref{conditionsSubsection}.
+\begin{center}
+	\includegraphics[width=0.3\textwidth]{include/snapshots/chose.jpg}
+\end{center}
+La elección permite a un usuario recuperar el control de la aplicación y escoger entre una serie de acciones descritas por el evento. Estas opciones aparecen si la condición que tienen anexa se cumple o si no tienen condición.
 
-Algunos ejemplos en los que aparece este evento son cuando hay que resolver un acertijo y se muestran varias respuestas, o cuando un personaje te ofrece posibles formas de pago para un trueque.
+Muestra un mensaje localizable que insta al jugador a escoger una opción de entre las seleccionadas. Además aparece la imagen del personaje usado en un evento anterior.
+
+El jugador solo puede pulsar en uno de los botones que aparecen con las posibles elecciones. Si el usuario pulsa en cualquier otro sitio, no ocurrirá nada.
+Al pulsar en una de estas opciones, se ejecutará el evento que corresponda.
 
 \subsubsection{Batalla} \label{battleDesignSubsection}
-Evento que inicia una nueva batalla con la información de un enemigo al que enfrentarse.
-Hasta que no termine la batalla no se pasará al siguiente evento de la cadena.
-
-Al terminar la batalla se ejecutará un evento según si el jugador ha ganado o ha perdido.
+\begin{center}
+	\includegraphics[width=0.3\textwidth]{include/snapshots/battle.jpg}
+\end{center}
 
 \subsubsection{Recompensa}
 
@@ -311,7 +336,7 @@ Al terminar la batalla se ejecutará un evento según si el jugador ha ganado o 
 
 \subsection{Inventario}
 
-\section{Cómo implementar un videojuego}
+\section{Cómo implementar un videojuego} \label{developmentGuide}
 
 También se describe cómo se han diseñado los ficheros que contienen la información de un juego y cuáles son los datos necesarios para poder crear un juego.
 Antes de comenzar, todos los eventos tienen una serie de características comunes entre ellos:
