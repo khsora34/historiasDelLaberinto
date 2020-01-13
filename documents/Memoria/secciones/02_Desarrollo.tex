@@ -292,6 +292,10 @@ En ciertas ocasiones el motor usará una habitación genérica en lugar de las h
 Hay que resaltar que en el juego original el jugador cambiaba la dirección a la que miraba cada vez que se movía, simulando un movimiento real de forma más fiel, y para orientarse contaba con una brújula que le permitía saber hacia que punto cardinal estaba mirando.
 Sin embargo, en esta aplicación todavía no se ha implementado esta funcionalidad, por lo que no existe este sistema de giro, el jugador siempre estará mirando hacia el mismo sitio.
 
+\subsection{Menú secundario}
+
+\subsection{Inventario}
+
 \subsection{Ejecución de eventos}
 La aplicación realiza una acción dependiendo del tipo de evento que se vaya a ejecutar. Algunas de estas acciones muestran una vista que las representa y otras se mantienen invisibles, transparentes para un jugador.
 
@@ -330,11 +334,36 @@ Al pulsar en una de estas opciones, se ejecutará el evento que corresponda.
 	\includegraphics[width=0.3\textwidth]{include/snapshots/battle.jpg}
 \end{center}
 
+La batalla es una parte muy importante de la aplicación, ya que es uno de los lugares donde un jugador va a poder salir de la dinámica de explorar la mazmorra y entrar en otra dinámica del juego.
+Además, debido a que el planteamiento del combate es muy simple, se necesita que la interfaz sea lo más atractiva posible y que el combate en sí sea suficientemente fluido.
+
+Un combate muestra a dos equipos enfrentados, el equipo del jugador contra el del enemigo. El equipo del jugador tiene que atacar al enemigo y viceversa, reduciendo sus puntos de vida actuales respectivamente. Un luchador se considera derrotado cuando sus puntos de vida actual llegan a 0.
+
+Gana el primer equipo que acabe con el representante del otro equipo, es decir, gana el equipo del enemigo si acaba con el protagonista y gana el equipo del protagonista si acaba con el enemigo principal.
+
+Respecto a la pantalla, debido a que en un combate se representa la lucha entre dos equipos, hay una mitad de pantalla para cada equipo.
+
+En la parte superior se encuentra el bando enemigo. Se muestra una vista de estado con la información del enemigo y una imagen que representa al enemigo principal.
+
+En la parte inferior se encuentra el bando del jugador, mostrando las ventanas con la información de sus luchadores y dos botones que permiten al jugador realizar acciones.
+
+Respecto a los cuadrados de información, los dos equipos muestran esencialmente lo mismo. Aquí se describe qué indica cada dato de esta vista:
+\begin{itemize}
+	\item Nombre y foto del personaje: permite reconocer a cada luchador en la batalla. Cada luchador debería tener su propio nombre y foto para evitar confundir al jugador.
+	\item Vida actual: representa la vida actual de la que dispone en el momento el luchador. Esta se reduce si un luchador contrario ataca al luchador, por lo tanto el número varía.
+	Además, los puntos de vida siguen un código de colores para ayudar al jugador a darse cuenta del estado en el que se encuentra ese luchador: si el color es \textcolor{green}{verde} significa que los puntos de vida actuales están al máximo, si el color es \textcolor{yellow}{amarillo} significa que los puntos están por debajo de un cuarto del máximo, si el color es  \textcolor{red}{rojo} significa que tiene 0 puntos, y en otro caso el color será blanco.
+	\item Vida máxima: representa el tope de vida que tiene un luchador.
+\end{itemize}
+
+Respecto a las dos botones, representan las dos acciones que puede realizar un usuario.
+\begin{itemize}
+	\item Atacar: realiza la acción de atacar sobre el enemigo.
+	\item Vida actual: lleva al usuario a la vista de inventario, para permitirle usar objetos de la misma manera que desde el menú secundario.
+\end{itemize}
+
+
+
 \subsubsection{Recompensa}
-
-\subsection{Menú secundario}
-
-\subsection{Inventario}
 
 \section{Cómo implementar un videojuego} \label{developmentGuide}
 
