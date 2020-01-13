@@ -63,7 +63,7 @@ class LocalizedValueFetcherImpl: LocalizedValueFetcher {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        guard let entity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.TextDAO)", in: managedContext) else { return false }
+        guard let entity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.TextDAO.rawValue, in: managedContext) else { return false }
         let text = TextDAO(entity: entity, insertInto: managedContext)
         
         text.key = key

@@ -6,6 +6,8 @@ struct Protagonist: CharacterStatus, Decodable {
         didSet {
             if currentHealthPoints > maxHealthPoints {
                 currentHealthPoints = maxHealthPoints
+            } else if currentHealthPoints < 0 {
+                currentHealthPoints = 0
             }
         }
     }

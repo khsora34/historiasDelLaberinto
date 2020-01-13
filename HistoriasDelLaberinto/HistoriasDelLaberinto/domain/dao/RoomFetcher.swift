@@ -115,11 +115,12 @@ class RoomFetcherImpl: RoomFetcher {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        guard let roomEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.RoomDAO)", in: managedContext),
-            let actionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ActionDAO)", in: managedContext),
-            let imageEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ImageSourceDAO)", in: managedContext),
-            let conditionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ConditionDAO)", in: managedContext),
-            let variableConditionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ConditionVariableDAO)", in: managedContext)
+        guard
+            let roomEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.RoomDAO.rawValue, in: managedContext),
+            let actionEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ActionDAO.rawValue, in: managedContext),
+            let imageEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ImageSourceDAO.rawValue, in: managedContext),
+            let conditionEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ConditionDAO.rawValue, in: managedContext),
+            let variableConditionEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ConditionVariableDAO.rawValue, in: managedContext)
             else { return false }
         let loadingRoom = RoomDAO(entity: roomEntity, insertInto: managedContext)
         
@@ -166,7 +167,7 @@ class RoomFetcherImpl: RoomFetcher {
                     loadingVariableCondition.relation = variable.relation.rawValue
                     
                     loadingCondition.variableCondition = loadingVariableCondition
-                    loadingCondition.conditionType = "\(ConditionString.variable)"
+                    loadingCondition.conditionType = ConditionString.variable.rawValue
                 }
                 loadingAction.condition = loadingCondition
             }

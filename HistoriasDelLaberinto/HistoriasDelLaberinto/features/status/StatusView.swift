@@ -31,14 +31,15 @@ class StatusView: UIView {
     }
     
     var ailment: StatusAilment? {
+        //TODO
         didSet {
-            ailmentLabel.text = ailment?.localizedAilmentName
+            ailmentLabel.text = ailment?.ailmentKey
             switch ailment {
-            case .poisoned?:
+            case .poison?:
                 ailmentLabel.textColor = UIColor.green
-            case .blind?:
+            case .blindness?:
                 ailmentLabel.textColor = UIColor.darkGray
-            case .paralyzed?:
+            case .paralysis?:
                 ailmentLabel.textColor = UIColor.yellow
             case .none:
                 ailmentLabel.textColor = UIColor.clear

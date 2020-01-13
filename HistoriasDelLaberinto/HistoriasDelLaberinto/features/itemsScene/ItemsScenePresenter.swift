@@ -1,4 +1,5 @@
 protocol ItemsScenePresentationLogic: Presenter {
+    var sceneTitle: String { get }
     func saveGame()
 }
 
@@ -65,7 +66,11 @@ class ItemsScenePresenter: BasePresenter {
     }
 }
 
-extension ItemsScenePresenter: ItemsScenePresentationLogic {}
+extension ItemsScenePresenter: ItemsScenePresentationLogic {
+    var sceneTitle: String {
+        localizedString(key: "itemsViewTitle")
+    }
+}
 
 extension ItemsScenePresenter: ItemSelectedDelegate {
     func didSelectItem(isSelected: Bool, tag: Int) {

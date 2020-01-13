@@ -1,6 +1,6 @@
 import UIKit
 
-protocol ViewControllerDisplay: ShowLoadingCapable {
+protocol ViewControllerDisplay: LoadingLauncher, AlertLauncher {
     var _presenter: Presenter? { get set }
 }
 

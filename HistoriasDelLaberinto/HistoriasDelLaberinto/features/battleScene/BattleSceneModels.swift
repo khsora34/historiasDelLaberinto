@@ -69,6 +69,15 @@ enum FinishedBattleReason {
     case defeated(CharacterChosen)
 }
 
-enum BattleAction {
-    case attack, items
+enum BattleAction: Int {
+    case attack, item
+    
+    var actionKey: String {
+        switch self {
+        case .attack:
+            return "battleOptionAttack"
+        case .item:
+            return "menuOptionItems"
+        }
+    }
 }

@@ -25,11 +25,11 @@ extension ModifyVariableEventFetcher {
     }
     
     func saveModifyVariable(_ event: ModifyVariableEvent) -> Bool {
-        guard let eventEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ModifyVariableEventDAO)", in: managedContext) else { return false }
+        guard let eventEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ModifyVariableEventDAO.rawValue, in: managedContext) else { return false }
         
         let loadingEvent = ModifyVariableEventDAO(entity: eventEntity, insertInto: managedContext)
         loadingEvent.id = event.id
-        loadingEvent.type = "\(DaoConstants.Event.modifyVariable)"
+        loadingEvent.type = DaoConstants.Event.modifyVariable.rawValue
         loadingEvent.shouldSetVisited = event.shouldSetVisited ?? false
         loadingEvent.shouldEndGame = event.shouldEndGame ?? false
         loadingEvent.nextStep = event.nextStep

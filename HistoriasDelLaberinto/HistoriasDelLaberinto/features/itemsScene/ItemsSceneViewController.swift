@@ -30,16 +30,14 @@ class ItemsSceneViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        title = "Inventario"
-        
+        title = presenter?.sceneTitle
         backgroundView.setColors([.red, .yellow, .orange])
         backgroundView.startAnimation()
         conditionView.backgroundColor = UIColor(white: 0.9, alpha: 0.3)
     }
 }
 
-extension ItemsSceneViewController: ItemsSceneDisplayLogic {
+extension ItemsSceneViewController: ItemsSceneDisplayLogic {    
     func addCharactersStatus(_ models: [StatusViewModel]) {
         for model in models {
             let statusView = StatusView(frame: .zero)

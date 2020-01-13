@@ -51,7 +51,7 @@ extension InitialScenePresenter: InitialScenePresentationLogic {
     
     func startNewGame() {
         viewController?.setLoadButton(isHidden: true)
-        viewController?.showLoading()
+        viewController?.showLoading(message: localizedString(key: "loadingPrompt"))
         interactor?.deleteAllFiles()
         let request = InitialScene.FileLoader.Request(imageDelegate: self)
         interactor?.loadAllFiles(request: request)
@@ -60,12 +60,12 @@ extension InitialScenePresenter: InitialScenePresentationLogic {
     func loadGame() {
         guard let movement = movement else { return }
         guard let items = movement.map, let map = Array(items) as? [RoomPosition], !map.isEmpty else {
-            viewController?.showUnableToStartGame()
+            viewController?.showAlert(title: nil, message: localizedString(key: "loadingGameError"), actions: [(title: localizedString(key: "genericButtonAccept"), style: .default, completion: nil)])
             return
         }
         let mapPositions = map.filter({ $0.x == movement.actualX && $0.y == movement.actualY })
         guard mapPositions.count == 1, let roomId = mapPositions.first?.roomId else {
-            viewController?.showUnableToStartGame()
+            viewController?.showAlert(title: nil, message: localizedString(key: "loadingGameError"), actions: [(title: localizedString(key: "genericButtonAccept"), style: .default, completion: nil)])
             return
         }
         
@@ -83,7 +83,7 @@ extension InitialScenePresenter {
         let response = interactor?.getRoom(request: request)
         
         guard let room = response?.room else {
-            viewController?.showUnableToStartGame()
+            viewController?.showAlert(title: nil, message: localizedString(key: "loadingGameError"), actions: [(title: localizedString(key: "genericButtonAccept"), style: .default, completion: nil)])
             return
         }
         interactor?.createMovement()

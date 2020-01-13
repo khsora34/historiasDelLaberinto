@@ -66,40 +66,40 @@ extension BattleScenePresenter {
     
     func getAilmentMessage(from ailment: StatusAilment?, for character: CharacterStatus) -> String {
         guard let ailment = ailment else { return "" }
-        var start = "Ahora \(character.name) está "
+        var start = character.name + " "
         switch ailment {
-        case .blind:
-            start += "cegado."
-        case .poisoned:
-            start += "envenenado."
-        case .paralyzed:
-            start += "paralizado."
+        case .blindness:
+            start += localizedString(key: "battleMessageGetBlind")
+        case .poison:
+            start += localizedString(key: "battleMessageGetPoisoned")
+        case .paralysis:
+            start += localizedString(key: "battleMessageGetParalyzed")
         }
         return start
     }
     
     func continueAilmentMessage(from ailment: StatusAilment, for character: CharacterStatus) -> String {
-        var start = "\(character.name) sigue "
+        var start = character.name + " "
         switch ailment {
-        case .blind:
-            start += "cegado."
-        case .poisoned:
-            start += "envenenado."
-        case .paralyzed:
-            start += "paralizado."
+        case .blindness:
+            start += localizedString(key: "battleMessageStillBlind")
+        case .poison:
+            start += localizedString(key: "battleMessageStillPoisoned")
+        case .paralysis:
+            start += localizedString(key: "battleMessageStillParalyzed")
         }
         return start
     }
     
     func finishedAilmentMessage(from ailment: StatusAilment, for character: CharacterStatus) -> String {
-        var start = "\(character.name) ya no está "
+        var start = character.name + " "
         switch ailment {
-        case .blind:
-            start += "cegado."
-        case .poisoned:
-            start += "envenenado."
-        case .paralyzed:
-            start += "paralizado."
+        case .blindness:
+            start += localizedString(key: "battleMessageFinishBlindness")
+        case .poison:
+            start += localizedString(key: "battleMessageFinishPoison")
+        case .paralysis:
+            start += localizedString(key: "battleMessageFinishParalysis")
         }
         return start
     }

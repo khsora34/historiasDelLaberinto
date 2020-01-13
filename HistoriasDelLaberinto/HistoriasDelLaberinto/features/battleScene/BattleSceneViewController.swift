@@ -11,7 +11,6 @@ protocol BattleSceneDisplayLogic: ViewControllerDisplay {
 }
 
 class BattleSceneViewController: BaseViewController {
-    
     private var presenter: BattleScenePresentationLogic? {
         return _presenter as? BattleScenePresentationLogic
     }
@@ -26,20 +25,12 @@ class BattleSceneViewController: BaseViewController {
     
     func configureButtons(availableActions: [BattleAction]) {
         var views: [UIView] = []
-        if availableActions.contains(.attack) {
-            let attackButton = ConfigurableButton(frame: .zero)
-            attackButton.setStyle(ButtonStyle.defaultButtonStyle)
-            attackButton.text = "Atacar"
-            attackButton.addTarget(self, action: #selector(didTapAttackButton), for: .touchUpInside)
-            views.append(attackButton)
-        }
-        
-        if availableActions.contains(.items) {
-            let itemsButton = ConfigurableButton(frame: .zero)
-            itemsButton.setStyle(ButtonStyle.defaultButtonStyle)
-            itemsButton.text = "Inventario"
-            itemsButton.addTarget(self, action: #selector(didTapItemsButton), for: .touchUpInside)
-            views.append(itemsButton)
+        for action in availableActions {
+            let button = ConfigurableButton(frame: .zero)
+            button.setStyle(ButtonStyle.defaultButtonStyle)
+            button.text = presenter?.localizedString(key: action.actionKey)
+            button.addTarget(self, action: #selector(didTapAction(sender:)), for: .touchUpInside)
+            views.append(button)
         }
         
         actionsStackView.addViewsInColumns(views)
@@ -55,12 +46,15 @@ class BattleSceneViewController: BaseViewController {
         navigationController?.navigationBar.isHidden = false
     }
     
-    @objc func didTapAttackButton() {
-        presenter?.protaWillAttack()
-    }
-    
-    @objc func didTapItemsButton() {
-        presenter?.protaWillUseItems()
+    @objc func didTapAction(sender: UIButton) {
+        switch BattleAction(rawValue: sender.tag) {
+        case .attack?:
+            presenter?.protaWillAttack()
+        case .item:
+            presenter?.protaWillUseItems()
+        case .none:
+            return
+        }
     }
 }
 

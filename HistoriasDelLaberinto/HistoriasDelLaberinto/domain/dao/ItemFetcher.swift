@@ -68,10 +68,10 @@ class ItemFetcherImpl: ItemFetcher {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        guard let itemEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ItemDAO)", in: managedContext),
-            let consumableEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ConsumableItemDAO)", in: managedContext),
-            let weaponEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.WeaponDAO)", in: managedContext),
-            let imageEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ImageSourceDAO)", in: managedContext) else { return false }
+        guard let itemEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ItemDAO.rawValue, in: managedContext),
+            let consumableEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ConsumableItemDAO.rawValue, in: managedContext),
+            let weaponEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.WeaponDAO.rawValue, in: managedContext),
+            let imageEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ImageSourceDAO.rawValue, in: managedContext) else { return false }
         
         let loadingItem: ItemDAO
         

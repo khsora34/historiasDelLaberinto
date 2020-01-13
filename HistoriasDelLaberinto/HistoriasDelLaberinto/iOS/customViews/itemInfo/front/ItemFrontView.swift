@@ -27,7 +27,8 @@ class ItemFrontView: UIView {
     
     var itemType: ItemType? {
         didSet {
-            itemTypeLabel.text = itemType?.localizedDescription()
+            //TODO
+            itemTypeLabel.text = itemType?.categoryKey
         }
     }
     

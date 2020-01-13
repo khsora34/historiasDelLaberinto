@@ -188,7 +188,9 @@ extension DialogViewController {
             let newView = RewardView(frame: CGRect(x: 0, y: 0, width: self.stackView.frame.width, height: 80.0))
             newView.item = localizer?.localizedString(key: item.name)
             newView.quantity = "\(quantity)"
-            newView.imageView.setImage(from: item.imageSource)
+            newView.imageView.setImage(from: item.imageSource) { (succesful, _) in
+                newView.imageView.isHidden = false
+            }
             self.stackView.addArrangedSubview(newView)
         }
         (stackView.arrangedSubviews.last as? RewardView)?.isLast = true

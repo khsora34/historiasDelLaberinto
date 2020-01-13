@@ -45,13 +45,13 @@ extension ChoiceEventFetcher {
     }
 
     func saveChoice(_ choice: ChoiceEvent) -> Bool {
-        guard let choiceEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ChoiceEventDAO)", in: managedContext),
-            let actionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ActionDAO)", in: managedContext),
-            let conditionEntity = NSEntityDescription.entity(forEntityName: "ConditionDAO", in: managedContext),
-            let conditionVariableEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ConditionVariableDAO)", in: managedContext) else { return false }
+        guard let choiceEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ChoiceEventDAO.rawValue, in: managedContext),
+            let actionEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ActionDAO.rawValue, in: managedContext),
+            let conditionEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ConditionDAO.rawValue, in: managedContext),
+            let conditionVariableEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ConditionVariableDAO.rawValue, in: managedContext) else { return false }
         let loadingEvent = ChoiceEventDAO(entity: choiceEntity, insertInto: managedContext)
         loadingEvent.id = choice.id
-        loadingEvent.type = "\(DaoConstants.Event.choice)"
+        loadingEvent.type = DaoConstants.Event.choice.rawValue
         loadingEvent.shouldSetVisited = choice.shouldSetVisited ?? false
         loadingEvent.shouldEndGame = choice.shouldEndGame ?? false
 
@@ -64,19 +64,19 @@ extension ChoiceEventFetcher {
                 let loadingCondition: ConditionDAO = ConditionDAO(entity: conditionEntity, insertInto: managedContext)
                 switch condition {
                 case .item(let value):
-                    loadingCondition.conditionType = "\(ConditionString.item)"
+                    loadingCondition.conditionType = ConditionString.item.rawValue
                     loadingCondition.conditionValue = value
                 case .partner(let value):
-                    loadingCondition.conditionType = "\(ConditionString.partner)"
+                    loadingCondition.conditionType = ConditionString.partner.rawValue
                     loadingCondition.conditionValue = value
                 case .roomVisited(let value):
-                    loadingCondition.conditionType = "\(ConditionString.roomVisited)"
+                    loadingCondition.conditionType = ConditionString.roomVisited.rawValue
                     loadingCondition.conditionValue = value
                 case .roomNotVisited(let value):
-                    loadingCondition.conditionType = "\(ConditionString.roomNotVisited)"
+                    loadingCondition.conditionType = ConditionString.roomNotVisited.rawValue
                     loadingCondition.conditionValue = value
                 case .variable(let variable):
-                    loadingCondition.conditionType = "\(ConditionString.variable)"
+                    loadingCondition.conditionType = ConditionString.variable.rawValue
                     loadingCondition.variableCondition = loadVariable(variable, for: ConditionVariableDAO(entity: conditionVariableEntity, insertInto: managedContext))
                 }
             }
@@ -96,7 +96,7 @@ extension ChoiceEventFetcher {
 
     private func loadVariable(_ variable: ConditionVariable, for daoObject: ConditionVariableDAO) -> ConditionVariableDAO {
         daoObject.comparationVariableName = variable.comparationVariableName
-        daoObject.relation = "\(variable.relation)"
+        daoObject.relation = variable.relation.rawValue
         if let initialVariableName = variable.initialVariableName {
             daoObject.initialVariableName = initialVariableName
         } else if let initialVariable = variable.initialVariable {

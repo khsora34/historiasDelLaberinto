@@ -18,14 +18,14 @@ enum ItemType: String {
         }
     }
     
-    func localizedDescription() -> String {
+    var categoryKey: String {
         switch self {
         case .consumable:
-            return "Consumible"
+            return "consumableItemCategory"
         case .key:
-            return "Objeto clave"
+            return "keyItemCategory"
         case .weapon:
-            return "Arma"
+            return "weaponItemCategory"
         }
     }
 }
