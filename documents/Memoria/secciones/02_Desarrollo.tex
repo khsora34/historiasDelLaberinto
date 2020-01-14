@@ -333,13 +333,14 @@ Al pulsar en una de estas opciones, se ejecutará el evento que corresponda.
 \begin{center}
 	\includegraphics[width=0.3\textwidth]{include/snapshots/battle.jpg}
 \end{center}
-
 La batalla es una parte muy importante de la aplicación, ya que es uno de los lugares donde un jugador va a poder salir de la dinámica de explorar la mazmorra y entrar en otra dinámica del juego.
 Además, debido a que el planteamiento del combate es muy simple, se necesita que la interfaz sea lo más atractiva posible y que el combate en sí sea suficientemente fluido.
 
 Un combate muestra a dos equipos enfrentados, el equipo del jugador contra el del enemigo. El equipo del jugador tiene que atacar al enemigo y viceversa, reduciendo sus puntos de vida actuales respectivamente. Un luchador se considera derrotado cuando sus puntos de vida actual llegan a 0.
 
 Gana el primer equipo que acabe con el representante del otro equipo, es decir, gana el equipo del enemigo si acaba con el protagonista y gana el equipo del protagonista si acaba con el enemigo principal.
+
+En el combate solo participan personajes jugables, es decir, personajes que contengan estadísticas. Si se intenta comenzar una batalla con un personaje que no tenga estadísticas, el evento de batalla no funcionará.
 
 Respecto a la pantalla, debido a que en un combate se representa la lucha entre dos equipos, hay una mitad de pantalla para cada equipo.
 En la parte superior se encuentra el bando enemigo. Se muestra una vista de estado con la información del enemigo y una imagen que representa al enemigo principal.
@@ -370,12 +371,21 @@ El combate sigue siendo por turnos, siguiendo el orden original: primero actúa 
 	\item Fase de continuidad de estado alterado: el motor analiza el estado del luchador, y si tiene un estado alterado evalúa que el luchador pueda perder ese estado alterado.
 	\item Fase de evaluación de daño de estado alterado: el motor analiza el estado del luchador y realiza ciertas acciones si tiene un estado alterado específico. Si el luchador está envenenado, entonces le hace una cantidad de daño al luchador; y si está paralizado hay una probabilidad de que pierda su turno.
 	\item Fase de introducción de acción: el motor pregunta al luchador qué acción quiere realizar. Si el luchador es el protagonista, el jugador podrá elegir una de las acciones descritas anteriormente en los botones. En otro caso, el luchador siempre decidirá atacar al contrario.
-	\item Fase de ataque: el motor comienza el cálculo del ataque. Si no se dispone de objetivo, el motor elige uno aleatoriamente del equipo contrario de entre los que están vivos, es decir, tienen más de 0 puntos de vida actuales. Tras ello, el motor calcula el daño que recibe el objetivo a partir de las estadísticas del luchador y el contrario.
+	\item Fase de ataque: el motor comienza el cálculo del ataque. Si no se dispone de objetivo, el motor elige uno aleatoriamente del equipo contrario de entre los que están vivos, es decir, tienen más de 0 puntos de vida actuales. Tras ello, el motor calcula el daño que recibe el objetivo a partir de las estadísticas del luchador y el contrario. Se explica con más detalle esta fase más adelante.
 	Además, si el luchador cuenta con el estado alterado ceguera, entonces es posible que falle el ataque.
 	\item Fase de evaluación de daño contrario: el motor analiza el estado del contrario y evalúa si está derrotado.
 \end{enumerate}
 
 Esta cadena de turnos se repite hasta que se da el caso de que uno de los representantes de los equipos sea derrotado. Si el representante del equipo enemigo ha sido derrotado, entonces se activa el evento de victoria. Si el protagonista es el derrotado, entonces se activa el evento de derrota.
+
+Por último, ya que la fase de ataque es más compleja que el resto, se va a describir qué realiza exactamente el motor en esa fase:
+\begin{enumerate}
+	\item Fase de obtención de arma: el motor evalúa si el luchador tiene un arma con la que luchar. Si es así, la carga en el sistema. Esta arma permite al luchador obtener modificadores de fuerza, estado alterado y acierto, por lo que modifica la fuerza del luchador, permite inflingir estados alterados al objetivo y tiene un porcentaje que determina si el luchador acierta un ataque.
+	\item Fase de cálculo de golpes: el motor se basa en la relación entre la agilidad del luchador y de su objetivo para calcular el número de golpes que efectuará el luchador. Para ello realiza la división entera entre la agilidad de los dos, y el resultado es el número de golpes que el luchador puede realizar.
+	Después, calcula si el luchador puede fallar alguno de esos golpes. Si este no tiene arma, entonces acierta todos los golpes. En otro caso, usará el porcentaje definido en el arma para calcular los golpes que da.
+	\item Fase de cálculo de daño: si el luchador acierta ningún ataque, entonces termina su turno. Si consigue acertar, entonces se calcula el daño teniendo en cuenta la fuerza del luchador y la defensa del enemigo, aparte del factor de fuerza extra que puede reportar un arma.
+	\item Fase de cálculo de estado alterado: si el luchador ha conseguido conectar algún golpe y además lleva un arma equipada que puede causar un estado alterado, entonces hay una probabilidad de que se lo cause al objetivo.
+\end{enumerate}
 
 \subsubsection{Recompensa}
 \begin{center}
@@ -388,30 +398,289 @@ Cada objeto está representado con su nombre localizable, una cantidad que se re
 \section{Cómo crear un videojuego} \label{developmentGuide}
 En esta sección se define cómo crear un juego que sea compatible con el motor. Para ello, se dispone de una serie de ficheros que permiten a la aplicación cargar la información básica y empezar el juego. En esta sección se explicará para qué sirve cada fichero y cómo se deben rellenar.
 
-Estos ficheros tienen formato YAML \cite{yamlDocumentation}. Este formato permite la manipulación de datos serializables de forma sencilla tanto por el programador como por un usuario, es decir, son ficheros fáciles de transformar a código y son fáciles de interpretar y diseñar por una persona.
+Estos ficheros tienen formato YAML \cite{yamlDocumentation}. Este formato permite la manipulación de datos serializables de forma sencilla tanto por el programador como por un usuario, es decir, son ficheros fáciles de transformar a código y son fáciles de interpretar y diseñar por una persona. 
 
-Todas las claves están definidas en inglés, para permitir que los diseñadores puedan tener un lenguaje común para crear juegos.
+Un fichero de este tipo sigue un formato ''clave:valor''. Todas las claves están definidas en inglés, para permitir que los diseñadores puedan tener un lenguaje común para crear juegos.
+Algunas claves son opcionales. Si una clave es opcional, significa que puede no aparecer o aparecer vacía.
 
 \subsection{Imágenes}
 Un diseñador puede crear o descargar sus propias imágenes para usarlas en el juego. Para ello existe una carpeta llamada ''images'', donde se deben guardar las imágenes necesarias.
 En todo caso, si el diseñador prefiere generar un juego de manera que sus elementos no pesen demasiado, el motor también soporta la descarga de imágenes por Internet, siempre teniendo en cuenta que sólo puede descargar imágenes de URLs con soporte SSL a través del protocolo HTTPS, es decir, que comiencen por ''https''.
 El motor acepta archivos con tipos comunes, como JPEG o PNG. No se asegura la compatibilidad con otros tipos de ficheros.
 
-Para representar una imagen hay que especificar el origen de la imagen y el lugar donde se encuentra el recurso. El origen puede ser tanto local como remoto. Si el origen es local, el diseñador debe especificar el nombre del fichero al que quiere acceder. Si el origen es remoto, el diseñador debe especificar la URL que contiene la imagen. 
+Para representar una imagen hay que especificar el origen de la imagen y el lugar donde se encuentra el recurso. El origen puede ser tanto local como remoto. Si el origen es local, el diseñador debe especificar el nombre del fichero al que quiere acceder. Si el origen es remoto, el diseñador debe especificar la URL que contiene la imagen.
 
-\begin{lstlisting}[style=Python]
-# -*- coding: utf-8 -*-
+\begin{lstlisting}
+#Si el fichero es remoto:
+imageSource:
+	type: remote
+	source: "https://imgur.com/zNGi05P.png"
+	
+#Si el fichero es local:
+imageSource:
+	type: local
+	source: "tarta.jpg"
+\end{lstlisting}
+
+\subsection{Literales localizables}
+En la pantalla de cambio de idioma se hacía referencia a la posibilidad de definir literales de texto que podían ser traducidos. Un literal suele ser una frase que resume la traducción del texto. Normalmente se encuentran de la forma "literal" = "traducción".
+
+La información de los idiomas se guarda en la carpeta ''texts'', donde se encuentra un fichero para cada idioma que se quiera implementar. Estos ficheros son los que albergan esos literales y sus traducciones. Es importante repetir que solo se puede usar un fichero para cada idioma, es decir, si se quiere que el juego esté disponible en español e inglés, entonces en la carpeta ''texts'' debe haber dos ficheros, uno para el español y otro para el inglés.
+
+Los archivos deben llamarse siempre <codigo\_iso639-1\_del\_idioma>.strings \cite{iso639-1Codes} para que el sistema sea capaz de reconocerlos.
+A continuación se muestra un ejemplo de cómo se deben rellenar:
+
+\begin{lstlisting}
+#es.strings
+"newGameButton" = "Nueva partida";
+"loadGameButton" = "Cargar partida";
+"gameTitle" = "Historias del Laberinto";
+"changeLanguageButtonText" = "Cambiar idioma";
+"room17LookAroundMessage" = "Miras a tu alrededor";
+
+#en.strings
+"newGameButton" = "New game";
+"loadGameButton" = "Load game";
+"gameTitle" = "Labyrinth adventures";
+"changeLanguageButtonText" = "Change language";
+"room17LookAroundMessage" = "You take a look at your surroundings.";
+#Los ; situados al final son muy importantes para que los textos puedan ser cargados.
+\end{lstlisting}
+
+Para añadir un texto localizable a cualquier parte del juego, hay que usar el literal en vez de su traducción.
+\begin{lstlisting}
+#En vez de poner una traduccion directa en el fichero correspondiente...
+- id: "room17LookAround"
+	mode: "dialogue"
+	message: "Miras a tu alrededor"
+	characterId: "narrator"
+	nextStep: "room17LookAround2"
+
+#se usa el literal.
+- id: "room17LookAround"
+	mode: "dialogue"
+	message: "room17LookAroundMessage"
+	characterId: "narrator"
+	nextStep: "room17LookAround2"
+\end{lstlisting}
+
+\subsection{Condiciones}
+No existe un fichero específico para las condiciones, implicaría más complicación para desarrollar los ficheros, aunque permitiría añadir orden.
+Sin embargo, se añade esta subsección para hablar de cómo modelizar condiciones en los ficheros. Todas las condiciones se modelan igual en todos los sitios, para evitar confusiones.
+
+\begin{lstlisting}
+# Existen varios tipos de condiciones:
+# Companero
+condition:
+	kind: "partner"
+	required: "gerar" # Id del companero que sigue al protagonista.
+	
+# Objeto
+condition:
+	kind: "item"
+	required: "potion" # Id del objeto que tiene que tener el protagonista. Si se cumple esta condicion, entonces el protagonista perdera una unidad de ese objeto.
+	
+# Habitacion visitada
+condition:
+	kind: "roomVisited"
+	required: "startRoom" # Id de una sala. Es cierta si la sala ya se ha visitado.
+	
+# Habitacion sin visitar
+condition:
+	kind: "roomNotVisited"
+	required: "startRoom" # Id de una sala. Es cierta si la sala todavia no se ha visitado.
+	
+# Variables
+condition:
+	kind: variable
+	required:
+		compareToId: "numberOfApples" # Id de la variable del lado izquierdo de la comparacion.
+		relation: equal # Operacion de relacion entre las variables.
+		initialVariable: # Opcional. Variable con informacion estatica para el lado derecho de la comparacion. Si este campo no aparece, debe aparecer el de la siguiente condicion. En otro caso, no funcionara el evento que contenga esta condicion.
+			type: integer
+			value: 10
+		
+condition:
+	kind: "variable"
+	required:
+		compareToId: "numberOfApples"
+		relation: equal
+		initialVariable: "cupcakes" # Opcional. Id de la variable del lado derecho de la comparacion. Si este campo no aparece, debe aparecer el de la siguiente condicion. En otro caso, no funcionara el evento que contenga esta condicion.
 
 \end{lstlisting}
 
 
-\subsection{Literales localizables}
 \subsection{Personajes}
+Este fichero define todos los personajes que van a aparecer a lo largo del juego, junto con toda la información que necesiten. Se debe llamar ''characters.yml''.
+
+\begin{lstlisting}
+playable: #Incluye los personajes con estadisticas de combate.
+	"gerar": #Id del personaje. Debe ser unico. Representa al personaje
+		name: "Gerardo" #Nombre del personaje. Este se mostrara en el juego. Localizable.
+		currentHealthPoints: 300 #Puntos de vida actuales. Este dato solo sirve para el principio del juego, no representa el estado del juego.
+		maxHealthPoints: 300 #Puntos de vida maximos.
+		attack: 15 #Puntos de ataque.
+		defense: 15 #Puntos de defensa.
+		agility: 4 #Puntos de agilidad.
+		weapon: "magic_sword" # Opcional. Indica el id del arma que porta el protagonista.
+		imageSource: #Imagen grande del personaje. Se usa en dialogos.
+			type: remote
+			source: "https://imgur.com/zNGi05P.png"
+
+		portraitSource: #Imagen reducida del personaje. Se usa en la vista de estado del personaje.
+			type: remote
+			source: "https://i.imgur.com/g3WIUf4.png"
+
+notPlayable: #Incluye los personajes que no tienen estadisticas de combate. Aunque se incluya a un personaje con estadisticas aqui, no se podra usar como personaje en batallas.
+	"narrator": #Id del personaje. Debe ser unico. Representa al personaje.
+		name: "Narrador" #Nombre del personaje. Este se mostrara en el juego. Localizable.
+		imageSource:  #Imagen grande del personaje. De tipo remoto.
+			type: remote
+			source: "https://i.imgur.com/Upcm999.png"
+
+	"aurelionSol":
+		name: "Aurelion Sol"
+		imageSource: #Imagen grande del personaje. De tipo local.
+			type: local
+			source: "aurelionSol.PNG"
+\end{lstlisting}
+
+Todas las estadísticas que se rellenen con números deben ser enteros. El motor no funcionará si se incluye un número con decimales.
+
 \subsection{Protagonista}
+El protagonista, el personaje controlado por el jugador, tiene su propio fichero. Muchas de las estadísticas son iguales, pero tiene cierta información extra. El nombre del fichero es ''prota.yml''.
+
+\begin{lstlisting}
+name: "Cisco" # Nombre del protagonista. Localizable.
+partner: "gerar" # Opcional. Id del personaje que viaja con el protagonista. Debe ser un personaje con estadisticas.
+imageSource: # Imagen grande del protagonista.
+	type: remote
+	source: "https://vignette.wikia.nocookie.net/megamitensei/images/6/63/Persona_5_Hero.png"
+portraitSource: # Imagen reducida del protagonista.
+	type: remote
+	source: "https://vignette.wikia.nocookie.net/megamitensei/images/1/14/P5_manga_Akira.jpg"
+
+currentHealthPoints: 590 # Puntos de vida actuales. Este dato solo sirve para el principio del juego, no representa el estado del juego.
+maxHealthPoints: 590 # Puntos de vida maximos.
+attack: 30 # Puntos de ataque.
+defense: 10 # Puntos de defensa.
+agility: 10 # Puntos de agilidad.
+weapon: "magic_sword" # Opcional. Indica el id del arma que porta el protagonista.
+	
+items: # Objetos que porta el protagonista al principio de la aventura.
+	"potion": 1 # Este objeto tiene el id del objeto como clave y la cantidad de la que se dispone como valor.
+	"high_potion": 2
+	"small_key": 1
+\end{lstlisting}
+
+El protagonista no tiene id, por lo que su id es siempre "prota".
+
 \subsection{Objetos}
+El fichero de objetos recoge todos los objetos que se pueden encontrar a lo largo de una partida. Se guardan en un archivo llamado ''items.yml''.
+
+Los objetos tienen un id, un nombre, una descripción, un tipo y una imagen asociada. Hay tres tipos de objetos: consumibles, armas y clave.
+\begin{itemize}
+	\item Consumibles: incluyen un campo obligatorio que indica la cantidad que aumenta o disminuye los puntos de vida actuales de un personaje.
+	\item Objetos clave: representan un objeto que se usará para ciertas condiciones. No tienen más campos.
+	\item Armas: objetos que usan los personajes para atacar. Podrán tener opcionalmente una estadística de fuerza extra, un porcentaje de acierto y un estado alterado que provocan junto con un porcentaje de provocarlo. Si no está el campo de fuerza extra, se supondrá que es 0. Si no está el campo de estado alterado, se supondrá que es "ninguno". 
+\end{itemize}
+
+Si un objeto aparece en algún sitio y no está en este fichero, entonces se tratará como si no estuviera dentro del inventario.
+
+\begin{lstlisting}
+consumableItems: # Objetos consumibles
+	"potion": # Id del objeto.
+		name: "Pocion" # Nombre del objeto. Localizable.
+		description: "Restaura puntos de vida." # Descripcion del objeto. Localizable.
+		imageSource: # Imagen del objeto
+			type: remote
+			source: "https://cdn.bulbagarden.net/upload/2/2e/GO_Potion.png"
+		healthRecovered: 40 # Cantidad de puntos de vida actual que recupera un personaje si lo usa. Puede ser negativo.
+		
+keyItems: # Objetos clave
+	"small_key": # Id del objeto.
+		name: "Llave" # Nombre del objeto. Localizable.
+		description: "Una llave." # Descripcion del objeto. Localizable.
+		imageSource: # Imagen del objeto
+			type: local
+			source: "small_key.png"
+			
+weapons: # Armas
+	"poisoned_bow": # Id del objeto.
+		name: "Arco envenenado" # Nombre del objeto. Localizable.
+		description: "Un arco que puede provocar veneno." # Descripcion del arma. Localizable.
+		imageSource: # Imagen del arma
+			type: local
+			source: "ModernBowFarket.png"
+		extraDamage: 0 # Dano extra que puede causar el luchador con el arma.
+		hitRate: 94 # Porcentaje de acierto con el arma equipada.
+		inducedAilment: 
+			ailment: "poison" # Estado alterado que puede causar el arma.
+			induceRate: 32 # Probabilidad de causar el estado alterado al atacar a un contrario.
+\end{lstlisting}
+
 \subsection{Variables}
+El fichero de variables recoge información sobre las variables que quiera el diseñador tener inicializadas desde el principio. El nombre del archivo es ''variables.yml''.
+
+\begin{lstlisting}
+- name: "isShieldActive" # Id de la variable. Unico
+  content:
+  	type: boolean # Tipo del dato de la variable.
+  	value: false # Dato contenido en la variable.
+
+- name: "numberOfApples" # Id de la variable. Unico
+  content:
+	type: integer # Tipo del dato de la variable.
+	value: 0 # Dato contenido en la variable.
+
+- name: "partnerName" # Id de la variable. Unico
+  content:
+	type: string # Tipo del dato de la variable.
+	value: "Gerardo" # Dato contenido en la variable.
+\end{lstlisting}
+ 
 \subsection{Habitaciones}
+El fichero de las salas recoge todas las salas que se podrán visitar durante el juego. El fichero que las contiene se llama ''rooms.yml''.
+
+Una sala está representada por un id que la identifica, un nombre, una descripción, acciones posibles en la sala, una imagen, un id de un evento que se ejecuta al entrar a la sala.
+Las acciones posibles en una sala tienen un nombre, un id de evento y condiciones de que aparezcan. Si la acción aparece siempre, el campo condición no debe estar en la acción.
+Además, existen salas genéricas que sirven para provocar eventos genéricos, tendrán un campo que indiquen que son genéricas.
+
+\begin{lstlisting}
+rooms:
+	"room17":
+		id: "room17" # Id que identifica a la sala. Unico.
+		name: "Primera habitacion" # Nombre de la sala. Localizable.
+		description: "Esta es la primera habitacion" # Descripcion de la sala. Localizable.
+		imageSource: # Imagen de la sala en la pantalla.
+			type: local
+			source: "cave-near-body-of-water-at-sunset-931910.jpg"
+		startEvent: "firstEvent" # Opcional. Ejecuta el evento con este id al entrar a la sala.
+		actions: # Acciones que se pueden realizar en una habitacion.
+			- action: "Hablar" # Nombre de la accion. Localizable.
+			  nextStep: "room17Conversation" # Id del evento a ejecutar al pulsar la accion.
+			  condition: # Opcional. Condicion para que aparezca esta accion.
+				kind: "partner"
+				required: "gerar"
+			- action: "Observar" # Nombre de la accion. Localizable.
+			  nextStep: "room17LookAround" # Id del evento a ejecutar al pulsar la accion.
+
+	"genericRoom1":
+		id: "genericRoom1" # Id que identifica a la sala. Unico.
+		name: "Habitacion generica" # Nombre de la sala. Localizable.
+		description: "Esta es una habitacion generica" # Descripcion de la sala. Localizable.
+		imageSource: # Imagen de la sala en la pantalla.
+			type: local
+			source: "orange-and-brown-cave-1533483.jpg"
+		isGenericRoom: true # Opcional. Indica que la habitacion es generica.
+		actions: # Acciones que se pueden realizar en una habitacion.
+			- action: "Observar" # Nombre de la accion. Localizable.
+		 	  nextStep: "emptyRoomTalk" # Id del evento a ejecutar al pulsar la accion.
+\end{lstlisting}
+
 \subsection{Eventos}
+Los eventos será el fichero con más información comparado con el resto. Es donde se guardan todos los eventos que se van a poder ejecutar durante el juego. El nombre del fichero es ''events.yml''.
+
 
 Antes de comenzar, todos los eventos tienen una serie de características comunes entre ellos:
 
