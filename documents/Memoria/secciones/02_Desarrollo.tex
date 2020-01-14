@@ -9,7 +9,7 @@ Historias del Laberinto es una aplicación que funciona como \textbf{intérprete
 Esta aplicación permite a un usuario reproducir un videojuego definido en un formato predefinido. Este formato permite abstraer de toda la capa programática a un diseñador.
 De momento solo es capaz de reproducir videojuegos, no es capaz de crearlos, aunque en una futura versión probablemente se desarrolle esta opción.
 
-Nos hemos referido antes al proyecto también como un motor de videojuegos, que se puede definir de esta manera:
+Se ha referido antes al proyecto también como un motor de videojuegos, que se puede definir de esta manera:
 \begin{quote}
 	\small Un motor de videojuego es un término que hace referencia a una serie de librerías de programación que permiten el diseño, la creación y la representación de un videojuego. \cite{Alberto_Carrasco}
 \end{quote}
@@ -342,32 +342,77 @@ Un combate muestra a dos equipos enfrentados, el equipo del jugador contra el de
 Gana el primer equipo que acabe con el representante del otro equipo, es decir, gana el equipo del enemigo si acaba con el protagonista y gana el equipo del protagonista si acaba con el enemigo principal.
 
 Respecto a la pantalla, debido a que en un combate se representa la lucha entre dos equipos, hay una mitad de pantalla para cada equipo.
-
 En la parte superior se encuentra el bando enemigo. Se muestra una vista de estado con la información del enemigo y una imagen que representa al enemigo principal.
-
 En la parte inferior se encuentra el bando del jugador, mostrando las ventanas con la información de sus luchadores y dos botones que permiten al jugador realizar acciones.
 
-Respecto a los cuadrados de información, los dos equipos muestran esencialmente lo mismo. Aquí se describe qué indica cada dato de esta vista:
+También se puede observar 3 cuadrados de información, dos para el equipo de jugador y uno para el enemigo. En este caso, los dos equipos muestran esencialmente lo mismo. Aquí se describe qué indica cada dato de esta vista:
 \begin{itemize}
 	\item Nombre y foto del personaje: permite reconocer a cada luchador en la batalla. Cada luchador debería tener su propio nombre y foto para evitar confundir al jugador.
 	\item Vida actual: representa la vida actual de la que dispone en el momento el luchador. Esta se reduce si un luchador contrario ataca al luchador, por lo tanto el número varía.
 	Además, los puntos de vida siguen un código de colores para ayudar al jugador a darse cuenta del estado en el que se encuentra ese luchador: si el color es \textcolor{green}{verde} significa que los puntos de vida actuales están al máximo, si el color es \textcolor{yellow}{amarillo} significa que los puntos están por debajo de un cuarto del máximo, si el color es  \textcolor{red}{rojo} significa que tiene 0 puntos, y en otro caso el color será blanco.
 	\item Vida máxima: representa el tope de vida que tiene un luchador.
+	\item Estado alterado: situado en la esquina superior derecha, representa el estado alterado que puede sufrir uno de los personajes. Si el personaje no tiene ningún estado alterado, entonces no aparece información al respecto.
 \end{itemize}
+
+Durante una batalla, el jugador solamente podrá controlar a su personaje, al protagonista. El resto de acciones, las realizadas por el resto del equipo del jugador y el equipo del enemigo, son calculadas automáticamente por la aplicación. 
 
 Respecto a las dos botones, representan las dos acciones que puede realizar un usuario.
 \begin{itemize}
 	\item Atacar: realiza la acción de atacar sobre el enemigo.
-	\item Vida actual: lleva al usuario a la vista de inventario, para permitirle usar objetos de la misma manera que desde el menú secundario.
+	\item Inventario: lleva al usuario a la vista de inventario, para permitirle usar objetos de la misma manera que desde el menú secundario.
 \end{itemize}
 
+La batalla está diseñada prácticamente igual a la que se encontraba en el juego original. Aunque esta vez la aplicación cuente con una interfaz que representa mejor una pelea, el núcleo lógico de toda la pantalla es muy parecido al anterior. De todas maneras, a continuación se describe cómo está diseñada la vista, funcionalmente hablando. 
 
+El combate sigue siendo por turnos, siguiendo el orden original: primero actúa el protagonista, después el enemigo y por último el resto del equipo del jugador. Cada turno cuenta con una serie de fases que le permite al jugador darse cuenta de lo que está ocurriendo. En esta descripción, siempre se hablará del personaje que actúa en el turno como luchador y contrario como el personaje al que ataca el responsable del turno.
+
+\begin{enumerate}
+	\item Fase de continuidad de estado alterado: el motor analiza el estado del luchador, y si tiene un estado alterado evalúa que el luchador pueda perder ese estado alterado.
+	\item Fase de evaluación de daño de estado alterado: el motor analiza el estado del luchador y realiza ciertas acciones si tiene un estado alterado específico. Si el luchador está envenenado, entonces le hace una cantidad de daño al luchador; y si está paralizado hay una probabilidad de que pierda su turno.
+	\item Fase de introducción de acción: el motor pregunta al luchador qué acción quiere realizar. Si el luchador es el protagonista, el jugador podrá elegir una de las acciones descritas anteriormente en los botones. En otro caso, el luchador siempre decidirá atacar al contrario.
+	\item Fase de ataque: el motor comienza el cálculo del ataque. Si no se dispone de objetivo, el motor elige uno aleatoriamente del equipo contrario de entre los que están vivos, es decir, tienen más de 0 puntos de vida actuales. Tras ello, el motor calcula el daño que recibe el objetivo a partir de las estadísticas del luchador y el contrario.
+	Además, si el luchador cuenta con el estado alterado ceguera, entonces es posible que falle el ataque.
+	\item Fase de evaluación de daño contrario: el motor analiza el estado del contrario y evalúa si está derrotado.
+\end{enumerate}
+
+Esta cadena de turnos se repite hasta que se da el caso de que uno de los representantes de los equipos sea derrotado. Si el representante del equipo enemigo ha sido derrotado, entonces se activa el evento de victoria. Si el protagonista es el derrotado, entonces se activa el evento de derrota.
 
 \subsubsection{Recompensa}
+\begin{center}
+	\includegraphics[width=0.3\textwidth]{include/snapshots/reward.jpg}
+\end{center}
+La recompensa muestra al usuario una serie de objetos que consigue, especificados en el evento.
+En la parte inferior se muestra un mensaje localizable del evento. En la parte superior se muestra una lista de objetos obtenidos por el jugador. Teóricamente un jugador puede recibir tantos objetos como se especifique en el evento.
+Cada objeto está representado con su nombre localizable, una cantidad que se recibe y una foto indicando qué objetos se reciben.
 
-\section{Cómo implementar un videojuego} \label{developmentGuide}
+\section{Cómo crear un videojuego} \label{developmentGuide}
+En esta sección se define cómo crear un juego que sea compatible con el motor. Para ello, se dispone de una serie de ficheros que permiten a la aplicación cargar la información básica y empezar el juego. En esta sección se explicará para qué sirve cada fichero y cómo se deben rellenar.
 
-También se describe cómo se han diseñado los ficheros que contienen la información de un juego y cuáles son los datos necesarios para poder crear un juego.
+Estos ficheros tienen formato YAML \cite{yamlDocumentation}. Este formato permite la manipulación de datos serializables de forma sencilla tanto por el programador como por un usuario, es decir, son ficheros fáciles de transformar a código y son fáciles de interpretar y diseñar por una persona.
+
+Todas las claves están definidas en inglés, para permitir que los diseñadores puedan tener un lenguaje común para crear juegos.
+
+\subsection{Imágenes}
+Un diseñador puede crear o descargar sus propias imágenes para usarlas en el juego. Para ello existe una carpeta llamada ''images'', donde se deben guardar las imágenes necesarias.
+En todo caso, si el diseñador prefiere generar un juego de manera que sus elementos no pesen demasiado, el motor también soporta la descarga de imágenes por Internet, siempre teniendo en cuenta que sólo puede descargar imágenes de URLs con soporte SSL a través del protocolo HTTPS, es decir, que comiencen por ''https''.
+El motor acepta archivos con tipos comunes, como JPEG o PNG. No se asegura la compatibilidad con otros tipos de ficheros.
+
+Para representar una imagen hay que especificar el origen de la imagen y el lugar donde se encuentra el recurso. El origen puede ser tanto local como remoto. Si el origen es local, el diseñador debe especificar el nombre del fichero al que quiere acceder. Si el origen es remoto, el diseñador debe especificar la URL que contiene la imagen. 
+
+\begin{lstlisting}[style=Python]
+# -*- coding: utf-8 -*-
+
+\end{lstlisting}
+
+
+\subsection{Literales localizables}
+\subsection{Personajes}
+\subsection{Protagonista}
+\subsection{Objetos}
+\subsection{Variables}
+\subsection{Habitaciones}
+\subsection{Eventos}
+
 Antes de comenzar, todos los eventos tienen una serie de características comunes entre ellos:
 
 \begin{itemize}
