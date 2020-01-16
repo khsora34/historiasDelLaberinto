@@ -51,7 +51,7 @@ class StatusView: UIView {
     
     func configure(withModel model: StatusViewModel) {
         self.characterChosen = model.chosenCharacter
-        self.name = model.name
+        self.nameLabel.text = model.name
         self.setHealth(currentHealth: model.actualHealth, maxHealth: model.maxHealth)
         self.ailment = model.ailment
         self.portraitImageView.setImage(from: model.imageSource)

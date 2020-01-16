@@ -40,7 +40,7 @@ extension ItemsSceneViewController: ItemsSceneDisplayLogic {
     func addCharactersStatus(_ models: [StatusViewModel]) {
         for model in models {
             let statusView = StatusView(frame: .zero)
-            model.configure(view: statusView)
+            statusView.configure(withModel: model)
             statusView.isUserInteractionEnabled = true
             statusStackView.addArrangedSubview(statusView)
         }
@@ -62,7 +62,7 @@ extension ItemsSceneViewController: ItemsSceneDisplayLogic {
     
     func updateStatusView(_ model: StatusViewModel) {
         if let view = statusStackView.arrangedSubviews.filter({ ($0 as? StatusView)?.characterChosen == model.chosenCharacter }).first as? StatusView {
-            model.configure(view: view)
+            view.configure(withModel: model)
             addBlinkAnimation(to: view.flashView, withAutoreverse: true)
         }
     }

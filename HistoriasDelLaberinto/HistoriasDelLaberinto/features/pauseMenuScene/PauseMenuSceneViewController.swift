@@ -40,7 +40,7 @@ extension PauseMenuSceneViewController: PauseMenuSceneDisplayLogic {
         for model in models {
             // Auto Layout will do the job.
             let statusView = StatusView(frame: CGRect.zero)
-            model.configure(view: statusView)
+            statusView.configure(withModel: model)
             statusStackView.addArrangedSubview(statusView)
         }
         
@@ -53,7 +53,7 @@ extension PauseMenuSceneViewController: PauseMenuSceneDisplayLogic {
     
     func updateStatusView(_ model: StatusViewModel) {
         if let view = statusStackView.arrangedSubviews.filter({ ($0 as? StatusView)?.characterChosen == model.chosenCharacter }).first as? StatusView {
-            model.configure(view: view)
+            view.configure(withModel: model)
         }
     }
     

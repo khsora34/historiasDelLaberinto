@@ -80,7 +80,7 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
     func setEnemyInfo(imageSource: ImageSource, model: StatusViewModel) {
         enemyImageView.setImage(from: imageSource)
         enemyStatus = StatusView(frame: CGRect(x: 0, y: 0, width: 394, height: 100))
-        model.configure(view: enemyStatus)
+        enemyStatus.configure(withModel: model)
         enemyStatus.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(enemyStatus)
         setEnemyViewConstraints(to: enemyStatus)
@@ -88,9 +88,9 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
     
     func updateView(_ model: StatusViewModel) {
         if model.isEnemy {
-            model.configure(view: enemyStatus)
+            enemyStatus.configure(withModel: model)
         } else if let view = charactersStackView.arrangedSubviews.filter({ ($0 as? StatusView)?.characterChosen == model.chosenCharacter }).first as? StatusView {
-            model.configure(view: view)
+            view.configure(withModel: model)
         }
     }
     
