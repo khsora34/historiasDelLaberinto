@@ -505,7 +505,7 @@ condition:
 	required:
 		compareToId: "numberOfApples"
 		relation: equal
-		initialVariable: "cupcakes" # Opcional. Id de la variable del lado derecho de la comparacion. Si este campo no aparece, debe aparecer el de la siguiente condicion. En otro caso, no funcionara el evento que contenga esta condicion.
+		initialVariable: "cupcakes" # Opcional. Id de la variable del lado derecho de la comparacion. Si este campo no aparece, debe aparecer el de la condicion anterior. En otro caso, no funcionara el evento que contenga esta condicion.
 
 \end{lstlisting}
 
@@ -681,24 +681,183 @@ rooms:
 \subsection{Eventos}
 Los eventos será el fichero con más información comparado con el resto. Es donde se guardan todos los eventos que se van a poder ejecutar durante el juego. El nombre del fichero es ''events.yml''.
 
-
 Antes de comenzar, todos los eventos tienen una serie de características comunes entre ellos:
-
 \begin{itemize}
 	\item Identificador: todos los eventos cuentan con un id, y este debe ser único. No se asegura que dos eventos con identificadores idénticos funcionen a la vez.
-	\item Siguiente paso: indica el identificador del próximo evento a ejecutarse...
-	akbhdfdkjalskshbebbjdkjbajbkRELLENAR
+	\item Habitación visitada: un evento puede marcar que la habitación en la que está el jugador en el momento ha sido visitada.
+	\item Final del juego: un evento puede activar el fin del juego. Si esto ocurre, entonces al terminar la cadena de eventos actual el jugador será llevado al menú principal.
 \end{itemize}
 
-Para crear un videojuego disponemos de x archivos.
-Describir cada uno y explicar en qué se traduce en el juego
+Los eventos permiten realizar pequeñas acciones programables durante la ejecución del juego. Los diferentes tipos de eventos que se han definido para el motor son:
+\begin{itemize}
+	\item Diálogo: tiene un id que lo identifica, un mensaje, un id del personaje que lo emite y un evento siguiente asociado.
+	\item Elección: tiene un id que la identifica y un campo que recoge redirecciones a otros eventos. La elección tendrá en un bloque entre una y múltiples acciones que tienen asociado un id de evento.
+	\item Condición: tiene un id que lo identifica, una condición, un id de evento asociado si se cumple y otro si no se cumple.
+	\item Recompensa: tiene un id que la identifica, un mensaje, una lista de pares de objetos conseguidos junto con una cantidad y un evento siguiente asociado.
+	\item Batalla: tiene un id que la identifica, el id del personaje enemigo, un id de un evento que se ejecuta cuando gana el jugador y otro que se ejecuta cuando pierde.
+	\item Modificar variable: tiene un id que lo identifica, un id de variable a modificar, una operación, una variable con la que operar y un evento siguiente asociado.
+\end{itemize}
 
+\begin{lstlisting}
+# Dialogo
+- id: "room17Conversation_WithGerar" # Id de evento. Unico.
+  mode: "dialogue" # Tipo de evento. Hay que poner el tipo para que el motor lo reconozca.
+  message: "room17Conversation_WithGerar_message" # Mensaje que se muestra en el dialogo. Localizable.
+  characterId: "gerar" # Id del personaje que enuncia el dialogo.
+  nextStep: "room17Conversation_WithGerar_2" # Opcional. Id del evento siguiente de la cadena.
 
+# Condicion
+- id: "room17Conversation" # Id de evento. Unico.
+  mode: "condition" # Tipo de evento. Hay que poner el tipo para que el motor lo reconozca.
+  condition:
+	kind: "partner"
+	required: "gerar"
+  nextStepIfTrue: "room17Conversation_WithGerar" # Id del evento que se ejecuta si la condicion es cierta.
+  nextStepIfFalse: "room17Conversation_3" # Id del evento que se ejecuta si la condicion es falsa.
+
+# Eleccion
+- id: "room17Conversation_WithGerar_2" # Id de evento. Unico.
+  mode: "choice" # Tipo de evento. Hay que poner el tipo para que el motor lo reconozca.
+  options: # Lista de acciones que tiene el evento.
+	- action: "Valep" # Nombre de la opcion. Localizable.
+	  nextStep: "room17StartBattle" # Opcional. Id del siguiente evento a ejecutar si se escoge esta accion.
+	  condition:
+		kind: "partner"
+		required: "gerar"
+	- action: "Mejor no" # Nombre de la opcion. Localizable.
+	  nextStep: "" # Opcional. Id del siguiente evento a ejecutar si se escoge esta accion.
+
+# Batalla
+- id: "room17StartBattle" # Id de evento. Unico.
+  mode: "battle" # Tipo de evento. Hay que poner el tipo para que el motor lo reconozca.
+  enemyId: "eternalGod" # Id del personaje contra el que luchar. Debe tener estadisticas.
+  winStep: "room17BattleReward" # Opcional. Id del siguiente evento a ejecutar si el jugador gana.
+  loseStep: "exampleEnding" # Opcional. Id del siguiente evento a ejecutar si el jugador pierde.
+
+# Recompensa
+- id: "room17BattleReward" # Id de evento. Unico.
+  mode: "reward" # Tipo de evento. Hay que poner el tipo para que el motor lo reconozca.
+  message: "room17BattleRewardMessage" # Mensaje que se muestra en el dialogo. Localizable.
+  rewards: # Lista de recompensas en forma de objetos
+	"potion": "2" # A la derecha el id del objeto como clave y la cantidad que se recibe como valor.
+	"high_potion": "1"
+  nextStep: "" # Opcional. Id del evento siguiente de la cadena.
+
+# Modificar variable
+- id: "addNumberToCount" # Id de evento. Unico.
+  mode: "modifyVariable" # Tipo de evento. Hay que poner el tipo para que el motor lo reconozca.
+  variableId: "countNumber" # Id de la variable a modificar.
+  operation: add # Operacion que se realiza en la modificacion.
+  initialVariable: # Opcional. Variable estatica para el lado derecho de la operacion. Si este campo no aparece, debe aparecer el del siguiente evento. En otro caso, no funcionara.
+	type: integer
+	value: 1
+  nextStep: "" # Opcional. Id del evento siguiente de la cadena.
+  
+- id: "addNumberToCount" # Id de evento. Unico.
+  mode: "modifyVariable" # Tipo de evento. Hay que poner el tipo para que el motor lo reconozca.
+  variableId: "countNumber" # Id de la variable a modificar.
+  operation: add # Operacion que se realiza en la modificacion.
+  initialVariableName: "variableName" # Opcional. Id de la variable del lado derecho de la operacion. Si este campo no aparece, debe aparecer el del evento anterior. En otro caso, no funcionara.
+  nextStep: "" # Opcional. Id del evento siguiente de la cadena.
+\end{lstlisting}
 
 \chapter{Desarrollo de la aplicación} \label{applicationImplementation}
+Una vez descrito el funcionamiento del motor de forma genérica, ahora queda exponer las partes más específicas de la implementación actual de la aplicación.
 
-\section{Una manera de llevarlo a cabo (Arquitectura)}
+En las próximas secciones se comentará cuál ha sido la metodología de trabajo durante todo el proyecto y cómo está desarrollado el motor en este momento. Se ofrecerá también una pequeña descripción de las tecnologías usadas en el camino.
 
-\section{Desarrollando en dispositivos móviles (Implementación)}
+\section{Planificando los objetivos}
+En el desarrollo de cualquier proyecto de gran calado, en nuestro caso de una aplicación, se necesita algo fundamental para que el desarrollo llegue a buen término: tener muy claro qué es lo que se va a desarrollar y cómo.
 
-De la forma en la que están desarrollados los eventos en este momento, permite a los desarrolladores de este motor crear nuevos tipos de eventos, sin perjuicio de ninguna implementación de los anteriores.
+Durante toda mi experiencia en la empresa, he estado trabajando en un equipo de desarrollo, programando también aplicaciones. Gracias a esto, me di cuenta de la importancia de tener el trabajo bien ordenado, y además he aprendido alguna manera de llevar esto a cabo. Por ello, decidí en el momento que debía tener una forma de organizarme para poder sacar el proyecto adelante.
+
+Un error que cometí durante el desarrollo del juego original fue que no tenía ningún orden a la hora de desarrollar funcionalidades: durante la programación se me ocurrían ideas nuevas que hacían que perdiera el foco de lo que estaba haciendo en el momento. Por eso, uno de mis defectos era que algunas funcionalidades no las implementaba completamente, sino que las dejaba a la mitad, incluso inservibles, hasta que me diera cuenta en un futuro.
+
+Como no quería que esto ocurriese durante el desarrollo, no podía permitirme una aplicación que solo funcionara a veces, entonces decidí ejecutar el mismo marco de trabajo que uso en la oficina. De esta manera, empecé a trabajar con Scrum.
+
+\subsection{Qué es Scrum}
+Scrum es un marco de trabajo que permite a los desarrolladores tener una forma de trabajar establecida, ayudándolos a seguir pautas ya establecidas para colaborar en equipo y conseguir información de forma rápida y eficaz.
+Si se necesita más información sobre esta metodología, existe una guía mantenida por parte de sus desarrolladores \cite{scrumGuides}.
+
+Estas son las ventajas que aporta Scrum al desarrollo:
+\begin{itemize}
+	\item Desarrollo iterativo: las funcionalidades de una aplicación se desarrollan en ciclos de dos semanas (''sprints''). Esto permite volver sobre el desarrollo anterior en estos ciclos y mejorarlo o desarrollar algo nuevo sobre lo anterior.
+	\item Trabajo colaborativo: está pensado para que varios participantes en un equipo trabajen a la vez sin interrumpirse entre ellos. Además, esto también permite que entre todo el equipo puedan revisar el trabajo de otro, detectando posibles fallos.
+	\item Requisitos: para poder comenzar el desarrollo con Scrum no se necesita tener el producto completo definido, se puede aprovechar el tiempo de desarrollo para definir más requisitos conforme a lo que se está desarrollando en el momento.
+	Además, todas las funcionalidades están descritas en historias de usuario, que son unos requisitos que incluyen más información sobre cómo desarrollar exactamente las funcionalidades.
+\end{itemize}
+
+Aunque durante este proyecto no he podido disfrutar del trabajo en equipo con otra gente, sí que he ido buscando la aprobación del código de otras personas. Además, el poder adaptar los requisitos a las nuevas necesidades que me surgieran durante el desarrollo ha ayudado mucho a que surgieran más funcionalidades útiles para el motor.
+
+Volviendo a la definición de Scrum, se va a describir los roles que dispone y las fases que se llevan a cabo durante el desarrollo.
+
+Las figuras más destacadas son:
+\begin{itemize}
+	\item Product owner: normalmente identificado con el cliente, es el encargado de definir requisitos, ayudar a generar historias de usuario y preocuparse de que las funcionalidades se desarrollen.
+	\item Scrum master: no es el jefe del equipo de desarrolladores, sino más bien el encargado de que todo el proceso de Scrum salga bien. Trata de solventar todos los problemas que puedan surgir durante el desarrollo y que impidan que los desarrolladores lleguen a cumplir los objetivos de los ''sprints''. Además sirve de puente entre el product owner y su equipo, encargándose de toda interacción entre ellos.
+	\item Equipo de desarrolladores: son los responsables de desarrollar el producto. Suelen formarse equipos pequeños para ayudar a la comunicación en el mismo.
+\end{itemize}
+
+\begin{center}
+	\includegraphics[width=0.8\textwidth]{include/scrumPhases.jpg}
+\end{center}
+
+Las fases de Scrum son:
+\begin{itemize}
+	\item Product backlog: el product owner se encarga de definir los requisitos y diseñar la carga de tareas de los sprints.
+	\item Sprint backlog: todo el equipo de Scrum se encarga de crear las historias de usuario conformes a los requisitos. Se balancea la carga de los sprints si es necesario.
+	\item Sprint: los desarrolladores empiezan el desarrollo de las tareas. Esta fase suele durar unas dos semanas. Cada día se celebra una reunión que permite al Scrum master y al resto del equipo de desarrolladores cómo va el desarrollo.
+	\item Demo: al final del sprint, se realiza una demostración de las funcionalidades cubiertas por el sprint.
+	\item Retrospectiva: reunión final del ciclo en la que se reune todo el equipo en la que se evalúa el resultado del sprint, se plantean problemas que hayan ocurrido y se formulan soluciones para la siguiente iteración.
+\end{itemize}
+
+Aunque al final no he tenido la ocasión de realizar todas las reuniones pero ha valido la pena este método para ordenar mi trabajo y guardar la información de los requisitos.
+
+\section{Desarrollando en dispositivos móviles (Arquitectura)}
+En esta sección se discutirá cómo se ha desarrollado la aplicación y con qué tecnologías se ha llevado a cabo.
+
+El motor está ahora mismo desarrollado para dispositivos móviles de Apple, en el lenguaje de programación Swift \cite{swiftGuides}.
+
+Swift es un lenguaje de programación de propósito general. Fue anunciado en 2014 y es de código abierto. Este proyecto está desarrollado específicamente con la versión 5 de Swift.
+
+Existen muchas formas de programar aplicaciones en Swift: usando arquitecturas nativas como MVC o yendo a ejemplos de arquitecturas limpias como Viper y Clean-Swift.
+Sin embargo, debido a que una de las recomendaciones de los pensadores detrás de las arquitecturas limpias es que la arquitectura debe adaptarse a las necesidades del desarrollador, en este proyecto se ha llevado a cabo una mezcla entre estas dos últimas arquitecturas.
+
+\begin{center}
+	\includegraphics[width=0.75\textwidth]{include/cleanSwiftArchitecture.png}
+\end{center}
+
+Para este proyecto se ha planteado desde el principio de su desarrollo una implementación mediante una arquitectura con capas que permita separar elementos de la programación con distintas funcionalidades. Se tomó la decisión de seguir esta arquitectura ya que permite que el código esté modularizado y sea fácil de implementar siguiendo un esquema. En la anterior arquitectura, MVC (Model-View-Controller), se incluía toda la lógica de negocio de la aplicación en los controladores, haciendo muy complicado el mantenimiento del código y la implementación de nuevas funcionalidades.
+
+Proporcionaré el punto de vista de trabajo mediante Xcode el programa especializado en compilar ficheros “swift”.
+
+El proyecto está específicamente dividido en 3 capas.
+
+\subsection{Capa de presentación}
+Nivel que se encarga de la interfaz visual que el usuario puede ver y tocar. Esto abarca todos los elementos visuales presentes en la aplicación, como la pantalla de inicio o la pantalla de carga. 
+Las vistas se han implementado de esta manera:
+
+\begin{itemize}
+	\item \textbf{''Storyboard''}: archivo XML específico de desarrollo en iOS para Objective-C y Swift que recoge toda la información de todos los elementos de una pantalla como pueden ser un botón, la barra de navegación o un deslizador. 
+	Incluye todos los elementos que mantienen fija la pantalla, aunque el dispositivo rote o la resolución de la pantalla cambie.
+	Estos ficheros se traducen en tiempo real en el entorno de desarrollo, Xcode, para mostrar una vista previa de los elementos en un dispositivo y proporcionar herramientas para ajustar todos los elementos de una vista, todo mediante el llamado ''Interface Builder''.Este fichero no contiene código en lenguaje Swift en ningún momento.
+	\item \textbf{''View Controller''} o controlador de la vista: archivo Swift que incluye información referente a una vista, que puede estar asociada a un ''storyboard'' y que siempre aparece en conjunto con un presentador.
+	Este fichero contiene toda la información que conecta lo que se muestra en un dispositivo y las acciones que deben ocurrir al realizar eventos. Tiene una referencia a todos los elementos de una vista, y se encarga de modificarlos.
+	En nuestra implementación, los controladores no pueden mantenerse por sí solos, pues solo saben rellenar los datos de los elementos presentes en una vista, como ponerle un nombre a un control o asociar una acción a un botón, pero no saben cómo tienen que rellenar los elementos.
+	\item \textbf{''Presenter''} o presentador: archivo Swift que incluye toda la información para rellenar una vista, pero que no tiene acceso a sus elementos. Este fichero tiene siempre asociado un controlador de la vista para saber a cuál tiene que mandarle los datos.
+	Contienen toda la información con la que se va a rellenar una vista, como la navegación de una pantalla a otra, el color de los elementos o el lanzamiento de interactores. Suelen contener todas las referencias a los objetos que necesitará una vista para ser rellenada: un enrutador, el controlador al que está asociado, y un protocolo a seguir para que el controlador sepa qué elementos usar de un presentador.
+	\item \textbf{''Router''} o enrutador: archivo Swift que incluye toda la información necesaria para navegar a otras vistas en la aplicación, como puede ser ir desde el menú principal a uno secundario. Incluye la referencia al controlador de la vista actual, de manera que le permite cambiarlo por otro durante el transcurso de la aplicación. También es el encargado de crear el presentador y su controlador asociado pertinentes para la nueva vista a mostrar.
+\end{itemize}
+
+\subsection{Capa de negocio}
+Nivel que se encarga de ejecutar la lógica de negocio de la aplicación. En esta capa se ejecutan todas las acciones que requieren de cierta lógica, como puede ser el cálculo de una operación matemática, el acceso a una base de datos o la utilización de algoritmos complejos.
+Esta capa incluye dos tipos de clase principales:
+\begin{itemize}
+	\item Objetos de dominio: objetos de negocio que se encargan de modelizar todas las posibles estructuras posibles de un objeto en la aplicación. Pongamos el ejemplo de una aplicación de cartas: una carta sería un objeto que representa una instancia de la clase Carta y que contiene toda la información que la define como el palo o el número.
+	\item ''Interactor'', o interactores: archivo Swift que incluye una funcionalidad específica para la aplicación. Estos interactores operan con los objetos de dominio y con la capa de datos para ofrecer los resultados de una operación a los presentadores. Una de estas operaciones puede ser sumar dos valores, o recoger información específica de una base de datos.
+\end{itemize}
+
+\subsection{Capa de datos}
+Nivel que incluye todas las clases con acceso a la base de datos. Estas clases simplemente sirven como puente para la funcionalidad de las librerías propietarias, es decir, desarrolladas por el equipo o de consumo único por la aplicación.
+La base de datos que se ha usado en este proyecto es una nativa ofrecida por Apple, Core Data \cite{coreDataDocumentation}.
+Esta base de datos permite guardar objetos directamente, sin tener que realizar consultas complicadas. Está basada en una base de datos SQlite.
