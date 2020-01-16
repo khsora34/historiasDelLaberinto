@@ -42,6 +42,10 @@ class ItemBackView: UIView {
         descriptionLabel.textColor = .white
     }
     
+    func configure(withModel model: ItemViewModel) {
+        self.descriptionText = model.item.description
+    }
+    
     @IBAction func didTapView(_ sender: Any) {
         flipView?()
     }

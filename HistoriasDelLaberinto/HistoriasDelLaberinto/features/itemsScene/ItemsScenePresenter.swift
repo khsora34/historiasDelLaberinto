@@ -40,12 +40,12 @@ class ItemsScenePresenter: BasePresenter {
     
     private func showItems() {
         var i = 0
-        for element in protagonist.items.keys {
-            let request = ItemsScene.ItemGetter.Request(itemId: element)
+        for (key, value) in protagonist.items {
+            let request = ItemsScene.ItemGetter.Request(itemId: key)
             let response = interactor?.getItem(request: request)
-            guard let item = response?.item else { continue }
-            items[element] = item
-            let model = ItemViewModel(id: element, name: item.name, description: item.description, itemType: ItemType(item: item), quantity: protagonist.items[element]!, imageSource: item.imageSource, tag: i, delegate: self)
+            guard let item = response?.item, let type = ItemType(item: item) else { continue }
+            items[key] = item
+            let model = ItemViewModel(id: key, item: item, itemType: type, quantity: value, imageSource: item.imageSource, tag: i, delegate: self)
             itemModels[i] = model
             i += 1
         }

@@ -29,6 +29,7 @@ class BattleSceneViewController: BaseViewController {
             let button = ConfigurableButton(frame: .zero)
             button.setStyle(ButtonStyle.defaultButtonStyle)
             button.text = presenter?.localizedString(key: action.actionKey)
+            button.tag = action.rawValue
             button.addTarget(self, action: #selector(didTapAction(sender:)), for: .touchUpInside)
             views.append(button)
         }
@@ -63,7 +64,7 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
         for model in models {
             // Auto Layout will do the job.
             let statusView = StatusView(frame: CGRect.zero)
-            model.configure(view: statusView)
+            statusView.configure(withModel: model)
             charactersStackView.addArrangedSubview(statusView)
         }
     }

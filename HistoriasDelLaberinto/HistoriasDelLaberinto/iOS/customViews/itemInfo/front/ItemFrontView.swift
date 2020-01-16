@@ -2,14 +2,7 @@ import UIKit
 import Kingfisher
 
 class ItemFrontView: UIView {
-    var name: String? {
-        get {
-            return nameLabel.text
-        }
-        set {
-            nameLabel.text = newValue
-        }
-    }
+    private var model: ItemViewModel!
     
     var isSelected: Bool = false {
         didSet {
@@ -25,29 +18,9 @@ class ItemFrontView: UIView {
         }
     }
     
-    var itemType: ItemType? {
-        didSet {
-            //TODO
-            itemTypeLabel.text = itemType?.categoryKey
-        }
-    }
-    
-    var quantity: Int? {
-        get {
-            return Int(quantityLabel.text ?? "-1")
-        }
-        set {
-            if let value = newValue {
-                quantityLabel.text = "\(value)"
-            } else {
-                quantityLabel.text = nil
-            }
-        }
-    }
-    
-    weak var delegate: ItemSelectedDelegate?
     var flipView: (() -> Void)?
     var selectModel: ((Bool) -> Void)?
+    weak var delegate: ItemSelectedDelegate?
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var imageView: UIImageView!
@@ -73,6 +46,20 @@ class ItemFrontView: UIView {
         setup()
     }
     
+    func configure(withModel model: ItemViewModel) {
+        self.model = model
+        self.nameLabel.text = model.item.name
+        self.itemTypeLabel.text = model.itemTypeDescription
+        self.quantityLabel.text = "\(model.quantity)"
+        self.setImage(for: model.imageSource)
+        self.tag = tag
+        self.delegate = model.delegate
+        self.isSelected = model.isSelected
+        self.selectModel = { [weak self] selected in
+            self?.isSelected = selected
+        }
+    }
+    
     func setImage(for source: ImageSource) {
         imageView.setImage(from: source)
     }
@@ -82,7 +69,7 @@ class ItemFrontView: UIView {
     }
     
     @IBAction func didTapView(_ sender: Any) {
-        guard case .consumable? = itemType else { return }
+        guard case .consumable = model.itemType else { return }
         isSelected = !isSelected
         delegate?.didSelectItem(isSelected: isSelected, tag: self.tag)
     }

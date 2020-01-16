@@ -2,7 +2,6 @@ import UIKit
 import Kingfisher
 
 class StatusView: UIView {
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initSubviews()
@@ -21,17 +20,7 @@ class StatusView: UIView {
         setup()
     }
     
-    var name: String? {
-        get {
-            return nameLabel.text
-        }
-        set {
-            nameLabel.text = newValue
-        }
-    }
-    
     var ailment: StatusAilment? {
-        //TODO
         didSet {
             ailmentLabel.text = ailment?.ailmentKey
             switch ailment {
@@ -47,21 +36,27 @@ class StatusView: UIView {
         }
     }
     
-    var characterChosen: CharacterChosen?
+    var characterChosen: CharacterChosen!
     var touchDelegate: DidTouchStatusDelegate?
     
     @IBOutlet var contentView: StatusView!
-    @IBOutlet weak var portraitImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var ailmentLabel: UILabel!
     @IBOutlet private weak var actualTitleLabel: UILabel!
     @IBOutlet private weak var actualhealthLabel: UILabel!
     @IBOutlet private weak var maxTitleLabel: UILabel!
     @IBOutlet private weak var maxHealthLabel: UILabel!
+    @IBOutlet weak var portraitImageView: UIImageView!
     @IBOutlet weak var flashView: UIView!
     
-    func setImage(for imageSource: ImageSource) {
-        portraitImageView.setImage(from: imageSource)
+    func configure(withModel model: StatusViewModel) {
+        self.characterChosen = model.chosenCharacter
+        self.name = model.name
+        self.setHealth(currentHealth: model.actualHealth, maxHealth: model.maxHealth)
+        self.ailment = model.ailment
+        self.portraitImageView.setImage(from: model.imageSource)
+        self.setBackground(shouldDisplayForEnemy: model.isEnemy)
+        self.touchDelegate = model.delegate
     }
     
     func setHealth(currentHealth: Int, maxHealth: Int) {

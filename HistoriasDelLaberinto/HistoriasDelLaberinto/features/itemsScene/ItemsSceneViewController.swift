@@ -9,7 +9,6 @@ protocol ItemsSceneDisplayLogic: ViewControllerDisplay {
 }
 
 class ItemsSceneViewController: BaseViewController {
-    
     private var presenter: ItemsScenePresentationLogic? {
         return _presenter as? ItemsScenePresentationLogic
     }
@@ -55,7 +54,8 @@ extension ItemsSceneViewController: ItemsSceneDisplayLogic {
     
     func buildItems(with models: [ItemViewModel]) {
         for model in models {
-            let view = ItemView(model: model, frame: .zero)
+            let view = ItemView(frame: .zero)
+            view.configure(withModel: model)
             itemsStackView.addArrangedSubview(view)
         }
     }
@@ -77,7 +77,7 @@ extension ItemsSceneViewController: ItemsSceneDisplayLogic {
             view.removeFromSuperview()
             return
         }
-        model.configure(view: view)
+        view.configure(withModel: model)
     }
     
     private func addBlinkAnimation(to view: UIView, withAutoreverse: Bool) {

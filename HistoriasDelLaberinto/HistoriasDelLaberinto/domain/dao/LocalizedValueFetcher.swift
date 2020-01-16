@@ -1,7 +1,7 @@
 import UIKit.UIApplication
 import CoreData
 
-protocol LocalizedValueFetcher {
+public protocol LocalizedValueFetcher {
     func getString(key: String, forLocale locale: Locale) -> String
     func getAvailableLanguages() -> [Locale]
     func saveString(key: String, value: String, forLocale locale: Locale) -> Bool

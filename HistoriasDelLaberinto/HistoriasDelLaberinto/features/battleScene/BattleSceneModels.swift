@@ -70,7 +70,7 @@ enum FinishedBattleReason {
 }
 
 enum BattleAction: Int {
-    case attack, item
+    case attack = 0, item
     
     var actionKey: String {
         switch self {

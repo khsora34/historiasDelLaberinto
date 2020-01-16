@@ -1,6 +1,6 @@
 import UIKit
 
-protocol DialogLauncher: NextDialogHandler {
+protocol DialogLauncher: Presenter, NextDialogHandler {
     var dialog: DialogDisplayLogic? { get set }
     var dialogRouter: DialogRouter? { get }
 }
@@ -8,7 +8,7 @@ protocol DialogLauncher: NextDialogHandler {
 extension DialogLauncher {
     func showDialog(with configurator: DialogConfigurator) {
         if dialog == nil {
-            dialog = Dialog.createDialog(configurator, delegate: self)
+            dialog = Dialog.createDialog(configurator, delegate: self, localizer: self)
             dialogRouter?.present(dialog!, animated: true)
         } else {
             dialog?.setNextConfigurator(configurator)
