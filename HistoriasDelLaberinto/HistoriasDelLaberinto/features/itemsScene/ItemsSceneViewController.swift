@@ -61,14 +61,14 @@ extension ItemsSceneViewController: ItemsSceneDisplayLogic {
     }
     
     func updateStatusView(_ model: StatusViewModel) {
-        if let view = statusStackView.arrangedSubviews.filter({ ($0 as? StatusView)?.characterChosen == model.chosenCharacter }).first as? StatusView {
+        if let view = statusStackView.arrangedSubviews.first(where: { ($0 as? StatusView)?.characterChosen == model.chosenCharacter }) as? StatusView {
             view.configure(withModel: model)
             addBlinkAnimation(to: view.flashView, withAutoreverse: true)
         }
     }
     
     func updateItemView(_ model: ItemViewModel) {
-        guard let view = itemsStackView.arrangedSubviews.filter({ $0.tag == model.tag }).first as? ItemView else { return }
+        guard let view = itemsStackView.arrangedSubviews.first(where: { $0.tag == model.tag }) as? ItemView else { return }
         guard model.quantity > 0 else {
             UIView.animate(withDuration: 0.1) {
                 view.isHidden = true

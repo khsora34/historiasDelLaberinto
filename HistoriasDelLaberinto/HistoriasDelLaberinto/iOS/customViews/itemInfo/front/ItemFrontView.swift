@@ -6,7 +6,6 @@ class ItemFrontView: UIView {
     
     var isSelected: Bool = false {
         didSet {
-            selectModel?(isSelected)
             if isSelected {
                 layer.borderWidth = 5
                 layer.borderColor = UIColor.white.cgColor
@@ -14,13 +13,10 @@ class ItemFrontView: UIView {
                 layer.borderWidth = 0
                 layer.borderColor = UIColor.clear.cgColor
             }
-            
         }
     }
     
     var flipView: (() -> Void)?
-    var selectModel: ((Bool) -> Void)?
-    weak var delegate: ItemSelectedDelegate?
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var imageView: UIImageView!
@@ -52,12 +48,7 @@ class ItemFrontView: UIView {
         self.itemTypeLabel.text = Localizer.localizedString(key: model.itemType.categoryKey)
         self.quantityLabel.text = "\(model.quantity)"
         self.setImage(for: model.imageSource)
-        self.tag = tag
-        self.delegate = model.delegate
         self.isSelected = model.isSelected
-        self.selectModel = { [weak self] selected in
-            self?.isSelected = selected
-        }
     }
     
     func setImage(for source: ImageSource) {
@@ -69,9 +60,11 @@ class ItemFrontView: UIView {
     }
     
     @IBAction func didTapView(_ sender: Any) {
-        guard case .consumable = model.itemType else { return }
-        isSelected = !isSelected
-        delegate?.didSelectItem(isSelected: isSelected, tag: self.tag)
+        if case .consumable = model.itemType {
+            isSelected = !isSelected
+            model.isSelected = isSelected
+        }
+        model.delegate?.didSelectItem(isSelected: isSelected, tag: model.tag)
     }
     
     private func setup() {

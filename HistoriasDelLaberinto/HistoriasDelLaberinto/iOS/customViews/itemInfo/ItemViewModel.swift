@@ -6,7 +6,7 @@ class ItemViewModel {
     let imageSource: ImageSource
     let tag: Int
     var isSelected = false
-    let delegate: ItemSelectedDelegate?
+    weak var delegate: ItemSelectedDelegate?
     
     init(id: String, item: Item, itemType: ItemType, quantity: Int, imageSource: ImageSource, tag: Int, delegate: ItemSelectedDelegate?) {
         self.id = id
