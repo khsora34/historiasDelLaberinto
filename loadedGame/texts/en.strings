@@ -43,6 +43,12 @@
 "menuOptionItems" = "Items";
 "menuOptionSave" = "Save";
 "menuOptionExit" = "Exit game";
+"actualLifeIndicator" = "Actual health";
+"maxLifeIndicator" = "Max health";
+"battleOneHit" = "once";
+"battleMoreHits" = "times";
+"battleHit" = "hits";
+"battleHitTargetConnector" = "to";
 
 // Custom
 "room17LookAround" = "You take a look of your surroundings.";

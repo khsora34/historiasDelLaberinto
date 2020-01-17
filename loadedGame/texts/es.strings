@@ -43,7 +43,12 @@
 "menuOptionItems" = "Inventario";
 "menuOptionSave" = "Guardar";
 "menuOptionExit" = "Salir";
-
+"actualLifeIndicator" = "Vida actual";
+"maxLifeIndicator" = "Vida máxima";
+"battleOneHit" = "una vez";
+"battleMoreHits" = "veces";
+"battleHit" = "golpea";
+"battleHitTargetConnector" = "a";
 
 //Custom
 "room17LookAround" = "Miras a tu alrededor";

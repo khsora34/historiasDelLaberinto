@@ -2,10 +2,9 @@ import UIKit
 import Kingfisher
 
 class Dialog {
-    static func createDialog(_ dialog: DialogConfigurator, delegate: NextDialogHandler, localizer: LocalizableStringPresenterProtocol? = nil) -> DialogDisplayLogic {
+    static func createDialog(_ dialog: DialogConfigurator, delegate: NextDialogHandler) -> DialogDisplayLogic {
         let dialog = DialogViewController(dialog)
         dialog.delegate = delegate
-        dialog.localizer = localizer
         return dialog
     }
 }
@@ -52,7 +51,6 @@ class DialogViewController: UIViewController {
     }()
     
     weak var delegate: NextDialogHandler?
-    weak var localizer: LocalizableStringPresenterProtocol?
     
     @IBOutlet weak var dialogView: UIView!
     @IBOutlet weak var characterLabel: UILabel!
@@ -137,7 +135,8 @@ extension DialogViewController: DialogDisplayLogic {
     }
     
     private func internalSetTypingText() {
-        guard let key = configurator?.message, let message = localizer?.localizedString(key: key) else { return }
+        guard let key = configurator?.message else { return }
+        let message = Localizer.localizedString(key: key)
         timer = textView.setTypingText(message: message, timeInterval: typingTimeInterval)
     }
     
@@ -186,7 +185,7 @@ extension DialogViewController {
         
         for (item, quantity) in reward.items {
             let newView = RewardView(frame: CGRect(x: 0, y: 0, width: self.stackView.frame.width, height: 80.0))
-            newView.item = localizer?.localizedString(key: item.name)
+            newView.item = Localizer.localizedString(key: item.name)
             newView.quantity = "\(quantity)"
             newView.imageView.setImage(from: item.imageSource) { (succesful, _) in
                 newView.imageView.isHidden = false
@@ -204,7 +203,7 @@ extension DialogViewController {
         stackView.spacing = 10
         
         let actions = choice.actions
-        stackView.createButtonsInColumns(names: actions.compactMap({self.localizer?.localizedString(key: $0.name)}), action: #selector(buttonSelected(sender:)), for: self)
+        stackView.createButtonsInColumns(names: actions.compactMap({Localizer.localizedString(key: $0.name)}), action: #selector(buttonSelected(sender:)), for: self)
         alignment = .bottom
     }
     

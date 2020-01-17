@@ -95,8 +95,8 @@ extension StatusView {
         contentView.layer.masksToBounds = true
         setFonts()
         setColors()
-        actualTitleLabel.text = "Vida actual"
-        maxTitleLabel.text = "Vida máxima"
+        actualTitleLabel.text = Localizer.localizedString(key: "actualLifeIndicator")
+        maxTitleLabel.text = Localizer.localizedString(key: "maxLifeIndicator")
     }
     
     private func setFonts() {

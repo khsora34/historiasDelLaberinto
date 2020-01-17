@@ -78,16 +78,16 @@ extension PauseMenuScenePresenter {
     
     private func createOptions() {
         let availableOptions: [MenuOption] = [.items, .save, .exit]
-        let transformed = availableOptions.map { return (localizedString(key: $0.optionKey), $0.rawValue) }
+        let transformed = availableOptions.map { return (Localizer.localizedString(key: $0.optionKey), $0.rawValue) }
         viewController?.createOptions(with: transformed)
     }
     
     private func showExitMessage() {
-        viewController?.showAlert(title: nil, message: localizedString(key: "menuExitPrompt"), actions: [
-            (title: localizedString(key: "genericRiskOption"), style: .default, completion: { [weak self] in
+        viewController?.showAlert(title: nil, message: Localizer.localizedString(key: "menuExitPrompt"), actions: [
+            (title: Localizer.localizedString(key: "genericRiskOption"), style: .default, completion: { [weak self] in
                 self?.exitGame()
             }),
-            (title: localizedString(key: "genericThinkAboutItOption"), style: .cancel, completion: nil)
+            (title: Localizer.localizedString(key: "genericThinkAboutItOption"), style: .cancel, completion: nil)
         ])
     }
 }
@@ -97,7 +97,7 @@ extension PauseMenuScenePresenter: PauseMenuScenePresentationLogic {
         switch MenuOption(rawValue: tag) {
         case .save?:
             saveGame()
-            viewController?.showAlert(title: nil, message: localizedString(key: "successfullySavedGame"), actions: [(title: localizedString(key: "genericButtonAccept"), style: .default, completion: nil)])
+            viewController?.showAlert(title: nil, message: Localizer.localizedString(key: "successfullySavedGame"), actions: [(title: Localizer.localizedString(key: "genericButtonAccept"), style: .default, completion: nil)])
         case .exit?:
             showExitMessage()
         case .items?:

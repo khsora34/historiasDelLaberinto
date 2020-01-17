@@ -69,11 +69,11 @@ extension BattleScenePresenter {
         var start = character.name + " "
         switch ailment {
         case .blindness:
-            start += localizedString(key: "battleMessageGetBlind")
+            start += Localizer.localizedString(key: "battleMessageGetBlind")
         case .poison:
-            start += localizedString(key: "battleMessageGetPoisoned")
+            start += Localizer.localizedString(key: "battleMessageGetPoisoned")
         case .paralysis:
-            start += localizedString(key: "battleMessageGetParalyzed")
+            start += Localizer.localizedString(key: "battleMessageGetParalyzed")
         }
         return start
     }
@@ -82,11 +82,11 @@ extension BattleScenePresenter {
         var start = character.name + " "
         switch ailment {
         case .blindness:
-            start += localizedString(key: "battleMessageStillBlind")
+            start += Localizer.localizedString(key: "battleMessageStillBlind")
         case .poison:
-            start += localizedString(key: "battleMessageStillPoisoned")
+            start += Localizer.localizedString(key: "battleMessageStillPoisoned")
         case .paralysis:
-            start += localizedString(key: "battleMessageStillParalyzed")
+            start += Localizer.localizedString(key: "battleMessageStillParalyzed")
         }
         return start
     }
@@ -95,11 +95,11 @@ extension BattleScenePresenter {
         var start = character.name + " "
         switch ailment {
         case .blindness:
-            start += localizedString(key: "battleMessageFinishBlindness")
+            start += Localizer.localizedString(key: "battleMessageFinishBlindness")
         case .poison:
-            start += localizedString(key: "battleMessageFinishPoison")
+            start += Localizer.localizedString(key: "battleMessageFinishPoison")
         case .paralysis:
-            start += localizedString(key: "battleMessageFinishParalysis")
+            start += Localizer.localizedString(key: "battleMessageFinishParalysis")
         }
         return start
     }

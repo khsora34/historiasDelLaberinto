@@ -18,10 +18,10 @@ class InitialSceneViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        gameTitleLabel.text = presenter?.gameTitle
-        newGameButton.setTitle(presenter?.newGameButtonText, for: .normal)
-        loadGameButton.setTitle(presenter?.loadGameButtonText, for: .normal)
-        changeLanguageButton.setTitle(presenter?.changeLanguageButtonText, for: .normal)
+        gameTitleLabel.text = Localizer.localizedString(key: "gameTitle")
+        newGameButton.setTitle(Localizer.localizedString(key: "newGameButton"), for: .normal)
+        loadGameButton.setTitle(Localizer.localizedString(key: "loadGameButton"), for: .normal)
+        changeLanguageButton.setTitle(Localizer.localizedString(key: "changeLanguageButtonText"), for: .normal)
     }
     
     @IBAction func didTapNewGame(_ sender: Any) {

@@ -69,7 +69,7 @@ class RoomScenePresenter: BasePresenter {
         }
         self.filteredActions = filteredActions
         var modeledActions = filteredActions.map({ $0.name })
-        modeledActions.append(localizedString(key: "movementAction"))
+        modeledActions.append(Localizer.localizedString(key: "movementAction"))
         viewController?.set(actions: modeledActions)
     }
 }
@@ -97,7 +97,7 @@ extension RoomScenePresenter: RoomScenePresentationLogic {
     }
     
     func didTapInfoButton() {
-        viewController?.showAlert(title: room.name, message: room.description, actions: [(title: localizedString(key: "genericButtonAccept"), style: .default, completion: nil)])
+        viewController?.showAlert(title: room.name, message: room.description, actions: [(title: Localizer.localizedString(key: "genericButtonAccept"), style: .default, completion: nil)])
     }
 }
 

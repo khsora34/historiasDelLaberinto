@@ -22,7 +22,7 @@ class PauseMenuSceneViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = presenter?.localizedString(key: "secondaryMenuTitle")
+        title = Localizer.localizedString(key: "secondaryMenuTitle")
         
         backgroundView.setColors([UIColor.blue, UIColor.cyan, UIColor.blue, UIColor.green])
         backgroundView.startAnimation()

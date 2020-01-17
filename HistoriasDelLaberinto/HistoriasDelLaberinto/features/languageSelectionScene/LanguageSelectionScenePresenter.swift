@@ -25,7 +25,6 @@ class LanguageSelectionScenePresenter: BasePresenter {
         super.viewDidLoad()
         getAvailableLanguages()
         createModels()
-        viewController?.setSaveButtonText(localizedString(key: "genericButtonSave"))
     }
     
     private func getAvailableLanguages() {

@@ -1,4 +1,4 @@
-protocol EventHandlerPresenter: ConditionEvaluator, NextDialogHandler, OnBattleFinishedDelegate, LocalizableStringPresenterProtocol {
+protocol EventHandlerPresenter: ConditionEvaluator, NextDialogHandler, OnBattleFinishedDelegate {
     var eventHandlerRouter: EventHandlerRoutingLogic? { get }
     var eventHandlerInteractor: EventHandlerInteractor? { get }
     var room: Room { get set }
@@ -278,7 +278,7 @@ extension EventHandlerPresenter {
 extension EventHandlerPresenter {
     func showDialog(with configurator: DialogConfigurator) {
         if dialog == nil {
-            dialog = Dialog.createDialog(configurator, delegate: self, localizer: self)
+            dialog = Dialog.createDialog(configurator, delegate: self)
             eventHandlerRouter?.present(dialog!, animated: true)
         } else {
             dialog?.setNextConfigurator(configurator)

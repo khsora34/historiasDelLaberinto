@@ -28,7 +28,7 @@ class BattleSceneViewController: BaseViewController {
         for action in availableActions {
             let button = ConfigurableButton(frame: .zero)
             button.setStyle(ButtonStyle.defaultButtonStyle)
-            button.text = presenter?.localizedString(key: action.actionKey)
+            button.text = Localizer.localizedString(key: action.actionKey)
             button.tag = action.rawValue
             button.addTarget(self, action: #selector(didTapAction(sender:)), for: .touchUpInside)
             views.append(button)

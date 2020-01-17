@@ -29,7 +29,7 @@ class ItemsSceneViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = presenter?.sceneTitle
+        title = Localizer.localizedString(key: "itemsViewTitle")
         backgroundView.setColors([.red, .yellow, .orange])
         backgroundView.startAnimation()
         conditionView.backgroundColor = UIColor(white: 0.9, alpha: 0.3)

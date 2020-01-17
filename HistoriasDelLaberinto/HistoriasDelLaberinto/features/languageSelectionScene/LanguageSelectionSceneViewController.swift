@@ -3,7 +3,6 @@ import UIKit
 protocol LanguageSelectionSceneDisplayLogic: ViewControllerDisplay {
     func showLanguages(models: [LanguageButtonInfo])
     func didUpdateLanguages(newIdentifier: String)
-    func setSaveButtonText(_ text: String)
 }
 
 class LanguageSelectionSceneViewController: BaseViewController {
@@ -28,7 +27,7 @@ class LanguageSelectionSceneViewController: BaseViewController {
 
 extension LanguageSelectionSceneViewController: LanguageSelectionSceneDisplayLogic {
     func setSaveButtonText(_ text: String) {
-        saveButton.text = text
+        saveButton.text = Localizer.localizedString(key: "genericButtonSave")
     }
     
     func showLanguages(models: [LanguageButtonInfo]) {
