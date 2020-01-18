@@ -14,6 +14,7 @@ class Dependencies {
     
     init() {
         databaseFetcherProvider = createDatabaseFetcherProvider()
+        createLocalizer()
         createModuleProvider()
     }
     
@@ -21,6 +22,10 @@ class Dependencies {
         moduleProvider = ModuleProvider()
         moduleProvider.routerProvider = routerProvider
         moduleProvider.databaseFetcherProvider = databaseFetcherProvider
+    }
+    
+    private func createLocalizer() {
+        Localizer.shared.setup(localizedStringAccess: databaseFetcherProvider.localizedValueFetcher)
     }
     
     private func createDatabaseFetcherProvider() -> DatabaseFetcherProvider {

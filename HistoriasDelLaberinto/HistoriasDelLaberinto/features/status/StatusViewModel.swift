@@ -7,14 +7,4 @@ struct StatusViewModel {
     let imageSource: ImageSource
     let isEnemy: Bool
     var delegate: DidTouchStatusDelegate?
-    
-    func configure(view: StatusView) {
-        view.characterChosen = chosenCharacter
-        view.name = name
-        view.setHealth(currentHealth: actualHealth, maxHealth: maxHealth)
-        view.ailment = ailment
-        view.setImage(for: imageSource)
-        view.setBackground(shouldDisplayForEnemy: isEnemy)
-        view.touchDelegate = delegate
-    }
 }

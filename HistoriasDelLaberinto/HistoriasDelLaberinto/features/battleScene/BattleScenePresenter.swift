@@ -57,13 +57,13 @@ class BattleScenePresenter: BasePresenter {
     }
     
     private func configureActions() {
-        viewController?.configureButtons(availableActions: [.attack, .items])
+        viewController?.configureButtons(availableActions: [.attack, .item])
     }
 }
 
 extension BattleScenePresenter: BattleScenePresentationLogic {
     func showStartDialogue() {
-        showDialog(with: BattleConfigurator(message: "Un \(enemy.name) salvaje apareció.", alignment: .bottom))
+        showDialog(with: BattleConfigurator(message: "\(enemy.name) \(Localizer.localizedString(key: "battleStartDialogue"))", alignment: .bottom))
     }
     
     func protaWillAttack() {
@@ -115,21 +115,21 @@ extension BattleScenePresenter {
         let characterName = getCharacter(from: chosenCharacter).name
         
         switch safeAilment {
-        case .poisoned:
+        case .poison:
             calculatePoisonDamage(for: chosenCharacter)
-            ailmentMessage = "\(characterName) pierde vida por el veneno."
+            ailmentMessage = "\(characterName) \(Localizer.localizedString(key: "battleMessagePoisonEffect"))"
             let configurator = BattleConfigurator(message: ailmentMessage, alignment: chosenCharacter == .enemy ? .bottom: .top)
             showDialog(with: configurator)
             return
-        case .paralyzed:
+        case .paralysis:
             if Double.random(in: 0..<1) < 0.4 {
-                ailmentMessage = "\(characterName) está paralizado, no puede moverse."
+                ailmentMessage = "\(characterName) \(Localizer.localizedString(key: "battleMessageParalysisEffect"))"
                 actualState = ActualState(step: .shouldContinueAilment, character: chosenCharacter.next(), target: nil)
                 let configurator = BattleConfigurator(message: ailmentMessage, alignment: chosenCharacter == .enemy ? .bottom: .top)
                 showDialog(with: configurator)
                 return
             }
-        case .blind:
+        case .blindness:
             actualState = ActualState(step: actualState.step.getNext(), character: chosenCharacter, target: nil)
             performNextStep()
         }
@@ -159,7 +159,7 @@ extension BattleScenePresenter {
                     return
                 }
                 
-                let configurator = DialogueConfigurator(name: partner.name, message: "Lo siento, ya no puedo más...", imageSource: partner.imageSource)
+                let configurator = DialogueConfigurator(name: partner.name, message: Localizer.localizedString(key: "battlePartnerFaints"), imageSource: partner.imageSource)
                 isPartnerDead = true
                 showDialog(with: configurator)
                 return
@@ -207,7 +207,7 @@ extension BattleScenePresenter {
                     return
                 }
                 
-                let configurator = DialogueConfigurator(name: partner.name, message: "Lo siento, ya no puedo más...", imageSource: partner.imageSource)
+                let configurator = DialogueConfigurator(name: partner.name, message: Localizer.localizedString(key: "battlePartnerFaints"), imageSource: partner.imageSource)
                 isPartnerDead = true
                 showDialog(with: configurator)
             } else {
@@ -232,7 +232,7 @@ extension BattleScenePresenter {
     private func attackPhase() {
         let chosenCharacter = actualState.character
         let character = getCharacter(from: chosenCharacter)
-        let message = "\(character.name) va a atacar."
+        let message = "\(character.name) \(Localizer.localizedString(key: "battleActionAttack"))"
         actualState = ActualState(step: actualState.step.getNext(), character: actualState.character, target: nil)
         let configurator = BattleConfigurator(message: message, alignment: chosenCharacter == .enemy ? .top: .bottom)
         showDialog(with: configurator)
@@ -277,7 +277,7 @@ extension BattleScenePresenter {
         }
         
         guard effectiveAttacks > 0 else {
-            attackMessage = "Pero falló el ataque..."
+            attackMessage = Localizer.localizedString(key: "battleActionAttackMissed")
             actualState = ActualState(step: actualState.step.getNext(), character: chosenCharacter, target: target)
             let configurator = BattleConfigurator(message: attackMessage, alignment: chosenCharacter == .enemy ? .top: .bottom)
             showDialog(with: configurator)
@@ -297,17 +297,16 @@ extension BattleScenePresenter {
         
         // IF THE CALCULATED DAMAGE IS NEGATIVE, INSTEAD DO CERO DAMAGE.
         if calculatedDamage <= 0 {
-            attackMessage = "Pero \(targetStatus.name) absorbe al ataque."
+            attackMessage = "\(targetStatus.name) \(Localizer.localizedString(key: "battleActionAttackAbsorbed"))"
             calculatedDamage = 0
             
         } else {
-            let timesMessage = effectiveAttacks == 1 ? "1 vez": "\(effectiveAttacks) veces"
-            attackMessage = "\(chosenCharacterStatus.name) golpea \(timesMessage) a \(targetStatus.name)."
+            let timesMessage = effectiveAttacks == 1 ? Localizer.localizedString(key: "battleOneHit"): "\(effectiveAttacks) \(Localizer.localizedString(key: "battleMoreHits"))"
+            attackMessage = "\(chosenCharacterStatus.name) \(Localizer.localizedString(key: "battleHit")) \(timesMessage) \(Localizer.localizedString(key: "battleHitTargetConnector")) \(targetStatus.name)."
         }
         
         // APPLY DAMAGE
         targetStatus.currentHealthPoints -= calculatedDamage
-        targetStatus.currentHealthPoints = targetStatus.currentHealthPoints < 0 ? 0: targetStatus.currentHealthPoints
         
         // CALCULATE IF THE CHOSEN CHARACTER CAN INDUCE AN AILMENT
         if calculateAilment(actualWeapon?.inducedAilment, to: targetStatus) {
@@ -327,7 +326,7 @@ extension BattleScenePresenter {
     private func battleEnd() {
         if protagonist.currentHealthPoints <= 0 {
             finishedBattleReason = .defeated(.protagonist)
-            let configurator = BattleConfigurator(message: "Empiezas a perder la consciencia.", alignment: .bottom)
+            let configurator = BattleConfigurator(message: Localizer.localizedString(key: "battlePlayerFaints"), alignment: .bottom)
             showDialog(with: configurator)
             return
         }
@@ -336,11 +335,11 @@ extension BattleScenePresenter {
         
         finishedBattleReason = .defeated(.enemy)
         if let partner = partner {
-            let configurator = DialogueConfigurator(name: partner.name, message: "¡Sí, lo hemos conseguido!", imageSource: partner.imageSource)
+            let configurator = DialogueConfigurator(name: partner.name, message: Localizer.localizedString(key: "battleExtraPartnerWin"), imageSource: partner.imageSource)
             showDialog(with: configurator)
             
         } else {
-            let configurator = BattleConfigurator(message: "Has conseguido derrotar al malo.", alignment: .bottom)
+            let configurator = BattleConfigurator(message: Localizer.localizedString(key: "battleExtraAloneWin"), alignment: .bottom)
             showDialog(with: configurator)
         }
     }
@@ -355,7 +354,7 @@ extension BattleScenePresenter {
     }
     
     private func getPartner() {
-        guard let partnerId = protagonist?.partner  else { return }
+        guard let partnerId = protagonist?.partner else { return }
         let request = BattleScene.CharacterGetter.Request(id: partnerId)
         let response = interactor?.getPartner(request: request)
         partner = response?.character

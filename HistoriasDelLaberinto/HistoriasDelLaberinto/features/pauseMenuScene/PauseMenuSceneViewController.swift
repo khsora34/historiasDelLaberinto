@@ -4,8 +4,6 @@ import Pastel
 protocol PauseMenuSceneDisplayLogic: ViewControllerDisplay {
     func addCharactersStatus(_ models: [StatusViewModel])
     func createOptions(with optionsAvailable: [(String, Int)])
-    func showMessage(_ message: String)
-    func showExitMessage()
     func updateStatusView(_ model: StatusViewModel)
 }
 
@@ -24,8 +22,7 @@ class PauseMenuSceneViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        title = "Menú"
+        title = Localizer.localizedString(key: "secondaryMenuTitle")
         
         backgroundView.setColors([UIColor.blue, UIColor.cyan, UIColor.blue, UIColor.green])
         backgroundView.startAnimation()
@@ -39,26 +36,11 @@ class PauseMenuSceneViewController: BaseViewController {
 }
 
 extension PauseMenuSceneViewController: PauseMenuSceneDisplayLogic {
-    func showMessage(_ message: String) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
-    
-    func showExitMessage() {
-        let alert = UIAlertController(title: nil, message: "¿Estás seguro de que quieres salir? Se borrará tu progreso si sales sin guardar.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Me arriesgaré", style: .default, handler: { [weak self] _ in
-            self?.presenter?.exitGame()
-        }))
-        alert.addAction(UIAlertAction(title: "Déjame pensarlo", style: .cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
-    
     func addCharactersStatus(_ models: [StatusViewModel]) {
         for model in models {
             // Auto Layout will do the job.
             let statusView = StatusView(frame: CGRect.zero)
-            model.configure(view: statusView)
+            statusView.configure(withModel: model)
             statusStackView.addArrangedSubview(statusView)
         }
         
@@ -71,7 +53,7 @@ extension PauseMenuSceneViewController: PauseMenuSceneDisplayLogic {
     
     func updateStatusView(_ model: StatusViewModel) {
         if let view = statusStackView.arrangedSubviews.filter({ ($0 as? StatusView)?.characterChosen == model.chosenCharacter }).first as? StatusView {
-            model.configure(view: view)
+            view.configure(withModel: model)
         }
     }
     

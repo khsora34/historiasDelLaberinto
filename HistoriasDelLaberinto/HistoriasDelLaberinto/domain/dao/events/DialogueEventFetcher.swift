@@ -21,11 +21,11 @@ extension DialogueEventFetcher {
     }
     
     func saveDialogue(_ dialogue: DialogueEvent) -> Bool {
-        guard let entity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.DialogueEventDAO)", in: managedContext) else { return false }
+        guard let entity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.DialogueEventDAO.rawValue, in: managedContext) else { return false }
         let loadingEvent = DialogueEventDAO(entity: entity, insertInto: managedContext)
         
         loadingEvent.id = dialogue.id
-        loadingEvent.type = "\(DaoConstants.Event.dialogue)"
+        loadingEvent.type = DaoConstants.Event.dialogue.rawValue
         loadingEvent.characterId = dialogue.characterId
         loadingEvent.message = dialogue.message
         loadingEvent.nextStep = dialogue.nextStep

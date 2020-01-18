@@ -6,4 +6,4 @@ class BaseInteractor: BusinessLogic {
     }
 }
 
-protocol BusinessLogic: LocalizableStringBussinesLogic {}
+protocol BusinessLogic {}

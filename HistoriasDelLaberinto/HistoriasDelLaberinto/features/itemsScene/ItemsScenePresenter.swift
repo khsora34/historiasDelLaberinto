@@ -39,12 +39,12 @@ class ItemsScenePresenter: BasePresenter {
     
     private func showItems() {
         var i = 0
-        for element in protagonist.items.keys {
-            let request = ItemsScene.ItemGetter.Request(itemId: element)
+        for (key, value) in protagonist.items {
+            let request = ItemsScene.ItemGetter.Request(itemId: key)
             let response = interactor?.getItem(request: request)
-            guard let item = response?.item else { continue }
-            items[element] = item
-            let model = ItemViewModel(id: element, name: item.name, description: item.description, itemType: ItemType(item: item), quantity: protagonist.items[element]!, imageSource: item.imageSource, tag: i, delegate: self)
+            guard let item = response?.item, let type = ItemType(item: item) else { continue }
+            items[key] = item
+            let model = ItemViewModel(id: key, item: item, itemType: type, quantity: value, imageSource: item.imageSource, tag: i, delegate: self)
             itemModels[i] = model
             i += 1
         }
@@ -65,7 +65,16 @@ class ItemsScenePresenter: BasePresenter {
     }
 }
 
-extension ItemsScenePresenter: ItemsScenePresentationLogic {}
+extension ItemsScenePresenter: ItemsScenePresentationLogic {
+    func saveGame() {
+        guard needsUpdate else { return }
+        let protaRequest = PauseMenuScene.ProtagonistUpdater.Request(protagonist: protagonist)
+        interactor?.updateProtagonist(request: protaRequest)
+        let partnerRequest = PauseMenuScene.CharacterUpdater.Request(partnerId: protagonist.partner, partner: partner)
+        interactor?.updateCharacter(request: partnerRequest)
+        updateDelegate?.update(with: protagonist, and: partner)
+    }
+}
 
 extension ItemsScenePresenter: ItemSelectedDelegate {
     func didSelectItem(isSelected: Bool, tag: Int) {
@@ -111,15 +120,6 @@ extension ItemsScenePresenter: DidTouchStatusDelegate {
             updateCharacterModel(chosen: .partner, model: characterModel)
         }
         needsUpdate = true
-    }
-    
-    func saveGame() {
-        guard needsUpdate else { return }
-        let protaRequest = PauseMenuScene.ProtagonistUpdater.Request(protagonist: protagonist)
-        interactor?.updateProtagonist(request: protaRequest)
-        let partnerRequest = PauseMenuScene.CharacterUpdater.Request(partnerId: protagonist.partner, partner: partner)
-        interactor?.updateCharacter(request: partnerRequest)
-        updateDelegate?.update(with: protagonist, and: partner)
     }
     
     private func updateCharacterModel(chosen: CharacterChosen, model: StatusViewModel) {

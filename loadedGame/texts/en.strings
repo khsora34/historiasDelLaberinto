@@ -2,5 +2,60 @@
 "loadGameButton" = "Load game";
 "gameTitle" = "Labyrinth adventures";
 "changeLanguageButtonText" = "Change language";
+"genericButtonSave" = "Save";
+"genericButtonAccept" = "Ok";
+"loadingGameError" = "An error was encountered while loading a new game. Please, try again later.";
+"loadingPrompt" = "Loading, please wait...";
+"movementAction" = "Move";
+"movementActualRoomStart" = "You are now in room";
+"menuExitPrompt" = "Are you sure that you want to exit the game? Please, save beforehand.";
+"genericRiskOption" = "I'll handle it";
+"genericThinkAboutItOption" = "Let me think again";
+"secondaryMenuTitle" = "Menu";
+"successfullySavedGame" = "Game successfully saved";
+"menuOptionItems" = "Items";
+"menuOptionSave" = "Save";
+"menuOptionExit" = "Exit game";
+
+// Status
+"actualLifeIndicator" = "Actual health";
+"maxLifeIndicator" = "Max health";
+"consumableItemCategory" = "Consumable item";
+"weaponItemCategory" = "Weapon";
+"keyItemCategory" = "Key item";
+"statusAilmentPoison" = "Poison";
+"statusAilmentParalysis" = "Paralysis";
+"statusAilmentBlindness" = "Blindness";
+
+// Battle
+"choiceEventMessage" = "Choose an option.";
+"itemsViewTitle" = "Items";
+"battleOptionAttack" = "Attack";
+"battleStartDialogue" = "wants to fight.";
+"battleActionAttack" = "attacks!";
+"battleActionAttackMissed" = "Pero falló el ataque...";
+"battleActionAttackAbsorbed" = "absorbe el ataque.";
+"battleMessageGetPoisoned" = "is now poisoned.";
+"battleMessageGetParalyzed" = "is now paralyzed.";
+"battleMessageGetBlind" = "is now blind.";
+"battleMessageStillPoisoned" = "is still poisoned.";
+"battleMessageStillParalyzed" = "is still paralyzed.";
+"battleMessageStillBlind" = "is still blind.";
+"battleMessagePoisonEffect" = "is hurt by poison.";
+"battleMessageParalysisEffect" = "is paralyzed and can't move.";
+"battleMessageFinishPoison" = "is no longer poisoned";
+"battleMessageFinishParalysis" = "is no longer paralyzed.";
+"battleMessageFinishBlindness" = "is no longer blind.";
+"battlePartnerFaints" = "I'm sorry, I can't last any longer...";
+"battlePlayerFaints" = "You start losing your conciousness.";
+"battleExtraPartnerWin" = "Yes, we did it!";
+"battleExtraAloneWin" = "You managed to defeat the villain.";
+
+"battleOneHit" = "once";
+"battleMoreHits" = "times";
+"battleHit" = "hits";
+"battleHitTargetConnector" = "to";
+
+// Custom
 "room17LookAround" = "You take a look of your surroundings.";
 "exampleRoomStartEvent" = "You find yourself in a luxurious open concept building.";

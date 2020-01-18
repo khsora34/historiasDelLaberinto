@@ -26,6 +26,10 @@ class LanguageSelectionSceneViewController: BaseViewController {
 }
 
 extension LanguageSelectionSceneViewController: LanguageSelectionSceneDisplayLogic {
+    func setSaveButtonText(_ text: String) {
+        saveButton.text = Localizer.localizedString(key: "genericButtonSave")
+    }
+    
     func showLanguages(models: [LanguageButtonInfo]) {
         self.models = models
         for model in models {

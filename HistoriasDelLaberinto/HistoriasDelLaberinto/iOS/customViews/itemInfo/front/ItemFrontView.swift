@@ -2,18 +2,10 @@ import UIKit
 import Kingfisher
 
 class ItemFrontView: UIView {
-    var name: String? {
-        get {
-            return nameLabel.text
-        }
-        set {
-            nameLabel.text = newValue
-        }
-    }
+    private var model: ItemViewModel!
     
     var isSelected: Bool = false {
         didSet {
-            selectModel?(isSelected)
             if isSelected {
                 layer.borderWidth = 5
                 layer.borderColor = UIColor.white.cgColor
@@ -21,32 +13,10 @@ class ItemFrontView: UIView {
                 layer.borderWidth = 0
                 layer.borderColor = UIColor.clear.cgColor
             }
-            
         }
     }
     
-    var itemType: ItemType? {
-        didSet {
-            itemTypeLabel.text = itemType?.localizedDescription()
-        }
-    }
-    
-    var quantity: Int? {
-        get {
-            return Int(quantityLabel.text ?? "-1")
-        }
-        set {
-            if let value = newValue {
-                quantityLabel.text = "\(value)"
-            } else {
-                quantityLabel.text = nil
-            }
-        }
-    }
-    
-    weak var delegate: ItemSelectedDelegate?
     var flipView: (() -> Void)?
-    var selectModel: ((Bool) -> Void)?
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var imageView: UIImageView!
@@ -72,6 +42,15 @@ class ItemFrontView: UIView {
         setup()
     }
     
+    func configure(withModel model: ItemViewModel) {
+        self.model = model
+        self.nameLabel.text = Localizer.localizedString(key: model.item.name)
+        self.itemTypeLabel.text = Localizer.localizedString(key: model.itemType.categoryKey)
+        self.quantityLabel.text = "\(model.quantity)"
+        self.setImage(for: model.imageSource)
+        self.isSelected = model.isSelected
+    }
+    
     func setImage(for source: ImageSource) {
         imageView.setImage(from: source)
     }
@@ -81,9 +60,11 @@ class ItemFrontView: UIView {
     }
     
     @IBAction func didTapView(_ sender: Any) {
-        guard case .consumable? = itemType else { return }
-        isSelected = !isSelected
-        delegate?.didSelectItem(isSelected: isSelected, tag: self.tag)
+        if case .consumable = model.itemType {
+            isSelected = !isSelected
+            model.isSelected = isSelected
+        }
+        model.delegate?.didSelectItem(isSelected: isSelected, tag: model.tag)
     }
     
     private func setup() {

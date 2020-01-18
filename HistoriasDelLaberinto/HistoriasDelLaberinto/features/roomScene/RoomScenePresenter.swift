@@ -1,8 +1,8 @@
 protocol RoomScenePresentationLogic: Presenter {
     func selectedAction(_ tag: Int)
-    func getInfoMessage() -> String
     func showMenu()
     func startWithStartEvent()
+    func didTapInfoButton()
 }
 
 class RoomScenePresenter: BasePresenter {
@@ -69,7 +69,7 @@ class RoomScenePresenter: BasePresenter {
         }
         self.filteredActions = filteredActions
         var modeledActions = filteredActions.map({ $0.name })
-        modeledActions.append("Moverse")
+        modeledActions.append("movementAction")
         viewController?.set(actions: modeledActions)
     }
 }
@@ -92,12 +92,12 @@ extension RoomScenePresenter: RoomScenePresentationLogic {
         startEvent(with: nextStep)
     }
     
-    func getInfoMessage() -> String {
-        return room.description
-    }
-    
     func showMenu() {
         router?.goToMenu()
+    }
+    
+    func didTapInfoButton() {
+        viewController?.showAlert(title: Localizer.localizedString(key: room.name), message: Localizer.localizedString(key: room.description), actions: [(title: Localizer.localizedString(key: "genericButtonAccept"), style: .default, completion: nil)])
     }
 }
 

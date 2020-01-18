@@ -29,12 +29,12 @@ extension RewardEventFetcher {
     }
 
     func saveReward(_ reward: RewardEvent) -> Bool {
-        guard let eventEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.RewardEventDAO)", in: managedContext),
-            let rewardEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ItemsQuantity)", in: managedContext) else { return false }
+        guard let eventEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.RewardEventDAO.rawValue, in: managedContext),
+            let rewardEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ItemsQuantity.rawValue, in: managedContext) else { return false }
 
         let loadingEvent = RewardEventDAO(entity: eventEntity, insertInto: managedContext)
         loadingEvent.id = reward.id
-        loadingEvent.type = "\(DaoConstants.Event.reward)"
+        loadingEvent.type = DaoConstants.Event.reward.rawValue
         loadingEvent.message = reward.message
         loadingEvent.shouldSetVisited = reward.shouldSetVisited ?? false
         loadingEvent.shouldEndGame = reward.shouldEndGame ?? false

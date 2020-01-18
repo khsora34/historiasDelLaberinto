@@ -2,7 +2,6 @@ import UIKit
 import Kingfisher
 
 class StatusView: UIView {
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initSubviews()
@@ -21,24 +20,15 @@ class StatusView: UIView {
         setup()
     }
     
-    var name: String? {
-        get {
-            return nameLabel.text
-        }
-        set {
-            nameLabel.text = newValue
-        }
-    }
-    
     var ailment: StatusAilment? {
         didSet {
-            ailmentLabel.text = ailment?.localizedAilmentName
+            ailmentLabel.text = ailment?.ailmentKey
             switch ailment {
-            case .poisoned?:
+            case .poison?:
                 ailmentLabel.textColor = UIColor.green
-            case .blind?:
+            case .blindness?:
                 ailmentLabel.textColor = UIColor.darkGray
-            case .paralyzed?:
+            case .paralysis?:
                 ailmentLabel.textColor = UIColor.yellow
             case .none:
                 ailmentLabel.textColor = UIColor.clear
@@ -46,21 +36,27 @@ class StatusView: UIView {
         }
     }
     
-    var characterChosen: CharacterChosen?
+    var characterChosen: CharacterChosen!
     var touchDelegate: DidTouchStatusDelegate?
     
     @IBOutlet var contentView: StatusView!
-    @IBOutlet weak var portraitImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var ailmentLabel: UILabel!
     @IBOutlet private weak var actualTitleLabel: UILabel!
     @IBOutlet private weak var actualhealthLabel: UILabel!
     @IBOutlet private weak var maxTitleLabel: UILabel!
     @IBOutlet private weak var maxHealthLabel: UILabel!
+    @IBOutlet weak var portraitImageView: UIImageView!
     @IBOutlet weak var flashView: UIView!
     
-    func setImage(for imageSource: ImageSource) {
-        portraitImageView.setImage(from: imageSource)
+    func configure(withModel model: StatusViewModel) {
+        self.characterChosen = model.chosenCharacter
+        self.nameLabel.text = model.name
+        self.setHealth(currentHealth: model.actualHealth, maxHealth: model.maxHealth)
+        self.ailment = model.ailment
+        self.portraitImageView.setImage(from: model.imageSource)
+        self.setBackground(shouldDisplayForEnemy: model.isEnemy)
+        self.touchDelegate = model.delegate
     }
     
     func setHealth(currentHealth: Int, maxHealth: Int) {
@@ -99,8 +95,8 @@ extension StatusView {
         contentView.layer.masksToBounds = true
         setFonts()
         setColors()
-        actualTitleLabel.text = "Vida actual"
-        maxTitleLabel.text = "Vida máxima"
+        actualTitleLabel.text = Localizer.localizedString(key: "actualLifeIndicator")
+        maxTitleLabel.text = Localizer.localizedString(key: "maxLifeIndicator")
     }
     
     private func setFonts() {

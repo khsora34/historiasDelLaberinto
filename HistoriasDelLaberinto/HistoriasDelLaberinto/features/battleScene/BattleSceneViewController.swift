@@ -11,7 +11,6 @@ protocol BattleSceneDisplayLogic: ViewControllerDisplay {
 }
 
 class BattleSceneViewController: BaseViewController {
-    
     private var presenter: BattleScenePresentationLogic? {
         return _presenter as? BattleScenePresentationLogic
     }
@@ -26,20 +25,13 @@ class BattleSceneViewController: BaseViewController {
     
     func configureButtons(availableActions: [BattleAction]) {
         var views: [UIView] = []
-        if availableActions.contains(.attack) {
-            let attackButton = ConfigurableButton(frame: .zero)
-            attackButton.setStyle(ButtonStyle.defaultButtonStyle)
-            attackButton.text = "Atacar"
-            attackButton.addTarget(self, action: #selector(didTapAttackButton), for: .touchUpInside)
-            views.append(attackButton)
-        }
-        
-        if availableActions.contains(.items) {
-            let itemsButton = ConfigurableButton(frame: .zero)
-            itemsButton.setStyle(ButtonStyle.defaultButtonStyle)
-            itemsButton.text = "Inventario"
-            itemsButton.addTarget(self, action: #selector(didTapItemsButton), for: .touchUpInside)
-            views.append(itemsButton)
+        for action in availableActions {
+            let button = ConfigurableButton(frame: .zero)
+            button.setStyle(ButtonStyle.defaultButtonStyle)
+            button.text = Localizer.localizedString(key: action.actionKey)
+            button.tag = action.rawValue
+            button.addTarget(self, action: #selector(didTapAction(sender:)), for: .touchUpInside)
+            views.append(button)
         }
         
         actionsStackView.addViewsInColumns(views)
@@ -55,12 +47,15 @@ class BattleSceneViewController: BaseViewController {
         navigationController?.navigationBar.isHidden = false
     }
     
-    @objc func didTapAttackButton() {
-        presenter?.protaWillAttack()
-    }
-    
-    @objc func didTapItemsButton() {
-        presenter?.protaWillUseItems()
+    @objc func didTapAction(sender: UIButton) {
+        switch BattleAction(rawValue: sender.tag) {
+        case .attack?:
+            presenter?.protaWillAttack()
+        case .item:
+            presenter?.protaWillUseItems()
+        case .none:
+            return
+        }
     }
 }
 
@@ -69,7 +64,7 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
         for model in models {
             // Auto Layout will do the job.
             let statusView = StatusView(frame: CGRect.zero)
-            model.configure(view: statusView)
+            statusView.configure(withModel: model)
             charactersStackView.addArrangedSubview(statusView)
         }
     }
@@ -85,7 +80,7 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
     func setEnemyInfo(imageSource: ImageSource, model: StatusViewModel) {
         enemyImageView.setImage(from: imageSource)
         enemyStatus = StatusView(frame: CGRect(x: 0, y: 0, width: 394, height: 100))
-        model.configure(view: enemyStatus)
+        enemyStatus.configure(withModel: model)
         enemyStatus.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(enemyStatus)
         setEnemyViewConstraints(to: enemyStatus)
@@ -93,9 +88,9 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
     
     func updateView(_ model: StatusViewModel) {
         if model.isEnemy {
-            model.configure(view: enemyStatus)
+            enemyStatus.configure(withModel: model)
         } else if let view = charactersStackView.arrangedSubviews.filter({ ($0 as? StatusView)?.characterChosen == model.chosenCharacter }).first as? StatusView {
-            model.configure(view: view)
+            view.configure(withModel: model)
         }
     }
     
