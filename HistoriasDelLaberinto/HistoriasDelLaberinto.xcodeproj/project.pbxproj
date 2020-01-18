@@ -491,7 +491,8 @@
 				6D285CED22AACEB9008C9A1D /* StatusViewModel.swift */,
 				6D74A09122B5AED500B37D1D /* DidTouchStatusDelegate.swift */,
 			);
-			path = status;
+			name = status;
+			path = ../../features/status;
 			sourceTree = "<group>";
 		};
 		6D2DA74F229EE49200BC5C0D /* dialog */ = {
@@ -541,7 +542,6 @@
 			children = (
 				6D7A23052351056600AED9A5 /* languageSelectionScene */,
 				6D223B9C22B56E460086AFA2 /* itemsScene */,
-				6D285CE822AAC720008C9A1D /* status */,
 				6D285CD922AAC5A6008C9A1D /* battleScene */,
 				6D450B6322A9C2F4003D8405 /* pauseMenuScene */,
 				6DDA433E22A701D4003C7993 /* movementScene */,
@@ -827,6 +827,7 @@
 		6DBC4D7522A2947200F93FA8 /* customViews */ = {
 			isa = PBXGroup;
 			children = (
+				6D285CE822AAC720008C9A1D /* status */,
 				6D92F97C239D130F00AC700B /* ConfigurableButton.swift */,
 				6D2DA74F229EE49200BC5C0D /* dialog */,
 				6D223BB922B56FF00086AFA2 /* itemInfo */,
