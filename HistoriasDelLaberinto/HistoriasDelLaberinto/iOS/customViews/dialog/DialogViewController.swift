@@ -203,7 +203,7 @@ extension DialogViewController {
         stackView.spacing = 10
         
         let actions = choice.actions
-        stackView.createButtonsInColumns(names: actions.compactMap({Localizer.localizedString(key: $0.name)}), action: #selector(buttonSelected(sender:)), for: self)
+        stackView.createButtonsInColumns(names: actions.map({Localizer.localizedString(key: $0.name)}), action: #selector(buttonSelected(sender:)), for: self)
         alignment = .bottom
     }
     

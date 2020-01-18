@@ -54,8 +54,15 @@ class RoomSceneViewController: BaseViewController {
 
 extension RoomSceneViewController: RoomSceneDisplayLogic {
     func set(title: String) {
-        self.title = title
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24)]
+        self.title = Localizer.localizedString(key: title)
+        let label = UILabel(frame: .zero)
+        label.text = self.title
+        label.textColor = UIColor.white
+        label.font = UIFont.systemFont(ofSize: 24, weight: .regular)
+        label.backgroundColor = UIColor.clear
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .center
+        self.navigationItem.titleView = label
     }
     
     func setImage(for source: ImageSource) {
@@ -67,7 +74,8 @@ extension RoomSceneViewController: RoomSceneDisplayLogic {
             buttonStackView.removeArrangedSubview(stack)
             stack.removeFromSuperview()
         }
-        buttonStackView.createButtonsInColumns(names: actions, action: #selector(didTapOption(sender:)), for: self, numberOfColumns: 2)
+        
+        buttonStackView.createButtonsInColumns(names: actions.map(Localizer.localizedString(key:)), action: #selector(didTapOption(sender:)), for: self, numberOfColumns: 2)
         
         if #available(iOS 11, *) {
             let iphoneXView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: view.safeAreaInsets.bottom)))

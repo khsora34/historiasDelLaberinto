@@ -44,7 +44,7 @@ class ItemFrontView: UIView {
     
     func configure(withModel model: ItemViewModel) {
         self.model = model
-        self.nameLabel.text = model.item.name
+        self.nameLabel.text = Localizer.localizedString(key: model.item.name)
         self.itemTypeLabel.text = Localizer.localizedString(key: model.itemType.categoryKey)
         self.quantityLabel.text = "\(model.quantity)"
         self.setImage(for: model.imageSource)

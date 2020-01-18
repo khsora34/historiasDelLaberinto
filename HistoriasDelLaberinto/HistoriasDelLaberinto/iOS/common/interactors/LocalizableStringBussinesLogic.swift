@@ -8,14 +8,14 @@ public class Localizer {
         self.localizedStringAccess = localizedStringAccess
     }
     
-    func getString(_ key: String) -> String {
+    private func getString(_ key: String) -> String {
         guard let languageIdentifier: String = UserDefaults.standard.string(forKey: "loadedLanguageIdentifier") else {
             return key
         }
         return getString(key, forLanguage: Locale(identifier: languageIdentifier))
     }
     
-    func getString(_ key: String, forLanguage language: Locale) -> String {
+    private func getString(_ key: String, forLanguage language: Locale) -> String {
         guard let localizedStringAccess = localizedStringAccess else { return key }
         return localizedStringAccess.getString(key: key, forLocale: language)
     }

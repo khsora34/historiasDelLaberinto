@@ -6,12 +6,28 @@
 "genericButtonAccept" = "Aceptar";
 "loadingGameError" = "Ha habido un error intentando comenzar una nueva partida. Vuelve a intentarlo en otro momento.";
 "loadingPrompt" = "Cargando, espera un momento...";
+"movementAction" = "Moverse";
+"movementActualRoomStart" = "Te encuentras en la sala";
+"menuExitPrompt" = "¿Estás seguro de que quieres salir? Se borrará tu progreso si sales sin guardar.";
+"genericRiskOption" = "Me arriesgaré";
+"genericThinkAboutItOption" = "Déjame pensarlo";
+"secondaryMenuTitle" = "Menú";
+"successfullySavedGame" = "Juego guardado con éxito.";
+"menuOptionItems" = "Inventario";
+"menuOptionSave" = "Guardar";
+"menuOptionExit" = "Salir";
+
+// Status
+"actualLifeIndicator" = "Vida actual";
+"maxLifeIndicator" = "Vida máxima";
 "consumableItemCategory" = "Objeto consumible";
 "weaponItemCategory" = "Arma";
 "keyItemCategory" = "Objeto clave";
 "statusAilmentPoison" = "Veneno";
 "statusAilmentParalysis" = "Parálisis";
 "statusAilmentBlindness" = "Ceguera";
+
+// Battle
 "choiceEventMessage" = "Escoge una opción.";
 "itemsViewTitle" = "Inventario";
 "battleOptionAttack" = "Atacar";
@@ -34,17 +50,6 @@
 "battlePlayerFaints" = "Empiezas a perder la consciencia.";
 "battleExtraPartnerWin" = "¡Sí, lo hemos conseguido!";
 "battleExtraAloneWin" = "Has conseguido derrotar al malo.";
-"movementAction" = "Moverse";
-"menuExitPrompt" = "¿Estás seguro de que quieres salir? Se borrará tu progreso si sales sin guardar.";
-"genericRiskOption" = "Me arriesgaré";
-"genericThinkAboutItOption" = "Déjame pensarlo";
-"secondaryMenuTitle" = "Menú";
-"successfullySavedGame" = "Juego guardado con éxito.";
-"menuOptionItems" = "Inventario";
-"menuOptionSave" = "Guardar";
-"menuOptionExit" = "Salir";
-"actualLifeIndicator" = "Vida actual";
-"maxLifeIndicator" = "Vida máxima";
 "battleOneHit" = "una vez";
 "battleMoreHits" = "veces";
 "battleHit" = "golpea";

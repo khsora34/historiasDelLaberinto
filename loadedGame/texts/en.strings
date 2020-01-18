@@ -6,12 +6,28 @@
 "genericButtonAccept" = "Ok";
 "loadingGameError" = "An error was encountered while loading a new game. Please, try again later.";
 "loadingPrompt" = "Loading, please wait...";
+"movementAction" = "Move";
+"movementActualRoomStart" = "You are now in room";
+"menuExitPrompt" = "Are you sure that you want to exit the game? Please, save beforehand.";
+"genericRiskOption" = "I'll handle it";
+"genericThinkAboutItOption" = "Let me think again";
+"secondaryMenuTitle" = "Menu";
+"successfullySavedGame" = "Game successfully saved";
+"menuOptionItems" = "Items";
+"menuOptionSave" = "Save";
+"menuOptionExit" = "Exit game";
+
+// Status
+"actualLifeIndicator" = "Actual health";
+"maxLifeIndicator" = "Max health";
 "consumableItemCategory" = "Consumable item";
 "weaponItemCategory" = "Weapon";
 "keyItemCategory" = "Key item";
 "statusAilmentPoison" = "Poison";
 "statusAilmentParalysis" = "Paralysis";
 "statusAilmentBlindness" = "Blindness";
+
+// Battle
 "choiceEventMessage" = "Choose an option.";
 "itemsViewTitle" = "Items";
 "battleOptionAttack" = "Attack";
@@ -34,17 +50,7 @@
 "battlePlayerFaints" = "You start losing your conciousness.";
 "battleExtraPartnerWin" = "Yes, we did it!";
 "battleExtraAloneWin" = "You managed to defeat the villain.";
-"movementAction" = "Move";
-"menuExitPrompt" = "Are you sure that you want to exit the game? Please, save beforehand.";
-"genericRiskOption" = "I'll handle it";
-"genericThinkAboutItOption" = "Let me think again";
-"secondaryMenuTitle" = "Menu";
-"successfullySavedGame" = "Game successfully saved";
-"menuOptionItems" = "Items";
-"menuOptionSave" = "Save";
-"menuOptionExit" = "Exit game";
-"actualLifeIndicator" = "Actual health";
-"maxLifeIndicator" = "Max health";
+
 "battleOneHit" = "once";
 "battleMoreHits" = "times";
 "battleHit" = "hits";

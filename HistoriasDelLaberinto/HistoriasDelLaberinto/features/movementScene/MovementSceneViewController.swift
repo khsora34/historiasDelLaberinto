@@ -12,6 +12,7 @@ class MovementSceneViewController: BaseViewController {
         return _presenter as? MovementScenePresentationLogic
     }
     
+    @IBOutlet weak var locationSignalLabel: UILabel!
     @IBOutlet weak var roomNameLabel: UILabel!
     @IBOutlet weak var upButton: UIButton!
     @IBOutlet weak var rightButton: UIButton!
@@ -19,6 +20,11 @@ class MovementSceneViewController: BaseViewController {
     @IBOutlet weak var leftButton: UIButton!
     
     // MARK: View lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        locationSignalLabel.text = Localizer.localizedString(key: "movementActualRoomStart")
+    }
     
     @IBAction func didTouchView(_ sender: Any) {
         presenter?.dismiss()

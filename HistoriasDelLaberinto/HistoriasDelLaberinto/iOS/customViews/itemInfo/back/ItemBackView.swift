@@ -43,7 +43,7 @@ class ItemBackView: UIView {
     }
     
     func configure(withModel model: ItemViewModel) {
-        self.descriptionText = model.item.description
+        self.descriptionText = Localizer.localizedString(key: model.item.description)
     }
     
     @IBAction func didTapView(_ sender: Any) {
