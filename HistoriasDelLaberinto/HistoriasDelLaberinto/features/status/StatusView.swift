@@ -37,7 +37,7 @@ class StatusView: UIView {
     }
     
     var characterChosen: CharacterChosen!
-    var touchDelegate: DidTouchStatusDelegate?
+    weak var touchDelegate: DidTouchStatusDelegate?
     
     @IBOutlet var contentView: StatusView!
     @IBOutlet private weak var nameLabel: UILabel!
