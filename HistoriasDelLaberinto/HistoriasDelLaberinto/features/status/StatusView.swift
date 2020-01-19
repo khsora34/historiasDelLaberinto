@@ -42,9 +42,8 @@ class StatusView: UIView {
     @IBOutlet var contentView: StatusView!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var ailmentLabel: UILabel!
-    @IBOutlet private weak var actualTitleLabel: UILabel!
     @IBOutlet private weak var actualhealthLabel: UILabel!
-    @IBOutlet private weak var maxTitleLabel: UILabel!
+    @IBOutlet private weak var healthTitleLabel: UILabel!
     @IBOutlet private weak var maxHealthLabel: UILabel!
     @IBOutlet weak var portraitImageView: UIImageView!
     @IBOutlet weak var flashView: UIView!
@@ -95,24 +94,21 @@ extension StatusView {
         contentView.layer.masksToBounds = true
         setFonts()
         setColors()
-        actualTitleLabel.text = Localizer.localizedString(key: "actualLifeIndicator")
-        maxTitleLabel.text = Localizer.localizedString(key: "maxLifeIndicator")
+        healthTitleLabel.text = Localizer.localizedString(key: "healthIndicator")
     }
     
     private func setFonts() {
         nameLabel.font = UIFont.systemFont(ofSize: 20.0)
         ailmentLabel.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
-        actualTitleLabel.font = UIFont.systemFont(ofSize: 15.0)
+        healthTitleLabel.font = UIFont.systemFont(ofSize: 15.0)
         actualhealthLabel.font = UIFont.systemFont(ofSize: 17.0)
-        maxTitleLabel.font = UIFont.systemFont(ofSize: 15.0)
         maxHealthLabel.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
     }
     
     private func setColors() {
         nameLabel.textColor = UIColor.white
-        actualTitleLabel.textColor = UIColor.white
+        healthTitleLabel.textColor = UIColor.white
         actualhealthLabel.textColor = UIColor.white
-        maxTitleLabel.textColor = UIColor.white
         maxHealthLabel.textColor = UIColor.white
     }
 }
