@@ -17,6 +17,7 @@ class DialogViewController: UIViewController {
     private let typingTimeInterval: TimeInterval = 0.02
     private let dialogViewDefaultAlpha: CGFloat = 0.95
     private let transitionAlpha: CGFloat = 0.3
+    private let font = UIFont.systemFont(ofSize: 0.03 * UIScreen.main.bounds.height)
     
     private var configurator: DialogConfigurator?
     private var timer: Timer?
@@ -27,10 +28,9 @@ class DialogViewController: UIViewController {
             case .bottom:
                 topConstraint.isActive = false
                 dialogHeightConstraint.isActive = false
-                let heightConstraint = NSLayoutConstraint(item: dialogView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.25, constant: 0)
+                let heightConstraint = NSLayoutConstraint(item: dialogView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.3, constant: 0)
                 heightConstraint.isActive = true
                 dialogHeightConstraint = heightConstraint
-                dialogTopConstraint.isActive = true
                 dialogToScrollInequalityConstraint.isActive = true
                 dialogBottomConstraint.isActive = true
             case .top:
@@ -39,7 +39,6 @@ class DialogViewController: UIViewController {
                 let heightConstraint = NSLayoutConstraint(item: dialogView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.15, constant: 0)
                 heightConstraint.isActive = true
                 dialogHeightConstraint = heightConstraint
-                dialogTopConstraint.isActive = false
                 dialogToScrollInequalityConstraint.isActive = false
                 dialogBottomConstraint.isActive = false
             }
@@ -54,12 +53,11 @@ class DialogViewController: UIViewController {
     
     @IBOutlet weak var dialogView: UIView!
     @IBOutlet weak var characterLabel: UILabel!
-    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var characterImageView: UIImageView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet var tapWindowGesture: UITapGestureRecognizer!
     @IBOutlet weak var dialogHeightConstraint: NSLayoutConstraint!
-    @IBOutlet var dialogTopConstraint: NSLayoutConstraint!
     @IBOutlet var dialogToScrollInequalityConstraint: NSLayoutConstraint!
     @IBOutlet var dialogBottomConstraint: NSLayoutConstraint!
     
@@ -75,11 +73,12 @@ class DialogViewController: UIViewController {
     }
     
     func initView() {
-        textView.backgroundColor = UIColor.coolBlue.withAlphaComponent(0.95)
-        textView.alpha = 0.95
+        dialogView.backgroundColor = UIColor.coolBlue.withAlphaComponent(0.95)
+        dialogView.alpha = 0.95
         dialogView.layer.cornerRadius = 6.0
         dialogView.alpha = dialogViewDefaultAlpha
         stackView.isHidden = true
+        messageLabel.font = UIFont.systemFont(ofSize: UIFont.systemFontSize)
         for view in stackView.arrangedSubviews {
             stackView.removeArrangedSubview(view)
         }
@@ -93,8 +92,10 @@ class DialogViewController: UIViewController {
     
     private func setupConfiguration() {
         initView()
+        characterLabel.font = font
         characterLabel.text = configurator?.name
-        textView.text = ""
+        messageLabel.font = font
+        messageLabel.text = ""
         if let dialogue = configurator as? DialogueConfigurator {
             setup(dialogue: dialogue)
         } else if let reward = configurator as? RewardConfigurator {
@@ -137,7 +138,7 @@ extension DialogViewController: DialogDisplayLogic {
     private func internalSetTypingText() {
         guard let key = configurator?.message else { return }
         let message = Localizer.localizedString(key: key)
-        timer = textView.setTypingText(message: message, timeInterval: typingTimeInterval)
+        timer = messageLabel.setTypingText(message: message, timeInterval: typingTimeInterval)
     }
     
     private func changeForDifferent(configurator newConfigurator: DialogConfigurator) {
@@ -188,7 +189,7 @@ extension DialogViewController {
             newView.item = Localizer.localizedString(key: item.name)
             newView.quantity = "\(quantity)"
             newView.imageView.setImage(from: item.imageSource) { (succesful, _) in
-                newView.imageView.isHidden = false
+                newView.imageView.isHidden = !succesful
             }
             self.stackView.addArrangedSubview(newView)
         }
@@ -203,14 +204,14 @@ extension DialogViewController {
         stackView.spacing = 10
         
         let actions = choice.actions
-        stackView.createButtonsInColumns(names: actions.map({Localizer.localizedString(key: $0.name)}), action: #selector(buttonSelected(sender:)), for: self)
+        stackView.createButtonsInColumns(names: actions.map({Localizer.localizedString(key: $0.name)}), usingFontSize: font.pointSize, action: #selector(buttonSelected(sender:)), for: self)
         alignment = .bottom
     }
     
     private func setup(battle: BattleConfigurator) {
         view.backgroundColor = .clear
-        textView.backgroundColor = .coolBlue
-        textView.alpha = 1.0
+        dialogView.backgroundColor = .coolBlue
+        dialogView.alpha = 1.0
         characterImageView.isHidden = true
         stackView.isHidden = true
         alignment = battle.alignment

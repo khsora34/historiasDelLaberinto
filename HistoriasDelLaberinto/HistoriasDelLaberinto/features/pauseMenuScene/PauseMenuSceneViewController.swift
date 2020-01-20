@@ -17,6 +17,7 @@ class PauseMenuSceneViewController: BaseViewController {
     @IBOutlet weak var buttonsStackView: UIStackView!
     @IBOutlet weak var conditionView: UIView!
     @IBOutlet weak var statusStackView: UIStackView!
+    @IBOutlet weak var iPhoneXViewHeight: NSLayoutConstraint!
     
     // MARK: View lifecycle
     
@@ -45,9 +46,8 @@ extension PauseMenuSceneViewController: PauseMenuSceneDisplayLogic {
         }
         
         if #available(iOS 11, *) {
-            let iphoneXView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: view.safeAreaInsets.bottom)))
-            iphoneXView.backgroundColor = .clear
-            statusStackView.addArrangedSubview(iphoneXView)
+            iPhoneXViewHeight.constant = view.safeAreaInsets.bottom
+            view.layoutIfNeeded()
         }
     }
     
@@ -59,7 +59,7 @@ extension PauseMenuSceneViewController: PauseMenuSceneDisplayLogic {
     
     func createOptions(with optionsAvailable: [(String, Int)]) {
         for option in optionsAvailable {
-            let button = ConfigurableButton(frame: .zero)
+            let button = ConfigurableButton(frame: CGRect(x: 0, y: 0, width: 0, height: 40))
             let style = ButtonStyle(backgroundColor: .orange, highlightedBackgroundColor: .red, font: .systemFont(ofSize: 18.0), textColor: .white, cornerRadius: 4)
             button.setStyle(style)
             button.text = option.0

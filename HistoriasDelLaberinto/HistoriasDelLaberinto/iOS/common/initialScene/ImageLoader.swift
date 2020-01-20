@@ -58,17 +58,15 @@ class ImageLoadingOperation {
     
     func start() {
         let imageCompletion: (Result<RetrieveImageResult, KingfisherError>) -> Void = { [weak self] result in
+            var didLoad = false
             switch result {
             case .success(let success):
+                didLoad = true
                 print("❤️ Image with url \(success.source) loaded correctly.")
             case .failure(let failure):
                 print("💔 Image didn't load correctly: \(failure.errorDescription ?? "")")
             }
             guard let self = self else { return }
-            var didLoad = false
-            if case .success = result {
-                didLoad = true
-            }
             self.delegate?.onFinished(id: self.identifier, success: didLoad)
         }
         

@@ -18,8 +18,7 @@
 "menuOptionExit" = "Salir";
 
 // Status
-"actualLifeIndicator" = "Vida actual";
-"maxLifeIndicator" = "Vida máxima";
+"healthIndicator" = "Puntos de vida";
 "consumableItemCategory" = "Objeto consumible";
 "weaponItemCategory" = "Arma";
 "keyItemCategory" = "Objeto clave";

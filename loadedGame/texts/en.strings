@@ -18,8 +18,7 @@
 "menuOptionExit" = "Exit game";
 
 // Status
-"actualLifeIndicator" = "Actual health";
-"maxLifeIndicator" = "Max health";
+"healthIndicator" = "Health points";
 "consumableItemCategory" = "Consumable item";
 "weaponItemCategory" = "Weapon";
 "keyItemCategory" = "Key item";

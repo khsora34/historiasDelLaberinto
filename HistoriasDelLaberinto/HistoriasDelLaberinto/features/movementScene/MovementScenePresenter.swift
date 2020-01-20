@@ -40,6 +40,7 @@ class MovementScenePresenter: BasePresenter {
     private func getMovement() {
         let response = interactor?.getMovement()
         movement = response?.movement
+        // Load rooms in any direction from actual room. It is meant for showing only the possible moves.
         if let items = movement.map, let map = Array(items) as? [RoomPosition], !map.isEmpty {
             for direction in CompassDirection.allCases {
                 let extraLocation = direction.locationDirection()

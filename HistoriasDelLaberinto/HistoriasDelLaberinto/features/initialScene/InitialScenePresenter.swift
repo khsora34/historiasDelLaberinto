@@ -5,18 +5,19 @@ protocol InitialScenePresentationLogic: Presenter {
 }
 
 class InitialScenePresenter: BasePresenter {
-    var viewController: InitialSceneDisplayLogic? {
+    private var viewController: InitialSceneDisplayLogic? {
         return _viewController as? InitialSceneDisplayLogic
     }
     
-    var interactor: InitialSceneBusinessLogic? {
+    private var interactor: InitialSceneBusinessLogic? {
         return _interactor as? InitialSceneBusinessLogic
     }
     
-    var router: InitialSceneRoutingLogic? {
+    private var router: InitialSceneRoutingLogic? {
         return _router as? InitialSceneRoutingLogic
     }
     
+    private var nextRoomId: String?
     var movement: Movement?
     
     override func viewDidLoad() {
@@ -30,6 +31,7 @@ class InitialScenePresenter: BasePresenter {
 
 extension InitialScenePresenter: InitialScenePresentationLogic {
     func startNewGame() {
+        nextRoomId = "startRoom"
         viewController?.setLoadButton(isHidden: true)
         viewController?.showLoading(message: Localizer.localizedString(key: "loadingPrompt"))
         interactor?.deleteAllFiles()
@@ -48,8 +50,9 @@ extension InitialScenePresenter: InitialScenePresentationLogic {
             viewController?.showAlert(title: nil, message: Localizer.localizedString(key: "loadingGameError"), actions: [(title: Localizer.localizedString(key: "genericButtonAccept"), style: .default, completion: nil)])
             return
         }
-        
-        goToRoom(id: roomId)
+        viewController?.showLoading(message: Localizer.localizedString(key: "loadingPrompt"))
+        nextRoomId = roomId
+        interactor?.reloadGame(request: InitialScene.FileLoader.Request(imageDelegate: self))
     }
     
     func goToLanguagesSelection() {
@@ -72,15 +75,13 @@ extension InitialScenePresenter {
 }
 
 extension InitialScenePresenter: ImageLoaderDelegate {
-    func finishedLoadingImages(numberOfImagesLoaded: Int) {
-//        guard numberOfImagesLoaded > 0 else {
-//            viewController?.dismissLoading { [weak self] in
-//                self?.viewController?.showUnableToStartGame()
-//            }
-//            return
-//        }
+    func finishedLoadingImages(numberOfImagesLoaded: Int, source: ImageLoaderSource) {
         viewController?.dismissLoading { [weak self] in
-            self?.goToRoom(id: "startRoom")
+            if let nextRoomId = self?.nextRoomId {
+                self?.goToRoom(id: nextRoomId)
+            } else {
+                self?.viewController?.showAlert(title: nil, message: Localizer.localizedString(key: "loadingGameError"), actions: [(title: Localizer.localizedString(key: "genericButtonAccept"), style: .default, completion: nil)])
+            }
         }
     }
 }
