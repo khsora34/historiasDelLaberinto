@@ -1,12 +1,12 @@
 import UIKit
 
 extension UIStackView {
-    func createButtonsInColumns(names: [String], action: Selector, for view: Any, numberOfColumns: Int = 2) {
+    func createButtonsInColumns(names: [String], usingFontSize size: CGFloat = 18.0, action: Selector, for view: Any, numberOfColumns: Int = 2) {
         func createButton(name: String, tag: Int) -> UIView {
             let button = ConfigurableButton(frame: .zero)
             button.tag = tag
             button.text = name
-            button.setStyle(ButtonStyle.defaultButtonStyle)
+            button.setStyle(ButtonStyle.defaultButtonStyle(withFontSize: size))
             button.addTarget(view, action: action, for: .touchUpInside)
             return button
         }

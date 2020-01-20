@@ -16,6 +16,10 @@ struct ButtonStyle {
     }
     
     static var defaultButtonStyle: ButtonStyle {
-        return ButtonStyle(backgroundColor: .coolBlue, highlightedBackgroundColor: .darkCoolBlue, font: .systemFont(ofSize: 18), textColor: .white, cornerRadius: 4)
+        return defaultButtonStyle(withFontSize: 18)
+    }
+    
+    static func defaultButtonStyle(withFontSize size: CGFloat) -> ButtonStyle {
+        return ButtonStyle(backgroundColor: .coolBlue, highlightedBackgroundColor: .darkCoolBlue, font: .systemFont(ofSize: size), textColor: .white, cornerRadius: 4)
     }
 }
