@@ -2,6 +2,7 @@ import Foundation
 
 protocol InitialSceneBusinessLogic: BusinessLogic {
     func loadAllFiles(request: InitialScene.FileLoader.Request)
+    func reloadGame(request: InitialScene.FileLoader.Request)
     func deleteAllFiles()
     func getRoom(request: InitialScene.RoomBuilder.Request) -> InitialScene.RoomBuilder.Response
     func getMovement() -> InitialScene.MovementGetter.Response
@@ -11,18 +12,19 @@ protocol InitialSceneBusinessLogic: BusinessLogic {
 
 class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
     private let databaseFetcherProvider: DatabaseFetcherProvider
-    
-    var operations: [Int: ImageLoadingOperation] = [:] {
-        didSet {
-            if operations.values.count == 0 {
-                print("😂 Finished loading images")
-                delegate?.finishedLoadingImages(numberOfImagesLoaded: successfulOperations)
-            }
-        }
-    }
+    private var imageLoadingSource: ImageLoaderSource?
     
     var successfulOperations: Int = 0
     weak var delegate: ImageLoaderDelegate?
+    
+    var operations: [Int: ImageLoadingOperation] = [:] {
+        didSet {
+            if operations.values.count == 0, let imageLoadingSource = imageLoadingSource {
+                print("😂 Finished loading images")
+                delegate?.finishedLoadingImages(numberOfImagesLoaded: successfulOperations, source: imageLoadingSource)
+            }
+        }
+    }
     
     init(databaseFetcherProvider: DatabaseFetcherProvider) {
         self.databaseFetcherProvider = databaseFetcherProvider
@@ -33,8 +35,19 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         let now = Date().timeIntervalSinceReferenceDate
         print("😂 Start Uploading ")
         delegate = request.imageDelegate
+        imageLoadingSource = .newGame
         parseFiles()
         print("😂 Finished in \(Date().timeIntervalSinceReferenceDate - now)")
+    }
+    
+    func reloadGame(request: InitialScene.FileLoader.Request) {
+        delegate = request.imageDelegate
+        imageLoadingSource = .loadGame
+        let protagonist = getProtagonist()
+        let charactersFile = getCharacters()
+        let roomsFile = getRooms()
+        let itemsFile = getItems()
+        loadImages(protagonist, charactersFile, roomsFile, itemsFile)
     }
     
     private func parseFiles() {
