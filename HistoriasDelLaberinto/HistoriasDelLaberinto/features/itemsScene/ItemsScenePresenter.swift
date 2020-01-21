@@ -1,34 +1,27 @@
 protocol ItemsScenePresentationLogic: Presenter {
-    func saveGame()
+    func saveCharactersStatus()
 }
 
 class ItemsScenePresenter: BasePresenter {
-    var viewController: ItemsSceneDisplayLogic? {
-        return _viewController as? ItemsSceneDisplayLogic
-    }
+    var viewController: ItemsSceneDisplayLogic? { return _viewController as? ItemsSceneDisplayLogic }
+    var interactor: ItemsSceneBusinessLogic? { return _interactor as? ItemsSceneBusinessLogic }
+    private var router: ItemsSceneRoutingLogic? { return _router as? ItemsSceneRoutingLogic }
     
-    var interactor: ItemsSceneBusinessLogic? {
-        return _interactor as? ItemsSceneBusinessLogic
-    }
-    
-    var router: ItemsSceneRoutingLogic? {
-        return _router as? ItemsSceneRoutingLogic
-    }
-    
-    private var needsUpdate: Bool = false
+    private var hasChanged: Bool = false
     weak var updateDelegate: CharactersUpdateDelegate?
     
+    private var protagonist: Protagonist
+    private var partner: PlayableCharacter?
     private var charactersModels: [CharacterChosen: StatusViewModel] = [:]
     private var items: [String: Item] = [:]
     private var itemModels: [Int: ItemViewModel] = [:]
     var selectedItemTag: Int?
     
-    private var protagonist: Protagonist
-    private var partner: PlayableCharacter?
-    
-    init(protagonist: Protagonist, partner: PlayableCharacter? = nil) {
-        self.protagonist = protagonist
-        self.partner = partner
+    override init() {
+        self.protagonist = GameSession.protagonist
+        if let partner = protagonist.partner {
+            self.partner = GameSession.partners[partner]
+        }
     }
     
     override func viewDidLoad() {
@@ -66,12 +59,12 @@ class ItemsScenePresenter: BasePresenter {
 }
 
 extension ItemsScenePresenter: ItemsScenePresentationLogic {
-    func saveGame() {
-        guard needsUpdate else { return }
-        let protaRequest = PauseMenuScene.ProtagonistUpdater.Request(protagonist: protagonist)
-        interactor?.updateProtagonist(request: protaRequest)
-        let partnerRequest = PauseMenuScene.CharacterUpdater.Request(partnerId: protagonist.partner, partner: partner)
-        interactor?.updateCharacter(request: partnerRequest)
+    func saveCharactersStatus() {
+        guard hasChanged else { return }
+        GameSession.setProtagonist(protagonist)
+        if let partner = partner, let partnerId = protagonist.partner {
+            GameSession.addPartner(partner, withId: partnerId)
+        }
         updateDelegate?.update(with: protagonist, and: partner)
     }
 }
@@ -119,7 +112,7 @@ extension ItemsScenePresenter: DidTouchStatusDelegate {
             updateItemModel(tag: tag, model: selectedItemModel)
             updateCharacterModel(chosen: .partner, model: characterModel)
         }
-        needsUpdate = true
+        hasChanged = true
     }
     
     private func updateCharacterModel(chosen: CharacterChosen, model: StatusViewModel) {

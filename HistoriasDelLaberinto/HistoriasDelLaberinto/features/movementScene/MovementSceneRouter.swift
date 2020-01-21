@@ -20,7 +20,7 @@ class MovementSceneRouter: BaseRouter, MovementSceneRoutingLogic {
         removeBlur()
         drawer?.dismiss(animated: true)
         guard let navigation = drawer?.currentRootViewController as? UINavigationController else { return }
-        let module = moduleProvider.roomSceneModule(roomId: room.id, room: room)
+        let module = moduleProvider.roomSceneModule(room: room)
         navigation.setViewControllers([module.viewController], animated: true)
     }
     

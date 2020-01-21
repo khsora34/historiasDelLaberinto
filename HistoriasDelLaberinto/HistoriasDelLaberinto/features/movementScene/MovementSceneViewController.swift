@@ -31,7 +31,7 @@ class MovementSceneViewController: BaseViewController {
     }
     
     @IBAction func didTouchDirection(_ sender: UIButton) {
-        presenter?.calculateDirection(tag: sender.tag)
+        presenter?.calculateNextRoom(tag: sender.tag)
     }
 }
 

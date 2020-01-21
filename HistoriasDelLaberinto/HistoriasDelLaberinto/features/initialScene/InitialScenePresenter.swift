@@ -36,7 +36,7 @@ extension InitialScenePresenter: InitialScenePresentationLogic {
         viewController?.showLoading(message: Localizer.localizedString(key: "loadingPrompt"))
         interactor?.deleteAllFiles()
         let request = InitialScene.FileLoader.Request(imageDelegate: self)
-        interactor?.loadAllFiles(request: request)
+        interactor?.startNewGame(request: request)
     }
     
     func loadGame() {
@@ -69,13 +69,12 @@ extension InitialScenePresenter {
             viewController?.showAlert(title: nil, message: Localizer.localizedString(key: "loadingGameError"), actions: [(title: Localizer.localizedString(key: "genericButtonAccept"), style: .default, completion: nil)])
             return
         }
-        interactor?.createMovement()
-        router?.goToRoomView(roomId: id, room: room)
+        router?.goToRoomView(room: room)
     }
 }
 
 extension InitialScenePresenter: ImageLoaderDelegate {
-    func finishedLoadingImages(numberOfImagesLoaded: Int, source: ImageLoaderSource) {
+    func finishedLoadingImages(numberOfImagesLoaded: Int) {
         viewController?.dismissLoading { [weak self] in
             if let nextRoomId = self?.nextRoomId {
                 self?.goToRoom(id: nextRoomId)

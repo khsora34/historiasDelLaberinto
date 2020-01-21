@@ -6,9 +6,9 @@ class ItemsSceneModule: Module {
     var presenter: Presenter
     var router: RouterLogic
     
-    init(protagonist: Protagonist, partner: PlayableCharacter?, delegate: CharactersUpdateDelegate?, fetcherProvider: DatabaseFetcherProvider, routerProvider: RouterProvider) {
+    init(delegate: CharactersUpdateDelegate?, fetcherProvider: DatabaseFetcherProvider, routerProvider: RouterProvider) {
         viewController = ViewCreator.createFrom(storyboardName: storyboardName, forController: controllerName)
-        presenter = ItemsScenePresenter(protagonist: protagonist, partner: partner)
+        presenter = ItemsScenePresenter()
         (presenter as? ItemsScenePresenter)?.updateDelegate = delegate
         router = routerProvider.itemsSceneRouter
         interactor = ItemsSceneInteractor(fetcherProvider: fetcherProvider)
