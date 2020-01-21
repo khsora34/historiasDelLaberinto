@@ -1,4 +1,4 @@
-protocol EventHandlerInteractor: ImageRemover {
+protocol EventHandlerInteractor {
     var fetcherProvider: DatabaseFetcherProvider { get }
     func getEvent(request: EventsHandlerModels.FetchEvent.Request) -> EventsHandlerModels.FetchEvent.Response
     func compareCondition(request: EventsHandlerModels.CompareCondition.Request) -> EventsHandlerModels.CompareCondition.Response
@@ -19,12 +19,8 @@ extension EventHandlerInteractor {
     
     func compareCondition(request: EventsHandlerModels.CompareCondition.Request) -> EventsHandlerModels.CompareCondition.Response {
         let condition = request.condition
-        guard let protagonist = fetcherProvider.charactersFetcher.getCharacter(with: "protagonist") as? Protagonist else {
-            return EventsHandlerModels.CompareCondition.Response(result: false)
-        }
-        
+        let protagonist: Protagonist = GameSession.protagonist
         let result: Bool = evaluateCondition(for: condition, withProta: protagonist)
-        
         return EventsHandlerModels.CompareCondition.Response(result: result)
     }
     
@@ -39,11 +35,11 @@ extension EventHandlerInteractor {
         case .roomNotVisited(let id):
             return !isRoomVisited(protagonist: protagonist, roomId: id)
         case .variable(let operation):
-            guard let leftVariable = fetcherProvider.variableFetcher.getVariable(with: operation.comparationVariableName) else { return false }
+            guard let leftVariable = getVariable(named: operation.comparationVariableName) else { return false }
             let relation = operation.relation
             if let rightVariable = operation.initialVariable {
                 return evaluateVariables(lhs: leftVariable.content, rhs: rightVariable, withOperator: relation)
-            } else if let initialVariableName = operation.initialVariableName, let rightVariable = fetcherProvider.variableFetcher.getVariable(with: initialVariableName) {
+            } else if let initialVariableName = operation.initialVariableName, let rightVariable = getVariable(named: initialVariableName) {
                 return evaluateVariables(lhs: leftVariable.content, rhs: rightVariable.content, withOperator: relation)
             }
             return false
@@ -66,7 +62,7 @@ extension EventHandlerInteractor {
     }
     
     private func isRoomVisited(protagonist: Protagonist, roomId: String) -> Bool {
-        let room = fetcherProvider.roomsFetcher.getRoom(with: roomId)
+        let room = GameSession.rooms[roomId] ?? fetcherProvider.roomsFetcher.getRoom(with: roomId)
         if let partner = protagonist.partner, !partner.isEmpty {
             return room?.isVisitedWithPartner ?? false
         } else {
@@ -75,17 +71,15 @@ extension EventHandlerInteractor {
     }
     
     func setIsVisited(request: EventsHandlerModels.SetVisited.Request) -> EventsHandlerModels.SetVisited.Response {
-        guard let prota = fetcherProvider.charactersFetcher.getCharacter(with: "protagonist") as? Protagonist else {
-            return EventsHandlerModels.SetVisited.Response(room: request.room)
-        }
+        let protagonist: Protagonist = GameSession.protagonist
         var room = request.room
-        if let partner = prota.partner, !partner.isEmpty {
+        if let partner = protagonist.partner, !partner.isEmpty {
             room.isVisitedWithPartner = true
         } else {
             room.isVisited = true
         }
         
-        _ = fetcherProvider.roomsFetcher.saveRoom(for: room, with: room.id)
+        GameSession.addRoom(room)
         return EventsHandlerModels.SetVisited.Response(room: room)
     }
     
@@ -102,36 +96,31 @@ extension EventHandlerInteractor {
     }
     
     func buildReward(request: EventsHandlerModels.BuildItems.Request) -> EventsHandlerModels.BuildItems.Response {
-        var protagonist = fetcherProvider.charactersFetcher.getCharacter(with: "protagonist") as? Protagonist
         let event = request.event
+        var protagonist: Protagonist = GameSession.protagonist
         
         var items: [(Item, Int)] = []
         for (key, value) in event.rewards {
             if let item = fetcherProvider.itemsFetcher.getItem(with: key) {
                 items.append((item, value))
-                if let inventoryQuantity = protagonist?.items[key] {
-                    protagonist?.items[key] = inventoryQuantity + value
+                if let inventoryQuantity = protagonist.items[key] {
+                    protagonist.items[key] = inventoryQuantity + value
                 } else {
-                    protagonist?.items[key] = value
+                    protagonist.items[key] = value
                 }
             }
         }
-        if let protagonist = protagonist {
-            _ = fetcherProvider.charactersFetcher.saveCharacter(for: protagonist, with: "protagonist")
-        }
         
-        let configurator = RewardConfigurator(name: "", message: event.message, items: items)
+        GameSession.setProtagonist(protagonist)
+        
+        let configurator = RewardConfigurator(message: event.message, items: items)
         return EventsHandlerModels.BuildItems.Response(configurator: configurator)
     }
     
     func buildChoice(request: EventsHandlerModels.BuildChoice.Request) -> EventsHandlerModels.BuildChoice.Response {
         let event = request.event
-        guard let prota = fetcherProvider.charactersFetcher.getCharacter(with: "protagonist") as? Protagonist else {
-            return EventsHandlerModels.BuildChoice.Response(configurator: nil)
-        }
-        let filtered = event.options.filter {
-            $0.condition == nil || evaluateCondition(for: $0.condition!, withProta: prota)
-        }
+        let protagonist: Protagonist = GameSession.protagonist
+        let filtered = event.options.filter { $0.condition == nil || evaluateCondition(for: $0.condition!, withProta: protagonist) }
         let configurator = ChoiceConfigurator(actions: filtered)
         return EventsHandlerModels.BuildChoice.Response(configurator: configurator)
     }
@@ -146,30 +135,34 @@ extension EventHandlerInteractor {
     
     func performVariableModification(request: EventsHandlerModels.VariableModification.Request) {
         let event = request.event
-        if let oldVariable = fetcherProvider.variableFetcher.getVariable(with: event.variableId) {
+        if let oldVariable = getVariable(named: event.variableId) {
             if let value = event.initialVariable {
                 perform(operation: event.operation, variableToModify: oldVariable, withContent: value)
                 
-            } else if let variableForCopyName = event.initialVariableName, let variableForCopy = fetcherProvider.variableFetcher.getVariable(with: variableForCopyName) {
-                perform(operation: event.operation, variableToModify: oldVariable, withContent: variableForCopy.content)
+            } else if let secondVariableName = event.initialVariableName, let secondVariable = getVariable(named: secondVariableName) {
+                perform(operation: event.operation, variableToModify: oldVariable, withContent: secondVariable.content)
             }
             
         } else if event.operation == .set {
             if let value = event.initialVariable {
                 let newVariable = Variable(name: event.variableId, content: value)
-                _ = fetcherProvider.variableFetcher.saveVariable(for: newVariable)
+                GameSession.addVariable(newVariable)
                 
-            } else if let variableForCopyName = event.initialVariableName, let variableForCopy = fetcherProvider.variableFetcher.getVariable(with: variableForCopyName) {
-                let newVariable = Variable(name: variableForCopyName, content: variableForCopy.content)
-                _ = fetcherProvider.variableFetcher.saveVariable(for: newVariable)
+            } else if let secondVariableName = event.initialVariableName, let secondVariable = getVariable(named: secondVariableName) {
+                let newVariable = Variable(name: event.variableId, content: secondVariable.content)
+                GameSession.addVariable(newVariable)
             }
         }
+    }
+    
+    private func getVariable(named name: String) -> Variable? {
+        return GameSession.variables[name] ?? fetcherProvider.variableFetcher.getVariable(with: name)
     }
     
     private func perform(operation: VariableOperation, variableToModify: Variable, withContent newContent: VariableValue) {
         guard variableToModify.content.type == newContent.type else { return }
         let newValue = operation.performOperation(originalContent: variableToModify.content, newContent: newContent)
-        _ = fetcherProvider.variableFetcher.saveVariable(for: Variable(name: variableToModify.name, content: newValue))
+        GameSession.addVariable(Variable(name: variableToModify.name, content: newValue))
     }
     
     func endGame() {
@@ -178,6 +171,6 @@ extension EventHandlerInteractor {
         fetcherProvider.itemsFetcher.deleteAllItems()
         fetcherProvider.roomsFetcher.deleteAllRooms()
         fetcherProvider.movementFetcher.removeMovement()
-        removeImageCache()
+        GameSession.restart()
     }
 }

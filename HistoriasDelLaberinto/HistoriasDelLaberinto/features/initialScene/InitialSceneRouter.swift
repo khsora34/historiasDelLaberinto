@@ -3,7 +3,7 @@ import UIKit
 protocol InitialSceneRoutingLogic: RouterLogic {
     func goToExampleView()
     func goToLanguagesSelection()
-    func goToRoomView(roomId: String, room: Room)
+    func goToRoomView(room: Room)
 }
 
 class InitialSceneRouter: BaseRouter, InitialSceneRoutingLogic {
@@ -19,9 +19,9 @@ class InitialSceneRouter: BaseRouter, InitialSceneRoutingLogic {
         navigation.pushViewController(module.viewController, animated: true)
     }
     
-    func goToRoomView(roomId: String, room: Room) {
+    func goToRoomView(room: Room) {
         guard let navigation = drawer?.currentRootViewController as? UINavigationController else { return }
-        let module = moduleProvider.roomSceneModule(roomId: roomId, room: room)
+        let module = moduleProvider.roomSceneModule(room: room)
         navigation.pushViewController(module.viewController, animated: true)
     }
 }

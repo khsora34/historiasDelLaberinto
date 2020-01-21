@@ -37,7 +37,6 @@ enum AttackPhase: Int {
     case attackResult
     case evaluateHealthAfterAttack
     case battleEnd
-    case userInput
     
     func getNext() -> AttackPhase {
         if let value = AttackPhase(rawValue: self.rawValue + 1) {

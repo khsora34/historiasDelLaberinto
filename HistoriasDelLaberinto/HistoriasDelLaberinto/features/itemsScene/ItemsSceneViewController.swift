@@ -23,7 +23,7 @@ class ItemsSceneViewController: BaseViewController {
     override func willMove(toParent parent: UIViewController?) {
         super.willMove(toParent: parent)
         if parent == nil {
-            presenter?.saveGame()
+            presenter?.saveCharactersStatus()
         }
     }
     

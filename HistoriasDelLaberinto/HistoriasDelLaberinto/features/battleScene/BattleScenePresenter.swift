@@ -10,30 +10,19 @@ class BattleScenePresenter: BasePresenter {
         var character: CharacterChosen
         var target: CharacterChosen?
     }
-    
-    var viewController: BattleSceneDisplayLogic? {
-        return _viewController as? BattleSceneDisplayLogic
-    }
-    
-    var interactor: BattleSceneInteractor? {
-        return _interactor as? BattleSceneInteractor
-    }
-    
-    var router: BattleSceneRouter? {
-        return _router as? BattleSceneRouter
-    }
+    var viewController: BattleSceneDisplayLogic? { return _viewController as? BattleSceneDisplayLogic }
+    var interactor: BattleSceneInteractor? { return _interactor as? BattleSceneInteractor }
+    var router: BattleSceneRouter? { return _router as? BattleSceneRouter }
     
     private let backgroundImage: ImageSource
-    
     private var actualWeapons: [String: Weapon] = [:]
     private var ailmentTurnsElapsed: [CharacterChosen: Int] = [:]
-    private var actualState = ActualState(step: .userInput, character: .protagonist, target: nil)
+    private var actualState = ActualState(step: .attackPhase, character: .protagonist, target: nil)
     private var finishedBattleReason: FinishedBattleReason?
     private var isPartnerDead = false
     
     var models: [CharacterChosen: StatusViewModel] = [:]
     var dialog: DialogDisplayLogic?
-    
     var protagonist: Protagonist!
     var partner: CharacterStatus?
     var enemy: CharacterStatus
@@ -48,8 +37,7 @@ class BattleScenePresenter: BasePresenter {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewController?.setBackground(using: backgroundImage)
-        getProtagonist()
-        getPartner()
+        getCharacters()
         getWeapons()
         buildCharacters()
         configureActions()
@@ -67,12 +55,12 @@ extension BattleScenePresenter: BattleScenePresentationLogic {
     }
     
     func protaWillAttack() {
-        actualState = ActualState(step: .attackPhase, character: .protagonist, target: nil)
+        actualState = ActualState(step: .attackResult, character: .protagonist, target: nil)
         performNextStep()
     }
     
     func protaWillUseItems() {
-        router?.goToItemsView(protagonist: protagonist, partner: partner as? PlayableCharacter, delegate: self)
+        router?.goToItemsView(delegate: self)
     }
 }
 
@@ -142,7 +130,7 @@ extension BattleScenePresenter {
             if protagonist.currentHealthPoints == 0 {
                 actualState = ActualState(step: .battleEnd, character: .protagonist, target: nil)
             } else {
-                actualState = ActualState(step: .userInput, character: .protagonist, target: nil)
+                actualState = ActualState(step: .attackPhase, character: .protagonist, target: nil)
             }
         case .partner:
             guard let partner = partner else {
@@ -230,6 +218,11 @@ extension BattleScenePresenter {
     }
     
     private func attackPhase() {
+        guard actualState.character != .protagonist else {
+            hideDialog()
+            return
+        }
+        
         let chosenCharacter = actualState.character
         let character = getCharacter(from: chosenCharacter)
         let message = "\(character.name) \(Localizer.localizedString(key: "battleActionAttack"))"
@@ -348,16 +341,11 @@ extension BattleScenePresenter {
 // MARK: - Interactors
 
 extension BattleScenePresenter {
-    private func getProtagonist() {
-        let response = interactor?.getProtagonist()
-        protagonist = response?.protagonist
-    }
-    
-    private func getPartner() {
-        guard let partnerId = protagonist?.partner else { return }
-        let request = BattleScene.CharacterGetter.Request(id: partnerId)
-        let response = interactor?.getPartner(request: request)
-        partner = response?.character
+    private func getCharacters() {
+        protagonist = GameSession.protagonist
+        if let partnerId = protagonist.partner {
+            partner = GameSession.partners[partnerId]
+        }
     }
     
     private func getWeapons() {
@@ -372,8 +360,10 @@ extension BattleScenePresenter {
     }
     
     private func updateCharacters() {
-        let request = BattleScene.CharacterUpdater.Request(protagonist: protagonist, partner: partner)
-        interactor?.updateCharacters(request: request)
+        GameSession.setProtagonist(protagonist)
+        if let partnerId = protagonist.partner, let partner = partner as? PlayableCharacter {
+            GameSession.addPartner(partner, withId: partnerId)
+        }
     }
 }
 
@@ -406,8 +396,6 @@ extension BattleScenePresenter: NextDialogHandler {
             evaluateHealth(for: actualState.target)
         case .battleEnd:
             battleEnd()
-        case .userInput:
-            hideDialog()
         }
     }
 }
@@ -427,12 +415,10 @@ extension BattleScenePresenter: CharactersUpdateDelegate {
         self.protagonist = protagonist
         if let partner = partner {
             self.partner = partner
-            if partner.currentHealthPoints > 0 {
-                isPartnerDead = false
-            }
+            isPartnerDead = partner.currentHealthPoints <= 0
         }
         updateStatusModels()
-        actualState = ActualState(step: actualState.step.getNext(), character: actualState.character.next(), target: nil)
+        actualState = ActualState(step: AttackPhase.startPhase(), character: actualState.character.next(), target: nil)
         performNextStep()
     }
 }

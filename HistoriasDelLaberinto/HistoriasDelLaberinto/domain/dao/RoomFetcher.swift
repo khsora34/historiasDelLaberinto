@@ -3,7 +3,7 @@ import CoreData
 
 protocol RoomFetcher {
     func getRoom(with id: String) -> Room?
-    func getAllRooms() -> [Room]
+    func getAllRooms() -> [String: Room]
     func saveRoom(for room: Room, with id: String) -> Bool
     func deleteAllRooms()
 }
@@ -23,8 +23,7 @@ class RoomFetcherImpl: RoomFetcher {
     }
     
     func getRoom(with id: String) -> Room? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = persistentContainer.viewContext
         
         let fetchRequest: NSFetchRequest<RoomDAO> = RoomDAO.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "\(DaoConstants.Generic.id) == %@", id)
@@ -38,10 +37,8 @@ class RoomFetcherImpl: RoomFetcher {
         }
     }
     
-    func getAllRooms() -> [Room] {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return [] }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
+    func getAllRooms() -> [String: Room] {
+        let managedContext = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<RoomDAO> = RoomDAO.fetchRequest()
         
         var rooms: [RoomDAO] = []
@@ -51,11 +48,11 @@ class RoomFetcherImpl: RoomFetcher {
             print("No ha sido posible guardar \(error), \(error.userInfo)")
         }
         
-        var modeledRooms: [Room] = []
+        var modeledRooms: [String: Room] = [:]
         
         for room in rooms {
             if let newRoom = getRoom(fromDao: room) {
-                modeledRooms.append(newRoom)
+                modeledRooms[newRoom.id] = newRoom
             }
         }
         return modeledRooms
@@ -112,8 +109,7 @@ class RoomFetcherImpl: RoomFetcher {
     }
     
     func saveRoom(for room: Room, with id: String) -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = persistentContainer.viewContext
         
         guard
             let roomEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.RoomDAO.rawValue, in: managedContext),
@@ -186,8 +182,7 @@ class RoomFetcherImpl: RoomFetcher {
     }
     
     func deleteAllRooms() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = persistentContainer.viewContext
         
         let roomFetchRequest: NSFetchRequest<RoomDAO> = RoomDAO.fetchRequest()
         

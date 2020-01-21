@@ -17,16 +17,21 @@ class PauseMenuScenePresenter: BasePresenter {
         return _router as? PauseMenuSceneRoutingLogic
     }
     
-    var characterModels: [CharacterChosen: StatusViewModel] = [:]
-    
-    private var actualWeapons: [String: Weapon] = [:]
-    private var protagonist: Protagonist!
+    private var protagonist: Protagonist
     private var partner: PlayableCharacter?
+    private var actualWeapons: [String: Weapon] = [:]
+    
+    private var characterModels: [CharacterChosen: StatusViewModel] = [:]
+    
+    override init() {
+        self.protagonist = GameSession.protagonist
+        if let partner = protagonist.partner {
+            self.partner = GameSession.partners[partner]
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getProtagonist()
-        getPartner()
         getWeapons()
         buildCharacters()
         createOptions()
@@ -34,18 +39,6 @@ class PauseMenuScenePresenter: BasePresenter {
 }
 
 extension PauseMenuScenePresenter {
-    private func getProtagonist() {
-        let response = interactor?.getProtagonist()
-        protagonist = response?.protagonist
-    }
-    
-    private func getPartner() {
-        guard let partnerId = protagonist.partner  else { return }
-        let request = PauseMenuScene.CharacterGetter.Request(id: partnerId)
-        let response = interactor?.getPartner(request: request)
-        partner = response?.character
-    }
-    
     private func getWeapons() {
         let weapons = [protagonist.weapon, partner?.weapon].compactMap({$0})
         var actualWeapons: [String: Weapon] = [:]
@@ -101,7 +94,7 @@ extension PauseMenuScenePresenter: PauseMenuScenePresentationLogic {
         case .exit?:
             showExitMessage()
         case .items?:
-            router?.goToItemsView(protagonist: protagonist, partner: partner, delegate: self)
+            router?.goToItemsView(delegate: self)
         default:
             return
         }

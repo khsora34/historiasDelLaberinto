@@ -5,6 +5,19 @@ class GameSession {
     static var variables: [String: Variable] = [:]
     static var rooms: [String: Room] = [:]
     
+    static func startSession(protagonist: Protagonist, movement: Movement) {
+        self.setProtagonist(protagonist)
+        self.setMovement(movement)
+    }
+    
+    static func restart() {
+        protagonist = nil
+        partners = [:]
+        movement = nil
+        variables = [:]
+        rooms = [:]
+    }
+    
     static func setProtagonist(_ protagonist: Protagonist) {
         self.protagonist = protagonist
     }
