@@ -27,7 +27,7 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
     
     init(databaseFetcherProvider: DatabaseFetcherProvider) {
         self.databaseFetcherProvider = databaseFetcherProvider
-        super.init(localizedStringAccess: databaseFetcherProvider.localizedValueFetcher)
+        super.init()
     }
     
     func startNewGame(request: InitialScene.FileLoader.Request) {

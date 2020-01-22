@@ -10,7 +10,7 @@ class MovementSceneInteractor: BaseInteractor, MovementSceneBusinessLogic {
     init(databaseFetcherProvider: DatabaseFetcherProvider) {
         self.roomFetcher = databaseFetcherProvider.roomsFetcher
         self.movementFetcher = databaseFetcherProvider.movementFetcher
-        super.init(localizedStringAccess: databaseFetcherProvider.localizedValueFetcher)
+        super.init()
     }
     
     func setNewLocation(request: MovementScene.SetLocation.Request) {
