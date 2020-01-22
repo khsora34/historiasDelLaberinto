@@ -1,7 +1,5 @@
 protocol PauseMenuScenePresentationLogic: Presenter {
     func performOption(tag: Int)
-    func saveGame()
-    func exitGame()
 }
 
 class PauseMenuScenePresenter: BasePresenter {
@@ -25,13 +23,13 @@ class PauseMenuScenePresenter: BasePresenter {
     
     override init() {
         self.protagonist = GameSession.protagonist
-        if let partner = protagonist.partner {
-            self.partner = GameSession.partners[partner]
-        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let partnerId = protagonist.partner {
+            partner = interactor?.getPartner(request: PauseMenuScene.CharacterGetter.Request(id: partnerId)).character
+        }
         getWeapons()
         buildCharacters()
         createOptions()
@@ -78,7 +76,7 @@ extension PauseMenuScenePresenter {
     private func showExitMessage() {
         viewController?.showAlert(title: nil, message: Localizer.localizedString(key: "menuExitPrompt"), actions: [
             (title: Localizer.localizedString(key: "genericRiskOption"), style: .default, completion: { [weak self] in
-                self?.exitGame()
+                self?.router?.endGame()
             }),
             (title: Localizer.localizedString(key: "genericThinkAboutItOption"), style: .cancel, completion: nil)
         ])
@@ -87,25 +85,16 @@ extension PauseMenuScenePresenter {
 
 extension PauseMenuScenePresenter: PauseMenuScenePresentationLogic {
     func performOption(tag: Int) {
-        switch MenuOption(rawValue: tag) {
-        case .save?:
-            saveGame()
+        guard let option = MenuOption(rawValue: tag) else { return }
+        switch option {
+        case .save:
+            interactor?.saveContext()
             viewController?.showAlert(title: nil, message: Localizer.localizedString(key: "successfullySavedGame"), actions: [(title: Localizer.localizedString(key: "genericButtonAccept"), style: .default, completion: nil)])
-        case .exit?:
+        case .exit:
             showExitMessage()
-        case .items?:
+        case .items:
             router?.goToItemsView(delegate: self)
-        default:
-            return
         }
-    }
-    
-    func saveGame() {
-        interactor?.saveContext()
-    }
-    
-    func exitGame() {
-        router?.endGame()
     }
 }
 
