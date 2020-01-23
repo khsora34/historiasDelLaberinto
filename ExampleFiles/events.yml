@@ -1,100 +1,264 @@
-"room17LookAround":
+- id: "room17LookAround"
   mode: "dialogue"
-  message: "Miras a tu alrededor"
-  character: "narrator" #idCharacter
+  message: "room17LookAround"
+  characterId: "narrator" #idCharacter
+  nextStep: "room17LookAround2"
+
+- id: "room17LookAround2"
+  mode: "dialogue"
+  message: "Este eres tú ahora mismo."
+  characterId: "protagonist" #idCharacter
   nextStep: ""
 
-"room17Conversation":
+- id: "exampleRoomStartEvent"
+  mode: "dialogue"
+  message: "exampleRoomStartEvent"
+  characterId: "narrator"
+  nextStep: ""
+
+- id: "exampleRoomStartEvent2"
+  mode: "condition"
+  condition:
+    kind: "variable"
+    required:
+      compareToId: "numberOfApples"
+      relation: equal
+      initialVariable:
+        type: integer
+        value: 10
+      #compareToId: "numberOfApples"
+      #relation: equal
+      #initialVariable: "cupcakes"
+  nextStepIfTrue: "exampleRoomStartEvent"
+  nextStepIfFalse: ""
+
+- id: "room17Conversation"
   mode: "condition"
   condition:
     kind: "partner" #For items, the keyword is "item".
     required: "gerar" #Item's or partner's id.
-  ifTrueNextStep: "room17Conversation_WithGerar"
-  ifFalseNextStep: "room17Conversation_3"
+  nextStepIfTrue: "room17Conversation_WithGerar"
+  nextStepIfFalse: "room17Conversation_3"
 
-"room17Conversation_WithGerar":
+- id: "room17Conversation_WithGerar"
   mode: "dialogue"
   message: "Parece que hay un malvado allí... ¿Atacamos?"
-  character: "gerar" #idCharacter
+  characterId: "gerar" #idCharacter
   nextStep: "room17Conversation_WithGerar_2"
 
-"room17Conversation_WithGerar_2":
+- id: "room17Conversation_WithGerar_2"
   mode: "choice"
   options:
     - action: "Valep"
       nextStep: "room17StartBattle"
+      condition:
+        kind: "partner"
+        required: "gerar" #Item's or partner's id.
     - action: "Mejor no"
       nextStep: ""
 
-"room17StartBattle":
+- id: "room17StartBattle"
   mode: "battle"
-  enemy: "badMonster"
-  nextStep: "room17BattleReward"
+  enemyId: "eternalGod"
+  winStep: "room17BattleReward"
+  loseStep: "exampleEnding"
 
-"room17BattleReward":
+- id: "room17BattleReward"
   mode: "reward"
   message: "¡El enemigo ha dejado caer cosas!"
   rewards:
-    - itemId: "potion"
-      sum: "2"
-    - itemId: "high_potion"
-      sum: "1"
-  nextStep: "ending"
+    "potion": "2"
+    "high_potion": "1"
+  nextStep: ""
 
-"room17Conversation_3":
+- id: "room17Conversation_3"
   mode: "dialogue"
   message: "Divisas a un malvado lejano... ¿Qué deberías hacer?"
-  character: "narrator" #idCharacter
+  characterId: "narrator" #idCharacter
   nextStep: "room17Conversation_Choice"
 
-"room17Conversation_Choice":
+- id: "room17Conversation_Choice"
   mode: "choice"
   options:
     - action: "Tirarle una piedra"
       nextStep: "room17ThrowRock"
-    - action: "Dejarle estar
+    - action: "Dejarle estar"
 
-"room17ThrowRock":
+- id: "room17ThrowRock"
   mode: "condition"
   condition:
     kind: "item"
     required: "rock" #Item's or partner's id.
-  ifTrueNextStep: "room17ThrownRock"
-  ifFalseNextStep: "room17FailedRock"
+  nextStepIfTrue: "room17ThrownRock"
+  nextStepIfFalse: "room17FailedRock"
 
-"room17ThrownRock":
+- id: "room17ThrownRock"
   mode: "dialogue"
   message: "La lanzas y... ¡Acertaste! "
-  character: "narrator" #idCharacter
+  characterId: "narrator" #idCharacter
   nextStep: "room17BattleReward"
 
-"room17FailedRock":
+- id: "room17FailedRock"
   mode: "dialogue"
   message: "No tienes una piedra. El enemigo se acerca rápidamente."
-  character: "narrator" #idCharacter
+  characterId: "narrator" #idCharacter
   nextStep: "room17StartBattle"
 
-"emptyRoomTalk":
+- id: "emptyRoomTalk"
   mode: "dialogue"
   message: "Parece una habitación vacía..."
-  character: "narrator" #idCharacter
+  characterId: "narrator" #idCharacter
   nextStep: ""
 
-"genericRoomStartBattle":
+- id: "genericRoomStartBattle"
   mode: "condition"
   condition:
     kind: "partner"
     required: "gerar"
-  ifTrueNextStep: "genericRoomBattle1_WithGerar"
-  ifFalseNextStep: "genericRoomBattle1"
+  nextStepIfTrue: "genericRoomBattle1_WithGerar"
+  nextStepIfFalse: "genericRoomBattle1"
 
-"genericRoomBattle1_WithGerar":
+- id: "genericRoomBattle1_WithGerar"
   mode: "dialogue"
   message: "¡Vamos a luchar!"
-  character: "narrator" #idCharacter
+  characterId: "narrator" #idCharacter
   nextStep: "genericRoomBattle1"
 
-"genericRoomBattle1":
+- id: "genericRoomBattle1"
   mode: "battle"
-  enemy: "badMonster"
+  enemyId: "badMonster"
   nextStep: "ending"
+
+- id: "exampleChoice"
+  mode: "choice"
+  options:
+    - action: "Sora normal"
+      nextStep: "exampleDialogue3"
+    - action: "Sora veloz"
+      nextStep: "exampleDialogue1"
+      condition:
+        kind: "item"
+        required: "potion"
+    - action: "BUFF SORA"
+      nextStep: "exampleDialogue2_3"
+      condition:
+        kind: "partner"
+        required: "sora"
+    - action: "Mejor déjalo"
+      nextStep: "room17BattleReward"
+
+- id: "exampleDialogue1"
+  mode: "dialogue"
+  message: "¡Hola, soy Sora!"
+  characterId: "speedSora" #idCharacter
+  nextStep: ""
+
+- id: "exampleDialogue2_3"
+  mode: "condition"
+  condition:
+    kind: "item" #For items, the keyword is "item".
+    required: "potion" #Item's or partner's id.
+  nextStepIfTrue: "exampleDialogue2"
+  nextStepIfFalse: "exampleDialogue3"
+
+- id: "exampleDialogue2"
+  mode: "dialogue"
+  message: "¡Y yo también soy Sora!"
+  characterId: "shieldSora" #idCharacter
+  nextStep: ""
+
+- id: "exampleDialogue3"
+  mode: "dialogue"
+  message: "¡Pues yo soy el original!"
+  characterId: "sora" #idCharacter
+  shouldSetVisited: true
+  nextStep: ""
+
+- id: "exampleDialogue4"
+  mode: "condition"
+  condition:
+    kind: "roomVisited"
+    required: "exampleRoom"
+  nextStepIfTrue: "exampleDialogue1"
+  nextStepIfFalse: "exampleDialogue3"
+
+- id: "exampleEnding"
+  mode: "dialogue"
+  message: "Lo siento mucho, pero no puedo seguir adelante."
+  characterId: "gerar"
+  shouldEndGame: true
+  nextStep: ""
+
+- id: "soraCanDoIt"
+  mode: "modifyVariable"
+  variableId: "partnerName"
+  operation: set
+  initialVariable:
+    type: string
+    value: "Sora"
+  #initialVariableName: "variableName"
+  nextStep: ""
+
+- id: "addNumberToCount"
+  mode: "modifyVariable"
+  variableId: "countNumber"
+  operation: add
+  initialVariable:
+    type: integer
+    value: 1
+  #initialVariableName: "variableName"
+  nextStep: ""
+
+- id: "resetCountNumber"
+  mode: "modifyVariable"
+  variableId: "countNumber"
+  operation: set
+  initialVariable:
+    type: integer
+    value: 0
+  #initialVariableName: "variableName"
+  nextStep: ""
+
+- id: "countNumberIs0"
+  mode: "dialogue"
+  message: "Parece que la cuenta ha vuelto a 0."
+  characterId: "gerar"
+  nextStep: ""
+
+- id: "countNumberIs5"
+  mode: "dialogue"
+  message: "¡Hemos conseguido que la cuenta sea 5!"
+  characterId: "sora"
+  nextStep: ""
+
+- id: "countNumberIsGreaterThan0"
+  mode: "dialogue"
+  message: "Todavía no es el número especial."
+  characterId: "narrator"
+  nextStep: ""
+
+- id: "firstCountCondition"
+  mode: "condition"
+  condition:
+    kind: "variable"
+    required:
+      compareToId: "countNumber"
+      relation: equal
+      initialVariable:
+        type: integer
+        value: 5
+  nextStepIfTrue: "countNumberIs5"
+  nextStepIfFalse: "secondCountCondition"
+
+- id: "secondCountCondition"
+  mode: "condition"
+  condition:
+    kind: "variable"
+    required:
+      compareToId: "countNumber"
+      relation: greater
+      initialVariable:
+        type: integer
+        value: 0
+  nextStepIfTrue: "countNumberIsGreaterThan0"
+  nextStepIfFalse: "countNumberIs0"

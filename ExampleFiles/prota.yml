@@ -1,29 +1,21 @@
 name: "Cisco"
+partner: "gerar"
+imageSource:
+  type: remote
+  source: "https://vignette.wikia.nocookie.net/megamitensei/images/6/63/Persona_5_Hero.png"
+portraitSource:
+  type: remote
+  source: "https://vignette.wikia.nocookie.net/megamitensei/images/1/14/P5_manga_Akira.jpg"
 
-partner: "idPartner"
-
-currentHealthPoints: 367
+currentHealthPoints: 590
 maxHealthPoints: 590
-attack: 45
-defense: 23
+attack: 30
+defense: 10
 agility: 10
-currentStatusAilment: "blind"
+currentStatusAilment: ""
 weapon: "magic_sword"
-
-visitedRooms:
-  '1' :
-    isVisited: false
-    isVisitedWithPartner: false
-  '2' :
-    isVisited: true
-    isVisitedWithPartner: false
-  '3' :
-    isVisited: false
-    isVisitedWithPartner: true
-  '4' :
-    isVisited: true
-    isVisitedWithPartner: true
 
 items:
   "potion": 1
   "high_potion": 2
+  "small_key": 1

@@ -1,0 +1,59 @@
+"newGameButton" = "Nueva partida";
+"loadGameButton" = "Cargar partida";
+"gameTitle" = "Historias del Laberinto";
+"changeLanguageButtonText" = "Cambiar idioma";
+"genericButtonSave" = "Guardar";
+"genericButtonAccept" = "Aceptar";
+"loadingGameError" = "Ha habido un error intentando comenzar una nueva partida. Vuelve a intentarlo en otro momento.";
+"loadingPrompt" = "Cargando, espera un momento...";
+"movementAction" = "Moverse";
+"movementActualRoomStart" = "Te encuentras en la sala";
+"menuExitPrompt" = "¿Estás seguro de que quieres salir? Se borrará tu progreso si sales sin guardar.";
+"genericRiskOption" = "Me arriesgaré";
+"genericThinkAboutItOption" = "Déjame pensarlo";
+"secondaryMenuTitle" = "Menú";
+"successfullySavedGame" = "Juego guardado con éxito.";
+"menuOptionItems" = "Inventario";
+"menuOptionSave" = "Guardar";
+"menuOptionExit" = "Salir";
+
+// Status
+"healthIndicator" = "Puntos de vida";
+"consumableItemCategory" = "Objeto consumible";
+"weaponItemCategory" = "Arma";
+"keyItemCategory" = "Objeto clave";
+"statusAilmentPoison" = "Veneno";
+"statusAilmentParalysis" = "Parálisis";
+"statusAilmentBlindness" = "Ceguera";
+
+// Battle
+"choiceEventMessage" = "Escoge una opción.";
+"itemsViewTitle" = "Inventario";
+"battleOptionAttack" = "Atacar";
+"battleStartDialogue" = "quiere pelear.";
+"battleActionAttack" = "ataca.";
+"battleActionAttackMissed" = "Pero falló el ataque...";
+"battleActionAttackAbsorbed" = "absorbe el ataque.";
+"battleMessageGetPoisoned" = "ahora está envenenado.";
+"battleMessageGetParalyzed" = "ahora está paralizado.";
+"battleMessageGetBlind" = "ahora está ciego.";
+"battleMessageStillPoisoned" = "sigue envenenado.";
+"battleMessageStillParalyzed" = "sigue paralizado.";
+"battleMessageStillBlind" = "sigue ciego.";
+"battleMessagePoisonEffect" = "pierde vida por el veneno.";
+"battleMessageParalysisEffect" = "está paralizado, no puede moverse.";
+"battleMessageFinishPoison" = "ya no está envenenado.";
+"battleMessageFinishParalysis" = "ya no está paralizado.";
+"battleMessageFinishBlindness" = "ya no está cegado.";
+"battlePartnerFaints" = "Lo siento, ya no puedo más...";
+"battlePlayerFaints" = "Empiezas a perder la consciencia.";
+"battleExtraPartnerWin" = "¡Sí, lo hemos conseguido!";
+"battleExtraAloneWin" = "Has conseguido derrotar al malo.";
+"battleOneHit" = "una vez";
+"battleMoreHits" = "veces";
+"battleHit" = "golpea";
+"battleHitTargetConnector" = "a";
+
+//Custom
+"room17LookAround" = "Miras a tu alrededor";
+"exampleRoomStartEvent" = "Te encuentras en un lujoso edificio de concepto abierto.";
