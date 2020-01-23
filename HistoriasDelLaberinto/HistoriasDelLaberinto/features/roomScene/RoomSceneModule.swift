@@ -6,9 +6,9 @@ class RoomSceneModule: Module {
     var presenter: Presenter
     var router: RouterLogic
     
-    init(roomId: String, room: Room, routerProvider: RouterProvider, databaseFetcherProvider: DatabaseFetcherProvider) {
+    init(room: Room, routerProvider: RouterProvider, databaseFetcherProvider: DatabaseFetcherProvider) {
         viewController = ViewCreator.createFrom(storyboardName: storyboardName, forController: controllerName)
-        presenter = RoomScenePresenter(roomId: roomId, room: room)
+        presenter = RoomScenePresenter(room: room)
         router = routerProvider.roomSceneRouter
         interactor = RoomSceneInteractor(databaseFetcherProvider: databaseFetcherProvider)
         viewController._presenter = presenter

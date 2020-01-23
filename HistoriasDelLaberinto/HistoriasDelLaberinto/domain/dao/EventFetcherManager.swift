@@ -1,3 +1,6 @@
+import CoreData
+import UIKit.UIApplication
+
 protocol EventFetcherManager {
     func getEvent(with id: String) -> Event?
     func saveEvent(_ event: Event) -> Bool
@@ -5,6 +8,18 @@ protocol EventFetcherManager {
 }
 
 class EventFetcherManagerImpl: EventFetcherManager {
+    let persistentContainer: NSPersistentContainer
+    
+    init(container: NSPersistentContainer) {
+        self.persistentContainer = container
+    }
+    
+    convenience init() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            fatalError("Unable to retrieve shared app delegate.")
+        }
+        self.init(container: appDelegate.persistentContainer)
+    }
     
     func getEvent(with id: String) -> Event? {
         guard let newEvent = getEvent(id), let type = newEvent.type, let eventType = EventType(rawValue: type) else { return nil }
@@ -14,13 +29,15 @@ class EventFetcherManagerImpl: EventFetcherManager {
         case .dialogue:
             loadedEvent = getDialogue(from: newEvent)
         case .choice:
-            loadedEvent = getChoice(with: id)
+            loadedEvent = getChoice(from: newEvent)
         case .reward:
-            loadedEvent = getReward(with: id)
+            loadedEvent = getReward(from: newEvent)
         case .battle:
-            loadedEvent = getBattle(with: id)
+            loadedEvent = getBattle(from: newEvent)
         case .condition:
-            loadedEvent = getCondition(with: id)
+            loadedEvent = getCondition(from: newEvent)
+        case .modifyVariable:
+            loadedEvent = getModifyVariable(from: newEvent)
         case .unknown:
             return nil
         }
@@ -45,6 +62,9 @@ class EventFetcherManagerImpl: EventFetcherManager {
         case .condition:
             guard let event = event as? ConditionEvent else { return false }
             return saveCondition(event)
+        case .modifyVariable:
+            guard let event = event as? ModifyVariableEvent else { return false }
+            return saveModifyVariable(event)
         case .unknown:
             print("Unable to find the type of the event \(event.id)")
             return false
@@ -52,17 +72,14 @@ class EventFetcherManagerImpl: EventFetcherManager {
     }
     
     func deleteAll() {
-        deleteAllBattles()
-        deleteAllChoices()
-        deleteAllRewards()
-        deleteAllConditions()
         deleteAllEvents()
     }
 }
 
 extension EventFetcherManagerImpl: EventFetcher {}
-extension EventFetcherManagerImpl: DialogueDaoParser {}
+extension EventFetcherManagerImpl: DialogueEventFetcher {}
 extension EventFetcherManagerImpl: ChoiceEventFetcher {}
 extension EventFetcherManagerImpl: RewardEventFetcher {}
 extension EventFetcherManagerImpl: ConditionEventFetcher {}
 extension EventFetcherManagerImpl: BattleEventFetcher {}
+extension EventFetcherManagerImpl: ModifyVariableEventFetcher {}

@@ -1,8 +1,6 @@
 protocol BattleSceneBusinessLogic: BusinessLogic {
-    func getProtagonist() -> BattleScene.ProtagonistGetter.Response
     func getPartner(request: BattleScene.CharacterGetter.Request) -> BattleScene.CharacterGetter.Response
     func getWeapon(request: BattleScene.WeaponGetter.Request) -> BattleScene.WeaponGetter.Response
-    func updateCharacters(request: BattleScene.CharacterUpdater.Request)
 }
 
 class BattleSceneInteractor: BaseInteractor, BattleSceneBusinessLogic {
@@ -12,17 +10,11 @@ class BattleSceneInteractor: BaseInteractor, BattleSceneBusinessLogic {
     init(databaseProvider: DatabaseFetcherProvider) {
         self.characterFetcher = databaseProvider.charactersFetcher
         self.itemFetcher = databaseProvider.itemsFetcher
-    }
-    
-    func getProtagonist() -> BattleScene.ProtagonistGetter.Response {
-        let protagonist = characterFetcher.getCharacter(with: "protagonist")
-        return BattleScene.ProtagonistGetter.Response(protagonist: protagonist as? Protagonist)
+        super.init()
     }
     
     func getPartner(request: BattleScene.CharacterGetter.Request) -> BattleScene.CharacterGetter.Response {
-        guard let partner = characterFetcher.getCharacter(with: request.id) as? PlayableCharacter else {
-            return BattleScene.CharacterGetter.Response(character: nil)
-        }
+        let partner = GameSession.partners[request.id] ?? characterFetcher.getCharacter(with: request.id) as? PlayableCharacter
         return BattleScene.CharacterGetter.Response(character: partner)
     }
     
@@ -31,16 +23,6 @@ class BattleSceneInteractor: BaseInteractor, BattleSceneBusinessLogic {
             return BattleScene.WeaponGetter.Response(weapon: nil)
         }
         return BattleScene.WeaponGetter.Response(weapon: weapon)
-    }
-    
-    func updateCharacters(request: BattleScene.CharacterUpdater.Request) {
-        guard let protagonist = request.protagonist as? Protagonist else { return }
-        
-        _ = characterFetcher.saveCharacter(for: protagonist, with: "protagonist")
-        if let partner = request.partner, let partnerId = protagonist.partner {
-            _ = characterFetcher.saveCharacter(for: partner, with: partnerId)
-        }
-        
     }
     
 }

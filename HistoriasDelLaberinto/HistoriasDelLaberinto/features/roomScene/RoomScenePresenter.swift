@@ -1,22 +1,14 @@
 protocol RoomScenePresentationLogic: Presenter {
     func selectedAction(_ tag: Int)
-    func getInfoMessage() -> String
     func showMenu()
     func startWithStartEvent()
+    func didTapInfoButton()
 }
 
 class RoomScenePresenter: BasePresenter {
-    var viewController: RoomSceneDisplayLogic? {
-        return _viewController as? RoomSceneDisplayLogic
-    }
-    
-    var interactor: RoomSceneInteractor? {
-        return _interactor as? RoomSceneInteractor
-    }
-    
-    var router: RoomSceneRouter? {
-        return _router as? RoomSceneRouter
-    }
+    var viewController: RoomSceneDisplayLogic? { return _viewController as? RoomSceneDisplayLogic }
+    var interactor: RoomSceneInteractor? { return _interactor as? RoomSceneInteractor }
+    var router: RoomSceneRouter? { return _router as? RoomSceneRouter }
     
     private var filteredActions: [Action] = []
     
@@ -35,7 +27,7 @@ class RoomScenePresenter: BasePresenter {
         }
     }
     
-    init(roomId: String, room: Room) {
+    init(room: Room) {
         self.room = room
         shouldLaunchStartEvent = room.startEvent != nil
     }
@@ -43,7 +35,7 @@ class RoomScenePresenter: BasePresenter {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewController?.set(title: room.name)
-        viewController?.setImage(with: room.imageUrl)
+        viewController?.setImage(for: room.imageSource)
         loadActions()
     }
     
@@ -53,9 +45,13 @@ class RoomScenePresenter: BasePresenter {
             let request = EventsHandlerModels.CompareCondition.Request(condition: condition)
             return interactor?.compareCondition(request: request).result ?? false
         }
-        if !self.filteredActions.isEmpty {
-            let newActions = filteredActions.filter { action in
-                for extAction in self.filteredActions where extAction == action {
+        if self.filteredActions.isEmpty {
+            var modeledActions = filteredActions.map({ $0.name })
+            modeledActions.append("movementAction")
+            viewController?.set(actions: modeledActions)
+        } else {
+            let newActions = filteredActions.filter { possibleNewAction in
+                for actualAction in self.filteredActions where actualAction == possibleNewAction {
                     return false
                 }
                 return true
@@ -66,11 +62,9 @@ class RoomScenePresenter: BasePresenter {
                 })
             }
             filteredActions = maintainingActions + newActions
+            viewController?.update(withActions: newActions.map({$0.name}))
         }
         self.filteredActions = filteredActions
-        var modeledActions = filteredActions.map({ $0.name })
-        modeledActions.append("Moverse")
-        viewController?.set(actions: modeledActions)
     }
 }
 
@@ -92,20 +86,16 @@ extension RoomScenePresenter: RoomScenePresentationLogic {
         startEvent(with: nextStep)
     }
     
-    func getInfoMessage() -> String {
-        return room.description
-    }
-    
     func showMenu() {
         router?.goToMenu()
     }
+    
+    func didTapInfoButton() {
+        viewController?.showAlert(title: Localizer.localizedString(key: room.name), message: Localizer.localizedString(key: room.description), actions: [(title: Localizer.localizedString(key: "genericButtonAccept"), style: .default, completion: nil)])
+    }
 }
 
-extension RoomScenePresenter: EventHandler {    
-    var imageUrl: String {
-        return room.imageUrl
-    }
-    
+extension RoomScenePresenter: EventHandlerPresenter {
     func onFinish() {
         loadActions()
     }

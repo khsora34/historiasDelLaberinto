@@ -12,8 +12,8 @@ class ModuleProvider {
         return InitialSceneModule(routerProvider: routerProvider, databaseFetcherProvider: databaseFetcherProvider)
     }
     
-    func roomSceneModule(roomId: String, room: Room) -> Module {
-        return RoomSceneModule(roomId: roomId, room: room, routerProvider: routerProvider, databaseFetcherProvider: databaseFetcherProvider)
+    func roomSceneModule(room: Room) -> Module {
+        return RoomSceneModule(room: room, routerProvider: routerProvider, databaseFetcherProvider: databaseFetcherProvider)
     }
     
     func movementSceneModule(room: Room) -> Module {
@@ -24,11 +24,15 @@ class ModuleProvider {
         return PauseMenuSceneModule(routerProvider: routerProvider, databaseProvider: databaseFetcherProvider)
     }
     
-    func battleSceneModule(enemy: PlayableCharacter, delegate: BattleBuilderDelegate) -> Module {
-        return BattleSceneModule(enemy: enemy, delegate: delegate, routerProvider: routerProvider, databaseProvider: databaseFetcherProvider)
+    func battleSceneModule(enemy: PlayableCharacter, backgroundImage: ImageSource, delegate: OnBattleFinishedDelegate) -> Module {
+        return BattleSceneModule(enemy: enemy, backgroundImage: backgroundImage, delegate: delegate, routerProvider: routerProvider, databaseProvider: databaseFetcherProvider)
     }
     
-    func itemsSceneModule(protagonist: Protagonist, partner: PlayableCharacter?, delegate: CharactersUpdateDelegate?) -> Module {
-        return ItemsSceneModule(protagonist: protagonist, partner: partner, delegate: delegate, fetcherProvider: databaseFetcherProvider, routerProvider: routerProvider)
+    func itemsSceneModule(delegate: CharactersUpdateDelegate?) -> Module {
+        return ItemsSceneModule(delegate: delegate, fetcherProvider: databaseFetcherProvider, routerProvider: routerProvider)
+    }
+    
+    func languagesSelection() -> Module {
+        return LanguageSelectionSceneModule(routerProvider: routerProvider, databaseFetcher: databaseFetcherProvider)
     }
 }

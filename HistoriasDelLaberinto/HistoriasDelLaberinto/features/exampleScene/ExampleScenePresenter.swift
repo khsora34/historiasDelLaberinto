@@ -22,7 +22,7 @@ class ExampleScenePresenter: BasePresenter {
     
     // MARK: Event handler
     
-    var room: Room = Room(id: "", name: "", description: "", imageUrl: "", actions: [])
+    var room: Room = Room(id: "", name: "", description: "", imageSource: .local(""), actions: [])
     var shouldSetVisitedWhenFinished: Bool = false
     var shouldEndGameWhenFinished: Bool = false
     var dialog: DialogDisplayLogic?
@@ -34,7 +34,7 @@ class ExampleScenePresenter: BasePresenter {
 
 extension ExampleScenePresenter: ExampleScenePresentationLogic {
     func navigateToNewPlace() {
-        router?.goToNewView(room: Room(id: "23", name: "Hola", description: "Si", imageUrl: "", isGenericRoom: true, actions: []))
+        router?.goToNewView(room: Room(id: "23", name: "Hola", description: "Si", imageSource: .local(""), isGenericRoom: true, actions: []))
     }
     
     func navigateToPlace() {
@@ -54,7 +54,7 @@ extension ExampleScenePresenter: ExampleScenePresentationLogic {
     }
 }
 
-extension ExampleScenePresenter: EventHandler {
+extension ExampleScenePresenter: EventHandlerPresenter {
     func onBattleFinished(reason: FinishedBattleReason) { }
     
     var imageUrl: String {

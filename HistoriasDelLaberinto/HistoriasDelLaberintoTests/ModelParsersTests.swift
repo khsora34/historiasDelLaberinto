@@ -10,7 +10,7 @@ import XCTest
 @testable import HistoriasDelLaberinto
 
 class ModelParsersTests: XCTestCase {
-
+    
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -110,4 +110,48 @@ class ModelParsersTests: XCTestCase {
         print(rooms)
     }
     
+    func testTexts() {
+        var texts: [String: [String: String]] = [:]
+        
+        let availableLanguagePaths: [String] = Bundle.main.paths(forResourcesOfType: "strings", inDirectory: "loadedGame/texts")
+        XCTAssert(availableLanguagePaths.count > 0)
+        
+        for path in availableLanguagePaths {
+            guard let langDictionary = NSDictionary(contentsOfFile: path) else {
+                XCTFail("Unable to load file in path \(path).")
+                continue
+            }
+            guard let literals = langDictionary as? [String: String] else {
+                XCTFail("Unable to parse dictionary as [String: String]")
+                continue
+            }
+            let startIndex: String.Index = path.index(path.endIndex, offsetBy: -10)
+            let endIndex: String.Index = path.index(path.endIndex, offsetBy: -8)
+            
+            XCTAssert(startIndex < endIndex)
+            
+            let languageCode: String = String(path[startIndex..<endIndex])
+            texts[languageCode] = literals
+        }
+        print(texts)
+    }
+    
+    func testVariablesModel() {
+        guard let path = Bundle.main.path(forResource: "variables", ofType: "yml", inDirectory: "loadedGame") else {
+            XCTFail("Couldn't find variables.yml in loadedGame directory.")
+            return
+        }
+        
+        guard let fileContent = try? String(contentsOfFile: path) else {
+            XCTFail("Unable to read the content of the file in path \(path).")
+            return
+        }
+        
+        let parser = VariablesFileParser()
+        guard let variables = parser.serialize(fileContent), !variables.isEmpty else {
+            XCTFail("Failed to parse variables body.")
+            return
+        }
+        print(variables)
+    }
 }

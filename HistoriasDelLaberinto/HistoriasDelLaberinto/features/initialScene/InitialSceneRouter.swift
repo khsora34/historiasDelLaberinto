@@ -2,7 +2,8 @@ import UIKit
 
 protocol InitialSceneRoutingLogic: RouterLogic {
     func goToExampleView()
-    func goToRoomView(roomId: String, room: Room)
+    func goToLanguagesSelection()
+    func goToRoomView(room: Room)
 }
 
 class InitialSceneRouter: BaseRouter, InitialSceneRoutingLogic {
@@ -12,10 +13,15 @@ class InitialSceneRouter: BaseRouter, InitialSceneRoutingLogic {
         navigation.pushViewController(module.viewController, animated: true)
     }
     
-    func goToRoomView(roomId: String, room: Room) {
+    func goToLanguagesSelection() {
         guard let navigation = drawer?.currentRootViewController as? UINavigationController else { return }
-        let module = moduleProvider.roomSceneModule(roomId: roomId, room: room)
-        navigation.isNavigationBarHidden = false
+        let module = moduleProvider.languagesSelection()
+        navigation.pushViewController(module.viewController, animated: true)
+    }
+    
+    func goToRoomView(room: Room) {
+        guard let navigation = drawer?.currentRootViewController as? UINavigationController else { return }
+        let module = moduleProvider.roomSceneModule(room: room)
         navigation.pushViewController(module.viewController, animated: true)
     }
 }

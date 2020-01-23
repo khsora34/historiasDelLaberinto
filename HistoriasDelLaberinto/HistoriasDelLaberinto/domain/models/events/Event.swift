@@ -6,7 +6,7 @@ protocol Event: Decodable {
 }
 
 enum EventType: String {
-    case dialogue, condition, choice, battle, reward, unknown
+    case dialogue, condition, choice, battle, reward, modifyVariable, unknown
     
     init(event: Event?) {
         if event is DialogueEvent {
@@ -19,6 +19,8 @@ enum EventType: String {
             self = .battle
         } else if event is RewardEvent {
             self = .reward
+        } else if event is ModifyVariableEvent {
+            self = .modifyVariable
         } else {
             self = .unknown
         }

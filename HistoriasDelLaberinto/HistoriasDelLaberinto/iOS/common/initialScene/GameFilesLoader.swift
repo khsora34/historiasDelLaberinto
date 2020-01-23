@@ -5,6 +5,8 @@ protocol GameFilesLoader {
     func getItems() -> ItemsFile
     func getRooms() -> RoomsFile
     func getEvents() -> EventsFile
+    func getTexts() -> [Locale: [String: String]]
+    func getVariables() -> [Variable]
 }
 
 extension GameFilesLoader {
@@ -71,5 +73,36 @@ extension GameFilesLoader {
         }
         
         return events
+    }
+    
+    func getTexts() -> [Locale: [String: String]] {
+        var texts: [Locale: [String: String]] = [:]
+        let availableLanguagePaths: [String] = Bundle.main.paths(forResourcesOfType: "strings", inDirectory: "loadedGame/texts")
+        for path in availableLanguagePaths {
+            guard let langDictionary = NSDictionary(contentsOfFile: path), let literals = langDictionary as? [String: String]
+                else {
+                    print("Unable to load file in path \(path).")
+                    continue
+            }
+            let startIndex: String.Index = path.index(path.endIndex, offsetBy: -10)
+            let endIndex: String.Index = path.index(path.endIndex, offsetBy: -8)
+            
+            let languageCode: String = String(path[startIndex..<endIndex])
+            texts[Locale(identifier: languageCode)] = literals
+        }
+        return texts
+    }
+    
+    func getVariables() -> [Variable] {
+        guard let path = Bundle.main.path(forResource: "variables", ofType: "yml", inDirectory: "loadedGame"), let fileContent = try? String(contentsOfFile: path) else {
+            fatalError()
+        }
+        
+        let parser = VariablesFileParser()
+        guard let variables = parser.serialize(fileContent) else {
+            fatalError()
+        }
+        
+        return variables
     }
 }

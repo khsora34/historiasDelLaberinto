@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14903" systemVersion="18G103" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19C57" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ActionDAO" representedClassName="ActionDAO" syncable="YES" codeGenerationType="class">
-        <attribute name="conditionType" optional="YES" attributeType="String"/>
-        <attribute name="conditionValue" optional="YES" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="nextStep" optional="YES" attributeType="String"/>
+        <relationship name="condition" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ConditionDAO" inverseName="parentAction" inverseEntity="ConditionDAO"/>
         <relationship name="parentChoiceEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChoiceEventDAO" inverseName="actionsAssociated" inverseEntity="ChoiceEventDAO"/>
         <relationship name="parentRoom" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RoomDAO" inverseName="actions" inverseEntity="RoomDAO"/>
     </entity>
@@ -15,17 +14,31 @@
     </entity>
     <entity name="CharacterDAO" representedClassName="CharacterDAO" syncable="YES" codeGenerationType="class">
         <attribute name="id" attributeType="String"/>
-        <attribute name="imageUrl" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
+        <relationship name="imageSource" maxCount="1" deletionRule="Nullify" destinationEntity="ImageSourceDAO" inverseName="parentCharacter" inverseEntity="ImageSourceDAO"/>
     </entity>
     <entity name="ChoiceEventDAO" representedClassName="ChoiceEventDAO" parentEntity="EventDAO" syncable="YES" codeGenerationType="class">
         <relationship name="actionsAssociated" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ActionDAO" inverseName="parentChoiceEvent" inverseEntity="ActionDAO"/>
     </entity>
-    <entity name="ConditionEventDAO" representedClassName="ConditionEventDAO" parentEntity="EventDAO" syncable="YES" codeGenerationType="class">
+    <entity name="ConditionDAO" representedClassName="ConditionDAO" syncable="YES" codeGenerationType="class">
         <attribute name="conditionType" attributeType="String"/>
-        <attribute name="conditionValue" attributeType="String"/>
+        <attribute name="conditionValue" optional="YES" attributeType="String"/>
+        <relationship name="parentAction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ActionDAO" inverseName="condition" inverseEntity="ActionDAO"/>
+        <relationship name="parentConditionEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ConditionEventDAO" inverseName="condition" inverseEntity="ConditionEventDAO"/>
+        <relationship name="variableCondition" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ConditionVariableDAO" inverseName="parentCondition" inverseEntity="ConditionVariableDAO"/>
+    </entity>
+    <entity name="ConditionEventDAO" representedClassName="ConditionEventDAO" parentEntity="EventDAO" syncable="YES" codeGenerationType="class">
         <attribute name="nextStepIfFalse" attributeType="String"/>
         <attribute name="nextStepIfTrue" attributeType="String"/>
+        <relationship name="condition" maxCount="1" deletionRule="Nullify" destinationEntity="ConditionDAO" inverseName="parentConditionEvent" inverseEntity="ConditionDAO"/>
+    </entity>
+    <entity name="ConditionVariableDAO" representedClassName="ConditionVariableDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="comparationVariableName" optional="YES" attributeType="String"/>
+        <attribute name="initialVariableName" optional="YES" attributeType="String"/>
+        <attribute name="initialVariableType" optional="YES" attributeType="String"/>
+        <attribute name="initialVariableValue" optional="YES" attributeType="String"/>
+        <attribute name="relation" optional="YES" attributeType="String"/>
+        <relationship name="parentCondition" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ConditionDAO" inverseName="variableCondition" inverseEntity="ConditionDAO"/>
     </entity>
     <entity name="ConsumableItemDAO" representedClassName="ConsumableItemDAO" parentEntity="ItemDAO" syncable="YES" codeGenerationType="class">
         <attribute name="healthRecovered" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -41,18 +54,33 @@
         <attribute name="shouldSetVisited" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="type" attributeType="String"/>
     </entity>
+    <entity name="ImageSourceDAO" representedClassName="ImageSourceDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="source" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+        <relationship name="parentCharacter" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CharacterDAO" inverseName="imageSource" inverseEntity="CharacterDAO"/>
+        <relationship name="parentItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ItemDAO" inverseName="imageSource" inverseEntity="ItemDAO"/>
+        <relationship name="parentPlayableCharacter" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlayableCharacterDAO" inverseName="portraitSource" inverseEntity="PlayableCharacterDAO"/>
+        <relationship name="parentRoom" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RoomDAO" inverseName="imageSource" inverseEntity="RoomDAO"/>
+    </entity>
     <entity name="ItemDAO" representedClassName="ItemDAO" syncable="YES" codeGenerationType="class">
         <attribute name="descriptionString" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
-        <attribute name="imageUrl" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
-        <attribute name="type" attributeType="String"/>
+        <relationship name="imageSource" maxCount="1" deletionRule="Nullify" destinationEntity="ImageSourceDAO" inverseName="parentItem" inverseEntity="ImageSourceDAO"/>
     </entity>
     <entity name="ItemsQuantity" representedClassName="ItemsQuantity" syncable="YES" codeGenerationType="class">
         <attribute name="itemId" attributeType="String" defaultValueString=""/>
         <attribute name="quantity" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="parentEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RewardEventDAO" inverseName="rewardsAssociated" inverseEntity="RewardEventDAO"/>
         <relationship name="parentProtagonist" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProtagonistDAO" inverseName="inventory" inverseEntity="ProtagonistDAO"/>
+    </entity>
+    <entity name="ModifyVariableEventDAO" representedClassName="ModifyVariableEventDAO" parentEntity="EventDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="initialVariableName" optional="YES" attributeType="String"/>
+        <attribute name="initialVariableType" optional="YES" attributeType="String"/>
+        <attribute name="initialVariableValue" optional="YES" attributeType="String"/>
+        <attribute name="nextStep" optional="YES" attributeType="String"/>
+        <attribute name="operation" attributeType="String"/>
+        <attribute name="variableId" attributeType="String"/>
     </entity>
     <entity name="Movement" representedClassName="Movement" syncable="YES" codeGenerationType="class">
         <attribute name="actualX" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -67,8 +95,8 @@
         <attribute name="currentHealthPoints" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="defense" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="maxHealthPoints" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="portraitUrl" optional="YES" attributeType="String"/>
         <attribute name="weaponId" optional="YES" attributeType="String"/>
+        <relationship name="portraitSource" maxCount="1" deletionRule="Nullify" destinationEntity="ImageSourceDAO" inverseName="parentPlayableCharacter" inverseEntity="ImageSourceDAO"/>
     </entity>
     <entity name="ProtagonistDAO" representedClassName="ProtagonistDAO" parentEntity="PlayableCharacterDAO" syncable="YES" codeGenerationType="class">
         <attribute name="partner" optional="YES" attributeType="String"/>
@@ -82,19 +110,29 @@
     <entity name="RoomDAO" representedClassName="RoomDAO" syncable="YES" codeGenerationType="class">
         <attribute name="descriptionString" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
-        <attribute name="imageUrl" attributeType="String"/>
         <attribute name="isGenericRoom" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isVisited" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="isVisitedWithPartner" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="startEvent" optional="YES" attributeType="String"/>
         <relationship name="actions" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="ActionDAO" inverseName="parentRoom" inverseEntity="ActionDAO"/>
+        <relationship name="imageSource" maxCount="1" deletionRule="Nullify" destinationEntity="ImageSourceDAO" inverseName="parentRoom" inverseEntity="ImageSourceDAO"/>
     </entity>
     <entity name="RoomPosition" representedClassName="RoomPosition" syncable="YES" codeGenerationType="class">
         <attribute name="roomId" attributeType="String"/>
         <attribute name="x" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="y" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="parentMovement" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Movement" inverseName="map" inverseEntity="Movement"/>
+    </entity>
+    <entity name="TextDAO" representedClassName="TextDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="key" attributeType="String"/>
+        <attribute name="language" attributeType="String"/>
+        <attribute name="value" attributeType="String"/>
+    </entity>
+    <entity name="VariableDAO" representedClassName="VariableDAO" syncable="YES" codeGenerationType="class">
+        <attribute name="name" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+        <attribute name="value" attributeType="String"/>
     </entity>
     <entity name="WeaponDAO" representedClassName="WeaponDAO" parentEntity="ItemDAO" syncable="YES" codeGenerationType="class">
         <attribute name="ailment" optional="YES" attributeType="String"/>
@@ -103,22 +141,28 @@
         <attribute name="induceRate" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="100" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="ActionDAO" positionX="-552.46875" positionY="-164.203125" width="128" height="133"/>
+        <element name="ActionDAO" positionX="-552.46875" positionY="-164.203125" width="128" height="118"/>
         <element name="BattleEventDAO" positionX="-64.7421875" positionY="-39.09375" width="128" height="88"/>
         <element name="CharacterDAO" positionX="-394.703125" positionY="182.46484375" width="128" height="88"/>
         <element name="ChoiceEventDAO" positionX="-379.828125" positionY="-212.3984375" width="128" height="58"/>
-        <element name="ConditionEventDAO" positionX="-66.6171875" positionY="-209.6328125" width="128" height="103"/>
-        <element name="ConsumableItemDAO" positionX="-369" positionY="-63" width="128" height="58"/>
+        <element name="ConditionDAO" positionX="-360" positionY="-144" width="128" height="118"/>
+        <element name="ConditionEventDAO" positionX="-57.5859375" positionY="-207.5234375" width="128" height="88"/>
+        <element name="ConditionVariableDAO" positionX="-369" positionY="-153" width="128" height="133"/>
+        <element name="ConsumableItemDAO" positionX="114.265625" positionY="-302.4609375" width="128" height="58"/>
         <element name="DialogueEventDAO" positionX="-220.78515625" positionY="-99.4921875" width="128" height="88"/>
         <element name="EventDAO" positionX="-220.2578125" positionY="-210.05859375" width="128" height="103"/>
-        <element name="ItemDAO" positionX="113.8984375" positionY="-210.9765625" width="128" height="118"/>
-        <element name="ItemsQuantity" positionX="-239.6015625" positionY="184.640625" width="128" height="103"/>
+        <element name="ImageSourceDAO" positionX="-391.3125" positionY="54.91796875" width="128" height="133"/>
+        <element name="ItemDAO" positionX="113.8984375" positionY="-210.9765625" width="128" height="103"/>
+        <element name="ItemsQuantity" positionX="-212.9921875" positionY="183.4296875" width="128" height="103"/>
+        <element name="ModifyVariableEventDAO" positionX="-369" positionY="-153" width="128" height="133"/>
         <element name="Movement" positionX="-64.171875" positionY="112.69921875" width="128" height="118"/>
         <element name="PlayableCharacterDAO" positionX="-560.4375" positionY="168.98046875" width="128" height="148"/>
         <element name="ProtagonistDAO" positionX="-394.8828125" positionY="314.58984375" width="128" height="73"/>
-        <element name="RewardEventDAO" positionX="-380.99609375" positionY="-91.8359375" width="128" height="88"/>
+        <element name="RewardEventDAO" positionX="-380.99609375" positionY="-80.4296875" width="128" height="88"/>
         <element name="RoomDAO" positionX="-557.7890625" positionY="-15.046875" width="128" height="178"/>
         <element name="RoomPosition" positionX="114.40625" positionY="115.58984375" width="128" height="103"/>
+        <element name="TextDAO" positionX="-67.109375" positionY="257.67578125" width="128" height="88"/>
+        <element name="VariableDAO" positionX="-369" positionY="-153" width="128" height="88"/>
         <element name="WeaponDAO" positionX="112.90625" positionY="-29.83203125" width="128" height="103"/>
     </elements>
 </model>

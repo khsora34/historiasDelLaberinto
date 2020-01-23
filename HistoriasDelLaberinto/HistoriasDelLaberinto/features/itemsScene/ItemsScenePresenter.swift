@@ -1,34 +1,27 @@
 protocol ItemsScenePresentationLogic: Presenter {
-    func saveGame()
+    func saveCharactersStatus()
 }
 
 class ItemsScenePresenter: BasePresenter {
-    var viewController: ItemsSceneDisplayLogic? {
-        return _viewController as? ItemsSceneDisplayLogic
-    }
+    var viewController: ItemsSceneDisplayLogic? { return _viewController as? ItemsSceneDisplayLogic }
+    var interactor: ItemsSceneBusinessLogic? { return _interactor as? ItemsSceneBusinessLogic }
+    private var router: ItemsSceneRoutingLogic? { return _router as? ItemsSceneRoutingLogic }
     
-    var interactor: ItemsSceneBusinessLogic? {
-        return _interactor as? ItemsSceneBusinessLogic
-    }
-    
-    var router: ItemsSceneRoutingLogic? {
-        return _router as? ItemsSceneRoutingLogic
-    }
-    
-    private var needsUpdate: Bool = false
+    private var hasChanged: Bool = false
     weak var updateDelegate: CharactersUpdateDelegate?
     
+    private var protagonist: Protagonist
+    private var partner: PlayableCharacter?
     private var charactersModels: [CharacterChosen: StatusViewModel] = [:]
     private var items: [String: Item] = [:]
     private var itemModels: [Int: ItemViewModel] = [:]
     var selectedItemTag: Int?
     
-    private var protagonist: Protagonist
-    private var partner: PlayableCharacter?
-    
-    init(protagonist: Protagonist, partner: PlayableCharacter? = nil) {
-        self.protagonist = protagonist
-        self.partner = partner
+    override init() {
+        self.protagonist = GameSession.protagonist
+        if let partner = protagonist.partner {
+            self.partner = GameSession.partners[partner]
+        }
     }
     
     override func viewDidLoad() {
@@ -39,12 +32,12 @@ class ItemsScenePresenter: BasePresenter {
     
     private func showItems() {
         var i = 0
-        for element in protagonist.items.keys {
-            let request = ItemsScene.ItemGetter.Request(itemId: element)
+        for (key, value) in protagonist.items {
+            let request = ItemsScene.ItemGetter.Request(itemId: key)
             let response = interactor?.getItem(request: request)
-            guard let item = response?.item else { continue }
-            items[element] = item
-            let model = ItemViewModel(id: element, name: item.name, description: item.description, itemType: ItemType(item: item), quantity: protagonist.items[element]!, imageUrl: item.imageUrl, tag: i, delegate: self)
+            guard let item = response?.item, let type = ItemType(item: item) else { continue }
+            items[key] = item
+            let model = ItemViewModel(id: key, item: item, itemType: type, quantity: value, imageSource: item.imageSource, tag: i, delegate: self)
             itemModels[i] = model
             i += 1
         }
@@ -53,11 +46,11 @@ class ItemsScenePresenter: BasePresenter {
     }
     
     private func buildCharacters() {
-        let protagonistModel = StatusViewModel(chosenCharacter: .protagonist, name: protagonist.name, ailment: protagonist.currentStatusAilment, actualHealth: protagonist.currentHealthPoints, maxHealth: protagonist.maxHealthPoints, imageUrl: protagonist.portraitUrl, isEnemy: false, delegate: self)
+        let protagonistModel = StatusViewModel(chosenCharacter: .protagonist, name: protagonist.name, ailment: protagonist.currentStatusAilment, actualHealth: protagonist.currentHealthPoints, maxHealth: protagonist.maxHealthPoints, imageSource: protagonist.portraitSource, isEnemy: false, delegate: self)
         charactersModels[.protagonist] = protagonistModel
         var charactersForStatus: [StatusViewModel] = [protagonistModel]
         if let partner = partner {
-            let partnerModel = StatusViewModel(chosenCharacter: .partner, name: partner.name, ailment: partner.currentStatusAilment, actualHealth: partner.currentHealthPoints, maxHealth: partner.maxHealthPoints, imageUrl: partner.portraitUrl, isEnemy: false, delegate: self)
+            let partnerModel = StatusViewModel(chosenCharacter: .partner, name: partner.name, ailment: partner.currentStatusAilment, actualHealth: partner.currentHealthPoints, maxHealth: partner.maxHealthPoints, imageSource: partner.portraitSource, isEnemy: false, delegate: self)
             charactersForStatus.append(partnerModel)
             charactersModels[.partner] = partnerModel
         }
@@ -65,7 +58,16 @@ class ItemsScenePresenter: BasePresenter {
     }
 }
 
-extension ItemsScenePresenter: ItemsScenePresentationLogic {}
+extension ItemsScenePresenter: ItemsScenePresentationLogic {
+    func saveCharactersStatus() {
+        guard hasChanged else { return }
+        GameSession.setProtagonist(protagonist)
+        if let partner = partner, let partnerId = protagonist.partner {
+            GameSession.addPartner(partner, withId: partnerId)
+        }
+        updateDelegate?.update(with: protagonist, and: partner)
+    }
+}
 
 extension ItemsScenePresenter: ItemSelectedDelegate {
     func didSelectItem(isSelected: Bool, tag: Int) {
@@ -110,16 +112,7 @@ extension ItemsScenePresenter: DidTouchStatusDelegate {
             updateItemModel(tag: tag, model: selectedItemModel)
             updateCharacterModel(chosen: .partner, model: characterModel)
         }
-        needsUpdate = true
-    }
-    
-    func saveGame() {
-        guard needsUpdate else { return }
-        let protaRequest = PauseMenuScene.ProtagonistUpdater.Request(protagonist: protagonist)
-        interactor?.updateProtagonist(request: protaRequest)
-        let partnerRequest = PauseMenuScene.CharacterUpdater.Request(partnerId: protagonist.partner, partner: partner)
-        interactor?.updateCharacter(request: partnerRequest)
-        updateDelegate?.update(with: protagonist, and: partner)
+        hasChanged = true
     }
     
     private func updateCharacterModel(chosen: CharacterChosen, model: StatusViewModel) {

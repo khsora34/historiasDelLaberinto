@@ -3,24 +3,39 @@ import Kingfisher
 
 protocol BattleSceneDisplayLogic: ViewControllerDisplay {
     func addCharactersStatus(_ models: [StatusViewModel])
-    func setBackground(with imageUrl: String?)
-    func setEnemyInfo(imageUrl: String, model: StatusViewModel)
+    func setBackground(using imageSource: ImageSource?)
+    func setEnemyInfo(imageSource: ImageSource, model: StatusViewModel)
     func updateView(_ model: StatusViewModel)
     func performDamage(on model: StatusViewModel)
+    func configureButtons(availableActions: [BattleAction])
 }
 
 class BattleSceneViewController: BaseViewController {
-    
     private var presenter: BattleScenePresentationLogic? {
         return _presenter as? BattleScenePresentationLogic
     }
     
-    var enemyStatus: StatusViewController!
+    var enemyStatus: StatusView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var enemyImageView: UIImageView!
     @IBOutlet weak var charactersStackView: UIStackView!
+    @IBOutlet weak var actionsStackView: UIStackView!
     
     // MARK: View lifecycle
+    
+    func configureButtons(availableActions: [BattleAction]) {
+        var views: [UIView] = []
+        for action in availableActions {
+            let button = ConfigurableButton(frame: .zero)
+            button.setStyle(ButtonStyle.defaultButtonStyle)
+            button.text = Localizer.localizedString(key: action.actionKey)
+            button.tag = action.rawValue
+            button.addTarget(self, action: #selector(didTapAction(sender:)), for: .touchUpInside)
+            views.append(button)
+        }
+        
+        actionsStackView.addViewsInColumns(views)
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -32,12 +47,15 @@ class BattleSceneViewController: BaseViewController {
         navigationController?.navigationBar.isHidden = false
     }
     
-    @IBAction func didTapAttackButton(_ sender: Any) {
-        presenter?.protaWillAttack()
-    }
-    
-    @IBAction func didTapItemsButton(_ sender: Any) {
-        presenter?.protaWillUseItems()
+    @objc func didTapAction(sender: UIButton) {
+        switch BattleAction(rawValue: sender.tag) {
+        case .attack?:
+            presenter?.protaWillAttack()
+        case .item:
+            presenter?.protaWillUseItems()
+        case .none:
+            return
+        }
     }
 }
 
@@ -45,21 +63,24 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
     func addCharactersStatus(_ models: [StatusViewModel]) {
         for model in models {
             // Auto Layout will do the job.
-            let statusView = StatusViewController(frame: CGRect.zero)
-            model.configure(view: statusView)
+            let statusView = StatusView(frame: CGRect.zero)
+            statusView.configure(withModel: model)
             charactersStackView.addArrangedSubview(statusView)
         }
     }
     
-    func setBackground(with imageUrl: String?) {
-        guard let imageUrl = imageUrl else { return }
-        backgroundImageView.kf.setImage(with: URL(string: imageUrl))
+    func setBackground(using imageSource: ImageSource?) {
+        guard let imageSource = imageSource else {
+            backgroundImageView.image = UIImage(named: "GenericRoom1")
+            return
+        }
+        backgroundImageView.setImage(from: imageSource)
     }
     
-    func setEnemyInfo(imageUrl: String, model: StatusViewModel) {
-        enemyImageView.kf.setImage(with: URL(string: imageUrl))
-        enemyStatus = StatusViewController(frame: CGRect(x: 0, y: 0, width: 394, height: 100))
-        model.configure(view: enemyStatus)
+    func setEnemyInfo(imageSource: ImageSource, model: StatusViewModel) {
+        enemyImageView.setImage(from: imageSource)
+        enemyStatus = StatusView(frame: CGRect(x: 0, y: 0, width: 394, height: 100))
+        enemyStatus.configure(withModel: model)
         enemyStatus.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(enemyStatus)
         setEnemyViewConstraints(to: enemyStatus)
@@ -67,16 +88,16 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
     
     func updateView(_ model: StatusViewModel) {
         if model.isEnemy {
-            model.configure(view: enemyStatus)
-        } else if let view = charactersStackView.arrangedSubviews.filter({ ($0 as? StatusViewController)?.characterChosen == model.chosenCharacter }).first as? StatusViewController {
-            model.configure(view: view)
+            enemyStatus.configure(withModel: model)
+        } else if let view = charactersStackView.arrangedSubviews.filter({ ($0 as? StatusView)?.characterChosen == model.chosenCharacter }).first as? StatusView {
+            view.configure(withModel: model)
         }
     }
     
     func performDamage(on model: StatusViewModel) {
         if model.isEnemy {
             enemyStatus.shake()
-        } else if let view = charactersStackView.arrangedSubviews.filter({ ($0 as? StatusViewController)?.characterChosen == model.chosenCharacter }).first {
+        } else if let view = charactersStackView.arrangedSubviews.filter({ ($0 as? StatusView)?.characterChosen == model.chosenCharacter }).first {
             view.shake()
         }
     }

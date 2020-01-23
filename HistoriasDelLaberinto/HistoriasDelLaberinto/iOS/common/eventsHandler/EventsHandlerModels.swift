@@ -61,6 +61,12 @@ enum EventsHandlerModels {
             let enemy: GameCharacter?
         }
     }
+    
+    enum VariableModification {
+        struct Request {
+            let event: ModifyVariableEvent
+        }
+    }
 }
 
 enum EventsHandlerError {
@@ -70,5 +76,5 @@ enum EventsHandlerError {
     case itemsNotFound
     case invalidChoiceExecution
     case reasonIsPartnerDefeated
-    case custom
+    case custom(String)
 }

@@ -1,7 +1,7 @@
 enum PauseMenuScene {
     enum ProtagonistGetter {
         struct Response {
-            let protagonist: Protagonist?
+            let protagonist: Protagonist
         }
     }
     enum CharacterGetter {
@@ -36,14 +36,14 @@ enum PauseMenuScene {
 enum MenuOption: Int {
     case items, save, exit
     
-    func getOptionName() -> String {
+    var optionKey: String {
         switch self {
         case .items:
-            return "Inventario"
+            return "menuOptionItems"
         case .save:
-            return "Guardar"
+            return "menuOptionSave"
         case .exit:
-            return "Salir"
+            return "menuOptionExit"
         }
     }
 }

@@ -1,16 +1,16 @@
 enum StatusAilment: String {
-    case poisoned
-    case paralyzed
-    case blind
+    case poison
+    case paralysis
+    case blindness
     
-    var localizedAilmentName: String {
+    var ailmentKey: String {
         switch self {
-        case .poisoned:
-            return "Veneno"
-        case .paralyzed:
-            return "Parálisis"
-        case .blind:
-            return "Ceguera"
+        case .poison:
+            return "statusAilmentPoison"
+        case .paralysis:
+            return "statusAilmentParalysis"
+        case .blindness:
+            return "statusAilmentBlindness"
         }
     }
 }

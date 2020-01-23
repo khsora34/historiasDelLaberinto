@@ -1,29 +1,16 @@
 protocol MovementSceneBusinessLogic: BusinessLogic {
-    func getMovement() -> MovementScene.GetMovement.Response
-    func saveMovement()
     func setNewLocation(request: MovementScene.SetLocation.Request)
-    func getRoom(request: MovementScene.GetRoom.Request) -> MovementScene.GetRoom.Response
-    func getAllRooms(request: MovementScene.GetAllRooms.Request) -> MovementScene.GetAllRooms.Response
+    func getAllRooms() -> MovementScene.GetAllRooms.Response
 }
 
 class MovementSceneInteractor: BaseInteractor, MovementSceneBusinessLogic {
     private let roomFetcher: RoomFetcher
     private let movementFetcher: MovementFetcher
     
-    init(roomFetcher: RoomFetcher, movementFetcher: MovementFetcher) {
-        self.roomFetcher = roomFetcher
-        self.movementFetcher = movementFetcher
-    }
-    
-    func getMovement() -> MovementScene.GetMovement.Response {
-        if let movement = movementFetcher.getMovement() {
-            return MovementScene.GetMovement.Response(movement: movement)
-        }
-        return MovementScene.GetMovement.Response(movement: movementFetcher.createMovement())
-    }
-    
-    func saveMovement() {
-        _ = movementFetcher.save()
+    init(databaseFetcherProvider: DatabaseFetcherProvider) {
+        self.roomFetcher = databaseFetcherProvider.roomsFetcher
+        self.movementFetcher = databaseFetcherProvider.movementFetcher
+        super.init()
     }
     
     func setNewLocation(request: MovementScene.SetLocation.Request) {
@@ -37,31 +24,19 @@ class MovementSceneInteractor: BaseInteractor, MovementSceneBusinessLogic {
         if let items = movement.map, let map = Array(items) as? [RoomPosition], !map.isEmpty {
             let searchRoom = map.filter({ $0.x == location.0 && $0.y == location.1 })
             
-            if searchRoom.count == 0 {
+            if searchRoom.isEmpty {
                 movementFetcher.registerPosition(location: location, roomId: id, on: movement)
             }
         }
         
-        saveMovement()
+        GameSession.setMovement(movement)
     }
     
-    func getRoom(request: MovementScene.GetRoom.Request) -> MovementScene.GetRoom.Response {
-        let id = request.id
-        let room = roomFetcher.getRoom(with: id)
-        return MovementScene.GetRoom.Response(room: room)
-    }
-    
-    func getAllRooms(request: MovementScene.GetAllRooms.Request) -> MovementScene.GetAllRooms.Response {
+    func getAllRooms() -> MovementScene.GetAllRooms.Response {
         let rooms = roomFetcher.getAllRooms()
-        let movement = request.movement
-        
-        let genericRooms = rooms.filter({ $0.isGenericRoom == true })
-        var availableRooms: [Room] = rooms.filter({ $0.isGenericRoom == false})
-        
-        if let items = movement.map, let map = Array(items) as? [RoomPosition] {
-            availableRooms = availableRooms.filter { room in map.filter({ $0.roomId == room.id }).isEmpty }
-        }
-        
-        return MovementScene.GetAllRooms.Response(availableRooms: availableRooms, genericRooms: genericRooms)
+        let mergedRooms = rooms.merging(GameSession.rooms) { (_, new) -> Room in new }
+        let genericRooms = mergedRooms.values.filter({ $0.isGenericRoom == true })
+        let storyRooms = mergedRooms.values.filter({ $0.isGenericRoom == false })
+        return MovementScene.GetAllRooms.Response(storyRooms: storyRooms, genericRooms: genericRooms)
     }
 }

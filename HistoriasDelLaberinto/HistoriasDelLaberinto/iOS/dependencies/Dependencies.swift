@@ -14,6 +14,7 @@ class Dependencies {
     
     init() {
         databaseFetcherProvider = createDatabaseFetcherProvider()
+        createLocalizer()
         createModuleProvider()
     }
     
@@ -23,7 +24,11 @@ class Dependencies {
         moduleProvider.databaseFetcherProvider = databaseFetcherProvider
     }
     
+    private func createLocalizer() {
+        Localizer.shared.setup(localizedStringAccess: databaseFetcherProvider.localizedValueFetcher)
+    }
+    
     private func createDatabaseFetcherProvider() -> DatabaseFetcherProvider {
-        return DatabaseFetcherProvider(eventsFetcherManager: EventFetcherManagerImpl(), itemsFetcher: ItemFetcherImpl(), charactersFetcher: CharacterFetcherImpl(), roomsFetcher: RoomFetcherImpl(), movementFetcher: MovementFetcherImpl())
+        return DatabaseFetcherProvider(eventsFetcherManager: EventFetcherManagerImpl(), itemsFetcher: ItemFetcherImpl(), charactersFetcher: CharacterFetcherImpl(), roomsFetcher: RoomFetcherImpl(), movementFetcher: MovementFetcherImpl(), localizedValueFetcher: LocalizedValueFetcherImpl(), variableFetcher: VariableFetcherImpl())
     }
 }

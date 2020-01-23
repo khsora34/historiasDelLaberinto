@@ -4,12 +4,16 @@ playable:
 
     currentHealthPoints: 300
     maxHealthPoints: 300
-    attack: 5
-    defense: 0
-    agility: 0
+    attack: 15
+    defense: 15
+    agility: 4
+    imageSource:
+      type: remote
+      source: "https://imgur.com/zNGi05P.png"
 
-    imageUrl: "https://imgur.com/zNGi05P.png"
-    portraitUrl: "https://i.imgur.com/g3WIUf4.png"
+    portraitSource:
+      type: remote
+      source: "https://i.imgur.com/g3WIUf4.png"
 
   "speedSora":
     name: "Blizzard claws Sora"
@@ -19,8 +23,12 @@ playable:
     attack: 30
     defense: 13
     agility: 30
-
-    imageUrl: "https://vignette.wikia.nocookie.net/kingdomhearts/images/f/f4/Sora_%28Blitz_Form%29_KHIII.png/revision/latest?cb=20190325141138"
+    imageSource:
+      type: remote
+      source: "https://vignette.wikia.nocookie.net/kingdomhearts/images/f/f4/Sora_%28Blitz_Form%29_KHIII.png/revision/latest?cb=20190325141138"
+    portraitSource:
+      type: remote
+      source: "https://i.imgur.com/g3WIUf4.png"
 
   "shieldSora":
     name: "Shield Sora"
@@ -30,8 +38,12 @@ playable:
     attack: 25
     defense: 22
     agility: 10
-
-    imageUrl: "https://images.khinsider.com/KINGDOM%20HEARTS%20III/Renders/Main%20Characters/SoraGF.png"
+    imageSource:
+      type: remote
+      source: "https://images.khinsider.com/KINGDOM%20HEARTS%20III/Renders/Main%20Characters/SoraGF.png"
+    portraitSource:
+      type: remote
+      source: "https://i.imgur.com/g3WIUf4.png"
 
   "sora":
     name: "Sora"
@@ -41,8 +53,12 @@ playable:
     attack: 33
     defense: 15
     agility: 18
-
-    imageUrl: "https://images.khinsider.com/KINGDOM%20HEARTS%20III/Renders/Main%20Characters/Sora03.png"
+    imageSource:
+      type: remote
+      source: "https://images.khinsider.com/KINGDOM%20HEARTS%20III/Renders/Main%20Characters/Sora03.png"
+    portraitSource:
+      type: remote
+      source: "https://i.imgur.com/g3WIUf4.png"
 
   "badMonster":
     name: "Monstruo"
@@ -52,19 +68,28 @@ playable:
     attack: 15
     defense: 13
     agility: 6
-
-    imageUrl: "http://www.lalaland.com/badMonster_image"
+    imageSource:
+      type: remote
+      source: "http://www.lalaland.com/badMonster_image"
+    portraitSource:
+      type: remote
+      source: "https://i.imgur.com/g3WIUf4.png"
 
   "eternalGod":
     name: "Malvado"
 
-    currentHealthPoints: 20000
-    maxHealthPoints: 20000
-    attack: 80
-    defense: 0
-    agility: 60
+    currentHealthPoints: 100
+    maxHealthPoints: 100
+    attack: 20
+    defense: 10
+    agility: 5
 
-    imageUrl: "https://i.imgur.com/U6RBjYo.png"
+    imageSource:
+      type: remote
+      source: "https://i.imgur.com/U6RBjYo.png"
+    portraitSource:
+      type: remote
+      source: "https://i.imgur.com/g3WIUf4.png"
 
   "grima_monster":
     name: "Grima"
@@ -76,13 +101,28 @@ playable:
     agility: 10
     weapon: "dragon_claw"
 
-    imageUrl: "http://www.lalaland.com/grima_monster_image"
+    imageSource:
+      type: remote
+      source: "http://www.lalaland.com/grima_monster_image"
+    portraitSource:
+      type: remote
+      source: "https://i.imgur.com/g3WIUf4.png"
 
 notPlayable:
   "grandma_npc":
     name: "Abuela"
-    imageUrl: "http://www.lalaland.com/grandma_npc_image"
+    imageSource:
+      type: remote
+      source: "http://www.lalaland.com/grandma_npc_image"
 
   "narrator":
     name: "Narrador"
-    imageUrl: "https://i.imgur.com/Upcm999.png"
+    imageSource:
+      type: remote
+      source: "https://i.imgur.com/Upcm999.png"
+
+  "aurelionSol":
+    name: "Aurelion Sol"
+    imageSource:
+      type: local
+      source: "aurelionSol.PNG"

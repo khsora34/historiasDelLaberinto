@@ -9,7 +9,6 @@ protocol ItemsSceneDisplayLogic: ViewControllerDisplay {
 }
 
 class ItemsSceneViewController: BaseViewController {
-    
     private var presenter: ItemsScenePresentationLogic? {
         return _presenter as? ItemsScenePresentationLogic
     }
@@ -24,26 +23,24 @@ class ItemsSceneViewController: BaseViewController {
     override func willMove(toParent parent: UIViewController?) {
         super.willMove(toParent: parent)
         if parent == nil {
-            presenter?.saveGame()
+            presenter?.saveCharactersStatus()
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        title = "Inventario"
-        
+        title = Localizer.localizedString(key: "itemsViewTitle")
         backgroundView.setColors([.red, .yellow, .orange])
         backgroundView.startAnimation()
         conditionView.backgroundColor = UIColor(white: 0.9, alpha: 0.3)
     }
 }
 
-extension ItemsSceneViewController: ItemsSceneDisplayLogic {
+extension ItemsSceneViewController: ItemsSceneDisplayLogic {    
     func addCharactersStatus(_ models: [StatusViewModel]) {
         for model in models {
-            let statusView = StatusViewController(frame: .zero)
-            model.configure(view: statusView)
+            let statusView = StatusView(frame: .zero)
+            statusView.configure(withModel: model)
             statusView.isUserInteractionEnabled = true
             statusStackView.addArrangedSubview(statusView)
         }
@@ -57,20 +54,21 @@ extension ItemsSceneViewController: ItemsSceneDisplayLogic {
     
     func buildItems(with models: [ItemViewModel]) {
         for model in models {
-            let view = ItemView(model: model, frame: .zero)
+            let view = ItemView(frame: .zero)
+            view.configure(withModel: model)
             itemsStackView.addArrangedSubview(view)
         }
     }
     
     func updateStatusView(_ model: StatusViewModel) {
-        if let view = statusStackView.arrangedSubviews.filter({ ($0 as? StatusViewController)?.characterChosen == model.chosenCharacter }).first as? StatusViewController {
-            model.configure(view: view)
+        if let view = statusStackView.arrangedSubviews.first(where: { ($0 as? StatusView)?.characterChosen == model.chosenCharacter }) as? StatusView {
+            view.configure(withModel: model)
             addBlinkAnimation(to: view.flashView, withAutoreverse: true)
         }
     }
     
     func updateItemView(_ model: ItemViewModel) {
-        guard let view = itemsStackView.arrangedSubviews.filter({ $0.tag == model.tag }).first as? ItemView else { return }
+        guard let view = itemsStackView.arrangedSubviews.first(where: { $0.tag == model.tag }) as? ItemView else { return }
         guard model.quantity > 0 else {
             UIView.animate(withDuration: 0.1) {
                 view.isHidden = true
@@ -79,7 +77,7 @@ extension ItemsSceneViewController: ItemsSceneDisplayLogic {
             view.removeFromSuperview()
             return
         }
-        model.configure(view: view)
+        view.configure(withModel: model)
     }
     
     private func addBlinkAnimation(to view: UIView, withAutoreverse: Bool) {

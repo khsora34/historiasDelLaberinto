@@ -7,3 +7,5 @@ class YamlParser<Parseable: Decodable>: Parser {
         return try? YAMLDecoder().decode(Parseable.self, from: responseString)
     }
 }
+
+typealias VariablesFileParser = YamlParser<[Variable]>

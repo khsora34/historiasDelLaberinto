@@ -8,28 +8,25 @@ protocol PauseMenuSceneBusinessLogic: BusinessLogic {
 }
 
 class PauseMenuSceneInteractor: BaseInteractor, PauseMenuSceneBusinessLogic {
-    private let characterFetcher: CharacterFetcher
-    private let itemFetcher: ItemFetcher
+    private let databaseProvider: DatabaseFetcherProvider
     
     init(databaseProvider: DatabaseFetcherProvider) {
-        self.characterFetcher = databaseProvider.charactersFetcher
-        self.itemFetcher = databaseProvider.itemsFetcher
+        self.databaseProvider = databaseProvider
+        super.init()
     }
     
     func getProtagonist() -> PauseMenuScene.ProtagonistGetter.Response {
-        let protagonist = characterFetcher.getCharacter(with: "protagonist") as? Protagonist
+        let protagonist: Protagonist = GameSession.protagonist
         return PauseMenuScene.ProtagonistGetter.Response(protagonist: protagonist)
     }
     
     func getPartner(request: PauseMenuScene.CharacterGetter.Request) -> PauseMenuScene.CharacterGetter.Response {
-        guard let partner = characterFetcher.getCharacter(with: request.id) as? PlayableCharacter else {
-            return PauseMenuScene.CharacterGetter.Response(character: nil)
-        }
+        let partner = GameSession.partners[request.id] ?? databaseProvider.charactersFetcher.getCharacter(with: request.id) as? PlayableCharacter
         return PauseMenuScene.CharacterGetter.Response(character: partner)
     }
     
     func getWeapon(request: PauseMenuScene.WeaponGetter.Request) -> PauseMenuScene.WeaponGetter.Response {
-        guard let weapon = itemFetcher.getItem(with: request.id) as? Weapon else {
+        guard let weapon = databaseProvider.itemsFetcher.getItem(with: request.id) as? Weapon else {
             return PauseMenuScene.WeaponGetter.Response(weapon: nil)
         }
         return PauseMenuScene.WeaponGetter.Response(weapon: weapon)
@@ -37,6 +34,26 @@ class PauseMenuSceneInteractor: BaseInteractor, PauseMenuSceneBusinessLogic {
     
     func saveContext() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let protagonist: Protagonist = GameSession.protagonist
+        _ = databaseProvider.charactersFetcher.saveCharacter(for: protagonist, with: "protagonist")
+        
+        for (id, partner) in GameSession.partners {
+            _ = databaseProvider.charactersFetcher.saveCharacter(for: partner, with: id)
+        }
+        
+        for variable in GameSession.variables.values {
+            _ = databaseProvider.variableFetcher.saveVariable(for: variable)
+        }
+        
+        for (id, room) in GameSession.rooms {
+            _ = databaseProvider.roomsFetcher.saveRoom(for: room, with: id)
+        }
+        
+        let movement: Movement = GameSession.movement
+        // Movement should be saved when this is called.
         appDelegate.saveContext()
+        
+        GameSession.restart()
+        GameSession.startSession(protagonist: protagonist, movement: movement)
     }
 }

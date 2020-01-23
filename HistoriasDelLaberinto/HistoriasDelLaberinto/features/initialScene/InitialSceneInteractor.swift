@@ -1,15 +1,20 @@
 import Foundation
 
 protocol InitialSceneBusinessLogic: BusinessLogic {
-    func loadAllFiles(request: InitialScene.FileLoader.Request)
+    func startNewGame(request: InitialScene.FileLoader.Request)
+    func reloadGame(request: InitialScene.FileLoader.Request)
     func deleteAllFiles()
     func getRoom(request: InitialScene.RoomBuilder.Request) -> InitialScene.RoomBuilder.Response
     func getMovement() -> InitialScene.MovementGetter.Response
     func createMovement()
+    func updateTexts()
 }
 
-class InitialSceneInteractor: InitialSceneBusinessLogic {
+class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
     private let databaseFetcherProvider: DatabaseFetcherProvider
+    
+    var successfulOperations: Int = 0
+    weak var delegate: ImageLoaderDelegate?
     
     var operations: [Int: ImageLoadingOperation] = [:] {
         didSet {
@@ -20,47 +25,94 @@ class InitialSceneInteractor: InitialSceneBusinessLogic {
         }
     }
     
-    var successfulOperations: Int = 0
-    weak var delegate: ImageLoaderDelegate?
-    
     init(databaseFetcherProvider: DatabaseFetcherProvider) {
         self.databaseFetcherProvider = databaseFetcherProvider
+        super.init()
     }
     
-    func loadAllFiles(request: InitialScene.FileLoader.Request) {
+    func startNewGame(request: InitialScene.FileLoader.Request) {
         let now = Date().timeIntervalSinceReferenceDate
         print("😂 Start Uploading ")
         delegate = request.imageDelegate
-        parseFiles()
+        let parsedInfo = parseFiles()
+        save(parsedInfo.0, parsedInfo.1, parsedInfo.2, parsedInfo.3, getEvents())
+        loadSession()
+        loadImages(parsedInfo.0, parsedInfo.1, parsedInfo.2, parsedInfo.3)
         print("😂 Finished in \(Date().timeIntervalSinceReferenceDate - now)")
     }
     
-    private func parseFiles() {
+    func reloadGame(request: InitialScene.FileLoader.Request) {
+        delegate = request.imageDelegate
+        loadSession()
+        let parsedInfo = parseFiles()
+        loadImages(parsedInfo.0, parsedInfo.1, parsedInfo.2, parsedInfo.3)
+    }
+    
+    // swiftlint:disable large_tuple
+    private func parseFiles() -> (Protagonist, CharactersFile, RoomsFile, ItemsFile) {
         let protagonist = getProtagonist()
         let charactersFile = getCharacters()
         let roomsFile = getRooms()
         let itemsFile = getItems()
-        let eventsFile = getEvents()
+        return (protagonist, charactersFile, roomsFile, itemsFile)
+    }
+    // swiftlint:enable large_tuple
+    
+    private func loadImages(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile) {
+        print("😂 Starting to load images")
+        var imageUrls: [ImageSource] = []
+        imageUrls.append(protagonist.imageSource)
+        imageUrls.append(contentsOf: charactersFile.notPlayable.values.map({$0.imageSource}))
+        imageUrls.append(contentsOf: charactersFile.playable.values.map({$0.imageSource}))
+        imageUrls.append(contentsOf: charactersFile.playable.values.map({$0.portraitSource}))
         
-        loadImages(protagonist, charactersFile, roomsFile, itemsFile, eventsFile)
-        save(protagonist, charactersFile, roomsFile, itemsFile, eventsFile)
+        imageUrls.append(contentsOf: roomsFile.rooms.values.map({$0.imageSource}))
+        
+        imageUrls.append(contentsOf: itemsFile.consumableItems.values.map({$0.imageSource}))
+        imageUrls.append(contentsOf: itemsFile.keyItems.values.map({$0.imageSource}))
+        imageUrls.append(contentsOf: itemsFile.weapons.values.map({$0.imageSource}))
+        loadImages(from: imageUrls)
     }
     
-    private func loadImages(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile, _ eventsFile: EventsFile) {
-        print("😂 Starting to load images")
-        var imageUrls: [String] = []
-        imageUrls.append(protagonist.imageUrl)
+    private func loadSession() {
+        var movement: Movement? = getMovement().movement
+        if movement == nil {
+            createMovement()
+            movement = getMovement().movement
+        }
         
-        imageUrls.append(contentsOf: charactersFile.notPlayable.values.map({$0.imageUrl}))
-        imageUrls.append(contentsOf: charactersFile.playable.values.map({$0.imageUrl}))
-        imageUrls.append(contentsOf: charactersFile.playable.values.compactMap({$0.portraitUrl}))
+        let protagonist = databaseFetcherProvider.charactersFetcher.getCharacter(with: "protagonist") as! Protagonist
+        GameSession.startSession(protagonist: protagonist, movement: movement!)
         
-        imageUrls.append(contentsOf: roomsFile.rooms.values.map({$0.imageUrl}))
+        if
+            let partnerId = protagonist.partner,
+            let partner = databaseFetcherProvider.charactersFetcher.getCharacter(with: partnerId) as? PlayableCharacter {
+            GameSession.addPartner(partner, withId: partnerId)
+        }
+    }
+    
+    func updateTexts() {
+        databaseFetcherProvider.localizedValueFetcher.deleteAllTexts()
+        print("Texts are saved: \(saveTexts(getTexts(), fetcher: databaseFetcherProvider.localizedValueFetcher))")
+        initLanguage()
+    }
+    
+    private func initLanguage() {
+        guard UserDefaults.standard.string(forKey: "loadedLanguageIdentifier") == nil else { return }
         
-        imageUrls.append(contentsOf: itemsFile.consumableItems.values.map({$0.imageUrl}))
-        imageUrls.append(contentsOf: itemsFile.keyItems.values.map({$0.imageUrl}))
-        imageUrls.append(contentsOf: itemsFile.weapons.values.map({$0.imageUrl}))
-        loadImages(from: imageUrls)
+        let availableLanguages = databaseFetcherProvider.localizedValueFetcher.getAvailableLanguages().map({$0.identifier})
+        let systemLanguages = Locale.preferredLanguages
+        var choseLanguage: String?
+        var i = 0
+        while choseLanguage == nil && i < systemLanguages.count {
+            if availableLanguages.contains(systemLanguages[i]) {
+                choseLanguage = systemLanguages[i]
+            }
+            i+=1
+        }
+        choseLanguage = choseLanguage ?? systemLanguages.first
+        
+        UserDefaults.standard.set(choseLanguage ?? "en", forKey: "loadedLanguageIdentifier")
     }
     
     private func save(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile, _ eventsFile: EventsFile) {

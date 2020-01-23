@@ -4,8 +4,9 @@ import Kingfisher
 protocol RoomSceneDisplayLogic: ViewControllerDisplay {
     var dialog: DialogDisplayLogic? { get set }
     func set(title: String)
-    func setImage(with literal: String)
+    func setImage(for source: ImageSource)
     func set(actions: [String])
+    func update(withActions actions: [String])
 }
 
 class RoomSceneViewController: BaseViewController {
@@ -54,17 +55,19 @@ class RoomSceneViewController: BaseViewController {
 
 extension RoomSceneViewController: RoomSceneDisplayLogic {
     func set(title: String) {
-        self.title = title
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24)]
+        self.title = Localizer.localizedString(key: title)
+        let label = UILabel(frame: .zero)
+        label.text = self.title
+        label.textColor = UIColor.white
+        label.font = UIFont.systemFont(ofSize: 24, weight: .regular)
+        label.backgroundColor = UIColor.clear
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .center
+        self.navigationItem.titleView = label
     }
     
-    func setImage(with literal: String) {
-        if literal.isEmpty {
-            let image = UIImage(named: "GenericRoom1")
-            backgroundImageView.image = image
-        }
-        
-        backgroundImageView.kf.setImage(with: URL(string: literal))
+    func setImage(for source: ImageSource) {
+        backgroundImageView.setImage(from: source)
     }
     
     func set(actions: [String]) {
@@ -72,26 +75,40 @@ extension RoomSceneViewController: RoomSceneDisplayLogic {
             buttonStackView.removeArrangedSubview(stack)
             stack.removeFromSuperview()
         }
-        buttonStackView.setButtonsInColumns(names: actions, action: #selector(didTapOption), for: self, numberOfColumns: 2, fixedHeight: false)
+        buttonStackView.createButtonsInColumns(names: actions.map(Localizer.localizedString(key:)), action: #selector(didTapOption(sender:)), for: self, numberOfColumns: 2)
         
         if #available(iOS 11, *) {
             let iphoneXView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: view.safeAreaInsets.bottom)))
             iphoneXView.backgroundColor = .clear
             buttonStackView.addArrangedSubview(iphoneXView)
         }
-
+        
+    }
+    
+    func update(withActions actions: [String]) {
+        guard !actions.isEmpty else { return }
+        buttonStackView.arrangedSubviews.last?.removeFromSuperview()
+        UIView.animate(withDuration: 0.3) {
+            self.buttonStackView.createButtonsInColumns(names: actions.map(Localizer.localizedString(key:)), action: #selector(self.didTapOption(sender:)), for: self, numberOfColumns: 2)
+            self.view.layoutIfNeeded()
+        }
+        
+        if #available(iOS 11, *) {
+            let iphoneXView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: view.safeAreaInsets.bottom)))
+            iphoneXView.backgroundColor = .clear
+            buttonStackView.addArrangedSubview(iphoneXView)
+        }
     }
 }
 
 extension RoomSceneViewController {
-    @objc func didTapOption(sender: UIButton) {
+    @objc func didTapOption(sender: UIControl) {
         presenter?.selectedAction(sender.tag)
     }
     
     @objc func didTapInfoButton() {
-        let alert = UIAlertController(title: title, message: presenter?.getInfoMessage(), preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: nil))
-        self.present(alert, animated: true)
+        presenter?.didTapInfoButton()
+        
     }
     
     @objc func didTapMenuButton() {

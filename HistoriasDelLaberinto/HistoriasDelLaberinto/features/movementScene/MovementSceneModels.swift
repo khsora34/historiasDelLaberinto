@@ -15,11 +15,8 @@ enum MovementScene {
     }
     
     enum GetAllRooms {
-        struct Request {
-            let movement: Movement
-        }
         struct Response {
-            let availableRooms: [Room]
+            let storyRooms: [Room]
             let genericRooms: [Room]
         }
     }
