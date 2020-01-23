@@ -23,11 +23,11 @@ extension BattleEventFetcher {
     }
 
     func saveBattle(_ battle: BattleEvent) -> Bool {
-        guard let entity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.BattleEventDAO)", in: managedContext) else { return false }
+        guard let entity = NSEntityDescription.entity(forEntityName: (DaoConstants.ModelsNames.BattleEventDAO).rawValue, in: managedContext) else { return false }
 
         let loadingEvent = BattleEventDAO(entity: entity, insertInto: managedContext)
         loadingEvent.id = battle.id
-        loadingEvent.type = "\(DaoConstants.Event.battle)"
+        loadingEvent.type = DaoConstants.Event.battle.rawValue
         loadingEvent.enemyId = battle.enemyId
         loadingEvent.shouldSetVisited = battle.shouldSetVisited ?? false
         loadingEvent.shouldEndGame = battle.shouldEndGame ?? false

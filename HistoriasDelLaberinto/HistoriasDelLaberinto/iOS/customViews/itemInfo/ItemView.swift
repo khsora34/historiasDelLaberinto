@@ -1,8 +1,10 @@
 import UIKit
 
 class ItemView: UIView {
-    private let defaultItemModel = ItemViewModel(id: "-1", name: "Objeto raro", description: "¿Esto es un objeto? ¿Quién sabe?", itemType: nil, quantity: -1, imageSource: .local(""), tag: -1, delegate: nil)
     private var showingBack = false
+    
+    var frontItemView: ItemFrontView!
+    var backItemView: ItemBackView!
     
     @IBOutlet var contentView: UIView!
     @IBOutlet var containerView: UIView!
@@ -11,14 +13,10 @@ class ItemView: UIView {
         return CGSize(width: 0, height: 70)
     }
     
-    var frontItemView: ItemFrontView!
-    var backItemView: ItemBackView!
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         frontItemView = ItemFrontView(frame: frame)
         backItemView = ItemBackView(frame: frame)
-        defaultItemModel.configure(view: self)
         initSubviews()
     }
     
@@ -26,16 +24,6 @@ class ItemView: UIView {
         super.init(frame: frame)
         frontItemView = ItemFrontView(frame: frame)
         backItemView = ItemBackView(frame: frame)
-        defaultItemModel.configure(view: self)
-        initSubviews()
-    }
-    
-    init(model: ItemViewModel, frame: CGRect) {
-        super.init(frame: frame)
-        frontItemView = ItemFrontView(frame: frame)
-        backItemView = ItemBackView(frame: frame)
-        model.configure(view: self)
-        tag = model.tag
         initSubviews()
     }
     
@@ -51,13 +39,14 @@ class ItemView: UIView {
         containerView.addSubview(frontItemView)
         frontItemView.translatesAutoresizingMaskIntoConstraints = false
         frontItemView.spanSuperview()
-        frontItemView.flipView = { [weak self] in
-            self?.flip()
-        }
-        
-        backItemView.flipView = { [weak self] in
-            self?.flip()
-        }
+        frontItemView.flipView = flip
+        backItemView.flipView = flip
+    }
+    
+    func configure(withModel model: ItemViewModel) {
+        frontItemView.configure(withModel: model)
+        backItemView.configure(withModel: model)
+        tag = model.tag
     }
     
     private func flip() {
@@ -68,16 +57,15 @@ class ItemView: UIView {
         toView.spanSuperview()
         showingBack = !showingBack
     }
-    
 }
 
 extension UIView {
     func spanSuperview() {
-        guard superview != nil else { return }
-        self.topAnchor.constraint(equalTo: superview!.topAnchor).isActive = true
-        self.leadingAnchor.constraint(equalTo: superview!.leadingAnchor).isActive = true
-        self.widthAnchor.constraint(equalTo: superview!.widthAnchor, multiplier: 1.0).isActive = true
-        self.heightAnchor.constraint(equalTo: superview!.heightAnchor, multiplier: 1.0).isActive = true
+        guard let superview = superview else { return }
+        self.topAnchor.constraint(equalTo: superview.topAnchor).isActive = true
+        self.leadingAnchor.constraint(equalTo: superview.leadingAnchor).isActive = true
+        self.widthAnchor.constraint(equalTo: superview.widthAnchor, multiplier: 1.0).isActive = true
+        self.heightAnchor.constraint(equalTo: superview.heightAnchor, multiplier: 1.0).isActive = true
         self.translatesAutoresizingMaskIntoConstraints = false
     }
 }

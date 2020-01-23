@@ -1,6 +1,6 @@
 import UIKit
 
-protocol DialogLauncher: NextDialogHandler {
+protocol DialogLauncher: Presenter, NextDialogHandler {
     var dialog: DialogDisplayLogic? { get set }
     var dialogRouter: DialogRouter? { get }
 }

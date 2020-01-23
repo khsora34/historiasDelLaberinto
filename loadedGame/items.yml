@@ -42,5 +42,5 @@ weapons:
     extraDamage: 0
     hitRate: 94 # This field means a percentage
     inducedAilment:
-      ailment: "poisoned"
+      ailment: "poison"
       induceRate: 32 # This field means a percentage

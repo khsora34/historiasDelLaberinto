@@ -1,5 +1,5 @@
 struct ChoiceConfigurator: DialogConfigurator {
     let name: String = ""
-    let message: String = "Escoge una acción"
+    let message: String = "choiceEventMessage"
     let actions: [Action]
 }

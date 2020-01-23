@@ -1,13 +1,13 @@
 import UIKit
 
-protocol ShowLoadingCapable: UIViewController {
-    func showLoading()
+protocol LoadingLauncher: UIViewController {
+    func showLoading(title: String?, message: String?)
     func dismissLoading(completion: (() -> Void)?)
 }
 
-extension ShowLoadingCapable {
-    func showLoading() {
-        let alert = UIAlertController(title: nil, message: "Cargando, espera un momento...", preferredStyle: .alert)
+extension LoadingLauncher {
+    func showLoading(title: String? = nil, message: String?) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
         loadingIndicator.hidesWhenStopped = true

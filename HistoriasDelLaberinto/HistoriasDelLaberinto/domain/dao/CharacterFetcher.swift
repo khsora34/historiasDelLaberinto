@@ -106,7 +106,7 @@ class CharacterFetcherImpl: CharacterFetcher {
             let playableEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.PlayableCharacterDAO.rawValue, in: managedContext),
             let protagonistEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ProtagonistDAO.rawValue, in: managedContext),
             let itemsEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ItemsQuantity.rawValue, in: managedContext),
-            let imageEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ImageSourceDAO)", in: managedContext)
+            let imageEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ImageSourceDAO.rawValue, in: managedContext)
             else { return false }
         
         deleteCharacter(with: id)

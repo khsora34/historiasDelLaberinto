@@ -1,9 +1,4 @@
 enum BattleScene {
-    enum ProtagonistGetter {
-        struct Response {
-            let protagonist: Protagonist?
-        }
-    }
     enum CharacterGetter {
         struct Request {
             let id: String
@@ -20,13 +15,6 @@ enum BattleScene {
             let weapon: Weapon?
         }
     }
-    
-    enum CharacterUpdater {
-        struct Request {
-            let protagonist: CharacterStatus
-            let partner: CharacterStatus?
-        }
-    }
 }
 
 enum AttackPhase: Int {
@@ -37,7 +25,6 @@ enum AttackPhase: Int {
     case attackResult
     case evaluateHealthAfterAttack
     case battleEnd
-    case userInput
     
     func getNext() -> AttackPhase {
         if let value = AttackPhase(rawValue: self.rawValue + 1) {
@@ -69,6 +56,15 @@ enum FinishedBattleReason {
     case defeated(CharacterChosen)
 }
 
-enum BattleAction {
-    case attack, items
+enum BattleAction: Int {
+    case attack = 0, item
+    
+    var actionKey: String {
+        switch self {
+        case .attack:
+            return "battleOptionAttack"
+        case .item:
+            return "menuOptionItems"
+        }
+    }
 }

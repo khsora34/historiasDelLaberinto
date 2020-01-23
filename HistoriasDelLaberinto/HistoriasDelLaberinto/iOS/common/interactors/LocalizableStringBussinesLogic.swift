@@ -1,24 +1,26 @@
 import Foundation
 
-protocol LocalizableStringBussinesLogic {
-    var localizedStringAccess: LocalizedValueFetcher { get }
-    func getString(key: String) -> String
-    func getString(key: String, forLanguage language: Locale) -> String
-}
-
-extension LocalizableStringBussinesLogic {
-    func getString(key: String) -> String {
+public class Localizer {
+    public static var shared: Localizer = Localizer()
+    private var localizedStringAccess: LocalizedValueFetcher?
+    
+    public func setup(localizedStringAccess: LocalizedValueFetcher) {
+        self.localizedStringAccess = localizedStringAccess
+    }
+    
+    private func getString(_ key: String) -> String {
         guard let languageIdentifier: String = UserDefaults.standard.string(forKey: "loadedLanguageIdentifier") else {
             return key
         }
-        return getString(key: key, forLanguage: Locale(identifier: languageIdentifier))
+        return getString(key, forLanguage: Locale(identifier: languageIdentifier))
     }
     
-    func getString(key: String, forLanguage language: Locale) -> String {
+    private func getString(_ key: String, forLanguage language: Locale) -> String {
+        guard let localizedStringAccess = localizedStringAccess else { return key }
         return localizedStringAccess.getString(key: key, forLocale: language)
     }
-}
-
-protocol LocalizableStringPresenterProtocol: class {
-    func localizedString(key: String) -> String
+    
+    public static func localizedString(key: String) -> String {
+        return Localizer.shared.getString(key)
+    }
 }

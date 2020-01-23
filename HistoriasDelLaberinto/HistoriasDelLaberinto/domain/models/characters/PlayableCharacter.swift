@@ -7,6 +7,8 @@ struct PlayableCharacter: CharacterStatus {
         didSet {
             if currentHealthPoints > maxHealthPoints {
                 currentHealthPoints = maxHealthPoints
+            } else if currentHealthPoints < 0 {
+                currentHealthPoints = 0
             }
         }
     }

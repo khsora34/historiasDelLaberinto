@@ -1,57 +1,55 @@
 protocol MovementScenePresentationLogic: Presenter {
     func dismiss()
-    func calculateDirection(tag: Int)
+    func calculateNextRoom(tag: Int)
 }
 
 class MovementScenePresenter: BasePresenter {
     private let probabilityReducingFactor: Double = 0.2
     private let probabilityRaisingFactor: Double = 0.1
     
-    var viewController: MovementSceneDisplayLogic? {
-        return _viewController as? MovementSceneDisplayLogic
-    }
-    
-    var interactor: MovementSceneInteractor? {
-        return _interactor as? MovementSceneInteractor
-    }
-    
-    var router: MovementSceneRouter? {
-        return _router as? MovementSceneRouter
-    }
+    var viewController: MovementSceneDisplayLogic? { return _viewController as? MovementSceneDisplayLogic }
+    var interactor: MovementSceneInteractor? { return _interactor as? MovementSceneInteractor }
+    var router: MovementSceneRouter? { return _router as? MovementSceneRouter }
     
     private let actualRoom: Room
+    private var movement: Movement
     
-    private var movement: Movement!
-    private var genericRooms: [Room]!
-    private var availableRooms: [Room]!
+    private var genericRooms: [Room] = []
+    private var storyRooms: [Room] = []
+    private lazy var availableRooms: [Room] = {
+        guard let items = movement.map, let map = Array(items) as? [RoomPosition] else { return [] }
+        return storyRooms.filter { room in map.filter({ $0.roomId == room.id }).isEmpty }
+    }()
+    
     private var savedMovements: [CompassDirection: Room] = [:]
     
     init(room: Room) {
         self.actualRoom = room
+        self.movement = GameSession.movement
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getMovement()
         getRooms()
+        enableDirections()
         viewController?.set(roomName: actualRoom.name)
     }
     
-    private func getMovement() {
-        let response = interactor?.getMovement()
-        movement = response?.movement
-        if let items = movement.map, let map = Array(items) as? [RoomPosition], !map.isEmpty {
-            for direction in CompassDirection.allCases {
-                let extraLocation = direction.locationDirection()
-                let newX = Int(movement.actualX) + extraLocation.0
-                let newY = Int(movement.actualY) + extraLocation.1
-                let searchRoom = map.filter({ $0.x == newX && $0.y == newY })
-                
-                guard let firstRoomId = searchRoom.first?.roomId else { continue }
-                let request = MovementScene.GetRoom.Request(id: firstRoomId)
-                let response = interactor?.getRoom(request: request)
-                
-                guard let room = response?.room else { continue }
+    private func enableDirections() {
+        // Load rooms in any direction from actual room. It is meant for showing only the possible moves.
+        guard let items = movement.map, let map = Array(items) as? [RoomPosition], !map.isEmpty else { return }
+        for direction in CompassDirection.allCases {
+            let extraLocation = direction.locationDirection()
+            let newX = Int(movement.actualX) + extraLocation.0
+            let newY = Int(movement.actualY) + extraLocation.1
+            let searchRoom = map.filter({ $0.x == newX && $0.y == newY })
+            
+            guard let firstRoomId = searchRoom.first?.roomId else { continue }
+            
+            if let room = storyRooms.first(where: { $0.id == firstRoomId }) {
+                savedMovements[direction] = room
+                viewController?.updateDirectionHidden(direction, isHidden: false)
+            } else if let room = genericRooms.first(where: { $0.id == firstRoomId }) {
                 savedMovements[direction] = room
                 viewController?.updateDirectionHidden(direction, isHidden: false)
             }
@@ -59,10 +57,9 @@ class MovementScenePresenter: BasePresenter {
     }
     
     private func getRooms() {
-        let request = MovementScene.GetAllRooms.Request(movement: movement)
-        let response = interactor?.getAllRooms(request: request)
-        genericRooms = response?.genericRooms
-        availableRooms = response?.availableRooms
+        let response = interactor?.getAllRooms()
+        genericRooms = response?.genericRooms ?? []
+        storyRooms = response?.storyRooms ?? []
         if !availableRooms.isEmpty {
             viewController?.showAllDirections()
         }
@@ -70,7 +67,7 @@ class MovementScenePresenter: BasePresenter {
 }
 
 extension MovementScenePresenter: MovementScenePresentationLogic {
-    func calculateDirection(tag: Int) {
+    func calculateNextRoom(tag: Int) {
         guard let direction = CompassDirection(rawValue: tag) else { return }
         let extraMovement = direction.locationDirection()
         
@@ -105,8 +102,7 @@ extension MovementScenePresenter: MovementScenePresentationLogic {
             movement.genericProb = movement.genericProb + probabilityRaisingFactor > 1 ? 1: movement.genericProb + probabilityRaisingFactor
         }
         
-        let randomIndex = usingRooms.count == 1 ? 0: Int.random(in: 0..<(usingRooms.count-1))
-        
+        let randomIndex = Int.random(in: 0..<(usingRooms.count))
         return usingRooms[randomIndex]
     }
     

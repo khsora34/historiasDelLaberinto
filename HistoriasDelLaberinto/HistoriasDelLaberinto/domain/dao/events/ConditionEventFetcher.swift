@@ -50,14 +50,14 @@ extension ConditionEventFetcher {
 
     func saveCondition(_ condition: ConditionEvent) -> Bool {
         guard
-            let conditionEventEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ConditionEventDAO)", in: managedContext),
-            let conditionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ConditionDAO)", in: managedContext),
-            let variableConditionEntity = NSEntityDescription.entity(forEntityName: "\(DaoConstants.ModelsNames.ConditionVariableDAO)", in: managedContext)
+            let conditionEventEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ConditionEventDAO.rawValue, in: managedContext),
+            let conditionEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ConditionDAO.rawValue, in: managedContext),
+            let variableConditionEntity = NSEntityDescription.entity(forEntityName: DaoConstants.ModelsNames.ConditionVariableDAO.rawValue, in: managedContext)
             else { return false }
         let loadingEvent = ConditionEventDAO(entity: conditionEventEntity, insertInto: managedContext)
 
         loadingEvent.id = condition.id
-        loadingEvent.type = "\(DaoConstants.Event.condition)"
+        loadingEvent.type = DaoConstants.Event.condition.rawValue
         loadingEvent.shouldSetVisited = condition.shouldSetVisited ?? false
         loadingEvent.shouldEndGame = condition.shouldEndGame ?? false
         loadingEvent.nextStepIfTrue = condition.nextStepIfTrue
@@ -66,16 +66,16 @@ extension ConditionEventFetcher {
         let loadingCondition = ConditionDAO(entity: conditionEntity, insertInto: managedContext)
         switch condition.condition {
         case .item(let value):
-            loadingCondition.conditionType = "\(ConditionString.item)"
+            loadingCondition.conditionType = ConditionString.item.rawValue
             loadingCondition.conditionValue = value
         case .partner(let value):
-            loadingCondition.conditionType = "\(ConditionString.partner)"
+            loadingCondition.conditionType = ConditionString.partner.rawValue
             loadingCondition.conditionValue = value
         case .roomVisited(let value):
-            loadingCondition.conditionType = "\(ConditionString.roomVisited)"
+            loadingCondition.conditionType = ConditionString.roomVisited.rawValue
             loadingCondition.conditionValue = value
         case .roomNotVisited(let value):
-            loadingCondition.conditionType = "\(ConditionString.roomNotVisited)"
+            loadingCondition.conditionType = ConditionString.roomNotVisited.rawValue
             loadingCondition.conditionValue = value
         case .variable(let variable):
             let loadingVariableCondition = ConditionVariableDAO(entity: variableConditionEntity, insertInto: managedContext)
@@ -86,7 +86,7 @@ extension ConditionEventFetcher {
             loadingVariableCondition.relation = variable.relation.rawValue
 
             loadingCondition.variableCondition = loadingVariableCondition
-            loadingCondition.conditionType = "\(ConditionString.variable)"
+            loadingCondition.conditionType = ConditionString.variable.rawValue
         }
 
         loadingEvent.condition = loadingCondition

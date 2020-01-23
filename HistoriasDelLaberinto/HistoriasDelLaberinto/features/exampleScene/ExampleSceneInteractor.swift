@@ -10,7 +10,7 @@ class ExampleSceneInteractor: BaseInteractor, ExampleSceneBusinessLogic {
     
     init(databaseFetcherProvider: DatabaseFetcherProvider) {
         self.databaseFetcherProvider = databaseFetcherProvider
-        super.init(localizedStringAccess: databaseFetcherProvider.localizedValueFetcher)
+        super.init()
     }
     
     // MARK: Do something

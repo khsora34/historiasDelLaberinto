@@ -1,7 +1,8 @@
 import Foundation
 
 protocol InitialSceneBusinessLogic: BusinessLogic {
-    func loadAllFiles(request: InitialScene.FileLoader.Request)
+    func startNewGame(request: InitialScene.FileLoader.Request)
+    func reloadGame(request: InitialScene.FileLoader.Request)
     func deleteAllFiles()
     func getRoom(request: InitialScene.RoomBuilder.Request) -> InitialScene.RoomBuilder.Response
     func getMovement() -> InitialScene.MovementGetter.Response
@@ -12,6 +13,9 @@ protocol InitialSceneBusinessLogic: BusinessLogic {
 class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
     private let databaseFetcherProvider: DatabaseFetcherProvider
     
+    var successfulOperations: Int = 0
+    weak var delegate: ImageLoaderDelegate?
+    
     var operations: [Int: ImageLoadingOperation] = [:] {
         didSet {
             if operations.values.count == 0 {
@@ -21,32 +25,38 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         }
     }
     
-    var successfulOperations: Int = 0
-    weak var delegate: ImageLoaderDelegate?
-    
     init(databaseFetcherProvider: DatabaseFetcherProvider) {
         self.databaseFetcherProvider = databaseFetcherProvider
-        super.init(localizedStringAccess: databaseFetcherProvider.localizedValueFetcher)
+        super.init()
     }
     
-    func loadAllFiles(request: InitialScene.FileLoader.Request) {
+    func startNewGame(request: InitialScene.FileLoader.Request) {
         let now = Date().timeIntervalSinceReferenceDate
         print("😂 Start Uploading ")
         delegate = request.imageDelegate
-        parseFiles()
+        let parsedInfo = parseFiles()
+        save(parsedInfo.0, parsedInfo.1, parsedInfo.2, parsedInfo.3, getEvents())
+        loadSession()
+        loadImages(parsedInfo.0, parsedInfo.1, parsedInfo.2, parsedInfo.3)
         print("😂 Finished in \(Date().timeIntervalSinceReferenceDate - now)")
     }
     
-    private func parseFiles() {
+    func reloadGame(request: InitialScene.FileLoader.Request) {
+        delegate = request.imageDelegate
+        loadSession()
+        let parsedInfo = parseFiles()
+        loadImages(parsedInfo.0, parsedInfo.1, parsedInfo.2, parsedInfo.3)
+    }
+    
+    // swiftlint:disable large_tuple
+    private func parseFiles() -> (Protagonist, CharactersFile, RoomsFile, ItemsFile) {
         let protagonist = getProtagonist()
         let charactersFile = getCharacters()
         let roomsFile = getRooms()
         let itemsFile = getItems()
-        
-        loadImages(protagonist, charactersFile, roomsFile, itemsFile)
-        save(protagonist, charactersFile, roomsFile, itemsFile, getEvents())
-        updateTexts()
+        return (protagonist, charactersFile, roomsFile, itemsFile)
     }
+    // swiftlint:enable large_tuple
     
     private func loadImages(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile) {
         print("😂 Starting to load images")
@@ -62,6 +72,23 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         imageUrls.append(contentsOf: itemsFile.keyItems.values.map({$0.imageSource}))
         imageUrls.append(contentsOf: itemsFile.weapons.values.map({$0.imageSource}))
         loadImages(from: imageUrls)
+    }
+    
+    private func loadSession() {
+        var movement: Movement? = getMovement().movement
+        if movement == nil {
+            createMovement()
+            movement = getMovement().movement
+        }
+        
+        let protagonist = databaseFetcherProvider.charactersFetcher.getCharacter(with: "protagonist") as! Protagonist
+        GameSession.startSession(protagonist: protagonist, movement: movement!)
+        
+        if
+            let partnerId = protagonist.partner,
+            let partner = databaseFetcherProvider.charactersFetcher.getCharacter(with: partnerId) as? PlayableCharacter {
+            GameSession.addPartner(partner, withId: partnerId)
+        }
     }
     
     func updateTexts() {

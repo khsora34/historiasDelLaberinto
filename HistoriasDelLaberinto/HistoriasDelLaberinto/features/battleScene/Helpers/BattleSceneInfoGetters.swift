@@ -66,40 +66,40 @@ extension BattleScenePresenter {
     
     func getAilmentMessage(from ailment: StatusAilment?, for character: CharacterStatus) -> String {
         guard let ailment = ailment else { return "" }
-        var start = "Ahora \(character.name) está "
+        var start = character.name + " "
         switch ailment {
-        case .blind:
-            start += "cegado."
-        case .poisoned:
-            start += "envenenado."
-        case .paralyzed:
-            start += "paralizado."
+        case .blindness:
+            start += Localizer.localizedString(key: "battleMessageGetBlind")
+        case .poison:
+            start += Localizer.localizedString(key: "battleMessageGetPoisoned")
+        case .paralysis:
+            start += Localizer.localizedString(key: "battleMessageGetParalyzed")
         }
         return start
     }
     
     func continueAilmentMessage(from ailment: StatusAilment, for character: CharacterStatus) -> String {
-        var start = "\(character.name) sigue "
+        var start = character.name + " "
         switch ailment {
-        case .blind:
-            start += "cegado."
-        case .poisoned:
-            start += "envenenado."
-        case .paralyzed:
-            start += "paralizado."
+        case .blindness:
+            start += Localizer.localizedString(key: "battleMessageStillBlind")
+        case .poison:
+            start += Localizer.localizedString(key: "battleMessageStillPoisoned")
+        case .paralysis:
+            start += Localizer.localizedString(key: "battleMessageStillParalyzed")
         }
         return start
     }
     
     func finishedAilmentMessage(from ailment: StatusAilment, for character: CharacterStatus) -> String {
-        var start = "\(character.name) ya no está "
+        var start = character.name + " "
         switch ailment {
-        case .blind:
-            start += "cegado."
-        case .poisoned:
-            start += "envenenado."
-        case .paralyzed:
-            start += "paralizado."
+        case .blindness:
+            start += Localizer.localizedString(key: "battleMessageFinishBlindness")
+        case .poison:
+            start += Localizer.localizedString(key: "battleMessageFinishPoison")
+        case .paralysis:
+            start += Localizer.localizedString(key: "battleMessageFinishParalysis")
         }
         return start
     }

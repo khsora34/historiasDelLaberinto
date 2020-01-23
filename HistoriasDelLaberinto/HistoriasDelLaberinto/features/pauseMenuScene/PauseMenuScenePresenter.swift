@@ -1,7 +1,5 @@
 protocol PauseMenuScenePresentationLogic: Presenter {
     func performOption(tag: Int)
-    func saveGame()
-    func exitGame()
 }
 
 class PauseMenuScenePresenter: BasePresenter {
@@ -17,16 +15,21 @@ class PauseMenuScenePresenter: BasePresenter {
         return _router as? PauseMenuSceneRoutingLogic
     }
     
-    var characterModels: [CharacterChosen: StatusViewModel] = [:]
-    
-    private var actualWeapons: [String: Weapon] = [:]
-    private var protagonist: Protagonist!
+    private var protagonist: Protagonist
     private var partner: PlayableCharacter?
+    private var actualWeapons: [String: Weapon] = [:]
+    
+    private var characterModels: [CharacterChosen: StatusViewModel] = [:]
+    
+    override init() {
+        self.protagonist = GameSession.protagonist
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getProtagonist()
-        getPartner()
+        if let partnerId = protagonist.partner {
+            partner = interactor?.getPartner(request: PauseMenuScene.CharacterGetter.Request(id: partnerId)).character
+        }
         getWeapons()
         buildCharacters()
         createOptions()
@@ -34,18 +37,6 @@ class PauseMenuScenePresenter: BasePresenter {
 }
 
 extension PauseMenuScenePresenter {
-    private func getProtagonist() {
-        let response = interactor?.getProtagonist()
-        protagonist = response?.protagonist
-    }
-    
-    private func getPartner() {
-        guard let partnerId = protagonist.partner  else { return }
-        let request = PauseMenuScene.CharacterGetter.Request(id: partnerId)
-        let response = interactor?.getPartner(request: request)
-        partner = response?.character
-    }
-    
     private func getWeapons() {
         let weapons = [protagonist.weapon, partner?.weapon].compactMap({$0})
         var actualWeapons: [String: Weapon] = [:]
@@ -78,32 +69,32 @@ extension PauseMenuScenePresenter {
     
     private func createOptions() {
         let availableOptions: [MenuOption] = [.items, .save, .exit]
-        let transformed = availableOptions.map { return ($0.getOptionName(), $0.rawValue) }
+        let transformed = availableOptions.map { return (Localizer.localizedString(key: $0.optionKey), $0.rawValue) }
         viewController?.createOptions(with: transformed)
+    }
+    
+    private func showExitMessage() {
+        viewController?.showAlert(title: nil, message: Localizer.localizedString(key: "menuExitPrompt"), actions: [
+            (title: Localizer.localizedString(key: "genericRiskOption"), style: .default, completion: { [weak self] in
+                self?.router?.endGame()
+            }),
+            (title: Localizer.localizedString(key: "genericThinkAboutItOption"), style: .cancel, completion: nil)
+        ])
     }
 }
 
 extension PauseMenuScenePresenter: PauseMenuScenePresentationLogic {
     func performOption(tag: Int) {
-        switch MenuOption(rawValue: tag) {
-        case .save?:
-            saveGame()
-            viewController?.showMessage("Juego guardado con éxito.")
-        case .exit?:
-            viewController?.showExitMessage()
-        case .items?:
-            router?.goToItemsView(protagonist: protagonist, partner: partner, delegate: self)
-        default:
-            return
+        guard let option = MenuOption(rawValue: tag) else { return }
+        switch option {
+        case .save:
+            interactor?.saveContext()
+            viewController?.showAlert(title: nil, message: Localizer.localizedString(key: "successfullySavedGame"), actions: [(title: Localizer.localizedString(key: "genericButtonAccept"), style: .default, completion: nil)])
+        case .exit:
+            showExitMessage()
+        case .items:
+            router?.goToItemsView(delegate: self)
         }
-    }
-    
-    func saveGame() {
-        interactor?.saveContext()
-    }
-    
-    func exitGame() {
-        router?.endGame()
     }
 }
 
