@@ -11,7 +11,7 @@ class ItemsSceneInteractor: BaseInteractor, ItemsSceneBusinessLogic {
     init(fetcherProvider: DatabaseFetcherProvider) {
         self.itemFetcher = fetcherProvider.itemsFetcher
         self.characterFetcher = fetcherProvider.charactersFetcher
-        super.init(localizedStringAccess: fetcherProvider.localizedValueFetcher)
+        super.init()
     }
     
     func getItem(request: ItemsScene.ItemGetter.Request) -> ItemsScene.ItemGetter.Response {

@@ -1,7 +1,7 @@
 enum PauseMenuScene {
     enum ProtagonistGetter {
         struct Response {
-            let protagonist: Protagonist?
+            let protagonist: Protagonist
         }
     }
     enum CharacterGetter {

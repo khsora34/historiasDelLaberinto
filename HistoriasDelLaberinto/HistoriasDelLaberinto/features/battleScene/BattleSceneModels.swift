@@ -1,9 +1,4 @@
 enum BattleScene {
-    enum ProtagonistGetter {
-        struct Response {
-            let protagonist: Protagonist?
-        }
-    }
     enum CharacterGetter {
         struct Request {
             let id: String
@@ -18,13 +13,6 @@ enum BattleScene {
         }
         struct Response {
             let weapon: Weapon?
-        }
-    }
-    
-    enum CharacterUpdater {
-        struct Request {
-            let protagonist: CharacterStatus
-            let partner: CharacterStatus?
         }
     }
 }

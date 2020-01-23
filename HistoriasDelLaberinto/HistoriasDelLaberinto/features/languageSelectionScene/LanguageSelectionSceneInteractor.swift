@@ -6,6 +6,11 @@ protocol LanguageSelectionSceneBusinessLogic: BusinessLogic {
 }
 
 class LanguageSelectionSceneInteractor: BaseInteractor, LanguageSelectionSceneBusinessLogic {
+    private let localizedStringAccess: LocalizedValueFetcher
+    
+    init(databaseFetcher: DatabaseFetcherProvider) {
+        self.localizedStringAccess = databaseFetcher.localizedValueFetcher
+    }
     
     func getAvailableLanguages() -> LanguageSelectionScene.AvailableLanguages.Response {
         let languages = localizedStringAccess.getAvailableLanguages()
