@@ -221,5 +221,9 @@ extension DialogViewController {
         timer?.invalidate()
         timer = nil
         delegate?.elementSelected(id: sender.tag)
+        for view in stackView.arrangedSubviews {
+            stackView.removeArrangedSubview(view)
+            view.removeFromSuperview()
+        }
     }
 }

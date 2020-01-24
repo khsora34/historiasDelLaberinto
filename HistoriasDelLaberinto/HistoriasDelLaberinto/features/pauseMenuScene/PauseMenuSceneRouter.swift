@@ -1,14 +1,14 @@
 import UIKit
 
 protocol PauseMenuSceneRoutingLogic: RouterLogic {
-    func goToItemsView(delegate: CharactersUpdateDelegate?)
+    func goToItemsView(protagonist: Protagonist, partner: PlayableCharacter?, delegate: CharactersUpdateDelegate?)
     func endGame()
 }
 
 class PauseMenuSceneRouter: BaseRouter, PauseMenuSceneRoutingLogic {
-    func goToItemsView(delegate: CharactersUpdateDelegate?) {
+    func goToItemsView(protagonist: Protagonist, partner: PlayableCharacter?, delegate: CharactersUpdateDelegate?) {
         guard let navigation = drawer?.currentRootViewController as? UINavigationController else { return }
-        let module = moduleProvider.itemsSceneModule(delegate: delegate)
+        let module = moduleProvider.itemsSceneModule(protagonist: protagonist, partner: partner, delegate: delegate)
         
         navigation.pushViewController(module.viewController, animated: true)
     }

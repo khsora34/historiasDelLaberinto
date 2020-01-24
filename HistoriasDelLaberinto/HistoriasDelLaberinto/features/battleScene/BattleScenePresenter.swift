@@ -60,7 +60,7 @@ extension BattleScenePresenter: BattleScenePresentationLogic {
     }
     
     func protaWillUseItems() {
-        router?.goToItemsView(delegate: self)
+        router?.goToItemsView(protagonist: protagonist, partner: partner as? PlayableCharacter, delegate: self)
     }
 }
 

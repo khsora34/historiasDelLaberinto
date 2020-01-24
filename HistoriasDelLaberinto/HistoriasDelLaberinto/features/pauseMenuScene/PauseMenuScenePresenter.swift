@@ -93,7 +93,7 @@ extension PauseMenuScenePresenter: PauseMenuScenePresentationLogic {
         case .exit:
             showExitMessage()
         case .items:
-            router?.goToItemsView(delegate: self)
+            router?.goToItemsView(protagonist: protagonist, partner: partner, delegate: self)
         }
     }
 }
