@@ -1,33 +1,20 @@
 rooms:
-  "room17":
-    id: "room17"
-    name: "Primera habitación"
-    description: "Esta es la primera habitación"
-    reloadWhenPartner: true
+  "room3":
+    id: "room3"
+    name: "room3Name"
+    description: "room3Description"
+    startEvent: "room3StartEvent"
     imageSource:
       type: local
       source: "cave-near-body-of-water-at-sunset-931910.jpg"
     actions:
-      - action: "Hablar"
-        nextStep: "room17Conversation"
+      - action: "room3TalkActionName"
+        nextStep: "room3TalkEvent"
+      - action: "room3DiscussActionName"
+        nextStep: "room3DiscussEvent"
         condition:
-          kind: "partner" #For items, the keyword is "item".
-          required: "gerar" #Item's or partner's id.
-      - action: "Observar"
-        nextStep: "room17LookAround"
-
-  "genericRoom1":
-    id: "genericRoom1"
-    name: "Habitación genérica"
-    description: "Esta es una habitación genérica"
-    imageSource:
-      type: local
-      source: "orange-and-brown-cave-1533483.jpg"
-    reloadWhenPartner: false
-    isGenericRoom: true
-    actions:
-      - action: "Observar"
-        nextStep: "emptyRoomTalk"
+          kind: "partner"
+          required: "gerar"
 
   "genericRoomBattle1":
     id: "genericRoomBattle1"

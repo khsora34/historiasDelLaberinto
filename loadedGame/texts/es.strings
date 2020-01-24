@@ -54,6 +54,90 @@
 "battleHit" = "golpea";
 "battleHitTargetConnector" = "a";
 
-//Custom
-"room17LookAround" = "Miras a tu alrededor";
-"exampleRoomStartEvent" = "Te encuentras en un lujoso edificio de concepto abierto.";
+//Items
+"itemBoneName" = "Hueso";
+"itemBoneDescription" = "Es solo un hueso, nada más.";
+"itemPotionName" = "Poción";
+"itemPotionDescription" = "Permite recuperar a un personaje 250 puntos de vida.";
+"itemSmallKeyName" = "Llave pequeña";
+"itemSmallKeyDescription" = "Una llave pequeña que encaja en ciertos cofres.";
+
+//Rooms
+"room1Name" = "room1Name";
+"room2Name" = "room2Name";
+"room3Name" = "Habitación del dragón";
+"room4Name" = "room4Name";
+"room5Name" = "room5Name";
+"room6Name" = "room6Name";
+"room7Name" = "room7Name";
+"room8Name" = "room5Name";
+"room9Name" = "room5Name";
+"room10Name" = "room5Name";
+"room11Name" = "room5Name";
+"room12Name" = "room5Name";
+"room13Name" = "room5Name";
+"room14Name" = "room5Name";
+"room15Name" = "room5Name";
+"room16Name" = "room5Name";
+"room17Name" = "room5Name";
+"room18Name" = "room5Name";
+"room19Name" = "room5Name";
+"room20Name" = "room5Name";
+"room1Description" = "room20Description";
+"room2Description" = "room20Description";
+"room3Description" = "En esta habitación se encuentra un gran y temible dragón.";
+"room4Description" = "room20Description";
+"room5Description" = "room20Description";
+"room6Description" = "room20Description";
+"room7Description" = "room20Description";
+"room8Description" = "room20Description";
+"room9Description" = "room20Description";
+"room10Description" = "room20Description";
+"room11Description" = "room20Description";
+"room12Description" = "room20Description";
+"room13Description" = "room20Description";
+"room14Description" = "room20Description";
+"room15Description" = "room20Description";
+"room16Description" = "room20Description";
+"room17Description" = "room20Description";
+"room18Description" = "room20Description";
+"room19Description" = "room20Description";
+"room20Description" = "room20Description";
+
+
+//Actions
+"indiferentActionName" = "Indiferente";
+"interestedActionName" = "Interesado";
+"braveActionName" = "Valiente";
+"cowardActionName" = "Cobarde";
+"boldActionName" = "Osado";
+
+
+// Room 3
+"room3TalkActionName" = "Hablar con el dragón";
+"room3DiscussActionName" = "Hablar con Gerardo";
+"room3StartEventMessage" = "Encuentras a lo lejos de la habitación una abertura. ¡Puede ser la salida!";
+"room3StartEventMessage_2" = "Sin embargo, se interpone un gigantesco dragón en el camino.";
+"room3TalkEventMessage" = "¿¡Quién se atreve a perturbar mi descanso!?";
+"room3TalkEventIndiferentMessage" = "Decides no dirigerle la palabra.";
+"room3TalkEventIndiferent2Message" = "¡Habla, humano! No oses burlarte de mí.";
+"room3TalkEventInterestedMessage" = "Preguntas al dragón quién es.";
+"room3TalkEventBoldMessage" = "Exiges su nombre.";
+"room3TalkEventBold2Message" = "¿Y ese tono? ¿Quién te crees que eres, MÍSERO HUMANO?";
+"room3TalkEvent_2Message" = "Mi nombre es Grima y esto es lo último que oirás, porque voy a acabar contigo.";
+"room3TalkEventWithGerar_2Message" = "Mi nombre es Grima y ahora acabaré con vosotros. No conseguiréis salir de este laberinto con vida.";
+"room3TalkEventWithGerar_2_2Message" = "Muy bien, has conseguido cabrear al dragón...";
+"room3TalkEventChoice2IndiferentMessage" = "Decides ignorar su amenaza.";
+"room3TalkEventChoice2BraveMessage" = "Miras fíjamente al dragón y decides plantarle cara.";
+"room3TalkEventChoice2CowardMessage" = "Intentas disculparte con el gran dragón negro.";
+"room3TalkEventChoice2Coward_2Message" = "Ya es tarde, criatura, no conseguirás salvarte.";
+"room3TalkEvent_3Message" = "Ahora regocíjate de mi poder.";
+"room3TalkEvent_4WithGerarMessage" = "¡Vamos Cisco! Esta será la última batalla, por nuestra libertad.";
+"room3TalkEvent_4Message" = "";
+"room3TalkEventIndiferentMessage" = "";
+"room3TalkEventIndiferentMessage" = "";
+"room3TalkEventIndiferentMessage" = "";
+"room3TalkEventIndiferentMessage" = "";
+"room3TalkEventIndiferentMessage" = "";
+"room3TalkEventIndiferentMessage" = "";
+"room3TalkEventIndiferentMessage" = "";

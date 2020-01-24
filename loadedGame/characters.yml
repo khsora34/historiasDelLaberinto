@@ -1,16 +1,14 @@
 playable:
   "gerar":
     name: "Gerardo"
-
-    currentHealthPoints: 300
-    maxHealthPoints: 300
-    attack: 15
-    defense: 15
-    agility: 4
+    currentHealthPoints: 497
+    maxHealthPoints: 497
+    attack: 26
+    defense: 13
+    agility: 8
     imageSource:
       type: remote
       source: "https://imgur.com/zNGi05P.png"
-
     portraitSource:
       type: remote
       source: "https://i.imgur.com/g3WIUf4.png"

@@ -1,3 +1,155 @@
+// ROOM 3
+
+- id: "room3StartEvent"
+  mode: "dialogue"
+  message: "room3StartEventMessage"
+  characterId: "narrator" #idCharacter
+  nextStep: "room3StartEvent_2"
+
+- id: "room3StartEvent_2"
+  mode: "dialogue"
+  message: "room3StartEventMessage_2"
+  characterId: "narrator" #idCharacter
+  nextStep: ""
+
+- id: "room3TalkEvent"
+  mode: "dialogue"
+  message: "room3TalkEventMessage"
+  characterId: "grima_monster"
+  nextStep: "room3TalkEventChoice1"
+
+- id: "room3TalkEventChoice1"
+  mode: "choice"
+  options:
+    - action: "indiferentActionName"
+      nextStep: "room3TalkEventIndiferent"
+    - action: "interestedActionName"
+      nextStep: "room3TalkEventInterested"
+    - action: "boldActionName"
+      nextStep: "room3TalkEventBold"
+
+- id: "room3TalkEventIndiferent"
+  mode: "dialogue"
+  message: "room3TalkEventIndiferentMessage"
+  characterId: "protagonist"
+  nextStep: "room3TalkEventIndiferent2"
+
+- id: "room3TalkEventIndiferent2"
+  mode: "dialogue"
+  message: "room3TalkEventIndiferent2Message"
+  characterId: "protagonist"
+  nextStep: "room3TalkEventCondition1"
+
+- id: "room3TalkEventInterested"
+  mode: "dialogue"
+  message: "room3TalkEventInterestedMessage"
+  characterId: "protagonist"
+  nextStep: "room3TalkEventCondition1"
+
+- id: "room3TalkEventBold"
+  mode: "dialogue"
+  message: "room3TalkEventBoldMessage"
+  characterId: "protagonist"
+  nextStep: "room3TalkEventBold2"
+
+- id: "room3TalkEventBold2"
+  mode: "dialogue"
+  message: "room3TalkEventBold2Message"
+  characterId: "grima_monster"
+  nextStep: "room3TalkEventCondition1"
+
+- id: "room3TalkEventCondition1"
+  mode: "condition"
+  condition:
+    kind: "partner"
+    required: "gerar"
+  nextStepIfTrue: "room3TalkEventWithGerar_2"
+  nextStepIfFalse: "room3TalkEvent_2"
+
+- id: "room3TalkEvent_2"
+  mode: "dialogue"
+  message: "room3TalkEvent_2Message"
+  characterId: "grima_monster"
+  nextStep: "room3TalkEventChoice2"
+
+- id: "room3TalkEventWithGerar_2"
+  mode: "dialogue"
+  message: "room3TalkEventWithGerar_2Message"
+  characterId: "grima_monster"
+  nextStep: "room3TalkEventWithGerar_2_2"
+
+- id: "room3TalkEventWithGerar_2_2"
+  mode: "dialogue"
+  message: "room3TalkEventWithGerar_2_2Message"
+  characterId: "gerar"
+  nextStep: "room3TalkEventChoice2"
+
+- id: "room3TalkEventChoice2"
+  mode: "choice"
+  options:
+    - action: "indiferentActionName"
+      nextStep: "room3TalkEventChoice2Indiferent"
+    - action: "braveActionName"
+      nextStep: "room3TalkEventChoice2Brave"
+    - action: "cowardActionName"
+      nextStep: "room3TalkEventChoice2Coward"
+
+- id: "room3TalkEventChoice2Indiferent"
+  mode: "dialogue"
+  message: "room3TalkEventChoice2IndiferentMessage"
+  characterId: "protagonist"
+  nextStep: "room3TalkEvent_3"
+
+- id: "room3TalkEventChoice2Brave"
+  mode: "dialogue"
+  message: "room3TalkEventChoice2BraveMessage"
+  characterId: "protagonist"
+  nextStep: "room3TalkEvent_3"
+
+- id: "room3TalkEventChoice2Coward"
+  mode: "dialogue"
+  message: "room3TalkEventChoice2CowardMessage"
+  characterId: "protagonist"
+  nextStep: "room3TalkEventChoice2Coward_2"
+
+- id: "room3TalkEventChoice2Coward_2"
+  mode: "dialogue"
+  message: "room3TalkEventChoice2Coward_2Message"
+  characterId: "grima_monster"
+  nextStep: "room3TalkEvent_3"
+
+- id: "room3TalkEvent_3"
+  mode: "dialogue"
+  message: "room3TalkEvent_3Message"
+  characterId: "grima_monster"
+  nextStep: "room3TalkEventChoice2"
+
+- id: "room3TalkEventCondition2"
+  mode: "condition"
+  condition:
+    kind: "partner"
+    required: "gerar"
+  nextStepIfTrue: "room3TalkEvent_4WithGerar"
+  nextStepIfFalse: "room3TalkEventBattle"
+
+- id: "room3TalkEvent_4WithGerar"
+  mode: "dialogue"
+  message: "room3TalkEvent_4WithGerarMessage"
+  characterId: "gerar"
+  nextStep: "room3TalkEventBattle"
+
+- id: "room3TalkEventBattle"
+  mode: "battle"
+  enemyId: "grima_monster"
+  shouldSetVisited: true
+  winStep: ""
+  loseStep: ""
+
+
+
+
+
+
 - id: "room17LookAround"
   mode: "dialogue"
   message: "room17LookAround"
