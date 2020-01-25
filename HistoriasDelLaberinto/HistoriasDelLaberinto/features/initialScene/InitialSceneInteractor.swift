@@ -83,13 +83,14 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         }
         
         let protagonist = databaseFetcherProvider.charactersFetcher.getCharacter(with: "protagonist") as! Protagonist
-        GameSession.startSession(protagonist: protagonist, movement: movement!)
         
+        var partners: [(String, PlayableCharacter)] = []
         if
             let partnerId = protagonist.partner,
             let partner = databaseFetcherProvider.charactersFetcher.getCharacter(with: partnerId) as? PlayableCharacter {
-            GameSession.addPartner(partner, withId: partnerId)
+            partners.append((partnerId, partner))
         }
+        GameSession.startSession(protagonist: protagonist, movement: movement!, partners: partners)
     }
     
     func updateTexts() {
@@ -131,6 +132,7 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         databaseFetcherProvider.itemsFetcher.deleteAllItems()
         databaseFetcherProvider.roomsFetcher.deleteAllRooms()
         databaseFetcherProvider.movementFetcher.removeMovement()
+        databaseFetcherProvider.variableFetcher.deleteAllVariables()
         removeImageCache()
         print("😂 Finished in \(Date().timeIntervalSinceReferenceDate - now)")
     }
