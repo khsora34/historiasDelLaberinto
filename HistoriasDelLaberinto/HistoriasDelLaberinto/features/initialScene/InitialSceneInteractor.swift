@@ -75,6 +75,7 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
     }
     
     private func loadSession() {
+        GameSession.restart()
         var movement: Movement? = getMovement().movement
         if movement == nil {
             createMovement()
