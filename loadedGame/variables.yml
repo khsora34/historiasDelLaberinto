@@ -1,4 +1,9 @@
 #boolean, integer, string
+- name: "room3BattleVictoryFlag"
+  content:
+    type: boolean
+    value: false
+
 - name: "isShieldActive"
   content:
     type: boolean

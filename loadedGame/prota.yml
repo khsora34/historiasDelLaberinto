@@ -11,7 +11,7 @@ currentHealthPoints: 590
 maxHealthPoints: 590
 attack: 30
 defense: 10
-agility: 10
+agility: 15
 currentStatusAilment: ""
 weapon: "magic_sword"
 
