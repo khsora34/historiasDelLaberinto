@@ -56,6 +56,7 @@ extension BattleScenePresenter: BattleScenePresentationLogic {
     
     func protaWillAttack() {
         actualState = ActualState(step: .attackResult, character: .protagonist, target: nil)
+        viewController?.setHiddenActions(true)
         performNextStep()
     }
     
@@ -220,6 +221,7 @@ extension BattleScenePresenter {
     private func attackPhase() {
         guard actualState.character != .protagonist else {
             hideDialog()
+            viewController?.setHiddenActions(false)
             return
         }
         
@@ -419,6 +421,7 @@ extension BattleScenePresenter: CharactersUpdateDelegate {
         }
         updateStatusModels()
         actualState = ActualState(step: AttackPhase.startPhase(), character: actualState.character.next(), target: nil)
+        viewController?.setHiddenActions(true)
         performNextStep()
     }
 }

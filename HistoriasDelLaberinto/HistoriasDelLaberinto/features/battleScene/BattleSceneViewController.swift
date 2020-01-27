@@ -8,6 +8,7 @@ protocol BattleSceneDisplayLogic: ViewControllerDisplay {
     func updateView(_ model: StatusViewModel)
     func performDamage(on model: StatusViewModel)
     func configureButtons(availableActions: [BattleAction])
+    func setHiddenActions(_ isHidden: Bool)
 }
 
 class BattleSceneViewController: BaseViewController {
@@ -15,11 +16,12 @@ class BattleSceneViewController: BaseViewController {
         return _presenter as? BattleScenePresentationLogic
     }
     
-    var enemyStatus: StatusView!
+    @IBOutlet weak var enemyStatusView: StatusView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var enemyImageView: UIImageView!
     @IBOutlet weak var charactersStackView: UIStackView!
     @IBOutlet weak var actionsStackView: UIStackView!
+    @IBOutlet weak var bottomContainer: UIStackView!
     
     // MARK: View lifecycle
     
@@ -79,16 +81,12 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
     
     func setEnemyInfo(imageSource: ImageSource, model: StatusViewModel) {
         enemyImageView.setImage(from: imageSource)
-        enemyStatus = StatusView(frame: CGRect(x: 0, y: 0, width: 394, height: 100))
-        enemyStatus.configure(withModel: model)
-        enemyStatus.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(enemyStatus)
-        setEnemyViewConstraints(to: enemyStatus)
+        enemyStatusView.configure(withModel: model)
     }
     
     func updateView(_ model: StatusViewModel) {
         if model.isEnemy {
-            enemyStatus.configure(withModel: model)
+            enemyStatusView.configure(withModel: model)
         } else if let view = charactersStackView.arrangedSubviews.filter({ ($0 as? StatusView)?.characterChosen == model.chosenCharacter }).first as? StatusView {
             view.configure(withModel: model)
         }
@@ -96,32 +94,16 @@ extension BattleSceneViewController: BattleSceneDisplayLogic {
     
     func performDamage(on model: StatusViewModel) {
         if model.isEnemy {
-            enemyStatus.shake()
+            enemyStatusView.shake()
         } else if let view = charactersStackView.arrangedSubviews.filter({ ($0 as? StatusView)?.characterChosen == model.chosenCharacter }).first {
             view.shake()
         }
     }
-}
-
-extension BattleSceneViewController {
-    private func setEnemyViewConstraints(to view: UIView) {
-        let margins = self.view.layoutMarginsGuide
-        NSLayoutConstraint.activate([
-            view.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: -10),
-            view.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: 10)
-            ])
-        
-        if #available(iOS 11, *) {
-            let guide = self.view.safeAreaLayoutGuide
-            NSLayoutConstraint.activate([
-                view.topAnchor.constraint(equalToSystemSpacingBelow: guide.topAnchor, multiplier: 1.0)
-                ])
-            
-        } else {
-            let standardSpacing: CGFloat = 8.0
-            NSLayoutConstraint.activate([
-                view.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: standardSpacing)
-                ])
+    
+    func setHiddenActions(_ isHidden: Bool) {
+        UIView.animate(withDuration: 0.1) {
+            self.actionsStackView.isHidden = isHidden
+            self.bottomContainer.layoutIfNeeded()
         }
     }
 }
