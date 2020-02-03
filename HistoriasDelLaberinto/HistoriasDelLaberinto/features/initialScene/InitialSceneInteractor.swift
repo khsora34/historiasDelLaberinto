@@ -35,7 +35,7 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         print("😂 Start Uploading ")
         delegate = request.imageDelegate
         let parsedInfo = parseFiles()
-        save(parsedInfo.0, parsedInfo.1, parsedInfo.2, parsedInfo.3, getEvents())
+        save(parsedInfo.0, parsedInfo.1, parsedInfo.2, parsedInfo.3, getEvents(), getVariables())
         loadSession()
         loadImages(parsedInfo.0, parsedInfo.1, parsedInfo.2, parsedInfo.3)
         print("😂 Finished in \(Date().timeIntervalSinceReferenceDate - now)")
@@ -49,12 +49,13 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
     }
     
     // swiftlint:disable large_tuple
-    private func parseFiles() -> (Protagonist, CharactersFile, RoomsFile, ItemsFile) {
+    private func parseFiles() -> (Protagonist, CharactersFile, RoomsFile, ItemsFile, [Variable]) {
         let protagonist = getProtagonist()
         let charactersFile = getCharacters()
         let roomsFile = getRooms()
         let itemsFile = getItems()
-        return (protagonist, charactersFile, roomsFile, itemsFile)
+        let variablesFile = getVariables()
+        return (protagonist, charactersFile, roomsFile, itemsFile, variablesFile)
     }
     // swiftlint:enable large_tuple
     
@@ -75,6 +76,7 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
     }
     
     private func loadSession() {
+        GameSession.restart()
         var movement: Movement? = getMovement().movement
         if movement == nil {
             createMovement()
@@ -82,13 +84,14 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         }
         
         let protagonist = databaseFetcherProvider.charactersFetcher.getCharacter(with: "protagonist") as! Protagonist
-        GameSession.startSession(protagonist: protagonist, movement: movement!)
         
+        var partners: [(String, PlayableCharacter)] = []
         if
             let partnerId = protagonist.partner,
             let partner = databaseFetcherProvider.charactersFetcher.getCharacter(with: partnerId) as? PlayableCharacter {
-            GameSession.addPartner(partner, withId: partnerId)
+            partners.append((partnerId, partner))
         }
+        GameSession.startSession(protagonist: protagonist, movement: movement!, partners: partners)
     }
     
     func updateTexts() {
@@ -102,11 +105,12 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         
         let availableLanguages = databaseFetcherProvider.localizedValueFetcher.getAvailableLanguages().map({$0.identifier})
         let systemLanguages = Locale.preferredLanguages
+        
         var choseLanguage: String?
         var i = 0
         while choseLanguage == nil && i < systemLanguages.count {
-            if availableLanguages.contains(systemLanguages[i]) {
-                choseLanguage = systemLanguages[i]
+            if let language = availableLanguages.first(where: { systemLanguages[i].hasPrefix($0) }) {
+                choseLanguage = language
             }
             i+=1
         }
@@ -115,11 +119,12 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         UserDefaults.standard.set(choseLanguage ?? "en", forKey: "loadedLanguageIdentifier")
     }
     
-    private func save(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile, _ eventsFile: EventsFile) {
-        print("Characters are saved: \(saveCharacters(in: charactersFile, protagonist: protagonist, fetcher: databaseFetcherProvider.charactersFetcher))")
-        print("Items are saved: \(saveItems(itemsFile, fetcher: databaseFetcherProvider.itemsFetcher))")
-        print("Rooms are saved: \(saveRooms(roomsFile, fetcher: databaseFetcherProvider.roomsFetcher))")
-        print("Events are saved: \(saveEvents(eventsFile, fetcher: databaseFetcherProvider.eventsFetcherManager))")
+    private func save(_ protagonist: Protagonist, _ charactersFile: CharactersFile, _ roomsFile: RoomsFile, _ itemsFile: ItemsFile, _ eventsFile: EventsFile, _ variables: [Variable]) {
+        print("😂 Characters are saved: \(saveCharacters(in: charactersFile, protagonist: protagonist, fetcher: databaseFetcherProvider.charactersFetcher))")
+        print("😂 Items are saved: \(saveItems(itemsFile, fetcher: databaseFetcherProvider.itemsFetcher))")
+        print("😂 Rooms are saved: \(saveRooms(roomsFile, fetcher: databaseFetcherProvider.roomsFetcher))")
+        print("😂 Events are saved: \(saveEvents(eventsFile, fetcher: databaseFetcherProvider.eventsFetcherManager))")
+        print("😂 Variables are saved: \(saveVariables(variables, fetcher: databaseFetcherProvider.variableFetcher))")
     }
     
     func deleteAllFiles() {
@@ -130,6 +135,7 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         databaseFetcherProvider.itemsFetcher.deleteAllItems()
         databaseFetcherProvider.roomsFetcher.deleteAllRooms()
         databaseFetcherProvider.movementFetcher.removeMovement()
+        databaseFetcherProvider.variableFetcher.deleteAllVariables()
         removeImageCache()
         print("😂 Finished in \(Date().timeIntervalSinceReferenceDate - now)")
     }

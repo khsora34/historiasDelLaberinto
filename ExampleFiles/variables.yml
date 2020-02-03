@@ -1,0 +1,15 @@
+#boolean, integer, string
+- name: "isShieldActive"
+  content:
+    type: boolean
+    value: false
+
+- name: "numberOfApples"
+  content:
+    type: integer
+    value: 0
+
+- name: "partnerName"
+  content:
+    type: string
+    value: "Gerardo"

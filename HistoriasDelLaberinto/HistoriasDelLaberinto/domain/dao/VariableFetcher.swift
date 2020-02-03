@@ -3,7 +3,7 @@ import CoreData
 
 protocol VariableFetcher {
     func getVariable(with name: String) -> Variable?
-    func saveVariable(for variable: Variable) -> Bool
+    func saveVariable(_ variable: Variable) -> Bool
     func deleteVariable(with name: String)
     func deleteAllVariables()
 }
@@ -41,7 +41,7 @@ class VariableFetcherImpl: VariableFetcher {
         return Variable(name: name, content: variableValue)
     }
     
-    func saveVariable(for variable: Variable) -> Bool {
+    func saveVariable(_ variable: Variable) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         let managedContext = appDelegate.persistentContainer.viewContext
         

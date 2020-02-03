@@ -74,12 +74,16 @@ extension PauseMenuScenePresenter {
     }
     
     private func showExitMessage() {
-        viewController?.showAlert(title: nil, message: Localizer.localizedString(key: "menuExitPrompt"), actions: [
-            (title: Localizer.localizedString(key: "genericRiskOption"), style: .default, completion: { [weak self] in
-                self?.router?.endGame()
-            }),
-            (title: Localizer.localizedString(key: "genericThinkAboutItOption"), style: .cancel, completion: nil)
-        ])
+        if GameSession.isDataSynced {
+            self.router?.endGame()
+        } else {
+            viewController?.showAlert(title: nil, message: Localizer.localizedString(key: "menuExitPrompt"), actions: [
+                (title: Localizer.localizedString(key: "genericRiskOption"), style: .default, completion: { [weak self] in
+                    self?.router?.endGame()
+                }),
+                (title: Localizer.localizedString(key: "genericThinkAboutItOption"), style: .cancel, completion: nil)
+            ])
+        }
     }
 }
 
@@ -93,7 +97,7 @@ extension PauseMenuScenePresenter: PauseMenuScenePresentationLogic {
         case .exit:
             showExitMessage()
         case .items:
-            router?.goToItemsView(delegate: self)
+            router?.goToItemsView(protagonist: protagonist, partner: partner, delegate: self)
         }
     }
 }

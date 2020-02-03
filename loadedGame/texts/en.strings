@@ -32,8 +32,8 @@
 "battleOptionAttack" = "Attack";
 "battleStartDialogue" = "wants to fight.";
 "battleActionAttack" = "attacks!";
-"battleActionAttackMissed" = "Pero falló el ataque...";
-"battleActionAttackAbsorbed" = "absorbe el ataque.";
+"battleActionAttackMissed" = "But misses the attack...";
+"battleActionAttackAbsorbed" = "absorbs the hit.";
 "battleMessageGetPoisoned" = "is now poisoned.";
 "battleMessageGetParalyzed" = "is now paralyzed.";
 "battleMessageGetBlind" = "is now blind.";
@@ -49,12 +49,78 @@
 "battlePlayerFaints" = "You start losing your conciousness.";
 "battleExtraPartnerWin" = "Yes, we did it!";
 "battleExtraAloneWin" = "You managed to defeat the villain.";
-
 "battleOneHit" = "once";
 "battleMoreHits" = "times";
 "battleHit" = "hits";
 "battleHitTargetConnector" = "to";
 
-// Custom
-"room17LookAround" = "You take a look of your surroundings.";
-"exampleRoomStartEvent" = "You find yourself in a luxurious open concept building.";
+//Items
+"itemBoneName" = "Bone";
+"itemBoneDescription" = "It's just a bone.";
+"itemPotionName" = "Potion";
+"itemPotionDescription" = "Restores 250 health points to the user.";
+"itemSmallKeyName" = "Small key";
+"itemSmallKeyDescription" = "A small key made for opening treasures.";
+
+//Rooms
+"room3Name" = "Dragon's room";
+"room18Name" = "The chair room";
+"room3Description" = "This room is the place for a really big and frightening dragon.";
+"room18Description" = "The room is painted with white color. There's a green chair at the center of the room.";
+
+
+//Actions
+"indiferentActionName" = "Indifferent";
+"interestedActionName" = "Interested";
+"braveActionName" = "Brave";
+"cowardActionName" = "Coward";
+"boldActionName" = "Bold";
+"keepExploringActionName" = "Keep exploring";
+"escapeActionName" = "Escape";
+"attackActionName" = "Attack";
+"talkWithGerarActionName" = "Talk to Gerardo";
+
+"defaultBadEndingMessage" = "You won't be able to endure much more on the fight.";
+"defaultBadEnding2Message" = "You close for eyes, as your conciousness slides away.";
+
+// Room 3
+"room3TalkActionName" = "Talk to the dragon";
+"room3StartEventMessage" = "At the end of the cave you see a big hole. It could be the exit!";
+"room3StartEventMessage_2" = "However, a giant dragon is on the way.";
+"room3TalkEventMessage" = "Who is the one bothering my slumber!?";
+"room3TalkEventIndiferentMessage" = "You decide not to talk to the dragon.";
+"room3TalkEventIndiferent2Message" = "You, human! Do not dare to ignore me.";
+"room3TalkEventInterestedMessage" = "You ask the dragon for its name.";
+"room3TalkEventBoldMessage" = "You demand its name.";
+"room3TalkEventBold2Message" = "Who do you think are you talking to, MISERABLE HUMAN?";
+"room3TalkEvent_2Message" = "I am Grima and this shall be the last words you will ever hear. ";
+"room3TalkEventWithGerar_2Message" = "I am Grima and I shall end your life now. Please do not run, because I will get you.";
+"room3TalkEventWithGerar_2_2Message" = "Great, you managed to anger the dragon... ";
+"room3TalkEventChoice2IndiferentMessage" = "You keep looking the dragon with your mind empty.";
+"room3TalkEventChoice2BraveMessage" = "You decide to stand against the dragon.";
+"room3TalkEventChoice2CowardMessage" = "You try to apologize to the dragon.";
+"room3TalkEventChoice2Coward_2Message" = "It is too late, my dear, for you shall perish today.";
+"room3TalkEvent_3Message" = "Now rejoice in my power!";
+"room3TalkEvent_4WithGerarMessage" = "Let's go, Cisco! This will probably be our last battle, let's fight for our freedom!";
+"room3BattleVictory" = "The giant dragon falls on the nearest wall. It seems it's sleeping. This is your chance to escape!";
+"room3BattleVictory2Message" = "Do you want to escape, or do you prefer to keep exploring?";
+"room3EscapeEventWithGerarMessage" = "Let's go, Cisco, together!";
+"room3EscapeEventWithGerar2Message" = "You nod your head with a big smile. You take Gerardo's hand and run to the cave's entrance.";
+"room3EscapeEventMessage" = "You decide to leave the labyrinth forever.";
+"room3BattleVictoryWithGerarMessage" = "Yes, we did it!";
+"room3BattleVictoryWithGerar2Message" = "NO! You mere mortals will not get away with this victory.";
+"room3BattleVictoryWithGerar3Message" = "With its last effort, the dragon tries to land on Gerardo.";
+"room3BattleVictoryWithGerar4Message" = "You try to warn him, but...";
+"room3BattleVictoryWithGerar5Message" = "Gerardo quickly evades the dragon's last attack and gets away from it. The dragon, really angered, shouts really high as its eyes close up.";
+"room3BattleVictoryWithGerar6Message" = "Phew, that was really a close one.";
+"room3BattleVictoryWithGerar7Message" = "You turn to the cave's entrance. From there, you can enjoy the view of the ocean. It seems like there's nothing else on your escape route. What do you want to do?";
+"room3DiscussIsDragonMessage" = "Are you sure this is the exit? That dragon is freaking huge...";
+"room3DiscussNoDragonMessage" = "Well, at least the dragon looks dead. When are we escaping?";
+"room3AttackEventMessage" = "You decide to face the dragon.";
+"room3AttackEventWithGerarMessage" = "Yup, you did go crazy.";
+"room3AttackEvent2Message" = "I see you enjoy going straight to the point. You see, I enoy it too.";
+"room18StartEventMessage" = "You enter on a room colored white. At the center of the room, there's a green chair.";
+"room18TalkWithGerarEventMessage" = "I think this is the room I woke up from!";
+"room18SitActionName" = "Sit on the chair";
+"room18SitEventMessage" = "You sit on the green chair.";
+"room18SitEvent2Message" = "You are surprised at how confortable it is.";

@@ -1,27 +1,27 @@
 consumableItems:
   "potion":
-    name: "Poción"
-    description: "Restaura puntos de vida."
+    name: "itemPotionName"
+    description: "itemPotionDescription"
     imageSource:
-      type: remote
-      source: "https://cdn.bulbagarden.net/upload/2/2e/GO_Potion.png"
-    healthRecovered: 40
+      type: local
+      source: "pocion-de-amor.png"
+    healthRecovered: 250
 
-  "high_potion":
-    name: "Poción grande"
-    description: "Restaura puntos de vida."
-    imageSource:
-      type: remote
-      source: "https://cdn.bulbagarden.net/upload/b/b5/GO_Super_Potion.png"
-    healthRecovered: 140
 
 keyItems:
   "small_key":
-    name: "Llave pequeña"
-    description: "Una llave pequeña."
+    name: "itemSmallKeyName"
+    description: "itemSmallKeyDescription"
     imageSource:
       type: local
-      source: "small_key.png"
+      source: "llave.png"
+
+  "bone":
+    name: "itemBoneName"
+    description: "itemBoneDescription"
+    imageSource:
+      type: local
+      source: "hueso.png"
 
 weapons:
   "magic_sword":
@@ -32,15 +32,3 @@ weapons:
       source: "magic_sword.png"
     extraDamage: 12
     hitRate: 99 # This field means a percentage
-
-  "poisoned_bow":
-    name: "Arco envenenado"
-    description: "Un arco que puede provocar veneno."
-    imageSource:
-      type: local
-      source: "ModernBowFarket.png"
-    extraDamage: 0
-    hitRate: 94 # This field means a percentage
-    inducedAilment:
-      ailment: "poison"
-      induceRate: 32 # This field means a percentage

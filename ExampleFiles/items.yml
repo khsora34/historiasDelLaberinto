@@ -1,39 +1,46 @@
-"potion":
-  name: "Poción"
-  description: "Restaura puntos de vida."
-  type: "usable" # It can appear as key and weapon
-  image: "http://LALALAND.com/potion_image"
-  addingHealth: 40
+consumableItems:
+  "potion":
+    name: "Poción"
+    description: "Restaura puntos de vida."
+    imageSource:
+      type: remote
+      source: "https://cdn.bulbagarden.net/upload/2/2e/GO_Potion.png"
+    healthRecovered: 40
 
-"high_potion":
-  name: "Poción grande"
-  description: "Restaura puntos de vida."
-  type: "usable"
-  image: "http://LALALAND.com/high_option_image"
-  addingHealth: 140
+  "high_potion":
+    name: "Poción grande"
+    description: "Restaura puntos de vida."
+    imageSource:
+      type: remote
+      source: "https://cdn.bulbagarden.net/upload/b/b5/GO_Super_Potion.png"
+    healthRecovered: 140
 
-"small_key":
-  name: "Llave pequeña"
-  description: "Una llave pequeña."
-  type: "key"
-  image: "http://LALALAND.com/small_key_image"
+keyItems:
+  "small_key":
+    name: "Llave pequeña"
+    description: "Una llave pequeña."
+    imageSource:
+      type: local
+      source: "small_key.png"
 
-"magic_sword":
-  name: "Espada mágica"
-  description: "Una espada mágica."
-  type: "weapon"
-  image: "http://LALALAND.com/magic_sword_image"
-  extraDamage:
-  hitRate: 99 # This field means a percentage
-  ailment: "none" # This field can be removed
-  ailmentRate: 0 # This can be removed
+weapons:
+  "magic_sword":
+    name: "Espada mágica"
+    description: "Una espada mágica."
+    imageSource:
+      type: local
+      source: "magic_sword.png"
+    extraDamage: 12
+    hitRate: 99 # This field means a percentage
 
-"poisoned_bow":
-  name: "Arco envenenado"
-  description: "Un arco que puede provocar veneno."
-  type: "weapon"
-  image: "http://LALALAND.com/poisoned_bow_image"
-  extraDamage: 0
-  hitRate: 94 # This field means a percentage
-  ailment: "poison"
-  ailmentRate: 32 # This field means a percentage
+  "poisoned_bow":
+    name: "Arco envenenado"
+    description: "Un arco que puede provocar veneno."
+    imageSource:
+      type: local
+      source: "ModernBowFarket.png"
+    extraDamage: 0
+    hitRate: 94 # This field means a percentage
+    inducedAilment:
+      ailment: "poison"
+      induceRate: 32 # This field means a percentage

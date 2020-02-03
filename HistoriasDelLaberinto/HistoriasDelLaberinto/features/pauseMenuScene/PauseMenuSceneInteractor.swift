@@ -42,7 +42,7 @@ class PauseMenuSceneInteractor: BaseInteractor, PauseMenuSceneBusinessLogic {
         }
         
         for variable in GameSession.variables.values {
-            _ = databaseProvider.variableFetcher.saveVariable(for: variable)
+            _ = databaseProvider.variableFetcher.saveVariable(variable)
         }
         
         for (id, room) in GameSession.rooms {

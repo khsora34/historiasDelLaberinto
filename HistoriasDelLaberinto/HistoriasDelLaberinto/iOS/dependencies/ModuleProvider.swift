@@ -28,8 +28,8 @@ class ModuleProvider {
         return BattleSceneModule(enemy: enemy, backgroundImage: backgroundImage, delegate: delegate, routerProvider: routerProvider, databaseProvider: databaseFetcherProvider)
     }
     
-    func itemsSceneModule(delegate: CharactersUpdateDelegate?) -> Module {
-        return ItemsSceneModule(delegate: delegate, fetcherProvider: databaseFetcherProvider, routerProvider: routerProvider)
+    func itemsSceneModule(protagonist: Protagonist, partner: PlayableCharacter?, delegate: CharactersUpdateDelegate?) -> Module {
+        return ItemsSceneModule(protagonist: protagonist, partner: partner, delegate: delegate, fetcherProvider: databaseFetcherProvider, routerProvider: routerProvider)
     }
     
     func languagesSelection() -> Module {
