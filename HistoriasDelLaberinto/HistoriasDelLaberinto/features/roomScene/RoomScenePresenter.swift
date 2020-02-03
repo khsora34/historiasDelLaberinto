@@ -40,31 +40,18 @@ class RoomScenePresenter: BasePresenter {
     }
     
     private func loadActions() {
-        var filteredActions = room.actions.filter { action in
+        let filteredActions = room.actions.filter { action in
             guard let condition = action.condition else { return true }
             let request = EventsHandlerModels.CompareCondition.Request(condition: condition)
             return interactor?.compareCondition(request: request).result ?? false
         }
-        if self.filteredActions.isEmpty {
-            var modeledActions = filteredActions.map({ $0.name })
-            modeledActions.append("movementAction")
-            viewController?.set(actions: modeledActions)
-        } else {
-            let newActions = filteredActions.filter { possibleNewAction in
-                for actualAction in self.filteredActions where actualAction == possibleNewAction {
-                    return false
-                }
-                return true
-            }
-            let maintainingActions = self.filteredActions.filter { action in
-                filteredActions.contains(where: { second in
-                    return action == second
-                })
-            }
-            filteredActions = maintainingActions + newActions
-            viewController?.update(withActions: newActions.map({$0.name}))
-        }
-        self.filteredActions = filteredActions
+        let newActions = filteredActions.filter { !self.filteredActions.contains($0) }
+        let maintainingActions = self.filteredActions.filter { filteredActions.contains($0) }
+        self.filteredActions = maintainingActions + newActions
+        
+        var modeledActions = filteredActions.map({ $0.name })
+        modeledActions.append("movementAction")
+        viewController?.set(actions: modeledActions)
     }
 }
 

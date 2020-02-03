@@ -5,17 +5,9 @@ protocol InitialScenePresentationLogic: Presenter {
 }
 
 class InitialScenePresenter: BasePresenter {
-    private var viewController: InitialSceneDisplayLogic? {
-        return _viewController as? InitialSceneDisplayLogic
-    }
-    
-    private var interactor: InitialSceneBusinessLogic? {
-        return _interactor as? InitialSceneBusinessLogic
-    }
-    
-    private var router: InitialSceneRoutingLogic? {
-        return _router as? InitialSceneRoutingLogic
-    }
+    private var viewController: InitialSceneDisplayLogic? { return _viewController as? InitialSceneDisplayLogic }
+    private var interactor: InitialSceneBusinessLogic? { return _interactor as? InitialSceneBusinessLogic }
+    private var router: InitialSceneRoutingLogic? { return _router as? InitialSceneRoutingLogic }
     
     private var nextRoomId: String?
     var movement: Movement?

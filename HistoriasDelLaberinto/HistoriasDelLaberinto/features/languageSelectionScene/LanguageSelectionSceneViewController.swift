@@ -6,9 +6,7 @@ protocol LanguageSelectionSceneDisplayLogic: ViewControllerDisplay {
 }
 
 class LanguageSelectionSceneViewController: BaseViewController {
-    private var presenter: LanguageSelectionScenePresentationLogic? {
-        return _presenter as? LanguageSelectionScenePresentationLogic
-    }
+    private var presenter: LanguageSelectionScenePresentationLogic? { return _presenter as? LanguageSelectionScenePresentationLogic }
     
     private var models: [LanguageButtonInfo] = []
     
@@ -22,14 +20,11 @@ class LanguageSelectionSceneViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         saveButton.setStyle(ButtonStyle.defaultButtonStyle)
+        saveButton.text = Localizer.localizedString(key: "genericButtonSave")
     }
 }
 
 extension LanguageSelectionSceneViewController: LanguageSelectionSceneDisplayLogic {
-    func setSaveButtonText(_ text: String) {
-        saveButton.text = Localizer.localizedString(key: "genericButtonSave")
-    }
-    
     func showLanguages(models: [LanguageButtonInfo]) {
         self.models = models
         for model in models {

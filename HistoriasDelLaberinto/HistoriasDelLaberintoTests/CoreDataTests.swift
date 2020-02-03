@@ -167,7 +167,7 @@ class CoreDataTests: XCTestCase, GameFilesLoader {
         manager.deleteAllVariables()
         let variables = getVariables()
         
-        for variable in variables where !manager.saveVariable(for: variable) {
+        for variable in variables where !manager.saveVariable(variable) {
             XCTFail()
         }
         

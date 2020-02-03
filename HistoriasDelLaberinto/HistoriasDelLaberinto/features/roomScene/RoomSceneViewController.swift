@@ -82,14 +82,30 @@ extension RoomSceneViewController: RoomSceneDisplayLogic {
             iphoneXView.backgroundColor = .clear
             buttonStackView.addArrangedSubview(iphoneXView)
         }
-        
     }
     
     func update(withActions actions: [String]) {
         guard !actions.isEmpty else { return }
-        buttonStackView.arrangedSubviews.last?.removeFromSuperview()
+        guard let iphoneXView = buttonStackView.arrangedSubviews.last else { return }
+        buttonStackView.removeArrangedSubview(iphoneXView)
+        iphoneXView.removeFromSuperview()
+        guard let lastStackView = buttonStackView.arrangedSubviews.last as? UIStackView else { return }
+        var actions = actions
+        var tag = 0
+        for button in lastStackView.arrangedSubviews.compactMap({$0 as? ConfigurableButton}) where button.text != nil {
+            if button.text == Localizer.localizedString(key: "movementAction") {
+                actions.append("movementAction")
+                tag = button.tag
+            } else {
+                actions.insert(button.text!, at: 0)
+            }
+        }
+        
+        buttonStackView.removeArrangedSubview(lastStackView)
+        lastStackView.removeFromSuperview()
+        
         UIView.animate(withDuration: 0.3) {
-            self.buttonStackView.createButtonsInColumns(names: actions.map(Localizer.localizedString(key:)), action: #selector(self.didTapOption(sender:)), for: self, numberOfColumns: 2)
+            self.buttonStackView.createButtonsInColumns(names: actions.map(Localizer.localizedString(key:)), action: #selector(self.didTapOption(sender:)), fromTag: tag, for: self, numberOfColumns: 2)
             self.view.layoutIfNeeded()
         }
         

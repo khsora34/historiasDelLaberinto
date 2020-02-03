@@ -5,6 +5,7 @@ protocol FilesSaver {
     func saveItems(_ file: ItemsFile, fetcher: ItemFetcher) -> Bool
     func saveRooms(_ file: RoomsFile, fetcher: RoomFetcher) -> Bool
     func saveEvents(_ file: EventsFile, fetcher: EventFetcherManager) -> Bool
+    func saveVariables(_ file: [Variable], fetcher: VariableFetcher) -> Bool
 }
 
 extension FilesSaver {
@@ -59,6 +60,14 @@ extension FilesSaver {
             bool = bool && fetcher.saveEvent(event)
         }
         
+        return bool
+    }
+    
+    func saveVariables(_ file: [Variable], fetcher: VariableFetcher) -> Bool {
+        var bool = true
+        for variable in file {
+            bool = bool && fetcher.saveVariable(variable)
+        }
         return bool
     }
     

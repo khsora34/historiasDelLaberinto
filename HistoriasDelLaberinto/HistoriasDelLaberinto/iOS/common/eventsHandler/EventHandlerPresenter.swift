@@ -158,6 +158,11 @@ extension EventHandlerPresenter {
         guard let interactor = eventHandlerInteractor else { return }
         let request = EventsHandlerModels.VariableModification.Request(event: event)
         interactor.performVariableModification(request: request)
+        if let nextStep = event.nextStep {
+            startEvent(with: nextStep)
+        } else {
+            finishFlow()
+        }
     }
 }
 

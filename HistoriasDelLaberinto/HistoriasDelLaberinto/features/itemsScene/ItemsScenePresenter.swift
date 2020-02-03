@@ -17,11 +17,9 @@ class ItemsScenePresenter: BasePresenter {
     private var itemModels: [Int: ItemViewModel] = [:]
     var selectedItemTag: Int?
     
-    override init() {
-        self.protagonist = GameSession.protagonist
-        if let partner = protagonist.partner {
-            self.partner = GameSession.partners[partner]
-        }
+    init(protagonist: Protagonist, partner: PlayableCharacter? = nil) {
+        self.protagonist = protagonist
+        self.partner = partner
     }
     
     override func viewDidLoad() {

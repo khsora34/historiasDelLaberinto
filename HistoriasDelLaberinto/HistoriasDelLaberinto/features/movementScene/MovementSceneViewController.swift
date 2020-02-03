@@ -37,7 +37,7 @@ class MovementSceneViewController: BaseViewController {
 
 extension MovementSceneViewController: MovementSceneDisplayLogic {
     func set(roomName: String) {
-        roomNameLabel.text = roomName
+        roomNameLabel.text = Localizer.localizedString(key: roomName)
         roomNameLabel.isHidden = false
     }
     

@@ -1,7 +1,7 @@
 import UIKit
 
 extension UIStackView {
-    func createButtonsInColumns(names: [String], usingFontSize size: CGFloat = 18.0, action: Selector, for view: Any, numberOfColumns: Int = 2) {
+    func createButtonsInColumns(names: [String], usingFontSize size: CGFloat = 18.0, action: Selector, fromTag tag: Int = 0, for view: Any, numberOfColumns: Int = 2) {
         func createButton(name: String, tag: Int) -> UIView {
             let button = ConfigurableButton(frame: .zero)
             button.tag = tag
@@ -12,7 +12,7 @@ extension UIStackView {
         }
         
         addViewsInColumns(
-            names.enumerated().map({createButton(name: $1, tag: $0)}),
+            names.enumerated().map({createButton(name: $1, tag: $0 + tag)}),
             numberOfColumns: numberOfColumns)
     }
     
