@@ -138,7 +138,7 @@
 "room3TalkEvent_4WithGerarMessage" = "¡Vamos Cisco! Esta será la última batalla, por nuestra libertad.";
 "defaultBadEndingMessage" = "No vas a poder aguantar mucho más el tipo.";
 "defaultBadEnding2Message" = "Cierras los ojos para no volver a abrirlos.";
-"room3BattleVictory" = "El enorme dragón cae bajo su propio peso en una de las paredes laterales. ¡Esta es tu oportunidad de escapar!.";
+"room3BattleVictory" = "El enorme dragón cae bajo su propio peso en una de las paredes laterales. ¡Esta es tu oportunidad de escapar!";
 "room3BattleVictory2Message" = "¿Quieres escapar, o prefieres seguir explorando?";
 "room3EscapeEventWithGerarMessage" = "Vamos Cisco, ¡juntos!";
 "room3EscapeEventWithGerar2Message" = "Afirmas con la cabeza y una sonrisa. Corréis hacia el agujero, en pos de un nuevo mañana.";

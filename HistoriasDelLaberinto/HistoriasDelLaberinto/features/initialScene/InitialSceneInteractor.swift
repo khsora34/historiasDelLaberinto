@@ -105,11 +105,12 @@ class InitialSceneInteractor: BaseInteractor, InitialSceneBusinessLogic {
         
         let availableLanguages = databaseFetcherProvider.localizedValueFetcher.getAvailableLanguages().map({$0.identifier})
         let systemLanguages = Locale.preferredLanguages
+        
         var choseLanguage: String?
         var i = 0
         while choseLanguage == nil && i < systemLanguages.count {
-            if availableLanguages.contains(systemLanguages[i]) {
-                choseLanguage = systemLanguages[i]
+            if let language = availableLanguages.first(where: { systemLanguages[i].hasPrefix($0) }) {
+                choseLanguage = language
             }
             i+=1
         }
